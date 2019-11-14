@@ -6,7 +6,7 @@
   "scripts": {
     "start": "parcel -p 9999 ./src/index.html",
     "build": "parcel build ./src/index.html --no-minify",
-    "docker": "DOCKER=true parcel build ./src/index.html --no-minify"
+    "docker": "cross-env DOCKER=true parcel build ./src/index.html --no-minify"
   },
   "keywords": [
     "node",
@@ -34,6 +34,7 @@
     "@babel/core": "latest",
     "@babel/preset-env": "latest",
     "@vue/component-compiler-utils": "latest",
+    "cross-env": "latest",
     "parcel-bundler": "latest",
     "vue-template-compiler": "latest"
   }
