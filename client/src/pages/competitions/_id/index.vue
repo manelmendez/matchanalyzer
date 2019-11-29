@@ -38,6 +38,7 @@ import constants from '../../../assets/constants/constants'
     methods: {
       ...mapActions("competition",[
         'getCompetition',
+        'getCompetitionRounds'
       ])
     },
     computed: {
@@ -45,9 +46,10 @@ import constants from '../../../assets/constants/constants'
         'competition'
       ])
     },
-    created() {
+    created: async function() {
       //do something after creating vue instance
-      this.getCompetition(this.$route.params.id)
+      await this.getCompetition(this.$route.params.id)
+      await this.getCompetitionRounds(this.$route.params.id)
     }
   }
 </script>

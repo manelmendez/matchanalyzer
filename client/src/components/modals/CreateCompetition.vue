@@ -12,16 +12,6 @@
             </v-flex>
             <v-flex xs12 md4>
               <v-select
-                :items="myTeams"
-                item-text="name"
-                item-value="_id"
-                label="Equipo que participa"
-                v-model="team"
-                required
-              ></v-select>
-            </v-flex>
-            <v-flex xs12 md4>
-              <v-select
                 :items="seasons"
                 label="Temporada de la competición"
                 v-model="season"
@@ -47,7 +37,6 @@
             </v-flex>
           </v-layout>
         </v-container>
-        <small>*indicates required field</small>
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" @click.native="(competition) ? editCompetition() : createCompetition()">Continue</v-btn>
@@ -66,7 +55,6 @@ export default {
   data() {
     return {
       name: (this.competition) ? this.competition.name : '',
-      team: (this.competition) ? this.competition.myTeam : '',
       season: (this.competition) ? this.competition.season : '',
       seasons: [
         "14/15",
@@ -98,7 +86,6 @@ export default {
   computed: {
     ...mapGetters({
       user:'user/user',
-      myTeams:'team/myTeams',
     })
   },
   methods: {
@@ -106,8 +93,7 @@ export default {
       let competition = {
         name: this.name,
         season: this.season,
-        team: this.team,
-        manager: this.user._id,
+        manager: this.user.id,
         discipline: this.discipline,
         category: this.category
       }
@@ -117,11 +103,10 @@ export default {
     },
     editCompetition() {
       let competition = {
-        _id: this.competition._id,
+        id: this.competition.id,
         name: this.name,
         season: this.season,
-        team: this.team,
-        manager: this.user._id,
+        manager: this.user.id,
         discipline: this.discipline,
         category: this.category
       }

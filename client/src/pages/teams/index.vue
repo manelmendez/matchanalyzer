@@ -4,8 +4,8 @@
     <v-list v-else>
       <v-list-item
         v-for="team in this.myTeams"
-        :key="team._id"
-        @click.stop="goTo(team._id)"
+        :key="team.id"
+        @click.stop="goTo(team.id)"
       >
         <v-list-item-avatar>
           <v-img :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" :contain="true">
@@ -26,7 +26,7 @@
         <v-list-item-action>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-            <v-btn text icon color="red lighten-2" v-on="on" @click.stop="deletingTeam=team._id ,deleteDialog=true">
+            <v-btn text icon color="red lighten-2" v-on="on" @click.stop="deletingTeam=team.id ,deleteDialog=true">
               <v-icon size="18">delete</v-icon>
             </v-btn>
             </template>
@@ -81,7 +81,7 @@ import constants from '../../assets/constants/constants'
       deletingTeam: null
     }),
     methods: {
-      goTo(id) {
+      goTo(id) {        
         this.$router.push({
           name: "teams-id",
           params: {
@@ -92,7 +92,7 @@ import constants from '../../assets/constants/constants'
       confirmCreate() {
         this.dialog = false
         if (this.updatingTeam) {
-          this.getUserTeams(this.user._id)
+          this.getUserTeams(this.user.id)
         }
       },
       deleteTeamFunction() {
@@ -123,7 +123,7 @@ import constants from '../../assets/constants/constants'
     },
     created() {
       //do something after creating vue instance
-      this.getUserTeams(this.user._id)
+      this.getUserTeams(this.user.id)
     }
   }
 </script>

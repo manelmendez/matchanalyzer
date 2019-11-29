@@ -40,7 +40,7 @@
       <v-card class="match-actions elevation-2">
         <v-card-text class="text-center">
           <v-col>
-            <v-tooltip top v-if="match.localTeam._id == competition.myTeam._id || match.awayTeam._id == competition.myTeam._id">
+            <v-tooltip top v-if="match.awayTeam.manager != null || match.localTeam.manager != null">
               <template v-slot:activator="{ on }">
                 <v-btn x-small text icon color="green lighten-2" @click.stop="addStatsDialog=true" v-on="on">
                   <v-icon size="18">fa-file-alt</v-icon>
@@ -125,14 +125,14 @@ export default {
     },
     deleteMatchFunction() {
       let body = {
-        localTeamId: this.match.localTeam._id,
-        awayTeamId: this.match.awayTeam._id,
+        localTeamId: this.match.localTeam.id,
+        awayTeamId: this.match.awayTeam.id,
         localTeamStatsId: this.match.localTeam.stats[this.selectedRound - 1],
         awayTeamStatsId: this.match.awayTeam.stats[this.selectedRound - 1],
         roundId: this.match.round
       };
       let data = {
-        id: this.match._id,
+        id: this.match.id,
         body: body
       };
       this.deleteMatch(data).then(response => {
@@ -148,8 +148,8 @@ export default {
     updateMatchFunction(stats) {
       let body = {
         match: {
-          localTeam: this.match.localTeam._id,
-          awayTeam: this.match.awayTeam._id,
+          localTeam: this.match.localTeam.id,
+          awayTeam: this.match.awayTeam.id,
           localTeamGoals: stats.localTeamStats.goals,
           awayTeamGoals: stats.awayTeamStats.goals,
           matchDay: Date.now(),
@@ -160,7 +160,7 @@ export default {
         awayTeamStats: stats.awayTeamStats
       };
       let data = {
-        id: this.match._id,
+        id: this.match.id,
         body: body
       };
       this.$emit("loading");

@@ -6,8 +6,8 @@
         md="3"
         lg="2"
         xl="1"
-        v-for="team in competition.teams" :key="team._id">
-        <v-card class="teamCard d-flex flex-column" min-height="100%" @click.native.stop="goTo(team._id)">
+        v-for="team in competition.teams" :key="team.id">
+        <v-card class="teamCard d-flex flex-column" min-height="100%" @click.native.stop="goTo(team.id)">
           <v-col>
             <v-img 
               justify="center"
@@ -19,12 +19,13 @@
           </v-col>
           <v-card-text class="title-card text-center grow">
             <b>{{team.name}}</b>
+            {{team}}
           </v-card-text>
-          <v-card-text class="text-center" height="100%" v-if="competition.myTeam._id == team._id">
-            Nº de jugadores: {{team.players.length}}  
+          <v-card-text class="text-center" height="100%" >
+            <!-- Nº de jugadores: {{team.players.length}}   -->
           </v-card-text>
           <v-spacer></v-spacer>
-          <v-card-actions v-if="competition.myTeam._id != team._id">
+          <v-card-actions >
             <v-spacer></v-spacer>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
@@ -34,9 +35,9 @@
               </template>
               <span>Editar equipo</span>
             </v-tooltip>
-            <v-tooltip top v-if="competition.rounds.length==0">
+            <v-tooltip top>
               <template v-slot:activator="{ on }">
-              <v-btn text icon color="red lighten-2" v-on="on" @click.stop="deletingTeam=team._id ,deleteDialog=true">
+              <v-btn text icon color="red lighten-2" v-on="on" @click.stop="deletingTeam=team.id ,deleteDialog=true">
                 <v-icon size="18">delete</v-icon>
               </v-btn>
               </template>
@@ -46,17 +47,55 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-btn
-      fab
-      color="accent"
-      dark
+    <v-speed-dial
+      v-model="fab"
       bottom
       right
+      direction="top"
+      transition="slide-y-reverse-transition"
       fixed
-      @click.stop="dialog=!dialog"
     >
-      <i class="material-icons">add</i>
-    </v-btn>
+      <template v-slot:activator>
+        <v-btn
+          v-model="fab"
+          fab
+          color="accent"
+          dark
+        >
+          <v-icon v-if="fab">mdi-close</v-icon>
+          <v-icon v-else>mdi-plus</v-icon>
+        </v-btn>
+      </template>
+      <v-tooltip left>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            v-on="on"
+            fab
+            dark
+            small
+            color="green"
+            @click.stop="dialog=!dialog"
+          >
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+        </template>
+        <span>Añadir equipo a competición</span>
+      </v-tooltip>
+      <v-tooltip left>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            v-on="on"
+            fab
+            dark
+            small
+            color="indigo"
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </template>
+        <span>Añadir equipo propio</span>
+      </v-tooltip>
+    </v-speed-dial>
     <CreateTeam v-if="dialog" :team="(updatingTeam ? updatingTeam : null)" :show="dialog" @confirm="confirm" @close="dialog=!dialog, updatingTeam=null"></CreateTeam>
     <DeleteDialog
       v-if="deleteDialog"
@@ -79,6 +118,7 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
       DeleteDialog
     },
     data: () => ({
+      fab:false,
       constants: constants,
       dialog: false,
       deleteDialog: false,
@@ -92,12 +132,12 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
       confirm(){
         this.dialog = false
         if (this.updatingTeam) {
-          this.getCompetition(this.competition._id)
+          this.getCompetition(this.competition.id)
         }
       },
       deleteTeamFunction() {
         this.deleteTeam(this.deletingTeam).then((response) =>{  
-          this.getCompetition(this.competition._id)        
+          this.getCompetition(this.competition.id)        
           this.deleteDialog = false
         })
         .catch((err) => {   

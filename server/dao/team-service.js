@@ -1,26 +1,17 @@
-const Team = require('../models/team')
+const con = require('../config/mysql')
 
 function findById(id) {
   return new Promise ((resolve, reject) =>{
-    Team.findById(id).populate('players').populate('stats').exec((err, team) => {
+    con.query("SELECT * FROM teams WHERE id = ?; SELECT * FROM players WHERE team = ?", [id,id],function(err, result) {
       if (err) reject(err)
-      else resolve(team)
+      else resolve(result)
     })
   })
 }
-function findByName(name) {
-  return new Promise ((resolve, reject) =>{
-    Team.findOne({ name: name }, function(err, team) {
-      if (err) reject(err)
-      else {
-        resolve(team)
-      }
-    })
-  })
-}
+
 function findByManager(manager) {
   return new Promise ((resolve, reject) =>{
-    Team.find({ manager: manager }, function(err, teams) {
+    con.query("SELECT * FROM teams WHERE manager = ?", manager,function(err, teams) {
       if (err) reject(err)
       else {
         resolve(teams)
@@ -28,67 +19,33 @@ function findByManager(manager) {
     })
   })
 }
-function findAll() {
+
+function findByCompetition(id) {
   return new Promise ((resolve, reject) =>{
-    Team.find({}, (err, teams) => {
+    con.query("SELECT * FROM teams WHERE competition = ?", id,function(err, teams) {
       if (err) reject(err)
-      else resolve(teams)
-    })
-  })
-}
-function saveTeam(teamToSave) {
-  return new Promise ((resolve, reject) =>{ 
-    teamToSave.save((err) => {
-      if (err) reject(err)
-      else resolve(teamToSave)
-    })
-  })
-}
-function findTeamByIdAndUpdatePlayer(teamId, playerId) {
-  return new Promise ((resolve, reject) =>{
-    Team.findByIdAndUpdate(teamId,{ "$push": {"players": playerId}}, function(err, team) {
-      if (err) reject(err)
-      else resolve(team)
-    })
-  })
-}
-function findTeamByIdAndDeletePlayer(teamId, playerId) {
-  return new Promise ((resolve, reject) =>{
-    Team.findByIdAndUpdate(teamId,{ "$pull": {"players": playerId}}, function(err, team) {
-      if (err) reject(err)
-      else resolve(team)
-    })
-  })
-}
-function findTeamByIdAndUpdateStats(teamId, stats) {
-  return new Promise ((resolve, reject) =>{
-    Team.findOneAndUpdate({_id:teamId},{ "$push": {"stats": stats}}, {new:true}, function(err, stats) {
-      if (err) reject(err)
-      else resolve(stats)
-    })
-  })
-}
-function findTeamByIdAndDeleteStats(teamId, stats) {
-  return new Promise ((resolve, reject) =>{
-    Team.findOneAndUpdate({_id:teamId},{ "$pullAll": {"stats": stats}}, function(err, stats) {
-      if (err) reject(err)
-      else resolve(stats)
+      else {
+        resolve(teams)
+      }
     })
   })
 }
 
-function findManyTeamsAndDeleteLastStats(teamStatsIds) {
-  return new Promise ((resolve, reject) =>{
-    Team.updateMany({stats:{ $in: teamStatsIds}}, { $pop: {stats: 1 } }, function(err, stats) {
+function saveTeam(teamToSave) {
+  return new Promise ((resolve, reject) =>{ 
+    con.query("INSERT INTO teams SET ?", teamToSave, function(err,result,fields) {
       if (err) reject(err)
-      else resolve(stats)
+      else {
+        teamToSave.id = result.insertId
+        resolve(teamToSave)
+      }
     })
   })
 }
 
 function updateTeam(id, team) {
   return new Promise ((resolve, reject) =>{
-    Team.updateOne({_id:id}, { $set: team }, function(err, team) {
+    con.query("UPDATE teams SET ? WHERE id = ?", [team, id], function(err,team) {
       if (err) reject(err)
       else resolve(team)
     })
@@ -97,7 +54,7 @@ function updateTeam(id, team) {
 
 function deleteTeam(id) {
   return new Promise ((resolve, reject) =>{
-    Team.deleteOne({_id:id}, function(err, team) {
+    con.query("DELETE FROM teams WHERE id = ?", id, function(err, team) {
       if (err) reject(err)
       else resolve(team)
     })
@@ -106,15 +63,9 @@ function deleteTeam(id) {
 
 module.exports = {
   findById,
-  findByName,
   findByManager,
-  findAll,
+  findByCompetition,
   saveTeam,
-  findTeamByIdAndUpdatePlayer,
-  findTeamByIdAndDeletePlayer,
-  findTeamByIdAndUpdateStats,
-  findTeamByIdAndDeleteStats,
-  findManyTeamsAndDeleteLastStats,
   updateTeam,
   deleteTeam
 }

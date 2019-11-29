@@ -1,48 +1,37 @@
-const Round = require('../models/round')
+const con = require('../config/mysql')
 
 function findById(id) {
-  Round.findById(id, (err, round) => {
-    if (err) throw err
-    else return round
+  return new Promise ((resolve, reject) =>{
+    con.query("SELECT * FROM rounds WHERE id = ?", id ,function(err, round) {
+      if (err) reject(err)
+      else resolve(round)
+    })
   })
 }
 
-function findAll() {
+function findByCompetition(id) {
   return new Promise ((resolve, reject) =>{
-    Round.find({}, (err, rounds) => {
+    con.query("SELECT * FROM rounds WHERE competition = ?", id ,function(err, rounds) {
       if (err) reject(err)
       else resolve(rounds)
     })
   })
 }
+
 function saveRound(round) {
   return new Promise ((resolve, reject) =>{
-    round.save((err) => {
+    con.query("INSERT INTO rounds SET ?", round, function(err,result,fields) {
       if (err) reject(err)
-      else resolve(round)
+      else {
+        round.id = result.insertId
+        resolve(round)
+      }
     })
   })
 }
-function updateRound(query, update, options) {
+function deleteRound(id) {
   return new Promise ((resolve, reject) =>{
-    Round.updateOne(query, update, options, function(err, round){
-      if (err) reject(err)
-      else resolve(round)
-    })
-  })
-}
-function deleteRound(query) {
-  return new Promise ((resolve, reject) =>{
-    Round.deleteOne(query, function(err, round){
-      if (err) reject(err)
-      else resolve(round)
-    })
-  })
-}
-
-function deleteCompetitionRounds(query) {
-  return new Promise ((resolve, reject) =>{
-    Round.deleteMany(query, function(err, round){
+    con.query("DELETE FROM rounds WHERE id = ?", id, function(err, result) {
       if (err) reject(err)
       else resolve(round)
     })
@@ -51,9 +40,7 @@ function deleteCompetitionRounds(query) {
 
 module.exports = {
   findById,
-  findAll,
-  updateRound,
+  findByCompetition,
   saveRound,
-  deleteRound,
-  deleteCompetitionRounds
+  deleteRound
 }

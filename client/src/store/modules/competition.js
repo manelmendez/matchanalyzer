@@ -5,7 +5,10 @@ export const competitionModule = {
   namespaced: true,
   state: {
     competitions: [],
-    competition: {},
+    competition: {
+      teams: []
+    },
+    rounds: [],
     selectedRound: null,
   },
   getters: {
@@ -13,15 +16,29 @@ export const competitionModule = {
       return state.competitions
     },
     competition: state => {
+      if (state.competition.rounds) { 
+        for (let i = 0; i < state.competition.rounds.length; i++) {
+          for (let j = 0; j < state.competition.rounds[i].matches.length; j++) {
+            for (let k = 0; k < state.competition.teams.length; k++) {
+              if (state.competition.teams[k].id = state.competition.rounds[i].matches.localTeam) {
+                state.competition.rounds[i].matches[j].localTeam = state.competition.teams[k]
+              }
+              if (state.competition.teams[k].id = state.competition.rounds[i].matches.localTeam) {
+                state.competition.rounds[i].matches[j].awayTeam = state.competition.teams[k]
+              }
+            }
+          }
+        }
+      }
       return state.competition
     },
     rounds: state => {
-      return state.competition.rounds
+      return state.rounds
     },
     selectedRound: state => {
       if (state.selectedRound==null) {
-        if (state.competition.rounds) {
-          return state.competition.rounds.length
+        if (state.rounds) {
+          return state.rounds.length
         }
       }
       else{
@@ -29,27 +46,27 @@ export const competitionModule = {
       }
     },
     matches: state => {
-      if (state.competition.rounds && state.competition.rounds.length != 0) {
-          return state.competition.rounds[state.selectedRound!=null ? state.selectedRound -1 : state.competition.rounds.length -1].matches
+      if (state.rounds && state.rounds.length != 0) {
+          return state.rounds[state.selectedRound!=null ? state.selectedRound -1 : state.rounds.length -1].matches
       }
       else {
         return []
       }
     },
     roundTeams: state => {
-      if (state.competition.rounds && state.competition.rounds.length != 0){
+      if (state.rounds && state.rounds.length != 0){
         let actualCompetition = {...state.competition}
-        let actualRound = {...actualCompetition.rounds[state.selectedRound!=null ? state.selectedRound -1 : actualCompetition.rounds.length -1]}
+        let actualRound = {...state.rounds[state.selectedRound!=null ? state.selectedRound -1 : state.rounds.length -1]}
         let actualRoundTeams = [...actualCompetition.teams]
         for (var i = 0; i < actualCompetition.teams.length; i++) {
           let found = false
           let j = 0
           while (j < actualRound.matches.length && !found) {
-            if(actualCompetition.teams[i]._id == actualRound.matches[j].localTeam._id || actualCompetition.teams[i]._id == actualRound.matches[j].awayTeam._id){
+            if(actualCompetition.teams[i].id == actualRound.matches[j].localTeam.id || actualCompetition.teams[i].id == actualRound.matches[j].awayTeam.id){
               found = true
               var index = actualRoundTeams.map(x => {
-                return x._id;
-              }).indexOf(actualCompetition.teams[i]._id);
+                return x.id;
+              }).indexOf(actualCompetition.teams[i].id);
               actualRoundTeams.splice(index, 1);
             }
             j++
@@ -119,7 +136,7 @@ export const competitionModule = {
             let duelMatches = []
             //buscar los partidos que esos 2 equipos hayan jugado entre ellos
             for (let y = 0; y < matches.length; y++) {
-              if ((matches[y].localTeam._id===a._id && matches[y].awayTeam._id===b._id) || (matches[y].localTeam._id===b._id && matches[y].awayTeam._id===a._id)) {
+              if ((matches[y].localTeam.id===a.id && matches[y].awayTeam.id===b.id) || (matches[y].localTeam.id===b.id && matches[y].awayTeam.id===a.id)) {
                 duelMatches.push(matches[y])
               }
             }
@@ -129,25 +146,25 @@ export const competitionModule = {
             let aLose=0
             let goalDifference=0
             for (let z = 0; z < duelMatches.length; z++) {
-              if(duelMatches[z].localTeam._id==a._id && Number(duelMatches[z].localTeamGoals)>Number(duelMatches[z].awayTeamGoals)){
+              if(duelMatches[z].localTeam.id==a.id && Number(duelMatches[z].localTeamGoals)>Number(duelMatches[z].awayTeamGoals)){
                 aWin++
                 goalDifference+=Number(duelMatches[z].localTeamGoals)-Number(duelMatches[z].awayTeamGoals)
               }
-              else if(duelMatches[z].awayTeam._id==a._id && Number(duelMatches[z].awayTeamGoals)>Number(duelMatches[z].localTeamGoals)){
+              else if(duelMatches[z].awayTeam.id==a.id && Number(duelMatches[z].awayTeamGoals)>Number(duelMatches[z].localTeamGoals)){
                 aWin++
                 goalDifference+=Number(duelMatches[z].awayTeamGoals)-Number(duelMatches[z].localTeamGoals)
               }
-              else if(duelMatches[z].localTeam._id==a._id && Number(duelMatches[z].localTeamGoals)==Number(duelMatches[z].awayTeamGoals)){
+              else if(duelMatches[z].localTeam.id==a.id && Number(duelMatches[z].localTeamGoals)==Number(duelMatches[z].awayTeamGoals)){
                 aDraw++
               }
-              else if(duelMatches[z].awayTeam._id==a._id && Number(duelMatches[z].awayTeamGoals)==Number(duelMatches[z].localTeamGoals)){
+              else if(duelMatches[z].awayTeam.id==a.id && Number(duelMatches[z].awayTeamGoals)==Number(duelMatches[z].localTeamGoals)){
                 aDraw++
               }
-              else if(duelMatches[z].localTeam._id==a._id && Number(duelMatches[z].localTeamGoals)<Number(duelMatches[z].awayTeamGoals)){
+              else if(duelMatches[z].localTeam.id==a.id && Number(duelMatches[z].localTeamGoals)<Number(duelMatches[z].awayTeamGoals)){
                 aLose++
                 goalDifference+=Number(duelMatches[z].localTeamGoals)-Number(duelMatches[z].awayTeamGoals)
               }
-              else if(duelMatches[z].awayTeam._id==a._id && Number(duelMatches[z].awayTeamGoals)<Number(duelMatches[z].localTeamGoals)){
+              else if(duelMatches[z].awayTeam.id==a.id && Number(duelMatches[z].awayTeamGoals)<Number(duelMatches[z].localTeamGoals)){
                 aLose++
                 goalDifference+=Number(duelMatches[z].awayTeamGoals)-Number(duelMatches[z].localTeamGoals)
               }
