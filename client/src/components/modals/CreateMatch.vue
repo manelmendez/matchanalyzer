@@ -66,7 +66,7 @@ export default {
     type: String,
     roundTeams: Array,
     match: Object,
-    round: String,
+    round: Number,
   },
   data() {
     return {
@@ -82,7 +82,7 @@ export default {
     checkTeam(team) {
       // console.log(team);
      
-      //   if (team._id == this.competition.myTeam._id) {
+      //   if (team.id == this.competition.myTeam.id) {
       //     console.log("HOLA");
           
       //               this.detailsModal=false
@@ -97,12 +97,11 @@ export default {
     confirm() {
       let stats = this.setStats(this.team, this.team2);
       let match = {
-        localTeam: this.team._id,
-        awayTeam: this.team2._id,
-        localTeamGoals: Number(this.localGoals),
-        awayTeamGoals: Number(this.awayGoals),
-        matchDay: Date.now(),
-        competition: this.competition._id,
+        localTeam: this.team.id,
+        awayTeam: this.team2.id,
+        // localTeamGoals: Number(this.localGoals),
+        // awayTeamGoals: Number(this.awayGoals),
+        competition: this.competition.id,
         round: this.round
       };
       let newMatch = {
@@ -110,7 +109,7 @@ export default {
         localTeamStats: stats.localTeamStats,
         awayTeamStats: stats.awayTeamStats
       };
-      this.$emit("confirm", newMatch);
+      this.$emit("confirm", match);
     },
     edit() {
       let stats = this.setStats(this.team, this.team2);
@@ -130,7 +129,7 @@ export default {
 
       if (Number(this.localGoals) > Number(this.awayGoals)) {
         if (this.type == "edit") {
-          localTeamStats._id = team1.stats[team1.stats.length - 1];
+          localTeamStats.id = team1.stats[team1.stats.length - 1];
         }
         localTeamStats.gamesPlayed = 1;
         localTeamStats.homeGamesPlayed = 1;
@@ -154,7 +153,7 @@ export default {
         localTeamStats.homeAgainstGoals = Number(this.awayGoals);
         localTeamStats.awayAgainstGoals = 0;
         if (this.type == "edit") {
-          awayTeamStats._id = team2.stats[team2.stats.length - 1];
+          awayTeamStats.id = team2.stats[team2.stats.length - 1];
         }
         awayTeamStats.gamesPlayed = 1;
         awayTeamStats.homeGamesPlayed = 0;
@@ -179,7 +178,7 @@ export default {
         awayTeamStats.awayAgainstGoals = Number(this.localGoals);
       } else if (Number(this.localGoals) == Number(this.awayGoals)) {
         if (this.type == "edit") {
-          localTeamStats._id = team1.stats[team1.stats.length - 1];
+          localTeamStats.id = team1.stats[team1.stats.length - 1];
         }
         localTeamStats.gamesPlayed = 1;
         localTeamStats.homeGamesPlayed = 1;
@@ -203,7 +202,7 @@ export default {
         localTeamStats.homeAgainstGoals = Number(this.awayGoals);
         localTeamStats.awayAgainstGoals = 0;
         if (this.type == "edit") {
-          awayTeamStats._id = team2.stats[team2.stats.length - 1];
+          awayTeamStats.id = team2.stats[team2.stats.length - 1];
         }
         awayTeamStats.gamesPlayed = 1;
         awayTeamStats.homeGamesPlayed = 0;
@@ -228,7 +227,7 @@ export default {
         awayTeamStats.awayAgainstGoals = Number(this.localGoals);
       } else if (Number(this.localGoals) < Number(this.awayGoals)) {
         if (this.type == "edit") {
-          localTeamStats._id = team1.stats[team1.stats.length - 1];
+          localTeamStats.id = team1.stats[team1.stats.length - 1];
         }
         localTeamStats.gamesPlayed = 1;
         localTeamStats.homeGamesPlayed = 1;
@@ -252,7 +251,7 @@ export default {
         localTeamStats.homeAgainstGoals = Number(this.awayGoals);
         localTeamStats.awayAgainstGoals = 0;
         if (this.type == "edit") {
-          awayTeamStats._id = team2.stats[team2.stats.length - 1];
+          awayTeamStats.id = team2.stats[team2.stats.length - 1];
         }
         awayTeamStats.gamesPlayed = 1;
         awayTeamStats.homeGamesPlayed = 0;

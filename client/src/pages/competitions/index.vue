@@ -6,11 +6,11 @@
     <v-list v-else>
       <v-list-item
         v-for="competition in this.competitions"
-        :key="competition._id"
-        @click="goTo(competition._id)"
+        :key="competition.id"
+        @click="goTo(competition.id)"
       >
         <v-list-item-content>
-          <v-list-item-title v-text="(competition.myTeam ? competition.myTeam.name : 'Equipo Borrado') + ' - ' + competition.discipline + ' - ' + competition.category + ' - ' + competition.name"></v-list-item-title>
+          <v-list-item-title v-text="competition.name + ' - ' + competition.discipline + ' - ' + competition.category + ' - ' + competition.season"></v-list-item-title>
         </v-list-item-content>
         <v-list-item-action>
           <v-tooltip top>
@@ -25,7 +25,7 @@
         <v-list-item-action>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-            <v-btn text icon color="red lighten-2" v-on="on" @click.stop="deletingCompetition=competition._id ,deleteDialog=true">
+            <v-btn text icon color="red lighten-2" v-on="on" @click.stop="deletingCompetition=competition.id ,deleteDialog=true">
               <v-icon size="18">delete</v-icon>
             </v-btn>
             </template>
@@ -86,7 +86,7 @@ export default {
         })
       },
       confirmCreate(){        
-        this.getUserCompetitions(this.user._id)
+        this.getUserCompetitions(this.user.id)
         this.dialog = false
       },
       deleteCompetitionFunction(){
@@ -118,8 +118,8 @@ export default {
     },
     created() {
       //do something after creating vue instance
-      this.getUserCompetitions(this.user._id)
-      this.getUserTeams(this.user._id)
+      this.getUserCompetitions(this.user.id)
+      this.getUserTeams(this.user.id)
     }
   }
 </script>

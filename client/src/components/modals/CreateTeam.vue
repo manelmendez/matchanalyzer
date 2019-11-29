@@ -85,7 +85,7 @@ export default {
             let body = {
                 season: this.season,
                 name: this.name,
-                manager: this.user._id
+                manager: this.user.id
             }
             if (response.status == 200) {
               body.avatar = response.data
@@ -102,7 +102,7 @@ export default {
               season: this.season,
               name: this.name,
               avatar: null,
-              manager: this.user._id
+              manager: this.user.id
           }
           this.addTeam(body).then((response) => {
             if(response.status === 200) {
@@ -118,12 +118,10 @@ export default {
           this.uploadTeamImage(fd).then((response) => {
             console.log(response);
             let body = {
-              team: {
-                season: this.season,
-                name: this.name,
-                avatar: null
-              },
-              competition: this.competition._id
+              season: this.season,
+              name: this.name,
+              avatar: null,
+              competition: this.competition.id
             }
             if (response.status == 200) {
               body.team.avatar = response.data
@@ -137,12 +135,10 @@ export default {
         }
         else {
           let body = {
-            team: {
-              season: this.season,
-              name: this.name,
-              avatar: null
-            },
-            competition: this.competition._id
+            season: this.season,
+            name: this.name,
+            avatar: null,
+            competition: this.competition.id
           }
           this.addNoManagerTeam(body).then((response) => {
             if(response.status === 200) {
@@ -160,16 +156,16 @@ export default {
           let body = {
             team: {
               season: this.season,
-              name: this.name
+              name: this.name,
+              competition: this.competition.id
             },
-            competition: this.competition._id
           }
           if (response.status == 200) {
             body.team.avatar = response.data
           }
           let data = {
             body: body,
-            id: this.team._id
+            id: this.team.id
           }
           this.updateTeam(data).then((response) => {
             if(response.status === 200) {
@@ -182,13 +178,13 @@ export default {
         let body = {
           team: {
             season: this.season,
-            name: this.name
+            name: this.name,
+            competition: this.competition.id
           },
-          competition: this.competition._id
         }
         let data = {
           body: body,
-          id: this.team._id
+          id: this.team.id
         }
         this.updateTeam(data).then((response) => {
           console.log(response);

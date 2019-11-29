@@ -44,13 +44,10 @@ export const getUserTeams = ({commit}, userId) => {
 
 export const addNoManagerTeam = ({commit}, body) => {
   console.log("ACTION -- addNoManagerTeam")
-    console.log(body);
-
   return axios.post('addNoManagerTeam', body)
     .then(response => {
-      console.log(response.data);
       if(response.status === 200) {
-        // ESTA USANDO UNA MUTATION DE COMPETITION DESDE TEAM por eso el root:true
+        // ESTA USANDO UNA MUTATION DE COMPETITION DESDE TEAM por eso el root:true        
         commit('competition/'+types.ADD_TEAM_TO_COMPETITION, response.data.team, { root: true })
       }      
       return response
@@ -107,10 +104,8 @@ export const addPlayer = ({commit}, body) => {
   console.log("ACTION -- addPlayer")
   return axios.post('addPlayer', body)
     .then(response => {
-      if(response.status === 200) {
-        console.log(response);
-        
-        commit(types.ADD_PLAYER, response.data)
+      if(response.status === 200) {        
+        commit(types.ADD_PLAYER, response.data.player)
       }
       return response
     })
@@ -128,11 +123,9 @@ export const getPlayerByTeamId = ({commit}, id) => {
 }
 export const updatePlayer = ({commit}, body) => {
   console.log("ACTION -- updatePlayer")  
-  return axios.put('updatePlayer/'+body._id, body)
-  .then(response => {
-    if(response.status === 200) {      
-      commit(types.UPDATE_PLAYER, response.data.player)
-    }
+  return axios.put('updatePlayer/'+body.id, body)
+  .then(response => {    
+    commit(types.UPDATE_PLAYER, response.data.player)
     return response
   })
   .catch((err) => {
@@ -144,7 +137,6 @@ export const deletePlayer = ({commit}, id) => {
   return axios.delete('deletePlayer/'+id)
   .then(response => {
     if(response.status === 200) {
-      console.log(response.data);
       commit(types.DELETE_PLAYER, id)
     }
     return response

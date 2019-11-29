@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid v-if="competition.rounds && selectedRound!=null">
+  <v-container fluid>
     <v-progress-linear :indeterminate="true" v-if="loading"></v-progress-linear>
-    <v-row v-if="competition.rounds.length == 0">
+    <v-row v-if="rounds.length == 0">
       <v-card class="results">
         <v-card-text class="text-center">
           Aun no hay ninguna jornada disputada
@@ -19,7 +19,7 @@
             <v-col md="3">
               <v-select
                 small
-                :items="competition.rounds"
+                :items="rounds"
                 item-text="name"
                 required
                 v-model="round"
@@ -35,7 +35,7 @@
               </v-btn>
               <v-btn
                 small
-                v-if="round._id == competition.rounds[competition.rounds.length -1]._id"
+                v-if="round.id == rounds[rounds.length -1].id"
                 rounded
                 color="red lighten-2"
                 class="white--text resultBtn"
@@ -47,13 +47,13 @@
             </v-col>
           </v-row>
         </v-card-title>
-        <v-card-text class="text-center" v-if="competition.rounds">
-          <v-col v-if="competition.rounds[selectedRound -1].matches.length == 0">
+        <v-card-text class="text-center" v-if="rounds">
+          <v-col v-if="rounds[selectedRound -1].matches.length == 0">
             Aún no has añadido partidos en esta jornada
           </v-col>
           <v-col v-else>
             <v-container>
-              <RoundMatch v-for="match in matches" :key="match._id" :match="match" @loading="loading"></RoundMatch>
+              <RoundMatch v-for="match in matches" :key="match.id" :match="match" @loading="loading"></RoundMatch>
             </v-container>
           </v-col>
           <br>
@@ -62,7 +62,7 @@
           </v-btn>
         </v-card-text>
       </v-card>
-      <CreateMatch v-if="roundDialog" :show="roundDialog" type="new" :roundTeams="roundTeams" :round="competition.rounds[selectedRound -1]._id" @close="roundDialog=!roundDialog" @confirm="createMatch"></CreateMatch>
+      <CreateMatch v-if="roundDialog" :show="roundDialog" type="new" :roundTeams="roundTeams" :round="rounds[selectedRound -1].id" @close="roundDialog=!roundDialog" @confirm="createMatch"></CreateMatch>
       <DeleteDialog :show="deleteDialog" type="jornada" @close="deleteDialog=!deleteDialog" @delete="deleteRoundFunction"></DeleteDialog>
     </v-row>
   </v-container>
@@ -88,28 +88,28 @@ export default {
   methods: {
     createRound() {
       let body = {
-        round: {
-          name: "Jornada " + (this.competition.rounds.length + 1)
-        },
-        competition: this.competition._id
+        name: "Jornada " + (this.rounds.length + 1),
+        competition: this.competition.id
       };
       this.addRound(body)
     },
     createMatch(newMatch) {
-      let body = {
-        match: newMatch.match,
-        localTeamStats: newMatch.localTeamStats,
-        awayTeamStats: newMatch.awayTeamStats
-      }
-      if (newMatch.match.localTeam == newMatch.match.awayTeam) {
+      console.log(newMatch);
+      
+      // let body = {
+      //   match: newMatch.match,
+      //   localTeamStats: newMatch.localTeamStats,
+      //   awayTeamStats: newMatch.awayTeamStats
+      // }
+      if (newMatch.localTeam == newMatch.awayTeam) {
         alert("No puedes seleccionar el mismo equipo en ambos lados");
       }
-      // else if (this.team._id == this.competition.myTeam._id || this.team2._id == this.competition.myTeam._id) {
+      // else if (this.team.id == this.competition.myTeam.id || this.team2.id == this.competition.myTeam.id) {
       //   alert("Uno de ellos es tu equipo, rellena las estadísticas")
       // }
       else {
         this.loading=true
-        this.addMatch(body).then(response => {
+        this.addMatch(newMatch).then(response => {
           if (response.status == 200) {
             this.roundDialog = false
             this.loading = false
@@ -139,7 +139,7 @@ export default {
         round: this.round
       };
       let data = {
-        id: this.round._id,
+        id: this.round.id,
         body: body
       };
       this.loading = true
@@ -164,14 +164,14 @@ export default {
     ])
   },
   computed: {
-    ...mapGetters("competition",["competition", "roundTeams", "selectedRound", "matches"]),
+    ...mapGetters("competition",["competition", "roundTeams", "selectedRound", "matches", "rounds"]),
     round: {
       get: function() {
-        return this.competition.rounds[this.selectedRound - 1];
+        return this.rounds[this.selectedRound - 1];
       },
       // setter
       set: function(newValue) {
-        return this.competition.rounds[this.selectedRound - 1];
+        return this.rounds[this.selectedRound - 1];
       }
     }
   }

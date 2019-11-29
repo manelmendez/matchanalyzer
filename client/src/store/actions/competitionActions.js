@@ -18,8 +18,10 @@ export const addCompetition = ({commit}, body) => {
 export const getCompetition = ({commit}, id) => {
   console.log("ACTION -- getCompetition")
   return axios.get('getCompetition/'+id)
-    .then(response => {
-      let competition = response.data.competition
+    .then(response => {     
+      console.log(response);
+       
+      let competition = response.data.competition      
       commit(types.GET_COMPETITION, competition)
     })
 }
@@ -119,7 +121,7 @@ export const deleteRound = ({commit}, data) => {
 
 export const updateCompetition = ({commit}, data) => {
   console.log("ACTION -- updateCompetition")
-  return axios.put('updateCompetition/'+data._id, data).then(response => {
+  return axios.put('updateCompetition/'+data.id, data).then(response => {
     if(response.status === 200) {
       commit(types.UPDATE_COMPETITION, response.data)
     }
@@ -134,7 +136,7 @@ export const deleteCompetition = ({commit}, data) => {
   console.log(data);
   return axios.delete('deleteCompetition/'+data).then(response => {
     if(response.status === 200) {
-      commit(types.DELETE_COMPETITION, response.data._id)
+      commit(types.DELETE_COMPETITION, response.data.id)
     }
     return response
   }).catch((err) => {

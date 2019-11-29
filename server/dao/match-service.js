@@ -1,33 +1,37 @@
-const Match = require('../models/match')
+const con = require('../config/mysql')
 
-function findById(id) {
+function findByCompetition(ids) {
   return new Promise ((resolve, reject) =>{
-    Match.findById(id, function(err, match) {
+    con.query("SELECT * FROM matches WHERE competition = ?", ids ,function(err, match) {
       if (err) reject(err)
       else resolve(match)
     })
   })
 }
 
-function findAll() {
+function findByRound(ids) {
   return new Promise ((resolve, reject) =>{
-    Match.find({}, (err, matchs) => {
+    con.query("SELECT * FROM matches WHERE round = ?", ids ,function(err, match) {
       if (err) reject(err)
-      else resolve(matchs)
+      else resolve(match)
     })
   })
 }
+
 function saveMatch(match) {
   return new Promise ((resolve, reject) =>{
-    match.save((err) => {
+    con.query("INSERT INTO matches SET ?", match, function(err,result,fields) {
       if (err) reject(err)
-      else resolve(match)
+      else {
+        match.id = result.insertId
+        resolve(match)
+      }
     })
   })
 }
-function updateMatch(query, update, options) {
+function updateMatch(match, id) {
   return new Promise ((resolve, reject) =>{
-    Match.findOneAndUpdate(query, update, options, function(err, match){
+    con.query("UPDATE match SET ? WHERE id = ?", [match, id], function(err,result) {
       if (err) reject(err)
       else resolve(match)
     })
@@ -35,7 +39,7 @@ function updateMatch(query, update, options) {
 }
 function deleteMatch (id) {
   return new Promise ((resolve, reject) =>{ 
-    Match.findOneAndRemove({_id:id}, function(err, match, result) {
+    con.query("DELETE FROM matches WHERE id = ?", id, function(err,result) {
       if (err) reject(err)
       else resolve(match)
     })
@@ -43,8 +47,8 @@ function deleteMatch (id) {
 }
 
 module.exports = {
-  findById,
-  findAll,
+  findByCompetition,
+  findByRound,
   saveMatch,
   updateMatch,
   deleteMatch

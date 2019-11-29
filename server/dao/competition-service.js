@@ -1,45 +1,18 @@
-const Competition = require('../models/competition')
+const con = require('../config/mysql')
 
 function findById(id) {
   return new Promise ((resolve, reject) =>{
-    Competition.findById(id).populate([{
-      path:'teams',
-      populate: {
-        path: 'stats'
-      }
-    },
-    {
-      path:'myTeam',
-      populate: {
-        path:'players'
-      }
-    },
-    {
-      path: 'rounds',
-      populate: {
-        path: 'matches',
-        populate: [{
-          path: 'localTeam',
-          populate: {
-            path: 'players'
-          }
-        },
-        {
-          path: 'awayTeam',
-          populate: {
-            path: 'players'
-          }
-        }]
-      }
-    }]).exec((err, competition) => {
+    con.query("SELECT * FROM competitions WHERE id = ?", id ,function(err, result) {
       if (err) reject(err)
-      else resolve(competition)
+      else {        
+        resolve(result)
+      }
     })
   })
 }
 function findByName(name) {
   return new Promise ((resolve, reject) =>{
-    Competition.findOne({name:name}, function(err, competition) {
+    con.query("SELECT * FROM competitions WHERE name = ?", name ,function(err, competition) {
       if (err) reject(err)
       else resolve(competition)
     })
@@ -47,7 +20,7 @@ function findByName(name) {
 }
 function findByManager(id) {
   return new Promise ((resolve, reject) => {
-    Competition.find({manager: id}).populate('myTeam').exec((err, competition) => {
+    con.query("SELECT * FROM competitions WHERE manager = ?;", id ,function(err, competition) {
       if (err) reject(err)
       else resolve(competition)
     })
@@ -55,7 +28,7 @@ function findByManager(id) {
 }
 function findAll() {
   return new Promise ((resolve, reject) =>{
-    Competition.find({}, (err, competitions) => {
+    con.query("SELECT * FROM competitions",function(err, competitions) {
       if (err) reject(err)
       else resolve(competitions)
     })
@@ -63,15 +36,18 @@ function findAll() {
 }
 function saveCompetition(competition) {
   return new Promise ((resolve, reject) =>{
-    competition.save((err) => {
+    con.query("INSERT INTO competitions SET ?", competition, function(err,result,fields) {
       if (err) reject(err)
-      else resolve(competition)
+      else {
+        competition.id = result.insertId
+        resolve(competition)
+      }
     })
   })
 }
-function updateCompetition(query, update, options) {
+function updateCompetition(competition, id) {
   return new Promise ((resolve, reject) =>{
-    Competition.findOneAndUpdate(query, update, options, function(err, competition){
+    con.query("UPDATE competitions SET ? WHERE id = ?", [competition, id], function(err,result) {
       if (err) reject(err)
       else resolve(competition)
     })
@@ -79,9 +55,9 @@ function updateCompetition(query, update, options) {
 }
 function deleteCompetition(id) {
   return new Promise ((resolve, reject) =>{ 
-    Competition.findOneAndRemove({_id:id}, function(err, competition, result) {
+    con.query("DELETE FROM competitions WHERE id = ?", id, function(err, result) {
       if (err) reject(err)
-      else resolve(competition)
+      else resolve(result)
     })
   })
 }

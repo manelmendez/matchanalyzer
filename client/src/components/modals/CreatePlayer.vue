@@ -87,12 +87,13 @@ export default {
     },
     editPlayer() {
       let player = {
-        _id: this.player._id,
+        id: this.player.id,
         name: this.name,
         position: this.position,
-        year: this.year
+        year: this.year,
+        team: this.$route.params.id
       }      
-      this.updatePlayer(player).then((value) => {
+      this.updatePlayer(player).then((value) => {        
         this.$emit('confirm') 
       })
     },

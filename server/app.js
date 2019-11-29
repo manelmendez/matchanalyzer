@@ -35,11 +35,11 @@ app.use(history())
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 // hay que decirle a express en que ruta estan las vistas (aunque solo hay una que es index.html en la carpeta client)
-app.set('views', path.join(__dirname, '../client/dist'));
+// app.set('views', path.join(__dirname, '../client/dist'));
 // aquí le decimos que el engine que usaremos es html y que use EJS para renderizarlo
-app.engine('html', require('ejs').renderFile);
+// app.engine('html', require('ejs').renderFile);
 // ahora seteamos html como view engine de express
-app.set('view engine', 'html');
+// app.set('view engine', 'html');
 // aquí le decimos que en cualquier ruta nos renderice el index.html que es la base de todos los componentes
 // app.get('*', (request, response) => {
 //    response.render('index')

@@ -9,29 +9,33 @@ export const competitionMutations = {
     state.competition = competition
   },
 
+  [types.GET_COMPETITION_ROUNDS] (state, rounds) {
+    state.rounds = rounds
+  },
+
   [types.GET_COMPETITIONS] (state, competitions) {
     state.competitions = competitions
   },
 
   [types.ADD_ROUND] (state, round) {
-    state.competition.rounds = [...state.competition.rounds, round]
-    state.selectedRound = Number(state.competition.rounds.length)
+    state.rounds = [...state.rounds, round]
+    state.selectedRound = Number(state.rounds.length)
   },
 
   [types.ADD_MATCH] (state, data) {  
     data.match.localTeam.stats.push(data.localTeamStats)
     data.match.awayTeam.stats.push(data.awayTeamStats)
-    for (var i = 0; i < state.competition.rounds.length; i++) {      
-      if (state.competition.rounds[i]._id == data.match.round) {
-        state.competition.rounds[i].matches = [...state.competition.rounds[i].matches, data.match]
+    for (var i = 0; i < state.rounds.length; i++) {      
+      if (state.rounds[i].id == data.match.round) {
+        state.rounds[i].matches = [...state.rounds[i].matches, data.match]
       }
     }
-    for (let x = 0; x < state.competition.teams.length; x++) {
-      if (state.competition.teams[x]._id == data.match.localTeam._id) {
-        state.competition.teams[x].stats = [...state.competition.teams[x].stats, data.localTeamStats]        
+    for (let x = 0; x < state.teams.length; x++) {
+      if (state.teams[x].id == data.match.localTeam.id) {
+        state.teams[x].stats = [...state.teams[x].stats, data.localTeamStats]        
       }
-      else if (state.competition.teams[x]._id == data.match.awayTeam._id) {
-        state.competition.teams[x].stats = [...state.competition.teams[x].stats, data.awayTeamStats]
+      else if (state.teams[x].id == data.match.awayTeam.id) {
+        state.teams[x].stats = [...state.teams[x].stats, data.awayTeamStats]
       }
     }
   },
@@ -48,20 +52,20 @@ export const competitionMutations = {
     // let round = null
     // let match = null
     // for (let a = 0; a < data.match.localTeam.stats.length; a++) {
-    //   if (data.match.localTeam.stats[a]._id == updatedLocalStats._id) {
+    //   if (data.match.localTeam.stats[a].id == updatedLocalStats.id) {
     //     data.match.localTeam.stats[a] = updatedLocalStats
     //   }
     // }
     // for (let b = 0; b < data.match.awayTeam.stats.length; b++) {
-    //   if (data.match.awayTeam.stats[b]._id == updatedAwayStats._id) {
+    //   if (data.match.awayTeam.stats[b].id == updatedAwayStats.id) {
     //     data.match.awayTeam.stats[b] = updatedAwayStats
     //   }
     // }
     // for (var i = 0; i < state.competition.rounds.length; i++) {
-    //   if (state.competition.rounds[i]._id == updatedMatch.round) {  
+    //   if (state.competition.rounds[i].id == updatedMatch.round) {  
     //     round = i      
     //     for (let j = 0; j < state.competition.rounds[i].matches.length; j++) {
-    //       if (state.competition.rounds[i].matches[j]._id == updatedMatch._id) {
+    //       if (state.competition.rounds[i].matches[j].id == updatedMatch.id) {
     //         // EN PRINCIPIO EL INDEXOF() ES LO MISMO QUE LA J
     //         let index = state.competition.rounds[i].matches.indexOf(state.competition.rounds[i].matches[j])   
     //         match = index         
@@ -71,17 +75,17 @@ export const competitionMutations = {
     //   }
     // }    
     // for (let x = 0; x < state.competition.teams.length; x++) {  
-    //   if (state.competition.teams[x]._id == state.competition.rounds[round].matches[match].localTeam._id) {
+    //   if (state.competition.teams[x].id == state.competition.rounds[round].matches[match].localTeam.id) {
     //     for (let y = 0; y < state.competition.teams[x].stats.length; y++) {
 
-    //       if (state.competition.teams[x].stats[y]._id == updatedLocalStats._id) {
+    //       if (state.competition.teams[x].stats[y].id == updatedLocalStats.id) {
     //         state.competition.teams[x].stats[y] = updatedLocalStats
     //       }
     //     }
     //   }     
-    //   else if (state.competition.teams[x]._id == state.competition.rounds[round].matches[match].awayTeam._id) {
+    //   else if (state.competition.teams[x].id == state.competition.rounds[round].matches[match].awayTeam.id) {
     //     for (let z = 0; z < state.competition.teams[x].stats.length; z++) {  
-    //       if (state.competition.teams[x].stats[z]._id == updatedAwayStats._id) {
+    //       if (state.competition.teams[x].stats[z].id == updatedAwayStats.id) {
     //         state.competition.teams[x].stats[z] = updatedAwayStats
     //       }
     //     }
@@ -96,9 +100,9 @@ export const competitionMutations = {
   [types.DELETE_MATCH] (state, data) {    
     //eliminar partido de la jornada
     for (let i = 0; i < state.competition.rounds.length; i++) {
-      if (state.competition.rounds[i]._id == data.body.roundId) {
+      if (state.competition.rounds[i].id == data.body.roundId) {
         for (let x = 0; x < state.competition.rounds[i].matches.length; x++) {
-          if(state.competition.rounds[i].matches[x]._id == data.id){
+          if(state.competition.rounds[i].matches[x].id == data.id){
             state.competition.rounds[i].matches.splice(x,1)
           }
         }
@@ -106,16 +110,16 @@ export const competitionMutations = {
     }
     //eliminar stats de ambos equipos
     for (let x = 0; x < state.competition.teams.length; x++) {  
-      if (state.competition.teams[x]._id == data.body.localTeamId) {
+      if (state.competition.teams[x].id == data.body.localTeamId) {
         for (let y = 0; y < state.competition.teams[x].stats.length; y++) {
-          if (state.competition.teams[x].stats[y]._id == data.body.localTeamStatsId) {
+          if (state.competition.teams[x].stats[y].id == data.body.localTeamStatsId) {
             state.competition.teams[x].stats.splice(y,1)
           }
         }
       }     
-      else if (state.competition.teams[x]._id == data.body.awayTeamId) {
+      else if (state.competition.teams[x].id == data.body.awayTeamId) {
         for (let z = 0; z < state.competition.teams[x].stats.length; z++) {  
-          if (state.competition.teams[x].stats[z]._id == data.body.awayTeamStatsId) {
+          if (state.competition.teams[x].stats[z].id == data.body.awayTeamStatsId) {
             state.competition.teams[x].stats.splice(z,1)
           }
         }
@@ -129,11 +133,11 @@ export const competitionMutations = {
   },
 
   [types.UPDATE_COMPETITION] (state, competition) {
-    let previousCompetition = state.competitions.find(a => a._id === competition._id)    
+    let previousCompetition = state.competitions.find(a => a.id === competition.id)    
     Object.assign(previousCompetition, competition)
   },
   [types.DELETE_COMPETITION] (state, competitionId) {
-    let index = state.competitions.findIndex(item => item._id == competitionId)
+    let index = state.competitions.findIndex(item => item.id == competitionId)
     state.competitions.splice(index, 1)
   },
 }

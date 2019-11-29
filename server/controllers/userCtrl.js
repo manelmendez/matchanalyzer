@@ -1,4 +1,3 @@
-const User = require('../models/user')
 const tokenServices = require('../services/token-services')
 const bcrypt = require('bcrypt-nodejs')
 const userService = require('../dao/user-service')
@@ -7,26 +6,23 @@ const userService = require('../dao/user-service')
  *
  */
 function signUp(req, res) {
-  console.log(req.body)
-  // getting data
-  let user = req.body  
+  const user = {
+    email: req.body.email,
+    name: req.body.name,
+    password: req.body.password,
+    provider: 'local',
+    signupDate: new Date(),
+    lastLogin: new Date()
+  }
   console.log("Registrando usuario con nombre: " + user.name + "...");  
-  userService.findByEmail(user.email).then((userFound) => {
-    if (userFound) {
-      console.log("Este email ya está registrado, no se puede continuar.")
-      return res.status(409).send({
-        message: `Error. Email ya registrado`
-      })
-    }
-    else{
-      console.log("No existe usuario con ese email, registrando...")
+  console.log(req.body)
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return err
+
+    bcrypt.hash(user.password, salt, null, (err, hash) => {
+      if (err) return err
+      user.password = hash
       // saving user in DB
-      const user = new User({
-        email: req.body.email,
-        name: req.body.name,
-        password: req.body.password,
-        provider: 'local'
-      })
       userService.saveUser(user).then((userSaved) => {
         delete user['password']
         return res.status(200).send({
@@ -36,16 +32,17 @@ function signUp(req, res) {
         })
       })
       .catch((err) => {
+        if (err.code == "ER_DUP_ENTRY") {
+          console.log("Este usuario ya existe");
+          return res.status(403).send({
+            message: `Este usuario ya existe`
+          })
+        }
+        console.log("Error al crear usuario");
         return res.status(500).send({
-          message: `Error al crear el usuario: ${err}`
+          message: `Error al registrar el usuario: ${err}`
         })
       })
-    }
-  })
-  .catch((err)=>{
-    console.log(`Error: ${err}`)
-    return res.status(500).send({
-      message: `Error al registrar usuario: ${err}`
     })
   })
 }
@@ -61,12 +58,13 @@ function signIn(req, res) {
       // check if password is OK
       if (bcrypt.compareSync(req.body.password, userFound.password)) {
         // setting loginDate on DB
-        User.loginDate(userFound.id, function(err, userLoged) {
-          if(err) return console.log(err);
-          console.log(`${userFound.email} se ha logueado correctamente`)
-        });
+        // User.loginDate(userFound.id, function(err, userLoged) {
+        //   if(err) return console.log(err);
+        //   console.log(`${userFound.email} se ha logueado correctamente`)
+        // });        
+        userFound.lastLogin = new Date()
+        userService.updateUser(userFound ,userFound.id)
         delete userFound['password']
-        console.log(userFound);
         res.status(200).send({
           message: 'Te has logueado correctamente',
           token: tokenServices.createToken(userFound),

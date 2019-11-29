@@ -1,5 +1,5 @@
 <template>
-  <v-col v-if="team._id != competition.myTeam._id">
+  <v-col v-if="team.manager==null">
     Añadir stats del equipo rival se implementará en el futuro
   </v-col>
   <v-col v-else>

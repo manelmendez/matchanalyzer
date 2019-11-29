@@ -26,10 +26,10 @@ export const teamMutations = {
   },
 
   [types.DELETE_TEAM] (state, teamId) {    
-    let index = state.myTeams.findIndex(item => item._id == teamId)
+    let index = state.myTeams.findIndex(item => item.id == teamId)
     state.myTeams.splice(index, 1)
 
-    let index2 = state.teams.findIndex(item => item._id == teamId)
+    let index2 = state.teams.findIndex(item => item.id == teamId)
     state.teams.splice(index2, 1)
   },
 
@@ -42,12 +42,12 @@ export const teamMutations = {
   },
 
   [types.UPDATE_PLAYER] (state, player) {
-    let previousPlayer = state.team.players.find(a => a._id === player._id)    
+    let previousPlayer = state.team.players.find(a => a.id === player.id)    
     Object.assign(previousPlayer, player)
   },
 
   [types.DELETE_PLAYER] (state, playerId) {
-    let index = state.team.players.findIndex(item => item._id == playerId)
+    let index = state.team.players.findIndex(item => item.id == playerId)
     state.team.players.splice(index, 1)
   },
 }

@@ -24,9 +24,9 @@
     "helmet": "latest",
     "jsonwebtoken": "latest",
     "moment": "latest",
-    "mongoose": "latest",
     "morgan": "latest",
     "multer": "latest",
+    "mysql": "latest",
     "nodemon": "latest"
   }
 }

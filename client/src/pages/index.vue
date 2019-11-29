@@ -8,7 +8,7 @@
         <v-list v-else>
           <v-list-item
             v-for="team in this.myTeams"
-            :key="team._id"
+            :key="team.id"
           >
             <v-list-item-content>
               <v-list-item-title v-text="team.name"></v-list-item-title>
@@ -23,7 +23,7 @@
         <v-list v-else>
           <v-list-item
             v-for="competition in this.competitions"
-            :key="competition._id"
+            :key="competition.id"
           >
             <v-list-item-content>
               <v-list-item-title v-text="competition.myTeam.name + ' - ' + competition.discipline + ' - ' + competition.category + ' - ' + competition.name"></v-list-item-title>
@@ -53,8 +53,8 @@ export default {
   },
   created() {
     //do something after creating vue instance
-    this.getUserCompetitions(this.user._id)
-    this.getUserTeams(this.user._id)
+    this.getUserCompetitions(this.user.id)
+    this.getUserTeams(this.user.id)
   }
 }
 </script>
