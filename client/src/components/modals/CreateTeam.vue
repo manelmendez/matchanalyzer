@@ -124,7 +124,7 @@ export default {
               competition: this.competition.id
             }
             if (response.status == 200) {
-              body.team.avatar = response.data
+              body.avatar = response.data
             }
             this.addNoManagerTeam(body).then((response) => {
               if(response.status === 200) {
@@ -157,7 +157,7 @@ export default {
             team: {
               season: this.season,
               name: this.name,
-              competition: this.competition.id
+              competition: this.team.competition
             },
           }
           if (response.status == 200) {
@@ -179,7 +179,7 @@ export default {
           team: {
             season: this.season,
             name: this.name,
-            competition: this.competition.id
+            competition: this.team.competition
           },
         }
         let data = {

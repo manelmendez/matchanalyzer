@@ -36,20 +36,23 @@ import constants from '../../../assets/constants/constants'
       constants: constants,
     }),
     methods: {
-      ...mapActions("competition",[
-        'getCompetition',
-        'getCompetitionRounds'
-      ])
+      ...mapActions({
+        getCompetition:'competition/getCompetition',
+        getCompetitionRounds:'competition/getCompetitionRounds',
+        getUserTeams:'team/getUserTeams',
+      })
     },
     computed: {
-      ...mapGetters("competition",[
-        'competition'
-      ])
+      ...mapGetters({
+        competition: 'competition/competition',
+        user: 'user/user'
+      })
     },
     created: async function() {
       //do something after creating vue instance
       await this.getCompetition(this.$route.params.id)
       await this.getCompetitionRounds(this.$route.params.id)
+      await this.getUserTeams(this.user.id)
     }
   }
 </script>

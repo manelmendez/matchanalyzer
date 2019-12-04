@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import login from './pages/login.vue'
 import index from './pages/index.vue'
+import error404 from './pages/error/404.vue'
 import teams from './pages/teams/index.vue'
 import team from './pages/teams/_id/index.vue'
 import competitionList from './pages/competitions/index.vue'
@@ -85,7 +86,7 @@ const router = new VueRouter({
     {
       path: '*',
       name: 'error',
-      component: index,
+      component: error404,
       meta: { requiresAuth: false, layout: "default" }
     },
   ]

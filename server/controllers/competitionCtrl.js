@@ -42,7 +42,7 @@ function getCompetition(req, res) {
     }
     else {
       console.log("No existe la competición.")
-      return res.status(401).send({
+      return res.status(404).send({
         message: 'No se ha encontrado la competición'
       })
     }

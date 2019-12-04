@@ -1,4 +1,6 @@
 const matchService = require('../dao/match-service')
+const goalService = require('../dao/goal-service')
+const assistService = require('../dao/assist-service')
 
 function getCompetitionMatches(req, res) {
   let competition = req.competition
@@ -27,7 +29,9 @@ function addMatch(req, res, next) {
   // getting data
   let match = {
     localTeam: req.body.localTeam,
+    localTeamGoals: req.body.localTeamGoals,
     awayTeam: req.body.awayTeam,
+    awayTeamGoals: req.body.awayTeamGoals,
     matchDay: new Date(),
     competition: req.body.competition,
     round: req.body.round
@@ -50,7 +54,9 @@ function updateMatch (req, res, next) {
   let id = req.params.id
   let match = {
     localTeam: req.body.localTeam,
+    localTeamGoals: req.body.localTeamGoals,
     awayTeam: req.body.awayTeam,
+    awayTeamGoals: req.body.awayTeamGoals,
     matchDay: req.body.matchDay,
     competition: req.body.match.competition,
     round: req.body.round
@@ -64,7 +70,7 @@ function updateMatch (req, res, next) {
   })
 }
 
-function deleteMatch (req, res, next) {
+function deleteMatch (req, res) {
   let matchId = req.params.id
   matchService.deleteMatch(matchId)
   .then((value) => {
@@ -76,6 +82,18 @@ function deleteMatch (req, res, next) {
   })
 }
 
+function addStats(req, res) {
+  let goals = req.body.goals
+  let substitutions = req.body.substitutions
+  let assists = req.body.assists
+  let cards = req.body.cards
+
+  goalService.saveGoal(goals).then(() => {
+    assistService.saveAssist(assists).then(() => {
+
+    })
+  })
+}
 module.exports = {
   getCompetitionMatches,
   addMatch,

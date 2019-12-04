@@ -135,15 +135,8 @@ export default {
     },
     
     deleteRoundFunction() {
-      let body = {
-        round: this.round
-      };
-      let data = {
-        id: this.round.id,
-        body: body
-      };
       this.loading = true
-      this.deleteRound(data).then(response => {
+      this.deleteRound(this.round.id).then(response => {
         if (response.status == 200) {
           this.getCompetition(this.$route.params.id);
           this.deleteDialog=false

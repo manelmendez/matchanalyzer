@@ -16,20 +16,7 @@ export const competitionModule = {
       return state.competitions
     },
     competition: state => {
-      if (state.competition.rounds) { 
-        for (let i = 0; i < state.competition.rounds.length; i++) {
-          for (let j = 0; j < state.competition.rounds[i].matches.length; j++) {
-            for (let k = 0; k < state.competition.teams.length; k++) {
-              if (state.competition.teams[k].id = state.competition.rounds[i].matches.localTeam) {
-                state.competition.rounds[i].matches[j].localTeam = state.competition.teams[k]
-              }
-              if (state.competition.teams[k].id = state.competition.rounds[i].matches.localTeam) {
-                state.competition.rounds[i].matches[j].awayTeam = state.competition.teams[k]
-              }
-            }
-          }
-        }
-      }
+      state.competitions.rounds = state.rounds
       return state.competition
     },
     rounds: state => {
@@ -47,7 +34,7 @@ export const competitionModule = {
     },
     matches: state => {
       if (state.rounds && state.rounds.length != 0) {
-          return state.rounds[state.selectedRound!=null ? state.selectedRound -1 : state.rounds.length -1].matches
+        return state.rounds[state.selectedRound!=null ? state.selectedRound -1 : state.rounds.length -1].matches
       }
       else {
         return []

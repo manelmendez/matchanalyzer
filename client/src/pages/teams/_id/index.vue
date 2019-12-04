@@ -4,7 +4,7 @@
       <v-card-title>
         <v-layout align-center>
           <v-flex xs1>
-            <v-img :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" alt="avatar" :contain="true" height="40" width="40">
+            <v-img v-if="team.avatar" :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" alt="avatar" :contain="true" height="40" width="40">
           </v-flex>
           <v-flex>  
             {{team.name}}
@@ -127,7 +127,6 @@ import constants from '../../../assets/constants/constants'
       ])
     },
     created() {
-      //do something after creating vue instance
       this.getTeam(this.$route.params.id)
     }
   }

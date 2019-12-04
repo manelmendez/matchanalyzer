@@ -106,15 +106,14 @@ export const deleteMatch = ({commit}, data) => {
   })
 }
 
-export const deleteRound = ({commit}, data) => {
+export const deleteRound = ({commit}, id) => {
   console.log("ACTION -- deleteRound")
-  console.log(data);
-  return axios.delete('deleteRound/'+data.id, { data: data.body }).then(response => {
+  return axios.delete('deleteRound/'+id).then(response => {    
     if(response.status === 200) {
       commit(types.DELETE_ROUND)
     }
     return response
-  }).catch((err) => {
+  }).catch((err) => {    
     return err.response
   })
 }
