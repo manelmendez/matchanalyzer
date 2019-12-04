@@ -4,7 +4,7 @@ import * as teamActions from '../actions/teamActions'
 export const teamModule = {
   namespaced: true,
   state: {
-    team: {},
+    team: {players:[]},
     teams: [],
     myTeams: [],
   },

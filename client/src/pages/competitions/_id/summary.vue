@@ -1,5 +1,10 @@
 <template>
   <v-container fluid grid-list-md>
+    <v-row v-if="competition.teams.length == 0">
+      <v-card class="no-teams">
+        <v-card-text class="text-center">No hay equipos en la competición.</v-card-text>
+      </v-card>
+    </v-row>
     <v-row dense>
       <v-col xs="6"
         sm="4"
@@ -19,7 +24,6 @@
           </v-col>
           <v-card-text class="title-card text-center grow">
             <b>{{team.name}}</b>
-            {{team}}
           </v-card-text>
           <v-card-text class="text-center" height="100%" >
             <!-- Nº de jugadores: {{team.players.length}}   -->
@@ -89,6 +93,7 @@
             dark
             small
             color="indigo"
+            @click.stop="addOwnTeam=!addOwnTeam"
           >
             <v-icon>mdi-plus</v-icon>
           </v-btn>
@@ -96,6 +101,19 @@
         <span>Añadir equipo propio</span>
       </v-tooltip>
     </v-speed-dial>
+    <v-dialog v-model="addOwnTeam" persistent max-width=50%>
+      <v-card>
+        <v-card-title class="headline">Selecciona el equipo que quieres añadir</v-card-title>
+        <v-card-text>
+          <v-select :items="myTeams" item-text="name" return-object v-model="team" label="Seleccionar Equipo"></v-select>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text  @click="addOwnTeam = false">Cancelar</v-btn>
+          <v-btn color="primary" @click="addMyTeam()">Añadir</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <CreateTeam v-if="dialog" :team="(updatingTeam ? updatingTeam : null)" :show="dialog" @confirm="confirm" @close="dialog=!dialog, updatingTeam=null"></CreateTeam>
     <DeleteDialog
       v-if="deleteDialog"
@@ -123,7 +141,9 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
       dialog: false,
       deleteDialog: false,
       updatingTeam: null,
-      deletingTeam: null
+      deletingTeam: null,
+      addOwnTeam: false,
+      team: ""
     }),
     methods: {
       goTo(teamId) {
@@ -150,19 +170,41 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
           this.$store.commit("root/SNACKBAR", snackbar);
         })
       },
+      addMyTeam(){
+        this.team.competition = Number(this.$route.params.id)
+        let body = {
+          team: {competition: this.team.competition}
+        }
+        let data = {
+          body: body,
+          id: this.team.id
+        }
+        this.updateTeam(data).then((response) => {
+          if(response.status === 200) {
+            this.addOwnTeam = false
+          }
+        }).catch((err)=>{
+          console.log(err)
+        })
+      },
       ...mapActions({
         getCompetition:'competition/getCompetition',
-        deleteTeam:'team/deleteTeam'
+        deleteTeam:'team/deleteTeam',
+        updateTeam:'team/updateTeam'
       })
     },
     computed: {
-      ...mapGetters("competition",[
-        'competition'
-      ])
+      ...mapGetters({
+        competition: 'competition/competition',
+        myTeams: 'team/myTeams',
+      })
     }
   }
 </script>
-<style>
+<style scoped>
+.no-teams {
+  width: 100%;
+}
 .teamCard{
   cursor: pointer;
 }

@@ -39,32 +39,38 @@
     <v-col cols=2>
       <v-card class="match-actions elevation-2">
         <v-card-text class="text-center">
-          <v-col>
-            <v-tooltip top v-if="match.awayTeam.manager != null || match.localTeam.manager != null">
-              <template v-slot:activator="{ on }">
-                <v-btn x-small text icon color="green lighten-2" @click.stop="addStatsDialog=true" v-on="on">
-                  <v-icon size="18">fa-file-alt</v-icon>
-                </v-btn>
-              </template>
-              <span>Añadir stats</span>
-            </v-tooltip>
-            <v-tooltip top>
-              <template v-slot:activator="{ on }">
-                <v-btn x-small text icon color="blue lighten-2" @click.stop="roundDialog=true" v-on="on">
-                  <v-icon size="18">edit</v-icon>
-                </v-btn>
-              </template>
-              <span>Editar partido</span>
-            </v-tooltip>
-            <v-tooltip top>
-              <template v-slot:activator="{ on }">
-                <v-btn x-small text icon color="red lighten-2" @click.stop="deleteDialog=true" v-on="on">
-                  <v-icon size="18">delete</v-icon>
-                </v-btn>
-              </template>
-              <span>Eliminar partido</span>
-            </v-tooltip>
-          </v-col>
+          <v-row>
+            <v-col v-if="match.awayTeam.manager != null || match.localTeam.manager != null">
+              <v-tooltip top v-if="match.awayTeam.manager != null || match.localTeam.manager != null">
+                <template v-slot:activator="{ on }">
+                  <v-btn x-small text icon color="green lighten-2" @click.stop="addStatsDialog=true" v-on="on">
+                    <v-icon size="18">fa-file-alt</v-icon>
+                  </v-btn>
+                </template>
+                <span>Añadir stats</span>
+              </v-tooltip>
+            </v-col>
+            <v-col>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-btn x-small text icon color="blue lighten-2" @click.stop="roundDialog=true" v-on="on">
+                    <v-icon size="18">edit</v-icon>
+                  </v-btn>
+                </template>
+                <span>Editar partido</span>
+              </v-tooltip>
+            </v-col>
+            <v-col>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-btn x-small text icon color="red lighten-2" @click.stop="deleteDialog=true" v-on="on">
+                    <v-icon size="18">delete</v-icon>
+                  </v-btn>
+                </template>
+                <span>Eliminar partido</span>
+              </v-tooltip>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-col>

@@ -51,7 +51,7 @@
               </v-card-actions>
             </v-form>
           </v-card>
-          <g-signin-button
+          <!-- <g-signin-button
             class="googleButton"
             :params="googleSignInParams"
             @success="onSignInSuccess"
@@ -65,7 +65,7 @@
             :params="fbSignInParams"
             @success="onSignInSuccessFB"
             @error="onSignInErrorFB"
-          >Sign in with Facebook</fb-signin-button>
+          >Sign in with Facebook</fb-signin-button> -->
         </v-col>
       </v-row>
       <!-- REGISTER -->

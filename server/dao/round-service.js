@@ -33,7 +33,7 @@ function deleteRound(id) {
   return new Promise ((resolve, reject) =>{
     con.query("DELETE FROM rounds WHERE id = ?", id, function(err, result) {
       if (err) reject(err)
-      else resolve(round)
+      else resolve(id)
     })
   })
 }

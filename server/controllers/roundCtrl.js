@@ -11,6 +11,7 @@ function addRound(req, res, next) {
   }
   console.log("Registrando competicion con nombre: " + round.name + "...")
   roundService.saveRound(round).then((roundSaved) => {
+    roundSaved.matches=[]
     return res.status(200).send({
       round: roundSaved
     })
@@ -26,6 +27,8 @@ function deleteRound(req, res) {
   let roundId = req.params.id
   roundService.deleteRound(roundId)
   .then((round) => {
+    console.log(round);
+    
     res.status(200).send({message: `Jornada borrada`})
   })
   .catch((err) => {
@@ -35,6 +38,8 @@ function deleteRound(req, res) {
 }
 
 function getCompetitionRounds(req, res) {
+  console.log("Obtener jornadas de competición con ID: "+req.params.id);
+  
   let id = req.params.id
   roundService.findByCompetition(id).then((value => {          
     let rounds = JSON.parse(JSON.stringify(value))
@@ -55,11 +60,11 @@ function getCompetitionRounds(req, res) {
               rounds[i].matches.push(JSON.parse(JSON.stringify(matches[j])))
             }
           }
-          console.log(rounds)              
-          res.status(200).send({
-            rounds: rounds
-          })
         }
+        console.log(rounds);
+        res.status(200).send({
+          rounds: rounds
+        })
       }))
     }))
   }))

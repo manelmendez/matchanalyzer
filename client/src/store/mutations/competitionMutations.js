@@ -22,20 +22,18 @@ export const competitionMutations = {
     state.selectedRound = Number(state.rounds.length)
   },
 
-  [types.ADD_MATCH] (state, data) {  
-    data.match.localTeam.stats.push(data.localTeamStats)
-    data.match.awayTeam.stats.push(data.awayTeamStats)
+  [types.ADD_MATCH] (state, data) {      
+    for (let j = 0; j < state.competition.teams.length; j++) {
+      if (data.match.localTeam == state.competition.teams[j].id) {
+        data.match.localTeam=state.competition.teams[j]
+      }
+      else if (data.match.awayTeam == state.competition.teams[j].id) {
+        data.match.awayTeam=state.competition.teams[j]
+      }
+    }    
     for (var i = 0; i < state.rounds.length; i++) {      
       if (state.rounds[i].id == data.match.round) {
         state.rounds[i].matches = [...state.rounds[i].matches, data.match]
-      }
-    }
-    for (let x = 0; x < state.teams.length; x++) {
-      if (state.teams[x].id == data.match.localTeam.id) {
-        state.teams[x].stats = [...state.teams[x].stats, data.localTeamStats]        
-      }
-      else if (state.teams[x].id == data.match.awayTeam.id) {
-        state.teams[x].stats = [...state.teams[x].stats, data.awayTeamStats]
       }
     }
   },
@@ -128,8 +126,8 @@ export const competitionMutations = {
   },
 
   [types.DELETE_ROUND] (state) {
-    state.competition.rounds.pop()
-    state.selectedRound = Number(state.competition.rounds.length)
+    state.rounds.pop()
+    state.selectedRound = Number(state.rounds.length)
   },
 
   [types.UPDATE_COMPETITION] (state, competition) {
