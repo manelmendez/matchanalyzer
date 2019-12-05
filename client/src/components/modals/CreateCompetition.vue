@@ -57,12 +57,12 @@ export default {
       name: (this.competition) ? this.competition.name : '',
       season: (this.competition) ? this.competition.season : '',
       seasons: [
-        "14/15",
-        "15/16",
-        "16/17",
-        "17/18",
+        "19/20",
         "18/19",
-        "19/20"
+        "17/18",
+        "16/17",
+        "15/16",
+        "14/15",
       ],
       disciplines: [
         "F7",

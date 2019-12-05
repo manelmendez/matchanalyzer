@@ -171,37 +171,25 @@ export default {
         };
         this.signIn(body)
           .then(response => {
-            if (response.status === 200) {
-              let snackbar = {
-                show: true,
-                color: "success",
-                text: "Logueado correctamente"
-              };
-              this.$store.commit("root/SNACKBAR", snackbar);
-              this.$router.push({
-                name: "index" //si uso path: "/mainpage" el params (props) no funciona -- params: { user: response.data.user } --
-              });
-            }
-          })
-          .catch(err => {
             let snackbar = {
               show: true,
-              color: "error",
-              text: err.data.message
+              color: "success",
+              text: "Logueado correctamente"
             };
             this.$store.commit("root/SNACKBAR", snackbar);
-          });
+            this.$router.push({
+              name: "index" //si uso path: "/mainpage" el params (props) no funciona -- params: { user: response.data.user } --
+            });
+          })
       }
     },
     onSignInSuccess(googleUser) {
       this.signInGoogle(googleUser).then(response => {
-        if (response.status === 200) {
-          setTimeout(() => {
-            this.$router.push({
-              name: "index" //si uso path: "/mainpage" el params (props) no funciona -- params: { user: response.data.user } --
-            });
-          }, 2000);
-        }
+        setTimeout(() => {
+          this.$router.push({
+            name: "index" //si uso path: "/mainpage" el params (props) no funciona -- params: { user: response.data.user } --
+          });
+        }, 2000);
       });
     },
     onSignInError(error) {
@@ -226,26 +214,17 @@ export default {
           name: this.name
         };
         this.signUp(body).then(response => {
-          if (response.status === 200) {
-            setTimeout(() => {
-              let snackbar = {
-                show: true,
-                color: "success",
-                text: response.data.message
-              };
-              this.$store.commit("root/SNACKBAR", snackbar);
-              this.$router.push({
-                name: "index" //si uso path: "/mainpage" el params (props) no funciona -- params: { user: response.data.user } --
-              });
-            }, 2000);
-          }
-        }).catch((err) => {
-          let snackbar = {
-            show: true,
-            color: "error",
-            text: err.data.message
-          };
-          this.$store.commit("root/SNACKBAR", snackbar);
+          setTimeout(() => {
+            let snackbar = {
+              show: true,
+              color: "success",
+              text: response.data.message
+            };
+            this.$store.commit("root/SNACKBAR", snackbar);
+            this.$router.push({
+              name: "index" //si uso path: "/mainpage" el params (props) no funciona -- params: { user: response.data.user } --
+            });
+          }, 2000);
         })
       }
     },

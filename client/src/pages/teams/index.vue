@@ -101,12 +101,6 @@ import constants from '../../assets/constants/constants'
         })
         .catch((err) => {   
           this.deleteDialog = false         
-          let snackbar = {
-            show: true,
-            color: "error",
-            text: err.data.message
-          };
-          this.$store.commit("root/SNACKBAR", snackbar);
         })
       },
       ...mapActions("team",[

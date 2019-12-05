@@ -2,12 +2,12 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import GSignInButton from 'vue-google-signin-button'
 import FBSignInButton from 'vue-facebook-signin-button'
-import axios from 'axios'
 
 import constants from './assets/constants/constants'
 import router from './routes'
 import App from './App.vue'
 import store from './store/store'
+import axiosConfig from './assets/axios'
 
 import 'vuetify/dist/vuetify.min.css'
 import green from './assets/themes/green'
@@ -21,17 +21,8 @@ Vue.use(Vuetify)
 Vue.use(GSignInButton)
 Vue.use(FBSignInButton)
 
-Vue.prototype.$axios = axios
-Vue.prototype.$axios.defaults.baseURL = constants.API_ADDRESS
+Vue.prototype.$axios = axiosConfig
 
-// add token to Auth header if onceLogged
-if (JSON.parse(window.localStorage.getItem('authUser'))!= null)
-{
-  Vue.prototype.$axios.defaults.headers.common['Authorization'] = 'Bearer '+JSON.parse(window.localStorage.getItem('authUser')).token
-  Vue.prototype.$axios.defaults.headers.common['Accept'] = 'application/json'
-  Vue.prototype.$axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-  Vue.prototype.$axios.defaults.headers.common['Content-Type'] ='application/x-www-form-urlencoded';
-}
 let themeApp = green
 if (window.localStorage.getItem('theme')!= null) {
   const storeTheme = window.localStorage.getItem('theme')

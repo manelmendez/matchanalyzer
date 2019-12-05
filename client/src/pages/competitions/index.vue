@@ -85,23 +85,13 @@ export default {
           }
         })
       },
-      confirmCreate(){        
-        this.getUserCompetitions(this.user.id)
+      async confirmCreate(){        
+        await this.getUserCompetitions(this.user.id)
         this.dialog = false
       },
-      deleteCompetitionFunction(){
-        this.deleteCompetition(this.deletingCompetition).then((response) =>{          
-          this.deleteDialog = false
-        })
-        .catch((err) => {   
-          this.deleteDialog = false         
-          let snackbar = {
-            show: true,
-            color: "error",
-            text: err.data.message
-          };
-          this.$store.commit("root/SNACKBAR", snackbar);
-        })
+      async deleteCompetitionFunction(){
+        await this.deleteCompetition(this.deletingCompetition)         
+        this.deleteDialog = false
       },
       ...mapActions({
         getUserCompetitions:'competition/getUserCompetitions',
@@ -116,10 +106,10 @@ export default {
         competitions:'competition/competitions'
       })
     },
-    created() {
+    async created() {
       //do something after creating vue instance
-      this.getUserCompetitions(this.user.id)
-      this.getUserTeams(this.user.id)
+      await this.getUserCompetitions(this.user.id)
+      await this.getUserTeams(this.user.id)
     }
   }
 </script>

@@ -8,21 +8,16 @@ export const initializeStore = ({commit}) => {
 export const signIn = ({commit}, body) => {
   console.log("ACTION -- signIn")
   return axios.post('signIn', body)
-    .then(response => {
-      if(response.status === 200) {
-        let authUser = {
-          token: response.data.token,
-          isLogged: true,
-          ...response.data.user
-        }
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token
-        window.localStorage.setItem('authUser', JSON.stringify(authUser))
-        commit(types.SIGN_IN, authUser)
+    .then(response => {      
+      let authUser = {
+        token: response.data.token,
+        isLogged: true,
+        ...response.data.user
       }
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token
+      window.localStorage.setItem('authUser', JSON.stringify(authUser))
+      commit(types.SIGN_IN, authUser)
       return response
-    })
-    .catch((err) => {
-      throw err.response
     })
 }
 export const signInGoogle = ({commit}, googleUser) => {
@@ -39,40 +34,30 @@ export const signInGoogle = ({commit}, googleUser) => {
   }
   return axios.get('oauth/google',{headers})
     .then(response => {
-      if(response.status === 200) {
-        let authUser = {
-          token: response.data.token,
-          isLogged: true,
-          ...response.data.user
-        }
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token
-        window.localStorage.setItem('authUser', JSON.stringify(authUser))
-        commit(types.SIGN_IN, authUser)
+      let authUser = {
+        token: response.data.token,
+        isLogged: true,
+        ...response.data.user
       }
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token
+      window.localStorage.setItem('authUser', JSON.stringify(authUser))
+      commit(types.SIGN_IN, authUser)
       return response
-    })
-    .catch((err) => {
-      throw err.response
     })
 }
 export const signInFB = ({commit}, token_payload) => {
   console.log("ACTION -- signInFB")
   return axios.post('signin', body)
     .then(response => {
-      if(response.status === 200) {
-        let authUser = {
-          token: response.data.token,
-          isLogged: true,
-          ...response.data.user
-        }
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token
-        window.localStorage.setItem('authUser', JSON.stringify(authUser))
-        commit(types.SIGN_IN, authUser)
+      let authUser = {
+        token: response.data.token,
+        isLogged: true,
+        ...response.data.user
       }
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token
+      window.localStorage.setItem('authUser', JSON.stringify(authUser))
+      commit(types.SIGN_IN, authUser)
       return response
-    })
-    .catch((err) => {
-      throw err.response
     })
 }
 
@@ -80,20 +65,15 @@ export const signUp = ({commit}, body) => {
   console.log("ACTION -- signUp")
   return axios.post('signup', body)
     .then(response => {
-      if(response.status === 200) {
-        let authUser = {
-          token: response.data.token,
-          isLogged: true,
-          ...response.data.user
-        }
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token
-        window.localStorage.setItem('authUser', JSON.stringify(authUser))
-        commit(types.SIGN_UP, authUser)
+      let authUser = {
+        token: response.data.token,
+        isLogged: true,
+        ...response.data.user
       }
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token
+      window.localStorage.setItem('authUser', JSON.stringify(authUser))
+      commit(types.SIGN_UP, authUser)
       return response
-    })
-    .catch((err) => {
-      throw err.response
     })
 }
 export const signOut = ({commit}) => {

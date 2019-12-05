@@ -129,7 +129,7 @@ export default {
       else if (goals1 > goals2) return "victory";
       else return "lose";
     },
-    deleteMatchFunction() {
+    async deleteMatchFunction() {
       let body = {
         localTeamId: this.match.localTeam.id,
         awayTeamId: this.match.awayTeam.id,
@@ -141,17 +141,12 @@ export default {
         id: this.match.id,
         body: body
       };
-      this.deleteMatch(data).then(response => {
-        if (response.status == 200) {
-          this.getCompetition(this.$route.params.id);
-          this.deleteDialog = false;
-        } else {
-          this.deleteDialog = false;
-          this.$emit("loading");
-        }
-      });
+      await this.deleteMatch(data)
+      await this.getCompetition(this.$route.params.id);
+      this.deleteDialog = false;
+      // this.$emit("loading");
     },
-    updateMatchFunction(stats) {
+    async updateMatchFunction(stats) {
       let body = {
         match: {
           localTeam: this.match.localTeam.id,
@@ -170,16 +165,10 @@ export default {
         body: body
       };
       this.$emit("loading");
-      this.updateMatch(data).then(response => {
-        if (response.status == 200) {
-          this.getCompetition(this.$route.params.id);
-          this.roundDialog = false;
-          this.$emit("loading");
-        } else {
-          this.roundDialog = false;
-          this.$emit("loading");
-        }
-      });
+      await this.updateMatch(data)
+      await this.getCompetition(this.$route.params.id)
+      this.roundDialog = false
+      this.$emit("loading") 
     },
     ...mapActions("competition", [
       "updateMatch",

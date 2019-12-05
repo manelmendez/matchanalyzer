@@ -22,6 +22,9 @@ export const competitionModule = {
     rounds: state => {
       return state.rounds
     },
+    round: state => {
+      return state.rounds[state.selectedRound - 1]
+    },
     selectedRound: state => {
       if (state.selectedRound==null) {
         if (state.rounds) {
@@ -63,46 +66,98 @@ export const competitionModule = {
       }
     },
     rankedTeams: state => {
-      if (state.competition.teams && state.competition.rounds && state.competition.rounds.length != 0){
+      if (state.competition.teams && state.rounds && state.rounds.length != 0){
         let teams = [...state.competition.teams]
-        // console.log(teams);
         let updatedTeams = []
-        let actualCompetition = {...state.competition}
         // sumar todas las jornadas hasta la seleccionada
         for (let i = 0; i < teams.length; i++) {
           let updatedTeam = {...teams[i]}
-          let teamStats = {}
-          let actualRound = (state.selectedRound!=null||state.selectedRound -1 > teams[i].stats.length) ? state.selectedRound-1 : teams[i].stats.length -1
-          for (let j = 0; j < actualRound+1; j++) {
-            if(j==0){
-              teamStats = {...teams[i].stats[j]}
-            }
-            else{
-              if (teams[i].stats[j]!=undefined) {
-                teamStats.gamesPlayed+=teams[i].stats[j].gamesPlayed
-                teamStats.homeGamesPlayed+= teams[i].stats[j].homeGamesPlayed
-                teamStats.awayGamesPlayed+= teams[i].stats[j].awayGamesPlayed
-                teamStats.points+= teams[i].stats[j].points
-                teamStats.homePoints += teams[i].stats[j].homePoints
-                teamStats.awayPoints+= teams[i].stats[j].awayPoints
-                teamStats.wins+= teams[i].stats[j].wins
-                teamStats.homeWins+= teams[i].stats[j].homeWins
-                teamStats.awayWins+= teams[i].stats[j].awayWins
-                teamStats.draws+= teams[i].stats[j].draws
-                teamStats.homeDraws+= teams[i].stats[j].homeDraws
-                teamStats.awayDraws+= teams[i].stats[j].awayDraws
-                teamStats.loses+= teams[i].stats[j].loses
-                teamStats.homeLoses+= teams[i].stats[j].homeLoses
-                teamStats.awayLoses+= teams[i].stats[j].awayLoses
-                teamStats.goals+= teams[i].stats[j].goals
-                teamStats.homeGoals+= teams[i].stats[j].homeGoals
-                teamStats.awayGoals+= teams[i].stats[j].awayGoals
-                teamStats.againstGoals+= teams[i].stats[j].againstGoals
-                teamStats.homeAgainstGoals+= teams[i].stats[j].homeAgainstGoals
-                teamStats.awayAgainstGoals+= teams[i].stats[j].awayAgainstGoals
-              }
-            }
+          let teamStats = {
+            gamesPlayed:0,
+            homeGamesPlayed:0,
+            awayGamesPlayed:0,
+            points:0,
+            homePoints:0,
+            awayPoints:0,
+            wins:0,
+            homeWins:0,
+            awayWins:0,
+            draws:0,
+            homeDraws:0,
+            awayDraws:0,
+            loses:0,
+            homeLoses:0,
+            awayLoses:0,
+            goals:0,
+            homeGoals:0,
+            awayGoals:0,
+            againstGoals:0,
+            homeAgainstGoals:0,
+            awayAgainstGoals:0
           }
+          let actualRound = state.selectedRound
+          for (let j = 0; j < actualRound; j++) {
+            let matches = state.rounds[j].matches
+            let x = 0
+            let found = false
+            while(x<matches.length && !found) {
+              if (matches[x].localTeam.id == teams[i].id) {  
+                teamStats.gamesPlayed+=1
+                teamStats.homeGamesPlayed+=1
+                teamStats.goals+= matches[x].localTeamGoals
+                teamStats.homeGoals+= matches[x].localTeamGoals
+                teamStats.againstGoals+= matches[x].awayTeamGoals
+                teamStats.homeAgainstGoals+= matches[x].awayTeamGoals
+                if (matches[x].localTeamGoals > matches[x].awayTeamGoals) {
+                  teamStats.homePoints+= 3
+                  teamStats.points+= 3
+                  teamStats.wins+= 1
+                  teamStats.homeWins+= 1
+                }
+                else if (matches[x].localTeamGoals == matches[x].awayTeamGoals) {
+                  teamStats.homePoints += 1
+                  teamStats.points+= 1
+                  teamStats.draws+= 1
+                  teamStats.homeDraws+= 1
+                }
+                else if (matches[x].localTeamGoals < matches[x].awayTeamGoals) {
+                  teamStats.homePoints += 0
+                  teamStats.points+= 0
+                  teamStats.loses+= 1
+                  teamStats.homeLoses+= 1
+                }
+                found=true
+              }
+              else if (matches[x].awayTeam.id == teams[i].id) {
+                teamStats.gamesPlayed+=1
+                teamStats.awayGamesPlayed+=1
+                teamStats.goals+= matches[x].awayTeamGoals
+                teamStats.awayGoals+= matches[x].awayTeamGoals
+                teamStats.againstGoals+= matches[x].localTeamGoals
+                teamStats.awayAgainstGoals+= matches[x].localTeamGoals
+                if (matches[x].awayTeamGoals > matches[x].localTeamGoals) {
+                  teamStats.awayPoints += 3
+                  teamStats.points+= 3
+                  teamStats.wins+= 1
+                  teamStats.awayWins+= 1
+                }
+                else if (matches[x].awayTeamGoals == matches[x].localTeamGoals) {
+                  teamStats.awayPoints += 1
+                  teamStats.points+= 1
+                  teamStats.draws+= 1
+                  teamStats.awayDraws+= 1
+                }
+                else if (matches[x].awayTeamGoals < matches[x].localTeamGoals) {
+                  teamStats.awayPoints += 0
+                  teamStats.points+= 0
+                  teamStats.loses+= 1
+                  teamStats.awayLoses+= 1
+                }
+                found=true
+              }
+              x++
+            }
+          }          
           updatedTeam.stats = teamStats
           updatedTeams.push(updatedTeam)
         }
@@ -117,8 +172,8 @@ export const competitionModule = {
           else if (a.stats.points == b.stats.points) {
             let matches = []
             //coger todos los partidos
-            for (let x = 0; x < actualCompetition.rounds.length; x++) {
-              matches=[...matches,...actualCompetition.rounds[x].matches]
+            for (let x = 0; x < state.rounds.length; x++) {
+              matches=[...matches,...state.rounds[x].matches]
             }
             let duelMatches = []
             //buscar los partidos que esos 2 equipos hayan jugado entre ellos

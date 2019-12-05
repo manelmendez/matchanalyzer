@@ -149,28 +149,18 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
       goTo(teamId) {
         this.$router.push('/teams/'+teamId+'/global')
       },
-      confirm(){
+      async confirm(){
         this.dialog = false
         if (this.updatingTeam) {
-          this.getCompetition(this.competition.id)
+          await this.getCompetition(this.competition.id)
         }
       },
-      deleteTeamFunction() {
-        this.deleteTeam(this.deletingTeam).then((response) =>{  
-          this.getCompetition(this.competition.id)        
-          this.deleteDialog = false
-        })
-        .catch((err) => {   
-          this.deleteDialog = false         
-          let snackbar = {
-            show: true,
-            color: "error",
-            text: err.data.message
-          };
-          this.$store.commit("root/SNACKBAR", snackbar);
-        })
+      async deleteTeamFunction() {
+        await this.deleteTeam(this.deletingTeam)
+        await this.getCompetition(this.competition.id)        
+        this.deleteDialog = false
       },
-      addMyTeam(){
+      async addMyTeam(){
         this.team.competition = Number(this.$route.params.id)
         let body = {
           team: {competition: this.team.competition}
@@ -179,13 +169,8 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
           body: body,
           id: this.team.id
         }
-        this.updateTeam(data).then((response) => {
-          if(response.status === 200) {
-            this.addOwnTeam = false
-          }
-        }).catch((err)=>{
-          console.log(err)
-        })
+        await this.updateTeam(data)
+        this.addOwnTeam = false
       },
       ...mapActions({
         getCompetition:'competition/getCompetition',

@@ -58,11 +58,9 @@ export default {
     return {
       constants: constants,
       parts:1,
-      
     }
   },
   created(){
-    
   }
 }
 </script>
