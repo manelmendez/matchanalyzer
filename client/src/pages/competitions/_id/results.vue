@@ -22,11 +22,23 @@
                 :items="rounds"
                 item-text="name"
                 required
-                v-model="round"
+                :value="round"
                 class="headline"
                 return-object
                 @change="changeResultRound"
               ></v-select>
+              <v-row>
+                <v-col>
+                  <v-btn text small :disabled="round.id == rounds[0].id" @click="this.previousRound">
+                    <v-icon left>mdi-chevron-double-left</v-icon>Anterior
+                  </v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn text small :disabled="round.id == rounds[rounds.length -1].id" @click="this.nextRound">
+                    Siguiente<v-icon right>mdi-chevron-double-right</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
             </v-col>
             <v-col md="3">
               <v-btn small rounded color="blue-grey" class="white--text resultBtn" @click="createRound()">
@@ -93,80 +105,42 @@ export default {
       };
       this.addRound(body)
     },
-    createMatch(newMatch) {
-      console.log(newMatch);
-      
-      // let body = {
-      //   match: newMatch.match,
-      //   localTeamStats: newMatch.localTeamStats,
-      //   awayTeamStats: newMatch.awayTeamStats
-      // }
+    async createMatch(newMatch) {
       if (newMatch.localTeam == newMatch.awayTeam) {
         alert("No puedes seleccionar el mismo equipo en ambos lados");
       }
-      // else if (this.team.id == this.competition.myTeam.id || this.team2.id == this.competition.myTeam.id) {
-      //   alert("Uno de ellos es tu equipo, rellena las estadísticas")
-      // }
       else {
         this.loading=true
-        this.addMatch(newMatch).then(response => {
-          if (response.status == 200) {
-            this.roundDialog = false
-            this.loading = false
-          }
-          else {
-            this.roundDialog = false
-            this.loading = false
-          }
-        })
-        .catch((e)=>{
-          console.log(e)
-          this.roundDialog = false
-          this.loading = false
-        })
+        await this.addMatch(newMatch)
+        this.roundDialog = false
+        this.loading = false
       }
     },
-    
     changeResultRound(item) {
       //coger el numero de round y ponerlo en selectedRound
       let str = item.name;
       var res = str.split(" ");
       this.changeRound(res[1]);
     },
-    
-    deleteRoundFunction() {
+    async deleteRoundFunction() {
       this.loading = true
-      this.deleteRound(this.round.id).then(response => {
-        if (response.status == 200) {
-          this.getCompetition(this.$route.params.id);
-          this.deleteDialog=false
-          this.loading = false
-        }
-        else {
-          this.deleteDialog = false
-          this.loading = false
-        }
-      });
+      await this.deleteRound(this.round.id)
+      await this.getCompetition(this.$route.params.id);
+      this.deleteDialog=false
+      this.loading = false
     },
     ...mapActions("competition",[
       "getCompetition",
       "addRound",
       "addMatch",
       "changeRound",
+      "previousRound",
+      "nextRound",
       "deleteRound"
     ])
   },
   computed: {
-    ...mapGetters("competition",["competition", "roundTeams", "selectedRound", "matches", "rounds"]),
-    round: {
-      get: function() {
-        return this.rounds[this.selectedRound - 1];
-      },
-      // setter
-      set: function(newValue) {
-        return this.rounds[this.selectedRound - 1];
-      }
-    }
+    ...mapGetters("competition",["competition", "roundTeams", "selectedRound", "matches", "rounds", "round"]),
   }
 }
 </script>

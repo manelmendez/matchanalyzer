@@ -11,8 +11,6 @@ import results from './pages/competitions/_id/results.vue'
 import classification from './pages/competitions/_id/classification.vue'
 import TeamGlobal from './pages/teams/_id/global.vue'
 
-import constants from './assets/constants/constants'
-
 import VueRouter from 'vue-router'
 import axios from 'axios'
 
@@ -25,7 +23,7 @@ const router = new VueRouter({
       path: '/login',
       name: 'login',
       component: login,
-      meta: { requiresAuth: false, layout: 'empty' }
+      meta: { requiresAuth: false, onceLogged: true, layout: 'empty' }
     },
     {
       path: '/',
@@ -99,7 +97,6 @@ router.beforeEach((to, from, next) => {
   // method to check if user needs to be logged to access a page
   if(to.meta.requiresAuth) {
     const authUser = JSON.parse(window.localStorage.getItem('authUser'))
-    console.log("Requires Auth");
     if(!authUser) {
       next({name:'login'})
     }
@@ -112,11 +109,9 @@ router.beforeEach((to, from, next) => {
   else if (to.meta.onceLogged) {
     const authUser = JSON.parse(window.localStorage.getItem('authUser'))
     if(authUser) {
-      console.log("Logged")
       next({name:'index'})
     }
     else {
-      console.log("Not Logged")
       next()
     }
   }
@@ -128,7 +123,7 @@ function isAuth() {
   axios.post('private', null)
   .then(response => {
     if(response.status === 200) {
-      console.log("Autorizado")
+      // console.log("Autorizado")
     }
   })
   .catch(error => {

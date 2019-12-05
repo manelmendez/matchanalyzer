@@ -71,9 +71,7 @@ export default {
     close() {
       this.$emit('close')
     },
-    add() {
-      console.log(this.player);
-      
+    add() {      
       this.$emit('confirm', {'player':this.player['player'], 'type': this.type, 'minute':this.minute})
     }
   }

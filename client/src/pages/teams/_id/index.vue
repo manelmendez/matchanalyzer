@@ -107,13 +107,9 @@ import constants from '../../../assets/constants/constants'
       createPlayer(){
         this.dialog = false
       },
-      deletePlayerFunction(){
-        this.deletePlayer(this.deletingPlayer).then((response) =>{
-          this.deleteDialog = false
-        })
-        .catch((err) => {
-
-        })
+      async deletePlayerFunction(){
+        await this.deletePlayer(this.deletingPlayer)
+        this.deleteDialog = false
       },
       ...mapActions({
         getTeam: 'team/getTeam',
@@ -126,8 +122,8 @@ import constants from '../../../assets/constants/constants'
         'teamPlayers'
       ])
     },
-    created() {
-      this.getTeam(this.$route.params.id)
+    async created() {
+      await this.getTeam(this.$route.params.id)
     }
   }
 </script>
