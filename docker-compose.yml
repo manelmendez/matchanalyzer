@@ -1,14 +1,47 @@
 version: '3.5'
 
 services:
+  mysql:
+    image: mysql:5.7.22
+    container_name: "mysql"
+    restart: always
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./server/resources:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_DATABASE: 'matchanalyzer'
+    networks:
+      - ma_backend
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: "phpmyadmin"
+    stdin_open: true
+    tty: true
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "1111:80"
+    networks:
+      - ma_backend
   matchanalyzer:
     build: .
     container_name: "matchanalyzer"
     restart: always
     stdin_open: true
     tty: true
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
     ports:
-      - "9009:9000"
+      - "8008:8000"
     networks:
       - ma_backend
 networks:

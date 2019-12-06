@@ -1,62 +1,49 @@
 version: '3.5'
 
 services:
-  mongo:
-    image: mongo
-    container_name: "mongo"
+  mysql:
+    image: mysql:5.7.22
+    container_name: "mysql"
     restart: always
     stdin_open: true
     tty: true
     volumes:
-      - ~/data/db:/data/db
-    ports:
-      - "27017:27017"
+      - ./server/resources:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_DATABASE: 'matchanalyzer'
     networks:
       - ma_backend
-  adminmongo:
-    image: adicom/admin-mongo
-    container_name: adminmongo
-    restart: "always"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: "phpmyadmin"
     stdin_open: true
     tty: true
-    environment:
-      CONN_NAME: matchanalyzer
-      DB_HOST: mongo
-      DB_PORT: 27017
-    ports:
-      - "1234:1234"
-    networks:
-      - ma_backend
-  mongoclient:
-    image: mongoclient/mongoclient
-    container_name: mongoclient
-    restart: "always"
-    stdin_open: true
-    tty: true
-    environment:
-      CONN_NAME: matchanalyzer
-      DB_HOST: mongo
-      DB_PORT: 27017
-    ports:
-      - "3000:3000"
-    networks:
-      - ma_backend
-  adminer:
-    image: adminer
     restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
     ports:
-      - 8080:8080
+      - "1111:80"
+    networks:
+      - ma_backend
   matchanalyzer:
     build: .
     container_name: "matchanalyzer"
     restart: always
     stdin_open: true
     tty: true
+    depends_on:
+      - mysql
     environment:
-      MONGODB_URI: mongodb://mongo:27017/matchAnalyzer
+      PMA_HOST: mysql
+      PMA_PORT: 3306
     ports:
-      - "9009:9000"
+      - "8008:8000"
     networks:
       - ma_backend
 networks:
   ma_backend:
+    
