@@ -4,27 +4,26 @@
   >
     <v-sheet
       class="v-sheet--offset mx-auto"
-      color="cyan"
+      color="rgb(255,255,255,0.8)"
       elevation="12"
       max-width="calc(100% - 32px)"
       max-height="calc(100% - 32px)"
     >
-      <line-chart :chart-data="this.chartData" :height="this.height" :options="options" class="chartStyle"></line-chart>
+      <pie-chart :chart-data="this.chartData" :height="this.height" :options="options" class="chartStyle"></pie-chart>
     </v-sheet>
 
     <v-card-text class="pt-0">
-      <div class="title font-weight-light mb-2">Recorrido del equipo</div>
+      <div class="title font-weight-light mb-2">Partidos del equipo</div>
       <div class="subheading font-weight-light grey--text">Temporada {{team.season}}</div>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-import LineChart from '../components/charts/LineChart.js'
+import PieChart from '../components/charts/PieChart.js'
 
   export default {
-    name: "statscard",
-    components: { LineChart },
+    components: { PieChart },
     props:[
       'chart-data',
       'height',
@@ -32,17 +31,7 @@ import LineChart from '../components/charts/LineChart.js'
     ],
     data() {
       return {
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                reverse: true,
-                max: 16,
-                min: 1,
-              },
-            }]
-          }
-        }
+        options: {cutoutPercentage: 50}
       }
     }
   }
