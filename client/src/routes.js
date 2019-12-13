@@ -9,7 +9,7 @@ import competitionBase from './pages/competitions/_id/index.vue'
 import summary from './pages/competitions/_id/summary.vue'
 import results from './pages/competitions/_id/results.vue'
 import classification from './pages/competitions/_id/classification.vue'
-import TeamGlobal from './pages/teams/_id/global.vue'
+import competitionStats from './pages/teams/_id/competitionstats.vue'
 
 import VueRouter from 'vue-router'
 import axios from 'axios'
@@ -44,9 +44,9 @@ const router = new VueRouter({
       meta: { requiresAuth: true, layout: 'default' }
     },
     {
-      path: '/teams/:id?/global',
-      name: 'TeamGlobal',
-      component: TeamGlobal,
+      path: '/teams/:id?/competitionstats',
+      name: 'competitionStats',
+      component: competitionStats,
       meta: { requiresAuth: true, layout: 'default' }
     },
     {

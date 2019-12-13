@@ -147,7 +147,7 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
     }),
     methods: {
       goTo(teamId) {
-        this.$router.push('/teams/'+teamId+'/global')
+        this.$router.push('/teams/'+teamId+'/competitionstats')
       },
       async confirm(){
         this.dialog = false
