@@ -4,7 +4,7 @@
   >
     <v-sheet
       class="v-sheet--offset mx-auto"
-      color="rgb(255,255,255,0.8)"
+      color="rgb(255,255,255,0.95)"
       elevation="12"
       max-width="calc(100% - 32px)"
       max-height="calc(100% - 32px)"
@@ -31,7 +31,14 @@ import PieChart from '../components/charts/PieChart.js'
     ],
     data() {
       return {
-        options: {cutoutPercentage: 50}
+        options: {
+          title: {
+            display: true,
+            text: 'Porcentaje de victorias / empates / derrotas'
+          },
+          borderColor: 'red',
+          cutoutPercentage: 50
+        }
       }
     }
   }
@@ -40,7 +47,6 @@ import PieChart from '../components/charts/PieChart.js'
 .v-sheet--offset {
   top: -24px;
   position: relative;
-  color: '#257747'
 }
 .chartStyle {
   padding-bottom: 10px;

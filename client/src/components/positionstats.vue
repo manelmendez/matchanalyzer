@@ -4,7 +4,7 @@
   >
     <v-sheet
       class="v-sheet--offset mx-auto"
-      color="cyan"
+      color="rgb(255,255,255,0.9)"
       elevation="12"
       max-width="calc(100% - 32px)"
       max-height="calc(100% - 32px)"
@@ -23,7 +23,6 @@
 import LineChart from '../components/charts/LineChart.js'
 
   export default {
-    name: "statscard",
     components: { LineChart },
     props:[
       'chart-data',
@@ -33,12 +32,27 @@ import LineChart from '../components/charts/LineChart.js'
     data() {
       return {
         options: {
+          title: {
+            display: true,
+            text: 'Posición por jornada'
+          },
           scales: {
             yAxes: [{
+              scaleLabel: {
+                display: false,
+                labelString: 'Posición'
+              },
               ticks: {
                 reverse: true,
                 max: 16,
                 min: 1,
+                stepSize: 1,
+              }
+            }],
+            xAxes: [{
+              scaleLabel: {
+                display: false,
+                labelString: 'Jornada'
               },
             }]
           }
@@ -51,7 +65,6 @@ import LineChart from '../components/charts/LineChart.js'
 .v-sheet--offset {
   top: -24px;
   position: relative;
-  color: '#257747'
 }
 .chartStyle {
   padding-bottom: 10px;
