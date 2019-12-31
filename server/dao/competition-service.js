@@ -1,8 +1,8 @@
 const con = require('../config/mysql')
 
-function findById(id) {
+function findById(id, managerId, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM competitions WHERE id = ?", id ,function(err, result) {
+    con.query("SELECT * FROM competitions WHERE id = ? AND manager = ? AND userId = ?", [id, managerId, userId] ,function(err, result) {
       if (err) reject(err)
       else {        
         resolve(result)
@@ -10,17 +10,17 @@ function findById(id) {
     })
   })
 }
-function findByName(name) {
+function findByName(name, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM competitions WHERE name = ?", name ,function(err, competition) {
+    con.query("SELECT * FROM competitions WHERE name = ? AND userId = ?", [name, userId] ,function(err, competition) {
       if (err) reject(err)
       else resolve(competition)
     })
   })
 }
-function findByManager(id) {
+function findByManager(id, userId) {
   return new Promise ((resolve, reject) => {
-    con.query("SELECT * FROM competitions WHERE manager = ?;", id ,function(err, competition) {
+    con.query("SELECT * FROM competitions WHERE manager = ? AND userId = ?", [id, userId] ,function(err, competition) {
       if (err) reject(err)
       else resolve(competition)
     })
@@ -45,17 +45,17 @@ function saveCompetition(competition) {
     })
   })
 }
-function updateCompetition(competition, id) {
+function updateCompetition(competition, id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("UPDATE competitions SET ? WHERE id = ?", [competition, id], function(err,result) {
+    con.query("UPDATE competitions SET ? WHERE id = ? AND userId = ?", [competition, id, userId], function(err,result) {
       if (err) reject(err)
       else resolve(competition)
     })
   })
 }
-function deleteCompetition(id) {
+function deleteCompetition(id, userId) {
   return new Promise ((resolve, reject) =>{ 
-    con.query("DELETE FROM competitions WHERE id = ?", id, function(err, result) {
+    con.query("DELETE FROM competitions WHERE id = ? AND userId = ?", [id, userId], function(err, result) {
       if (err) reject(err)
       else resolve(result)
     })

@@ -1,17 +1,17 @@
 const con = require('../config/mysql')
 
-function findById(id) {
+function findById(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM teams WHERE id = ?; SELECT * FROM players WHERE team = ?", [id,id],function(err, result) {
+    con.query("SELECT * FROM teams WHERE id = ? AND userId = ?; SELECT * FROM players WHERE team = ? AND userId = ?", [id, userId ,id, userId],function(err, result) {
       if (err) reject(err)
       else resolve(result)
     })
-  })
+  }) 
 }
 
-function findByManager(manager) {
+function findByManager(manager, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM teams WHERE manager = ?", manager,function(err, teams) {
+    con.query("SELECT * FROM teams WHERE manager = ? AND userId = ?", [manager, userId],function(err, teams) {
       if (err) reject(err)
       else {
         resolve(teams)
@@ -20,9 +20,9 @@ function findByManager(manager) {
   })
 }
 
-function findByCompetition(id) {
+function findByCompetition(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM teams WHERE competition = ?", id,function(err, teams) {
+    con.query("SELECT * FROM teams WHERE competition = ? AND userId = ?", [id, userId],function(err, teams) {
       if (err) reject(err)
       else {
         resolve(teams)
@@ -43,18 +43,18 @@ function saveTeam(teamToSave) {
   })
 }
 
-function updateTeam(id, team) {
+function updateTeam(id, team, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("UPDATE teams SET ? WHERE id = ?", [team, id], function(err,team) {
+    con.query("UPDATE teams SET ? WHERE id = ? AND userId = ?", [team, id, userId], function(err,team) {
       if (err) reject(err)
       else resolve(team)
     })
   })
 }
 
-function deleteTeam(id) {
+function deleteTeam(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM teams WHERE id = ?", id, function(err, team) {
+    con.query("DELETE FROM teams WHERE id = ? AND userId = ?", [id, userId], function(err, team) {
       if (err) reject(err)
       else resolve(team)
     })

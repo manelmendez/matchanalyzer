@@ -1,17 +1,17 @@
 const con = require('../config/mysql')
 
-function findById(id) {
+function findById(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM rounds WHERE id = ?", id ,function(err, round) {
+    con.query("SELECT * FROM rounds WHERE id = ? AND userId = ?", [id, userId] ,function(err, round) {
       if (err) reject(err)
       else resolve(round)
     })
   })
 }
 
-function findByCompetition(id) {
+function findByCompetition(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM rounds WHERE competition = ?", id ,function(err, rounds) {
+    con.query("SELECT * FROM rounds WHERE competition = ? AND userId = ?", [id, userId] ,function(err, rounds) {
       if (err) reject(err)
       else resolve(rounds)
     })
@@ -29,9 +29,9 @@ function saveRound(round) {
     })
   })
 }
-function deleteRound(id) {
+function deleteRound(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM rounds WHERE id = ?", id, function(err, result) {
+    con.query("DELETE FROM rounds WHERE id = ? AND userId = ?", [id, userId], function(err, result) {
       if (err) reject(err)
       else resolve(id)
     })

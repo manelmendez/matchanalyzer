@@ -48,6 +48,7 @@ function checkAuth(req, res, next) {
       if (response) {
         console.log(response);
         console.log("Está autorizado");
+        req.user = response
         next()
       }
       else{
