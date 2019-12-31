@@ -4,7 +4,8 @@ const assistService = require('../dao/assist-service')
 
 function getCompetitionMatches(req, res) {
   let competition = req.competition
-  matchService.findByCompetition(req.competition.id).then((matches) => {
+  let userId = req.user.id
+  matchService.findByCompetition(req.competition.id, userId).then((matches) => {
     console.log(matches);
     
     for (let i = 0; i < competition.rounds.length; i++) {
@@ -25,7 +26,8 @@ function getCompetitionMatches(req, res) {
     })
   })
 }
-function addMatch(req, res, next) {
+function addMatch(req, res) {
+  let userId = req.user.id
   // getting data
   let match = {
     localTeam: req.body.localTeam,
@@ -34,7 +36,8 @@ function addMatch(req, res, next) {
     awayTeamGoals: req.body.awayTeamGoals,
     matchDay: new Date(),
     competition: req.body.competition,
-    round: req.body.round
+    round: req.body.round,
+    userId: userId
   }
   console.log("Añadiendo partido...")
   matchService.saveMatch(match).then((matchSaved) => {
@@ -50,19 +53,19 @@ function addMatch(req, res, next) {
   })
 }
 
-function updateMatch (req, res, next) {
+function updateMatch (req, res) {
   let id = req.params.id
+  let userId = req.user.id
   let match = {
-    localTeam: req.body.localTeam,
+    localTeam: req.body.localTeam.id,
     localTeamGoals: req.body.localTeamGoals,
-    awayTeam: req.body.awayTeam,
+    awayTeam: req.body.awayTeam.id,
     awayTeamGoals: req.body.awayTeamGoals,
-    matchDay: req.body.matchDay,
-    competition: req.body.match.competition,
-    round: req.body.round
+    competition: req.body.competition,
+    round: req.body.round,
   }
   console.log("Actualizar partido");
-  matchService.updateMatch(id, match).then((matchUpdated) => {    
+  matchService.updateMatch(match, id, userId).then((matchUpdated) => {    
     res.status(200).send({match: matchUpdated})
   }).catch((err) => {
     console.log(err);
@@ -72,7 +75,8 @@ function updateMatch (req, res, next) {
 
 function deleteMatch (req, res) {
   let matchId = req.params.id
-  matchService.deleteMatch(matchId)
+  let userId = req.user.id
+  matchService.deleteMatch(matchId, userId)
   .then((value) => {
     res.status(200).send({match: matchId})
   })

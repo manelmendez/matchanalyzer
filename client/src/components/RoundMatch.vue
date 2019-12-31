@@ -130,45 +130,27 @@ export default {
       else return "lose";
     },
     async deleteMatchFunction() {
-      let body = {
-        localTeamId: this.match.localTeam.id,
-        awayTeamId: this.match.awayTeam.id,
-        localTeamStatsId: this.match.localTeam.stats[this.selectedRound - 1],
-        awayTeamStatsId: this.match.awayTeam.stats[this.selectedRound - 1],
-        roundId: this.match.round
-      };
-      let data = {
-        id: this.match.id,
-        body: body
-      };
-      await this.deleteMatch(data)
+      this.$emit("loading")
+      await this.deleteMatch(this.match.id)
       await this.getCompetition(this.$route.params.id);
       this.deleteDialog = false;
-      // this.$emit("loading");
+      this.$emit("loading")
     },
-    async updateMatchFunction(stats) {
-      let body = {
-        match: {
-          localTeam: this.match.localTeam.id,
-          awayTeam: this.match.awayTeam.id,
-          localTeamGoals: stats.localTeamStats.goals,
-          awayTeamGoals: stats.awayTeamStats.goals,
-          matchDay: Date.now(),
-          competition: this.match.competition,
-          round: this.match.round
-        },
-        localTeamStats: stats.localTeamStats,
-        awayTeamStats: stats.awayTeamStats
-      };
-      let data = {
-        id: this.match.id,
-        body: body
-      };
-      this.$emit("loading");
-      await this.updateMatch(data)
-      await this.getCompetition(this.$route.params.id)
-      this.roundDialog = false
-      this.$emit("loading") 
+    async updateMatchFunction(match) {      
+      if (match.localTeam == match.awayTeam) {
+        alert("No puedes seleccionar el mismo equipo en ambos lados");
+      }
+      else {
+        let data = {
+          id: this.match.id,
+          body: match
+        }
+        this.$emit("loading")
+        await this.updateMatch(data)
+        await this.getCompetition(this.$route.params.id)
+        this.roundDialog = false
+        this.$emit("loading") 
+      }
     },
     ...mapActions("competition", [
       "updateMatch",

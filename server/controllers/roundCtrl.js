@@ -2,12 +2,14 @@ const roundService = require('../dao/round-service')
 const matchService = require('../dao/match-service')
 const teamService = require('../dao/team-service')
 
-function addRound(req, res, next) {
+function addRound(req, res) {
+  let userId = req.user.id
   // getting data
   const round = {
     name: req.body.name,
     date: new Date(),
-    competition: req.body.competition
+    competition: req.body.competition,
+    userId: userId
   }
   console.log("Registrando competicion con nombre: " + round.name + "...")
   roundService.saveRound(round).then((roundSaved) => {
@@ -25,10 +27,10 @@ function addRound(req, res, next) {
 
 function deleteRound(req, res) {
   let roundId = req.params.id
-  roundService.deleteRound(roundId)
+  let userId = req.user.id
+  roundService.deleteRound(roundId, userId)
   .then((round) => {
     console.log(round);
-    
     res.status(200).send({message: `Jornada borrada`})
   })
   .catch((err) => {
@@ -39,12 +41,12 @@ function deleteRound(req, res) {
 
 function getCompetitionRounds(req, res) {
   console.log("Obtener jornadas de competición con ID: "+req.params.id);
-  
   let id = req.params.id
-  roundService.findByCompetition(id).then((value => {          
+  let userId = req.user.id
+  roundService.findByCompetition(id, userId).then((value => {          
     let rounds = JSON.parse(JSON.stringify(value))
-    matchService.findByCompetition(id).then((matches => {
-      teamService.findByCompetition(id).then((teams => {
+    matchService.findByCompetition(id, userId).then((matches => {
+      teamService.findByCompetition(id, userId).then((teams => {
         for (let i = 0; i < rounds.length; i++) {
           rounds[i].matches=[]
           for (let j = 0; j < matches.length; j++) {

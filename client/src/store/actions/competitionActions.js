@@ -82,18 +82,19 @@ export const nextRound = ({commit}) => {
 
 export const updateMatch = ({commit}, data) => {
   console.log("ACTION -- updateMatch")
-  return axios.put('updateMatch/'+data.id, data.body).then(response => {
-    commit(types.UPDATE_MATCH, response.data)
+  return axios.put('updateMatch/'+data.id, data.body).then(response => {    
+    data.body.id = data.id
+    commit(types.UPDATE_MATCH, data.body)
     return response
   }).catch((err) => {
     return err.response
   })
 }
 
-export const deleteMatch = ({commit}, data) => {
+export const deleteMatch = ({commit}, id) => {
   console.log("ACTION -- deleteMatch")
-  return axios.delete('deleteMatch/'+data.id, { data: data.body }).then(response => {
-    commit(types.DELETE_MATCH, data)
+  return axios.delete('deleteMatch/'+id).then(response => {
+    commit(types.DELETE_MATCH, id)
     return response
   }).catch((err) => {
     return err.response

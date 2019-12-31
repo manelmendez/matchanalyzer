@@ -1,17 +1,17 @@
 const con = require('../config/mysql')
 
-function findByCompetition(ids) {
+function findByCompetition(ids, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matches WHERE competition = ?", ids ,function(err, match) {
+    con.query("SELECT * FROM matches WHERE competition = ? AND userId = ?", [ids, userId] ,function(err, match) {
       if (err) reject(err)
       else resolve(match)
     })
   })
 }
 
-function findByRound(ids) {
+function findByRound(ids, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matches WHERE round = ?", ids ,function(err, match) {
+    con.query("SELECT * FROM matches WHERE round = ? AND userId = ?", [ids, userId] ,function(err, match) {
       if (err) reject(err)
       else resolve(match)
     })
@@ -29,19 +29,19 @@ function saveMatch(match) {
     })
   })
 }
-function updateMatch(match, id) {
+function updateMatch(match, id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("UPDATE match SET ? WHERE id = ?", [match, id], function(err,result) {
+    con.query("UPDATE matches SET ? WHERE id = ? AND userId = ?", [match, id, userId], function(err,result) {
       if (err) reject(err)
       else resolve(match)
     })
   })
 }
-function deleteMatch (id) {
+function deleteMatch (id, userId) {
   return new Promise ((resolve, reject) =>{ 
-    con.query("DELETE FROM matches WHERE id = ?", id, function(err,result) {
+    con.query("DELETE FROM matches WHERE id = ? AND userId = ?", [id, userId], function(err,result) {
       if (err) reject(err)
-      else resolve(match)
+      else resolve(id)
     })
   })
 }

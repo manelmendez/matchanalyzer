@@ -53,7 +53,7 @@ api.get('/getCompetitionRounds/:id', auth.checkAuth, roundCtrl.getCompetitionRou
 
 // MATCH
 api.post('/addMatch', auth.checkAuth, matchCtrl.addMatch)
-// api.put('/updateMatch/:id', auth.checkAuth, matchCtrl.updateMatch, teamStatsCtrl.updateTeamStats)
-// api.delete('/deleteMatch/:id', auth.checkAuth, matchCtrl.deleteMatch, teamStatsCtrl.deleteMatchTeamStats, teamCtrl.deleteStatsOfTeam, roundCtrl.deleteMatchOfRound)
+api.put('/updateMatch/:id', auth.checkAuth, matchCtrl.updateMatch)
+api.delete('/deleteMatch/:id', auth.checkAuth, matchCtrl.deleteMatch)
 
 module.exports = api

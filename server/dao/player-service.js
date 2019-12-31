@@ -12,9 +12,9 @@ function savePlayer(player) {
   })
 }
 
-function updatePlayer(id, player) {  
+function updatePlayer(id, player, userId) {  
   return new Promise ((resolve, reject) =>{ 
-    con.query("UPDATE players SET ? WHERE id = ?", [player, id], function(err,result) {      
+    con.query("UPDATE players SET ? WHERE id = ? AND userId = ?", [player, id, userId], function(err,result) {      
       if (err) reject(err)
       else {
         resolve(player)
@@ -23,9 +23,9 @@ function updatePlayer(id, player) {
   })
 }
 
-function deletePlayer (id) {
+function deletePlayer (id, userId) {
   return new Promise ((resolve, reject) =>{ 
-    con.query("DELETE FROM players WHERE id = ?", id, function(err,result) {
+    con.query("DELETE FROM players WHERE id = ?", [id, userId], function(err,result) {
       if (err) reject(err)
       else resolve(result)
     })

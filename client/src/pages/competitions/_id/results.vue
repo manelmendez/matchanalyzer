@@ -65,7 +65,7 @@
           </v-col>
           <v-col v-else>
             <v-container>
-              <RoundMatch v-for="match in matches" :key="match.id" :match="match" @loading="loading"></RoundMatch>
+              <RoundMatch v-for="match in matches" :key="match.id" :match="match" @loading="loading=!loading"></RoundMatch>
             </v-container>
           </v-col>
           <br>

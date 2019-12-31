@@ -3,13 +3,15 @@
 const teamService = require('../dao/team-service')
 
 function addTeam(req, res) {
+  let userId = req.user.id
   // getting data
   let team = {
     name: req.body.name,
     manager: req.body.manager,
     season: req.body.season,
     avatar: req.body.avatar!=null ? req.body.avatar : "assets/images/escudo-vacio.png",
-    signupDate: new Date()
+    signupDate: new Date(),
+    userId: userId
   }
   console.log("Registrando equipo con nombre: " + team.name + "...");
   teamService.saveTeam(team).then((teamSaved) => {    
@@ -24,13 +26,15 @@ function addTeam(req, res) {
   })
 }
 
-function addNoManagerTeam(req, res, next) {  
+function addNoManagerTeam(req, res) {  
+  let userId = req.user.id
   let team = {
     name: req.body.name,
     season: req.body.season,
     avatar: req.body.avatar!=null ? req.body.avatar : "assets/images/escudo-vacio.png",
     signupDate: new Date(),
-    competition: req.body.competition
+    competition: req.body.competition,
+    userId: userId
   }  
   console.log("Registrando equipo con nombre: " + team.name + "...");
   teamService.saveTeam(team).then((teamSaved) => {    
@@ -48,10 +52,11 @@ function addNoManagerTeam(req, res, next) {
 
 
 function getTeam(req, res) {
+  let userId = req.user.id
   let teamId = req.params.id
   console.log("Buscando equipo con id: " + teamId + " en la base de datos...");
   //search team on DB
-  teamService.findById(teamId).then((result) => {
+  teamService.findById(teamId, userId).then((result) => {
     if (result) {      
       let team = result[0][0]
       team.players = []
@@ -92,12 +97,13 @@ function getAllTeams(req, res) {
 }
 
 function getUserTeams(req, res) {
-  let userId = req.params.userId
-  console.log("Buscando equipos del usuario " + userId + "en la base de datos..." );
+  let managerId = req.params.userId
+  let userId = req.user.id
+  console.log("Buscando equipos del usuario " + managerId + " en la base de datos..." );
   //search team on DB
-  teamService.findByManager(userId).then((teams) => {
+  teamService.findByManager(managerId, userId).then((teams) => {
     if (teams) {
-      console.log("Equipos de " + userId + " entontrados.");
+      console.log("Equipos de " + managerId + " entontrados.");
       // send user
       res.status(200).send({
         message: 'Datos obtenidos correctamente',
@@ -120,7 +126,8 @@ function getUserTeams(req, res) {
 
 function updateTeam(req, res) {
   let team = req.body.team
-  teamService.updateTeam(req.params.id, team)
+  let userId = req.user.id
+  teamService.updateTeam(req.params.id, team, userId)
   .then((value) => {
     res.status(200).send({team: value})
   })
@@ -132,7 +139,8 @@ function updateTeam(req, res) {
 
 function deleteTeam (req, res) {
   let teamId = req.params.id  
-  teamService.deleteTeam(teamId).then((value) => {
+  let userId = req.user.id
+  teamService.deleteTeam(teamId, userId).then((value) => {
     res.status(200).send({team: value})
   }).catch((err) => {
     console.log(err);

@@ -51,87 +51,36 @@ export const competitionMutations = {
     state.selectedRound += 1
   },
 
-  [types.UPDATE_MATCH] (state, data) {
-    // let updatedMatch = data.match
-    // let updatedLocalStats = data.localTeamStats
-    // let updatedAwayStats = data.awayTeamStats
-    // console.log(updatedMatch);
-    // let round = null
-    // let match = null
-    // for (let a = 0; a < data.match.localTeam.stats.length; a++) {
-    //   if (data.match.localTeam.stats[a].id == updatedLocalStats.id) {
-    //     data.match.localTeam.stats[a] = updatedLocalStats
-    //   }
-    // }
-    // for (let b = 0; b < data.match.awayTeam.stats.length; b++) {
-    //   if (data.match.awayTeam.stats[b].id == updatedAwayStats.id) {
-    //     data.match.awayTeam.stats[b] = updatedAwayStats
-    //   }
-    // }
-    // for (var i = 0; i < state.competition.rounds.length; i++) {
-    //   if (state.competition.rounds[i].id == updatedMatch.round) {  
-    //     round = i      
-    //     for (let j = 0; j < state.competition.rounds[i].matches.length; j++) {
-    //       if (state.competition.rounds[i].matches[j].id == updatedMatch.id) {
-    //         // EN PRINCIPIO EL INDEXOF() ES LO MISMO QUE LA J
-    //         let index = state.competition.rounds[i].matches.indexOf(state.competition.rounds[i].matches[j])   
-    //         match = index         
-    //         state.competition.rounds[i].matches[index] = updatedMatch            
-    //       }
-    //     }
-    //   }
-    // }    
-    // for (let x = 0; x < state.competition.teams.length; x++) {  
-    //   if (state.competition.teams[x].id == state.competition.rounds[round].matches[match].localTeam.id) {
-    //     for (let y = 0; y < state.competition.teams[x].stats.length; y++) {
-
-    //       if (state.competition.teams[x].stats[y].id == updatedLocalStats.id) {
-    //         state.competition.teams[x].stats[y] = updatedLocalStats
-    //       }
-    //     }
-    //   }     
-    //   else if (state.competition.teams[x].id == state.competition.rounds[round].matches[match].awayTeam.id) {
-    //     for (let z = 0; z < state.competition.teams[x].stats.length; z++) {  
-    //       if (state.competition.teams[x].stats[z].id == updatedAwayStats.id) {
-    //         state.competition.teams[x].stats[z] = updatedAwayStats
-    //       }
-    //     }
-    //   } 
-    // }
+  [types.UPDATE_MATCH] (state, data) {    
+    let updatedMatch = data    
+    let round = 0
+    let match = 0
+    for (var i = 0; i < state.rounds.length; i++) {
+      if (state.rounds[i].id == updatedMatch.round) {  
+        round = i              
+        for (let j = 0; j < state.rounds[i].matches.length; j++) {
+          if (state.rounds[i].matches[j].id == updatedMatch.id) {
+            // EN PRINCIPIO EL INDEXOF() ES LO MISMO QUE LA J
+            let index = state.rounds[i].matches.indexOf(state.rounds[i].matches[j])   
+            match = index                                  
+            state.rounds[i].matches[index] = updatedMatch            
+          }
+        }
+      }
+    }    
   },
 
   [types.ADD_TEAM_TO_COMPETITION] (state, team) {
     state.competition.teams = [...state.competition.teams, team]
   },
 
-  [types.DELETE_MATCH] (state, data) {    
+  [types.DELETE_MATCH] (state, id) {    
     //eliminar partido de la jornada
-    for (let i = 0; i < state.competition.rounds.length; i++) {
-      if (state.competition.rounds[i].id == data.body.roundId) {
-        for (let x = 0; x < state.competition.rounds[i].matches.length; x++) {
-          if(state.competition.rounds[i].matches[x].id == data.id){
-            state.competition.rounds[i].matches.splice(x,1)
-          }
-        }
+    for (let x = 0; x < state.rounds[state.selectedRound - 1].matches.length; x++) {
+      if(state.rounds[state.selectedRound - 1].matches[x].id == id){
+        state.rounds[state.selectedRound - 1].matches.splice(x,1)
       }
     }
-    //eliminar stats de ambos equipos
-    for (let x = 0; x < state.competition.teams.length; x++) {  
-      if (state.competition.teams[x].id == data.body.localTeamId) {
-        for (let y = 0; y < state.competition.teams[x].stats.length; y++) {
-          if (state.competition.teams[x].stats[y].id == data.body.localTeamStatsId) {
-            state.competition.teams[x].stats.splice(y,1)
-          }
-        }
-      }     
-      else if (state.competition.teams[x].id == data.body.awayTeamId) {
-        for (let z = 0; z < state.competition.teams[x].stats.length; z++) {  
-          if (state.competition.teams[x].stats[z].id == data.body.awayTeamStatsId) {
-            state.competition.teams[x].stats.splice(z,1)
-          }
-        }
-      } 
-    }    
   },
 
   [types.DELETE_ROUND] (state) {
