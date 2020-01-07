@@ -89,8 +89,11 @@ export const competitionModule = {
             homeLoses:0,
             awayLoses:0,
             goals:0,
+            goalDif:0,
             homeGoals:0,
+            homeGoalDif: 0,
             awayGoals:0,
+            awayGoalDif: 0,
             againstGoals:0,
             homeAgainstGoals:0,
             awayAgainstGoals:0
@@ -105,7 +108,9 @@ export const competitionModule = {
                 teamStats.gamesPlayed+=1
                 teamStats.homeGamesPlayed+=1
                 teamStats.goals+= matches[x].localTeamGoals
+                teamStats.goalDif+= matches[x].localTeamGoals-matches[x].awayTeamGoals
                 teamStats.homeGoals+= matches[x].localTeamGoals
+                teamStats.homeGoalDif+= matches[x].localTeamGoals-matches[x].awayTeamGoals
                 teamStats.againstGoals+= matches[x].awayTeamGoals
                 teamStats.homeAgainstGoals+= matches[x].awayTeamGoals
                 if (matches[x].localTeamGoals > matches[x].awayTeamGoals) {
@@ -133,7 +138,9 @@ export const competitionModule = {
                 teamStats.awayGamesPlayed+=1
                 teamStats.goals+= matches[x].awayTeamGoals
                 teamStats.awayGoals+= matches[x].awayTeamGoals
+                teamStats.goalDif+= matches[x].awayTeamGoals-matches[x].localTeamGoals
                 teamStats.againstGoals+= matches[x].localTeamGoals
+                teamStats.awayGoalDif+= matches[x].awayTeamGoals-matches[x].localTeamGoals
                 teamStats.awayAgainstGoals+= matches[x].localTeamGoals
                 if (matches[x].awayTeamGoals > matches[x].localTeamGoals) {
                   teamStats.awayPoints += 3
@@ -253,6 +260,24 @@ export const competitionModule = {
       else {
         return []
       }
+    },
+    topScorers: (state, getters) => {
+      let orderTeams = JSON.parse(JSON.stringify(getters.rankedTeams))
+      return JSON.parse(JSON.stringify(orderTeams.sort(function(b, a) {
+        return a.stats.goals - b.stats.goals      
+      })))  
+    },
+    mostTrashed: (state, getters) => {
+      let orderTeams = JSON.parse(JSON.stringify(getters.rankedTeams))
+      return JSON.parse(JSON.stringify(orderTeams.sort(function(b, a) {
+        return  b.stats.againstGoals - a.stats.againstGoals  
+      })))
+    },
+    topDifference: (state, getters) => {
+      let orderTeams = JSON.parse(JSON.stringify(getters.rankedTeams))
+      return JSON.parse(JSON.stringify(orderTeams.sort(function(b, a) {
+        return a.stats.goalDif - b.stats.goalDif
+      })))
     },
     statsPerRound: state => {
       if (state.competition.teams && state.rounds && state.rounds.length != 0){

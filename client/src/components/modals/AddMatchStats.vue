@@ -8,7 +8,7 @@
           <v-toolbar-title>Añadir estadísticas del partido</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click.native="close">Guardar</v-btn>
+            <v-btn dark text @click.native="addStats">Guardar</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-row>
@@ -23,9 +23,9 @@
               </v-col>
             </v-row>
             <v-row>
-              <AddMatchStatsContent :team="localTeam"></AddMatchStatsContent>
+              <AddMatchStatsContent :team="localTeamWithPlayers"></AddMatchStatsContent>
               <v-divider vertical></v-divider>
-              <AddMatchStatsContent :team="awayTeam"></AddMatchStatsContent>
+              <AddMatchStatsContent :team="awayTeamWithPlayers"></AddMatchStatsContent>
             </v-row>
             <br><br>
             <v-divider></v-divider>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import constants from "../../assets/constants/constants";
 import AddMatchStatsContent from '../AddMatchStatsContent.vue'
 export default {
@@ -58,9 +59,24 @@ export default {
     return {
       constants: constants,
       parts:1,
+      localTeamWithPlayers: this.localTeam,
+      awayTeamWithPlayers: this.awayTeam
     }
   },
-  created(){
+  methods: {
+    close() {
+      this.$emit("close")
+    },
+    addStats() {
+      this.$emit("addStats")
+    },
+    ...mapActions({
+      getTeam: 'team/getTeam'
+    })
+  },
+  async created(){    
+    this.localTeamWithPlayers = await this.getTeam(this.localTeam.id)
+    this.awayTeamWithPlayers = await this.getTeam(this.awayTeam.id)
   }
 }
 </script>

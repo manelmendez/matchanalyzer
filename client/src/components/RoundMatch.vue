@@ -95,7 +95,8 @@
       :show="addStatsDialog"
       :localTeam="match.localTeam"
       :awayTeam="match.awayTeam"
-      @close="addStatsDialog=!addStatsDialog"> </AddMatchStats>
+      @close="addStatsDialog=!addStatsDialog"
+      @addStats="addStats"> </AddMatchStats>
   </v-row>
 </template>
 <script>
@@ -151,6 +152,10 @@ export default {
         this.roundDialog = false
         this.$emit("loading") 
       }
+    },
+    addStats(data){
+      console.log(data)
+      this.addStatsDialog = false
     },
     ...mapActions("competition", [
       "updateMatch",

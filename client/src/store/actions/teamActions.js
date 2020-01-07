@@ -17,6 +17,7 @@ export const getTeam = ({commit}, id) => {
   console.log("ACTION -- getTeam")
   return axios.get('getTeam/'+id).then(response => {
     commit(types.GET_TEAM, response.data.team)
+    return response.data.team
   })
 }
 export const getAllTeams = ({commit}) => {

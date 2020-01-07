@@ -5,6 +5,88 @@
         <v-card-text class="text-center">No hay equipos en la competición.</v-card-text>
       </v-card>
     </v-row>
+    <v-card v-if="rounds && rounds.length !=0">
+      <v-card-title>
+        <v-row justify="space-between">
+          <v-col md="3">
+            <v-select
+              small
+              :items="rounds"
+              item-text="name"
+              required
+              :value="round"
+              class="headline"
+              return-object
+              @change="changeResultRound"
+            ></v-select>
+          </v-col>
+          <v-col md="3">
+            <v-row>
+              <v-col>
+                <v-btn text small :disabled="round.id == rounds[0].id" @click="this.previousRound">
+                  <v-icon left>mdi-chevron-double-left</v-icon>Anterior
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn text small :disabled="round.id == rounds[rounds.length -1].id" @click="this.nextRound">
+                  Siguiente<v-icon right>mdi-chevron-double-right</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-card-title>
+    </v-card>
+    <v-row>
+      <v-col xs=12 sm=12 md=6 lg=4>
+        <v-card v-if="topScorers.length != 0" class="no-teams">
+          <v-card-title class="justify-center">Equipos más goleadores</v-card-title>
+          <v-card-text v-for="i in 4" :key=i>
+            <v-row no-gutters>
+              <v-col cols=10>
+                <v-avatar tile size=36>
+                  <v-img :src="constants.ADDRESS+topScorers[i-1].avatar"
+                    @error="topScorers[i-1].avatar=constants.DEFAULT_TEAM_URL"
+                    contain>
+                </v-avatar> {{topScorers[i-1].name}}</v-col>
+              <v-col align-self="center">{{ topScorers[i-1].stats.goals }} <v-icon >mdi-soccer</v-icon></v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col xs=12 sm=12 md=6 lg=4>
+        <v-card v-if="mostTrashed.length != 0" class="no-teams">
+          <v-card-title class="justify-center">Equipos menos goleados</v-card-title>
+          <v-card-text v-for="i in 4" :key=i>
+            <v-row no-gutters>
+              <v-col cols=10>
+                <v-avatar tile size=36>
+                  <v-img :src="constants.ADDRESS+mostTrashed[i-1].avatar"
+                    @error="mostTrashed[i-1].avatar=constants.DEFAULT_TEAM_URL"
+                    contain>
+                </v-avatar> {{mostTrashed[i-1].name}}</v-col>
+              <v-col>{{mostTrashed[i-1].stats.againstGoals}} <v-icon >mdi-soccer</v-icon></v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col xs=12 sm=12 md=6 lg=4>
+        <v-card v-if="topDifference.length != 0" class="no-teams">
+          <v-card-title class="justify-center">Mejor diferencia de goles</v-card-title>
+          <v-card-text v-for="i in 4" :key=i>
+            <v-row no-gutters>
+              <v-col cols=10>
+                <v-avatar tile size=36>
+                  <v-img :src="constants.ADDRESS+topDifference[i-1].avatar"
+                    @error="topDifference[i-1].avatar=constants.DEFAULT_TEAM_URL"
+                    contain>
+                </v-avatar> {{topDifference[i-1].name}}</v-col>
+              <v-col>{{ topDifference[i-1].stats.goalDif }} <v-icon >mdi-soccer</v-icon></v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
     <v-row dense>
       <v-col xs="6"
         sm="4"
@@ -135,7 +217,8 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
       CreateTeam,
       DeleteDialog
     },
-    data: () => ({
+    data() {
+    return {
       fab:false,
       constants: constants,
       dialog: false,
@@ -143,8 +226,8 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
       updatingTeam: null,
       deletingTeam: null,
       addOwnTeam: false,
-      team: ""
-    }),
+      team: "",
+    }},
     methods: {
       goTo(teamId) {
         this.$router.push('/teams/'+teamId+'/competitionstats')
@@ -172,16 +255,35 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
         await this.updateTeam(data)
         this.addOwnTeam = false
       },
+      changeResultRound(item) {
+        //coger el numero de round y ponerlo en selectedRound
+        let str = item.name;
+        var res = str.split(" ");
+        this.changeRound(res[1]);
+      },
       ...mapActions({
         getCompetition:'competition/getCompetition',
         deleteTeam:'team/deleteTeam',
-        updateTeam:'team/updateTeam'
+        updateTeam:'team/updateTeam',
+        changeRound: 'competition/changeRound',
+        previousRound: 'competition/previousRound',
+        nextRound: 'competition/nextRound'
       })
+    },
+    async created() {
+      // await this.changeRound(this.rounds.length -1)      
     },
     computed: {
       ...mapGetters({
         competition: 'competition/competition',
         myTeams: 'team/myTeams',
+        rounds: 'competition/rounds',
+        round: 'competition/round',
+        selectedRound: 'competition/selectedRound',
+        rankedTeams: 'competition/rankedTeams',
+        topScorers: 'competition/topScorers',
+        mostTrashed: 'competition/mostTrashed',
+        topDifference: 'competition/topDifference'
       })
     }
   }
