@@ -23,6 +23,7 @@
           <td class="text-xs-center">{{ item.stats.loses }}</td>
           <td class="text-xs-center">{{ item.stats.goals }}</td>
           <td class="text-xs-center">{{ item.stats.againstGoals }}</td>
+          <td class="text-xs-center">{{ item.stats.goalDif }}</td>
           <td class="text-xs-center"></td>
           <td class="text-xs-center">{{ item.stats.homePoints }}</td>
           <td class="text-xs-center">{{ item.stats.homeGamesPlayed }}</td>
@@ -31,6 +32,7 @@
           <td class="text-xs-center">{{ item.stats.homeLoses }}</td>
           <td class="text-xs-center">{{ item.stats.homeGoals }}</td>
           <td class="text-xs-center">{{ item.stats.homeAgainstGoals }}</td>
+          <td class="text-xs-center">{{ item.stats.homeGoalDif }}</td>
           <td class="text-xs-center"></td>
           <td class="text-xs-center">{{ item.stats.awayPoints }}</td>
           <td class="text-xs-center">{{ item.stats.awayGamesPlayed }}</td>
@@ -39,6 +41,7 @@
           <td class="text-xs-center">{{ item.stats.awayLoses }}</td>
           <td class="text-xs-center">{{ item.stats.awayGoals }}</td>
           <td class="text-xs-center">{{ item.stats.awayAgainstGoals }}</td>
+          <td class="text-xs-center">{{ item.stats.awayGoalDif }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -55,50 +58,53 @@
 import constants from '../assets/constants/constants'
 
 export default {
-    name: "ClassificationTable",
-    props: {
-        rankedTeams: Array
-    },
-    data() {
-        return {
-            constants: constants,
-            headers: [
-                { text: 'P', align: 'center', sortable: false, value: 'name'},
-                { text: '', align: 'center', sortable: false, value: ''},
-                { text: 'Nombre', align: 'center', sortable: false, value: 'name'},
-                { text: 'PTS', value: 'points', align: 'center', sortable: false,},
-                { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false,},
-                { text: 'V', value: 'wins', align: 'center', sortable: false,},
-                { text: 'E', value: 'draws', align: 'center', sortable: false,},
-                { text: 'D', value: 'loses', align: 'center', sortable: false,},
-                { text: 'GF', value: 'goals', align: 'center', sortable: false,},
-                { text: 'GC', value: 'againstGoals', align: 'center', sortable: false,},
-                { text: 'En Casa', sortable: false },
-                { text: 'PTS', value: 'points', align: 'center', sortable: false,},
-                { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false,},
-                { text: 'V', value: 'wins', align: 'center', sortable: false,},
-                { text: 'E', value: 'draws', align: 'center', sortable: false,},
-                { text: 'D', value: 'loses', align: 'center', sortable: false,},
-                { text: 'GF', value: 'goals', align: 'center', sortable: false,},
-                { text: 'GC', value: 'againstGoals', align: 'center', sortable: false,},
-                { text: 'Fuera', sortable: false },
-                { text: 'PTS', value: 'points', align: 'center', sortable: false,},
-                { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false,},
-                { text: 'V', value: 'wins', align: 'center', sortable: false,},
-                { text: 'E', value: 'draws', align: 'center', sortable: false,},
-                { text: 'D', value: 'loses', align: 'center', sortable: false,},
-                { text: 'GF', value: 'goals', align: 'center', sortable: false,},
-                { text: 'GC', value: 'againstGoals', align: 'center', sortable: false,},
-                ]
-        }
-    },
-    methods:{
-        setClass(index) {
-            if(index==0) return 'first'
-            else if(index==1) return 'second'
-            else if(index==this.rankedTeams.length-1||index==this.rankedTeams.length-2||index==this.rankedTeams.length-3) return 'descending'
-        }
+  name: "ClassificationTable",
+  props: {
+    rankedTeams: Array
+  },
+  data() {
+    return {
+      constants: constants,
+      headers: [
+        { text: 'P', align: 'center', sortable: false, value: 'name'},
+        { text: '', align: 'center', sortable: false, value: ''},
+        { text: 'Nombre', align: 'center', sortable: false, value: 'name'},
+        { text: 'PTS', value: 'points', align: 'center', sortable: false,},
+        { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false,},
+        { text: 'V', value: 'wins', align: 'center', sortable: false,},
+        { text: 'E', value: 'draws', align: 'center', sortable: false,},
+        { text: 'D', value: 'loses', align: 'center', sortable: false,},
+        { text: 'GF', value: 'goals', align: 'center', sortable: false,},
+        { text: 'GC', value: 'againstGoals', align: 'center', sortable: false,},
+        { text: 'DG', value: 'goalDif', align: 'center', sortable: false,},
+        { text: 'En Casa', sortable: false },
+        { text: 'PTS', value: 'points', align: 'center', sortable: false,},
+        { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false,},
+        { text: 'V', value: 'wins', align: 'center', sortable: false,},
+        { text: 'E', value: 'draws', align: 'center', sortable: false,},
+        { text: 'D', value: 'loses', align: 'center', sortable: false,},
+        { text: 'GF', value: 'goals', align: 'center', sortable: false,},
+        { text: 'GC', value: 'againstGoals', align: 'center', sortable: false,},
+        { text: 'DG', value: 'homeGoalDif', align: 'center', sortable: false,},
+        { text: 'Fuera', sortable: false },
+        { text: 'PTS', value: 'points', align: 'center', sortable: false,},
+        { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false,},
+        { text: 'V', value: 'wins', align: 'center', sortable: false,},
+        { text: 'E', value: 'draws', align: 'center', sortable: false,},
+        { text: 'D', value: 'loses', align: 'center', sortable: false,},
+        { text: 'GF', value: 'goals', align: 'center', sortable: false,},
+        { text: 'GC', value: 'againstGoals', align: 'center', sortable: false,},
+        { text: 'DG', value: 'awayGoalDif', align: 'center', sortable: false,},
+      ]
     }
+  },
+  methods:{
+    setClass(index) {
+      if(index==0) return 'first'
+      else if(index==1) return 'second'
+      else if(index==this.rankedTeams.length-1||index==this.rankedTeams.length-2||index==this.rankedTeams.length-3) return 'descending'
+    }
+  }
 }
 </script>
 <style scoped>
