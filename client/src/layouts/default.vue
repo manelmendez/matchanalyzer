@@ -1,9 +1,10 @@
 <template>
   <v-content>
     <v-app-bar app fixed flat clipped-left collapse-on-scroll color="primary darken-1">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title @click="changeTheme">MatchAnalyzer</v-toolbar-title>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
+      <v-toolbar-title @click="changeTheme" class="white--text">MatchAnalyzer</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-switch v-model="dark" inset color="white" class="switchStyle" label="Dark mode"></v-switch>
       <v-menu open-on-hover offset-y>
         <template v-slot:activator="{ on }">
           <v-btn
@@ -75,7 +76,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <router-view></router-view>
+    <router-view :class="dark ? 'darkContent': 'content'"></router-view>
   </v-content>
 </template>
 <script>
@@ -115,14 +116,35 @@ import constants from '../assets/constants/constants'
       ...mapActions("user",[
         'signOut',
       ]),
-      changeTheme() {
+      changeTheme() {        
         var randomTheme = this.themes[Math.floor(Math.random() * this.themes.length)];
         window.localStorage.setItem('theme', randomTheme.name)
-        this.$vuetify.theme.themes.dark= randomTheme.value
+        if(this.$vuetify.theme.dark) {
+          this.$vuetify.theme.themes.dark= randomTheme.value
+        }
+        else {
+          this.$vuetify.theme.themes.light= randomTheme.value
+        }
       },
       selectTheme(theme) {
         window.localStorage.setItem('theme', theme.name)
-        this.$vuetify.theme.themes.dark= theme.value
+        if(this.$vuetify.theme.dark) {
+          this.$vuetify.theme.themes.dark= theme.value
+        }
+        else {
+          this.$vuetify.theme.themes.light= theme.value
+        }
+      },
+    },
+    computed: {
+      dark: {
+        get() {
+          return this.$vuetify.theme.dark
+        },
+        set() {
+          window.localStorage.setItem('dark', !this.dark)
+          this.$vuetify.theme.dark=!this.dark          
+        }
       }
     }
   }
@@ -131,6 +153,14 @@ import constants from '../assets/constants/constants'
 .toolbar-title {
   color: inherit;
   text-decoration: inherit;
+}
+.content {
+  background-color: var(--v-item-lighten5);
+  height: 100%
+}
+.darkContent {
+  background-color: var(--v-background-base);
+  height: 100%
 }
 .logout{
   cursor: pointer;

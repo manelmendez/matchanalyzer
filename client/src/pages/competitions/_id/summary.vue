@@ -39,50 +39,92 @@
     </v-card>
     <v-row>
       <v-col xs=12 sm=12 md=6 lg=4>
-        <v-card v-if="topScorers.length != 0" class="no-teams">
-          <v-card-title class="justify-center">Equipos más goleadores</v-card-title>
-          <v-card-text v-for="i in 4" :key=i>
-            <v-row no-gutters>
-              <v-col cols=10>
-                <v-avatar tile size=36>
-                  <v-img :src="constants.ADDRESS+topScorers[i-1].avatar"
-                    @error="topScorers[i-1].avatar=constants.DEFAULT_TEAM_URL"
-                    contain>
-                </v-avatar> {{topScorers[i-1].name}}</v-col>
-              <v-col align-self="center">{{ topScorers[i-1].stats.goals }} <v-icon >mdi-soccer</v-icon></v-col>
-            </v-row>
+        <v-card
+          v-if="topScorers.length != 0" class="mt-9 no-teams"
+        >
+          <v-sheet
+            class="v-sheet--offset mx-auto"
+            color="#e91e63"
+            elevation="12"
+            max-width="calc(100% - 32px)"
+            max-height="calc(100% - 32px)"
+          >
+            <v-card class="transparent">
+              <v-card-text v-for="i in 4" :key=i class="white--text">
+                <v-row no-gutters>
+                  <v-col cols=10>
+                    <v-avatar tile size=36>
+                      <v-img :src="constants.ADDRESS+topScorers[i-1].avatar"
+                        @error="topScorers[i-1].avatar=constants.DEFAULT_TEAM_URL"
+                        contain>
+                    </v-avatar> {{topScorers[i-1].name}}</v-col>
+                  <v-col align-self="center">{{ topScorers[i-1].stats.goals }} <v-icon class="white--text">mdi-soccer</v-icon></v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-sheet>
+          <v-card-text class="pt-0">
+            <v-card-title class="justify-center">Equipos más goleadores</v-card-title>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col xs=12 sm=12 md=6 lg=4>
-        <v-card v-if="mostTrashed.length != 0" class="no-teams">
-          <v-card-title class="justify-center">Equipos menos goleados</v-card-title>
-          <v-card-text v-for="i in 4" :key=i>
-            <v-row no-gutters>
-              <v-col cols=10>
-                <v-avatar tile size=36>
-                  <v-img :src="constants.ADDRESS+mostTrashed[i-1].avatar"
-                    @error="mostTrashed[i-1].avatar=constants.DEFAULT_TEAM_URL"
-                    contain>
-                </v-avatar> {{mostTrashed[i-1].name}}</v-col>
-              <v-col>{{mostTrashed[i-1].stats.againstGoals}} <v-icon >mdi-soccer</v-icon></v-col>
-            </v-row>
+        <v-card
+          v-if="mostTrashed.length != 0" class="mt-9 no-teams"
+        >
+          <v-sheet
+            class="v-sheet--offset mx-auto"
+            color="#4caf50"
+            elevation="12"
+            max-width="calc(100% - 32px)"
+            max-height="calc(100% - 32px)"
+          >
+            <v-card class="transparent">
+              <v-card-text v-for="i in 4" :key=i class="white--text">
+                <v-row no-gutters>
+                  <v-col cols=10>
+                    <v-avatar tile size=36>
+                      <v-img :src="constants.ADDRESS+mostTrashed[i-1].avatar"
+                        @error="mostTrashed[i-1].avatar=constants.DEFAULT_TEAM_URL"
+                        contain>
+                    </v-avatar> {{mostTrashed[i-1].name}}</v-col>
+                  <v-col>{{mostTrashed[i-1].stats.againstGoals}} <v-icon class="white--text">mdi-soccer</v-icon></v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-sheet>
+          <v-card-text class="pt-0">
+            <v-card-title class="justify-center">Equipos menos goleados</v-card-title>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col xs=12 sm=12 md=6 lg=4>
-        <v-card v-if="topDifference.length != 0" class="no-teams">
-          <v-card-title class="justify-center">Mejor diferencia de goles</v-card-title>
-          <v-card-text v-for="i in 4" :key=i>
-            <v-row no-gutters>
-              <v-col cols=10>
-                <v-avatar tile size=36>
-                  <v-img :src="constants.ADDRESS+topDifference[i-1].avatar"
-                    @error="topDifference[i-1].avatar=constants.DEFAULT_TEAM_URL"
-                    contain>
-                </v-avatar> {{topDifference[i-1].name}}</v-col>
-              <v-col>{{ topDifference[i-1].stats.goalDif }} <v-icon >mdi-soccer</v-icon></v-col>
-            </v-row>
+        <v-card
+          v-if="topDifference.length != 0" class="mt-9 no-teams"
+        >
+          <v-sheet
+            class="v-sheet--offset mx-auto"
+            color="#00cae3"
+            elevation="12"
+            max-width="calc(100% - 32px)"
+            max-height="calc(100% - 32px)"
+          >
+            <v-card class="transparent">
+              <v-card-text v-for="i in 4" :key=i class="white--text">
+                <v-row no-gutters>
+                  <v-col cols=10>
+                    <v-avatar tile size=36>
+                      <v-img :src="constants.ADDRESS+topDifference[i-1].avatar"
+                        @error="topDifference[i-1].avatar=constants.DEFAULT_TEAM_URL"
+                        contain>
+                    </v-avatar> {{topDifference[i-1].name}}</v-col>
+                  <v-col>{{ topDifference[i-1].stats.goalDif }} <v-icon class="white--text">mdi-soccer</v-icon></v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-sheet>
+          <v-card-text class="pt-0">
+            <v-card-title class="justify-center">Mejor diferencia de goles</v-card-title>
           </v-card-text>
         </v-card>
       </v-col>

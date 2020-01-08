@@ -30,6 +30,11 @@ if (window.localStorage.getItem('theme')!= null) {
     storeTheme=='lightBlue'? lightBlue : storeTheme=='indigo'? indigo :
     storeTheme=='teal'? teal : storeTheme=='deepPurple'? deepPurple : green
 }
+let darkMode = true
+if (window.localStorage.getItem('dark')!= null) {
+  const storeDark = window.localStorage.getItem('dark')
+  darkMode = JSON.parse(storeDark)
+}
 
 new Vue({
   el: '#app',
@@ -37,10 +42,10 @@ new Vue({
   store,
   vuetify: new Vuetify({
     theme: {
-      dark: true,
+      dark: darkMode,
       themes: {
         dark: themeApp,
-        light: red
+        light: themeApp
       },
       options: {
         customProperties: true,
