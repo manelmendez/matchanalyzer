@@ -1,43 +1,45 @@
 <template>
   <v-container class="homeContent" fluid>
-    <v-col class="content">
-      <v-row class="group"> 
-        <v-col v-if="this.myTeams.length == 0">
-          No tienes equipos
-        </v-col>
-        <v-list v-else>
-          <v-list-item
-            v-for="team in this.myTeams"
-            :key="team.id"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="team.name"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-row>
-      <v-row class="group">
-        <v-col v-if="this.competitions.length == 0">
-          No tienes competiciones
-        </v-col>
-        <v-list v-else>
-          <v-list-item
-            v-for="competition in this.competitions"
-            :key="competition.id"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="competition.name + ' - ' + competition.discipline + ' - ' + competition.category + ' - ' + competition.season"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-row>
-    </v-col>
+    <v-row class="justify-center">
+      <v-col>
+        <v-card class="animated fadeInRight">
+          <v-card-title v-if="this.myTeams.length==0" class="justify-center"><v-badge inline color="primary" content="0">Equipos</v-badge></v-card-title>
+          <v-card-title v-else class="justify-center"><v-badge inline color="primary" :content="this.myTeams.length">Equipos</v-badge></v-card-title>
+          <v-card-text v-if="this.myTeams.length == 0" class="text-center">Aún no hay equipos</v-card-text>
+          <Carousel v-else :per-page="1" :loop="true" :autoplay="true" autoplayTimeout="4000" paginationActiveColor="var(--v-primary-darken1)" paginationColor="var(--v-item-lighten2)">
+            <Slide v-for="team in this.myTeams" :key="team.id">
+              <h5 class="text-center">{{team.name}}</h5>
+            </Slide>
+          </Carousel>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row class="justify-center">
+      <v-col>
+        <v-card class="animated fadeInRight">
+          <v-card-title v-if="this.competitions.length == 0" class="justify-center"><v-badge inline color="primary" content="0">Competiciones</v-badge></v-card-title>          
+          <v-card-title v-else class="justify-center"><v-badge inline color="primary" :content="this.competitions.length">Competiciones</v-badge></v-card-title>          
+          <v-card-text v-if="this.competitions.length == 0" class="text-center">Aún no hay competiciones</v-card-text>
+          <Carousel v-else :per-page="1" :loop="true" :autoplay="true" autoplayTimeout="4000" paginationActiveColor="var(--v-primary-darken1)" paginationColor="var(--v-item-lighten2)">
+            <Slide v-for="competition in this.competitions" :key="competition.id">
+              <h5 class="text-center">{{competition.name}}</h5>
+            </Slide>
+          </Carousel>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { Carousel, Slide } from 'vue-carousel'
+
 export default {
   name: "index",
+  components: {
+    Carousel,
+    Slide
+  },
   methods: {
     ...mapActions({
       getUserCompetitions:'competition/getUserCompetitions',
@@ -62,11 +64,7 @@ export default {
 .homeContent {
   height: 100%;
 }
-.content {
+.cardContent {
   height: 100%;
-}
-.group {
-  background-color: var(--v-item-base);
-  height: 50%;
 }
 </style>

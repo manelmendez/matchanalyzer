@@ -26,6 +26,7 @@
     "font-awesome": "latest",
     "moment": "latest",
     "vue": "latest",
+    "vue-carousel": "^0.18.0",
     "vue-chartjs": "latest",
     "vue-facebook-signin-button": "latest",
     "vue-google-signin-button": "latest",
