@@ -23,7 +23,7 @@
           v-if="(item.localTeam.id == team.id && item.localTeamGoals > item.awayTeamGoals) || (item.awayTeam.id == team.id && item.awayTeamGoals > item.localTeamGoals)"
           width="20px"
           height="20px"
-          color="green"
+          color="success"
           content="G"
           inline
           tile
@@ -32,7 +32,7 @@
           v-if="item.localTeamGoals == item.awayTeamGoals"
           width="20px"
           height="20px"
-          color="orange"
+          color="warning"
           content="E"
           inline
           tile
@@ -41,7 +41,7 @@
           v-if="(item.localTeam.id == team.id && item.localTeamGoals < item.awayTeamGoals) || (item.awayTeam.id == team.id && item.awayTeamGoals < item.localTeamGoals)"
           width="20px"
           height="20px"
-          color="red"
+          color="error"
           content="P"
           inline
           tile

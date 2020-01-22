@@ -15,7 +15,7 @@
         <v-list-item-action>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-btn text icon color="blue lighten-2" @click.stop="updatingCompetition=competition, dialog=true" v-on="on">
+              <v-btn text icon color="info" @click.stop="updatingCompetition=competition, dialog=true" v-on="on">
                 <v-icon size="18">edit</v-icon>
               </v-btn>
             </template>
@@ -25,7 +25,7 @@
         <v-list-item-action>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-            <v-btn text icon color="red lighten-2" v-on="on" @click.stop="deletingCompetition=competition.id ,deleteDialog=true">
+            <v-btn text icon color="error" v-on="on" @click.stop="deletingCompetition=competition.id ,deleteDialog=true">
               <v-icon size="18">delete</v-icon>
             </v-btn>
             </template>
