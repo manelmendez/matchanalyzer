@@ -42,7 +42,7 @@
                 <a class="info--text" style="padding-right:10px" @click="login=!login">Si aún no tienes cuenta</a>
                 <v-btn
                   depressed
-                  color="info"
+                  color="var(--v-accent-darken1)"
                   rounded
                   type="submit"
                   @click="submit"

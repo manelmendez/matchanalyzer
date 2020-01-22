@@ -49,7 +49,7 @@
                 small
                 v-if="round.id == rounds[rounds.length -1].id"
                 rounded
-                color="red lighten-2"
+                color="error"
                 class="white--text resultBtn"
                 @click.stop="deleteDialog=!deleteDialog"
               >

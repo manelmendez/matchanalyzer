@@ -158,7 +158,4 @@ import teamMatchList from '../../../components/teamMatchList'
   }
 </script>
 <style>
-.a {
-  color: rgb(115, 199, 132)
-}
 </style>

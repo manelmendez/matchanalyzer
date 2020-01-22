@@ -157,7 +157,7 @@ import constants from '../assets/constants/constants'
   text-decoration: inherit;
 }
 .content {
-  background-color: var(--v-item-lighten5);
+  background-color: var(--v-item-lighten3);
   height: 100%
 }
 .darkContent {

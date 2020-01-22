@@ -53,7 +53,7 @@
             <v-col>
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
-                  <v-btn x-small text icon color="blue lighten-2" @click.stop="roundDialog=true" v-on="on">
+                  <v-btn x-small text icon color="info" @click.stop="roundDialog=true" v-on="on">
                     <v-icon size="18">edit</v-icon>
                   </v-btn>
                 </template>
@@ -63,7 +63,7 @@
             <v-col>
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
-                  <v-btn x-small text icon color="red lighten-2" @click.stop="deleteDialog=true" v-on="on">
+                  <v-btn x-small text icon color="error" @click.stop="deleteDialog=true" v-on="on">
                     <v-icon size="18">delete</v-icon>
                   </v-btn>
                 </template>
