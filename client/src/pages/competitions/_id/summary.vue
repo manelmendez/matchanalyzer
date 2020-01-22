@@ -52,7 +52,7 @@
             <v-card class="transparent">
               <v-card-text v-for="i in 4" :key=i class="white--text">
                 <v-row no-gutters>
-                  <v-col cols=10>
+                  <v-col cols=9>
                     <v-avatar tile size=36>
                       <v-img :src="constants.ADDRESS+topScorers[i-1].avatar"
                         @error="topScorers[i-1].avatar=constants.DEFAULT_TEAM_URL"
@@ -82,7 +82,7 @@
             <v-card class="transparent">
               <v-card-text v-for="i in 4" :key=i class="white--text">
                 <v-row no-gutters>
-                  <v-col cols=10>
+                  <v-col cols=9>
                     <v-avatar tile size=36>
                       <v-img :src="constants.ADDRESS+mostTrashed[i-1].avatar"
                         @error="mostTrashed[i-1].avatar=constants.DEFAULT_TEAM_URL"
@@ -112,7 +112,7 @@
             <v-card class="transparent">
               <v-card-text v-for="i in 4" :key=i class="white--text">
                 <v-row no-gutters>
-                  <v-col cols=10>
+                  <v-col cols=9>
                     <v-avatar tile size=36>
                       <v-img :src="constants.ADDRESS+topDifference[i-1].avatar"
                         @error="topDifference[i-1].avatar=constants.DEFAULT_TEAM_URL"
@@ -136,7 +136,7 @@
         lg="2"
         xl="1"
         v-for="team in competition.teams" :key="team.id">
-        <v-card class="teamCard d-flex flex-column" min-height="100%" @click.native.stop="goTo(team.id)">
+        <v-card class="teamCard d-flex flex-column" min-height="100%" @click.native.stop="$router.push('/teams/'+team.id+'/competitionstats')">
           <v-col>
             <v-img 
               justify="center"
@@ -229,7 +229,7 @@
       <v-card>
         <v-card-title class="headline">Selecciona el equipo que quieres añadir</v-card-title>
         <v-card-text>
-          <v-select :items="myTeams" item-text="name" return-object v-model="team" label="Seleccionar Equipo"></v-select>
+          <v-select :items="myTeamsWithoutCompetition" item-text="name" return-object v-model="team" label="Seleccionar Equipo"></v-select>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -271,9 +271,6 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
       team: "",
     }},
     methods: {
-      goTo(teamId) {
-        this.$router.push('/teams/'+teamId+'/competitionstats')
-      },
       async confirm(){
         this.dialog = false
         if (this.updatingTeam) {
@@ -326,7 +323,16 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
         topScorers: 'competition/topScorers',
         mostTrashed: 'competition/mostTrashed',
         topDifference: 'competition/topDifference'
-      })
+      }),
+      myTeamsWithoutCompetition() {
+        let teams = []
+        for (let i = 0; i < this.myTeams.length; i++) {
+          if (this.myTeams[i].competition == null || !this.myTeams[i].competition) {
+            teams.push(this.myTeams[i])
+          }
+        }
+        return teams
+      } 
     }
   }
 </script>

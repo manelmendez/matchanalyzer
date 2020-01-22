@@ -1,7 +1,7 @@
 <template>
   <v-row justify-center>
     <v-col cols=4>
-      <v-card class="match elevation-2">
+      <v-card class="match elevation-2" @click="$router.push('/teams/'+match.localTeam.id+'/competitionstats')">
         <v-card-text
           class="text-center"
           :class="resultClass(match.localTeamGoals,match.awayTeamGoals)"
@@ -22,7 +22,7 @@
       </v-card>
     </v-col>
     <v-col cols=4>
-      <v-card class="match elevation-2">
+      <v-card class="match elevation-2" @click="$router.push('/teams/'+match.awayTeam.id+'/competitionstats')">
         <v-card-text
           class="text-center"
           :class="resultClass(match.awayTeamGoals,match.localTeamGoals)"

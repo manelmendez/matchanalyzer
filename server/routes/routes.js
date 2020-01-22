@@ -33,7 +33,7 @@ api.get('/getUserTeams/:userId', auth.checkAuth, teamCtrl.getUserTeams)
 api.post('/addNoManagerTeam', auth.checkAuth, teamCtrl.addNoManagerTeam)
 api.put('/updateTeam/:id', auth.checkAuth, teamCtrl.updateTeam)
 api.delete('/deleteTeam/:id', auth.checkAuth, teamCtrl.deleteTeam) // PENSAR EN SI BORRAR O NO LAS ESTADISTICAS DEL EQUIPO
-
+api.get('/getTeamStats/:teamId/competition/:competitionId', auth.checkAuth, teamCtrl.getTeamStats)
 // PLAYER
 api.post('/addPlayer', auth.checkAuth, playerCtrl.addPlayer)
 api.put('/updatePlayer/:id', auth.checkAuth, playerCtrl.updatePlayer)

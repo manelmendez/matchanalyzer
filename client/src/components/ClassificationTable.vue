@@ -11,7 +11,7 @@
         <tr :class="setClass(index)">
           <td class="text-xs-center">{{ index+1 }}</td>
           <td class="text-xs-center">
-            <v-list-item-avatar :tile="true">
+            <v-list-item-avatar :tile="true" style="cursor:pointer" @click="$router.push('/teams/'+item.id+'/competitionstats')">
               <v-img :src="constants.ADDRESS+item.avatar" @error="item.avatar=constants.DEFAULT_TEAM_URL" contain>
             </v-list-item-avatar>
           </td>
