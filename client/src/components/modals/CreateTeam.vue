@@ -6,8 +6,8 @@
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
-          <v-layout wrap>
-            <v-flex xs12 md4 class="text-xs-center">
+          <v-row>
+            <v-col cols="12" md="4" class="text-xs-center">
               <input type="file" ref="file" @change="onFileChanged" style="display:none">
               <v-avatar v-if="!image" size="100px" class="uploadPhoto" @click="launchFilePicker">
                 <v-icon>add_a_photo</v-icon>
@@ -16,19 +16,19 @@
               @click="launchFilePicker" 
               @error="image=constants.DEFAULT_TEAM_URL"
               contain>
-            </v-flex>
-            <v-flex xs12 md4>
+            </v-col>
+            <v-col cols="12" md="4">
               <v-text-field label="Nombre del equipo" v-model="name" required></v-text-field>
-            </v-flex>
-            <v-flex xs12 md4>
+            </v-col>
+            <v-col cols="12" md="4">
               <v-select
                 :items="temporada"
                 label="Temporada"
                 v-model="season"
                 required
               ></v-select>
-            </v-flex>
-          </v-layout>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card-text>
       <v-card-actions>

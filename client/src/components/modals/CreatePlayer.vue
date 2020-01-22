@@ -6,27 +6,27 @@
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
-          <v-layout wrap>
-            <v-flex xs12 md4>
+          <v-row>
+            <v-col cols="12" md="4">
               <v-text-field label="Nombre y apellidos" v-model="name" required></v-text-field>
-            </v-flex>
-            <v-flex xs12 md4>
+            </v-col>
+            <v-col cols="12" md="4">
               <v-select
                 :items="positions"
                 label="Posicion"
                 v-model="position"
                 required
               ></v-select>
-            </v-flex>
-            <v-flex xs12 md4>
+            </v-col>
+            <v-col cols="12" md="4">
               <v-select
                 :items="years"
                 label="Año de nacimiento"
                 v-model="year"
                 required
               ></v-select>
-            </v-flex>
-          </v-layout>
+            </v-col>
+          </v-row>
         </v-container>
         <small>*indicates required field</small>
       </v-card-text>

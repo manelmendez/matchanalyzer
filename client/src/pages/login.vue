@@ -3,7 +3,7 @@
     <v-container text-center>
       <!-- LOGIN -->
       <v-row class="login" v-if="login" wrap justify="center">
-        <v-col lg="6" md="6" sm="10" xs="12">
+        <v-col lg="6" md="6" sm="10" cols="12">
           <v-card class="elevation-0">
             <v-toolbar dark color="primary" class="elevation-0">
               <v-toolbar-title>Iniciar sesión</v-toolbar-title>
@@ -70,7 +70,7 @@
       </v-row>
       <!-- REGISTER -->
       <v-row v-else class="register" wrap justify="center">
-        <v-col lg="6" md="6" sm="10" xs="12">
+        <v-col lg="6" md="6" sm="10" cols="12">
           <v-card class="elevation-0">
             <v-toolbar dark color="primary" class="elevation-0">
               <v-toolbar-title>Registrarse</v-toolbar-title>

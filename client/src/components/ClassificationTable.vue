@@ -3,45 +3,45 @@
     <v-data-table v-if="rankedTeams"
       :headers="headers"
       :items="rankedTeams"
-      class="elevation-1 text-xs-center"
+      class="elevation-1 text-center"
       hide-default-footer
       :items-per-page="-1"
     >
       <template v-slot:item="{ item, index }">
         <tr :class="setClass(index)">
-          <td class="text-xs-center">{{ index+1 }}</td>
-          <td class="text-xs-center">
+          <td class="text-center">{{ index+1 }}</td>
+          <td class="text-center">
             <v-list-item-avatar :tile="true" style="cursor:pointer" @click="$router.push('/teams/'+item.id+'/competitionstats')">
               <v-img :src="constants.ADDRESS+item.avatar" @error="item.avatar=constants.DEFAULT_TEAM_URL" contain>
             </v-list-item-avatar>
           </td>
-          <td class="text-xs-center">{{ item.name }}</td>
-          <td class="text-xs-center">{{ item.stats.points }}</td>
-          <td class="text-xs-center">{{ item.stats.gamesPlayed }}</td>
-          <td class="text-xs-center">{{ item.stats.wins }}</td>
-          <td class="text-xs-center">{{ item.stats.draws }}</td>
-          <td class="text-xs-center">{{ item.stats.loses }}</td>
-          <td class="text-xs-center">{{ item.stats.goals }}</td>
-          <td class="text-xs-center">{{ item.stats.againstGoals }}</td>
-          <td class="text-xs-center">{{ item.stats.goalDif }}</td>
-          <td class="text-xs-center"></td>
-          <td class="text-xs-center">{{ item.stats.homePoints }}</td>
-          <td class="text-xs-center">{{ item.stats.homeGamesPlayed }}</td>
-          <td class="text-xs-center">{{ item.stats.homeWins }}</td>
-          <td class="text-xs-center">{{ item.stats.homeDraws }}</td>
-          <td class="text-xs-center">{{ item.stats.homeLoses }}</td>
-          <td class="text-xs-center">{{ item.stats.homeGoals }}</td>
-          <td class="text-xs-center">{{ item.stats.homeAgainstGoals }}</td>
-          <td class="text-xs-center">{{ item.stats.homeGoalDif }}</td>
-          <td class="text-xs-center"></td>
-          <td class="text-xs-center">{{ item.stats.awayPoints }}</td>
-          <td class="text-xs-center">{{ item.stats.awayGamesPlayed }}</td>
-          <td class="text-xs-center">{{ item.stats.awayWins }}</td>
-          <td class="text-xs-center">{{ item.stats.awayDraws }}</td>
-          <td class="text-xs-center">{{ item.stats.awayLoses }}</td>
-          <td class="text-xs-center">{{ item.stats.awayGoals }}</td>
-          <td class="text-xs-center">{{ item.stats.awayAgainstGoals }}</td>
-          <td class="text-xs-center">{{ item.stats.awayGoalDif }}</td>
+          <td class="text-center">{{ item.name }}</td>
+          <td class="text-center">{{ item.stats.points }}</td>
+          <td class="text-center">{{ item.stats.gamesPlayed }}</td>
+          <td class="text-center">{{ item.stats.wins }}</td>
+          <td class="text-center">{{ item.stats.draws }}</td>
+          <td class="text-center">{{ item.stats.loses }}</td>
+          <td class="text-center">{{ item.stats.goals }}</td>
+          <td class="text-center">{{ item.stats.againstGoals }}</td>
+          <td class="text-center">{{ item.stats.goalDif }}</td>
+          <td class="text-center"></td>
+          <td class="text-center">{{ item.stats.homePoints }}</td>
+          <td class="text-center">{{ item.stats.homeGamesPlayed }}</td>
+          <td class="text-center">{{ item.stats.homeWins }}</td>
+          <td class="text-center">{{ item.stats.homeDraws }}</td>
+          <td class="text-center">{{ item.stats.homeLoses }}</td>
+          <td class="text-center">{{ item.stats.homeGoals }}</td>
+          <td class="text-center">{{ item.stats.homeAgainstGoals }}</td>
+          <td class="text-center">{{ item.stats.homeGoalDif }}</td>
+          <td class="text-center"></td>
+          <td class="text-center">{{ item.stats.awayPoints }}</td>
+          <td class="text-center">{{ item.stats.awayGamesPlayed }}</td>
+          <td class="text-center">{{ item.stats.awayWins }}</td>
+          <td class="text-center">{{ item.stats.awayDraws }}</td>
+          <td class="text-center">{{ item.stats.awayLoses }}</td>
+          <td class="text-center">{{ item.stats.awayGoals }}</td>
+          <td class="text-center">{{ item.stats.awayAgainstGoals }}</td>
+          <td class="text-center">{{ item.stats.awayGoalDif }}</td>
         </tr>
       </template>
       <template v-slot:no-data>

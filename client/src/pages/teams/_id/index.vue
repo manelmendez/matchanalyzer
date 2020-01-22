@@ -2,20 +2,20 @@
   <v-container fluid>
     <v-card>
       <v-card-title>
-        <v-layout align-center>
-          <v-flex xs1>
+        <v-row align-center>
+          <v-col cols="1">
             <v-img v-if="team.avatar" :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" alt="avatar" :contain="true" height="40" width="40">
-          </v-flex>
-          <v-flex>  
+          </v-col>
+          <v-col>  
             {{team.name}}
-          </v-flex>
-        </v-layout>
+          </v-col>
+        </v-row>
       </v-card-title>
       <v-data-table
         v-if="team"
         :headers="headers"
         :items="team.players"
-        class="elevation-1 text-xs-center"
+        class="elevation-1 text-center"
         hide-default-footer
         :items-per-page="-1"
       >

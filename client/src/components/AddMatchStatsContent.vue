@@ -40,7 +40,7 @@
           </v-btn>
         </v-row>
         <v-row dense>
-          <v-col xs="12"
+          <v-col cols="12"
             sm="12"
             md="4"
             lg="4"
@@ -66,7 +66,7 @@
           <AddGoal v-if="addgoalDialog" :show="addgoalDialog" :players="players" :duration="Number(duration)" @close="addgoalDialog=false" @confirm="addGoal"></AddGoal>
         </v-row>
         <v-row dense>
-          <v-col xs="12"
+          <v-col cols="12"
             sm="12"
             md="6"
             lg="6"
@@ -92,7 +92,7 @@
           <AddCard v-if="addcardDialog" :show="addcardDialog" :players="players" :duration="Number(duration)" @close="addcardDialog=false" @confirm="addCard"></AddCard>
         </v-row>
         <v-row dense>
-          <v-col xs="12"
+          <v-col cols="12"
             sm="12"
             md="6"
             lg="6"

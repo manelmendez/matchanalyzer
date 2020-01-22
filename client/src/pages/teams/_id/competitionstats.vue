@@ -2,13 +2,13 @@
   <v-container fluid>
     {{team.name}}
     <v-row>
-      <v-col xs=12 sm=12 md=6 lg=4>
+      <v-col cols="12" sm="12" md="6" lg="4">
         <positionstats :chart-data="positiondatacollection" :height="250" :team="team"/>
       </v-col>
-      <v-col xs=12 sm=12 md=6 lg=4>
+      <v-col cols="12" sm="12" md="6" lg="4">
         <matchstats :chart-data="matchesdatacollection" :height="250" :team="team"/>
       </v-col>
-      <v-col xs=12 sm=12 md=6 lg=4>
+      <v-col cols="12" sm="12" md="6" lg="4">
         <goalstats :chart-data="goalsdatacollection" :height="250" :team="team"/>
       </v-col>
     </v-row>
