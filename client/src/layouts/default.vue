@@ -4,7 +4,6 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
       <v-toolbar-title @click="changeTheme" class="white--text">MatchAnalyzer</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-switch v-model="dark" inset color="white" class="switchStyle" label="Dark mode"></v-switch>
       <v-menu open-on-hover offset-y>
         <template v-slot:activator="{ on }">
           <v-btn
@@ -16,6 +15,9 @@
           </v-btn>
         </template>
         <v-list>
+          <v-list-item class="text-center">
+            <v-switch dense v-model="dark" inset color="white" label=""></v-switch>
+          </v-list-item>
           <v-list-item
             v-for="(item, index) in themes"
             :key="index"

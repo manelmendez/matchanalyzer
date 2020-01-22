@@ -12,6 +12,9 @@
         <goalstats :chart-data="goalsdatacollection" :height="250" :team="team"/>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col><teamMatchList :team="team" :rounds="rounds"></teamMatchList></v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -22,11 +25,13 @@ import constants from '../../../assets/constants/constants'
 import positionstats from '../../../components/positionstats'
 import matchstats from '../../../components/matchstats'
 import goalstats from '../../../components/goalstats'
+import teamMatchList from '../../../components/teamMatchList'
   export default {
     components: {
       positionstats,
       matchstats,
       goalstats,
+      teamMatchList
     },
     data: () => ({
       constants: constants,
