@@ -6,7 +6,7 @@
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
-          <v-layout wrap></v-layout>
+          <v-row></v-row>
         </v-container>
       </v-card-text>
       <v-card-actions>

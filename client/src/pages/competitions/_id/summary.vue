@@ -38,7 +38,7 @@
       </v-card-title>
     </v-card>
     <v-row>
-      <v-col xs=12 sm=12 md=6 lg=4>
+      <v-col cols=12 sm=12 md=6 lg=4>
         <v-card
           v-if="topScorers.length != 0" class="mt-9 no-teams"
         >
@@ -68,7 +68,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col xs=12 sm=12 md=6 lg=4>
+      <v-col cols=12 sm=12 md=6 lg=4>
         <v-card
           v-if="mostTrashed.length != 0" class="mt-9 no-teams"
         >
@@ -98,7 +98,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col xs=12 sm=12 md=6 lg=4>
+      <v-col cols=12 sm=12 md=6 lg=4>
         <v-card
           v-if="topDifference.length != 0" class="mt-9 no-teams"
         >
@@ -130,7 +130,7 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col xs="6"
+      <v-col cols="6"
         sm="4"
         md="3"
         lg="2"

@@ -6,27 +6,27 @@
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
-          <v-layout wrap>
-            <v-flex xs12 md4>
+          <v-row>
+            <v-col cols="12" md="4">
               <v-text-field label="Nombre de la competición" v-model="name" required></v-text-field>
-            </v-flex>
-            <v-flex xs12 md4>
+            </v-col>
+            <v-col cols="12" md="4">
               <v-select
                 :items="seasons"
                 label="Temporada de la competición"
                 v-model="season"
                 required
               ></v-select>
-            </v-flex>
-            <v-flex xs12 md4>
+            </v-col>
+            <v-col cols="12" md="4">
               <v-select
                 :items="disciplines"
                 label="Disciplina"
                 v-model="discipline"
                 required
               ></v-select>
-            </v-flex>
-            <v-flex xs12 md4>
+            </v-col>
+            <v-col cols="12" md="4">
               <v-select
                 :disabled="discipline==''"
                 :items="(discipline=='F7') ? categoriesF7 : categoriesF11"
@@ -34,8 +34,8 @@
                 v-model="category"
                 required
               ></v-select>
-            </v-flex>
-          </v-layout>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card-text>
       <v-card-actions>

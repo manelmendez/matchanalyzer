@@ -1,19 +1,52 @@
 <template>
   <v-container fluid v-if="this.teamStats.stats">
     <v-row justify="center">
-      <v-col class="text-center" xs=12 sm=6 md=6 lg=4>
-        Posicion en liga: {{this.teamStats.position}}
+      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+        <v-card class="elevation-0">
+          <v-card-title style="justify-content: center">
+            Posicion en liga
+          </v-card-title>
+          <v-card-text>
+            <p style="font-size: 40px">{{this.teamStats.position}}</p>
+            <v-icon x-large size="1000px" :color="(this.teamStats.position == 1 ? 'gold' : this.teamStats.position == 2 ? 'blue' : this.teamStats.position == 3 ? 'red' : '')">mdi-trophy
+            </v-icon>
+          </v-card-text>
+        </v-card>
       </v-col>
-      <v-col class="text-center" xs=12 sm=6 md=6 lg=4>
-        Puntos: {{this.teamStats.stats.points}}
+      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+        <v-card class="elevation-0">
+          <v-card-title style="justify-content: center">
+            Puntos
+          </v-card-title>
+          <v-card-text>  
+            <p style="font-size: 40px">{{this.teamStats.stats.points}}</p>
+          </v-card-text>
+        </v-card>
       </v-col>
-    </v-row>
-    <v-row justify="center">
-      <v-col class="text-center" xs=12 sm=6 md=6 lg=4>
-        Goles: {{this.teamStats.stats.goals}}
+    
+      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+        <v-card class="elevation-0">
+          <v-card-title style="justify-content: center">
+            Goles
+          </v-card-title>
+          <v-card-text>
+              <p style="font-size: 40px">{{this.teamStats.stats.goals}}</p>
+              <v-icon x-large size="1000px">mdi-soccer
+              </v-icon>
+          </v-card-text>
+        </v-card>
       </v-col>
-      <v-col class="text-center" xs=12 sm=6 md=6 lg=4>
-        Victorias: {{this.teamStats.stats.wins}}
+      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+        <v-card class="elevation-0">
+          <v-card-title style="justify-content: center">
+            Victorias
+          </v-card-title>
+          <v-card-text >
+              <p style="font-size: 40px">{{this.teamStats.stats.wins}} / {{this.teamStats.stats.gamesPlayed}}</p>
+              <v-icon x-large size="1000px">mdi-check
+              </v-icon>
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>

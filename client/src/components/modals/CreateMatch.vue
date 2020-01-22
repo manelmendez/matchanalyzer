@@ -6,8 +6,8 @@
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
-          <v-layout wrap>
-            <v-flex xs12 md4>
+          <v-row>
+            <v-col cols="12" md="4">
               <v-select
                 :items="roundTeams"
                 item-text="name"
@@ -17,20 +17,20 @@
                 v-on:change="checkTeam"
                 required
               ></v-select>
-            </v-flex>
-            <v-flex xs12 md4 class="text-center">
+            </v-col>
+            <v-col cols="12" md="4" class="text-center">
               Resultado
-              <v-layout wrap>
-                <v-flex xs12 md4 class="text-center">
+              <v-row wrap>
+                <v-col cols="12" md="4" class="text-center">
                   <v-text-field class="centered-input" type="number" min="0" v-model="localTeamGoals" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 md4 class="text-center align-self-center">-</v-flex>
-                <v-flex xs12 md4 class="text-center">
+                </v-col>
+                <v-col cols="12" md="4" class="text-center align-self-center">-</v-col>
+                <v-col cols="12" md="4" class="text-center">
                   <v-text-field class="centered-input" type="number" min="0" v-model="awayTeamGoals" required></v-text-field>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-            <v-flex xs12 md4>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col cols="12" md="4">
               <v-select
                 :items="roundTeams"
                 item-text="name"
@@ -40,8 +40,8 @@
                 v-on:change="checkTeam"
                 required
               ></v-select>
-            </v-flex>
-          </v-layout>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card-text>
       <v-card-actions>
