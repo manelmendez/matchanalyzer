@@ -8,7 +8,13 @@
           </v-card-title>
           <v-card-text>
             <p style="font-size: 40px">{{this.teamStats.position}}</p>
-            <v-icon x-large size="1000px" :color="(this.teamStats.position == 1 ? 'gold' : this.teamStats.position == 2 ? 'blue' : this.teamStats.position == 3 ? 'red' : '')">mdi-trophy
+            <v-icon 
+              v-if="this.teamStats.position == 1 || this.teamStats.position == 2 || this.teamStats.position == 3"
+              x-large 
+              size="1000px" 
+              :color="(this.teamStats.position == 1 ? colors.yellow.darken3 : this.teamStats.position == 2 ? colors.blueGrey.lighten1 : this.teamStats.position == 3 ? colors.deepOrange.darken1 : '')"
+            >
+              mdi-trophy
             </v-icon>
           </v-card-text>
         </v-card>
@@ -23,7 +29,6 @@
           </v-card-text>
         </v-card>
       </v-col>
-    
       <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center">
@@ -58,6 +63,7 @@
 </template>
 
 <script>
+import colors from 'vuetify/lib/util/colors'
 import { mapActions, mapGetters } from "vuex";
 import axios from 'axios'
 
@@ -67,7 +73,8 @@ export default {
   },
   data() {
     return {
-      teamStats: this.team
+      teamStats: this.team,
+      colors: colors
     }
   },
   methods: {

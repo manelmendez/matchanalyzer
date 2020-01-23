@@ -5,7 +5,7 @@ export const teamModule = {
   namespaced: true,
   state: {
     team: {players:[]},
-    teams: [],
+    teams: [], // NO SE SI SE ESTA USANDO
     myTeams: [],
   },
   getters: {
@@ -21,6 +21,13 @@ export const teamModule = {
     teamPlayers: state => {
       return state.team.players
     },
+    getTeamNameById: (state) => (id) => { //ejemplo de getter con parametro
+      for (let i = 0; i < state.myTeams.length; i++) {
+        if (state.teams[i].id == id) {
+          return state.teams[i].name
+        }
+      }
+    }
   },
   mutations: {
     ...teamMutations

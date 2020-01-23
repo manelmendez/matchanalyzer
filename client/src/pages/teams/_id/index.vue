@@ -117,10 +117,10 @@ import constants from '../../../assets/constants/constants'
       })
     },
     computed: {
-      ...mapGetters("team",[
-        'team',
-        'teamPlayers'
-      ])
+      ...mapGetters({
+        team:'team/team',
+        teamPlayers: 'team/teamPlayers'
+      })
     },
     async created() {
       await this.getTeam(this.$route.params.id)
