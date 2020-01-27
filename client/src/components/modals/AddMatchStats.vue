@@ -23,9 +23,9 @@
               </v-col>
             </v-row>
             <v-row>
-              <AddMatchStatsContent :team="localTeamWithPlayers"></AddMatchStatsContent>
+              <addMatchStatsContent :team="localTeamWithPlayers"></addMatchStatsContent>
               <v-divider vertical></v-divider>
-              <AddMatchStatsContent :team="awayTeamWithPlayers"></AddMatchStatsContent>
+              <addMatchStatsContent :team="awayTeamWithPlayers"></addMatchStatsContent>
             </v-row>
             <br><br>
             <v-divider></v-divider>
@@ -45,7 +45,7 @@
 <script>
 import { mapActions } from "vuex";
 import constants from "../../assets/constants/constants";
-import AddMatchStatsContent from '../AddMatchStatsContent.vue'
+import addMatchStatsContent from '../addMatchStatsContent.vue'
 export default {
   props:{
     show: Boolean,

@@ -65,7 +65,7 @@
           </v-col>
           <v-col v-else>
             <v-container>
-              <RoundMatch v-for="match in matches" :key="match.id" :match="match" @loading="loading=!loading"></RoundMatch>
+              <roundMatch v-for="match in matches" :key="match.id" :match="match" @loading="loading=!loading"></roundMatch>
             </v-container>
           </v-col>
           <br>
@@ -83,12 +83,12 @@
 <script>
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
-import RoundMatch from "../../../components/RoundMatch"
+import roundMatch from "../../../components/roundMatch"
 import DeleteDialog from "../../../components/modals/DeleteDialog"
 import CreateMatch from "../../../components/modals/CreateMatch"
 export default {
   components: {
-    RoundMatch,
+    roundMatch,
     DeleteDialog,
     CreateMatch
   },

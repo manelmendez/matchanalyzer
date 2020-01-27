@@ -41,7 +41,7 @@
         </v-row>
       </v-card-title>
       <v-card-text>
-        <ClassificationTable :rankedTeams="rankedTeams"></ClassificationTable>
+        <classificationTable :rankedTeams="rankedTeams"></classificationTable>
       </v-card-text>
     </v-card>
   </v-row>
@@ -52,11 +52,11 @@
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
 import constants from '../../../assets/constants/constants'
-import ClassificationTable from '../../../components/ClassificationTable'
+import classificationTable from '../../../components/classificationTable'
   export default {
     name: "classification",
     components: {
-      ClassificationTable
+      classificationTable
     },
     data: () => ({
       constants: constants,
