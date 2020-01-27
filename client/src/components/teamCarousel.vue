@@ -25,7 +25,7 @@
             Puntos
           </v-card-title>
           <v-card-text>  
-            <p style="font-size: 40px">{{this.teamStats.stats.points}}</p>
+            <p style="font-size: 40px">{{this.teamStats.stats.points}}/{{this.teamStats.stats.gamesPlayed * 3}}</p>
           </v-card-text>
         </v-card>
       </v-col>
@@ -42,6 +42,7 @@
         </v-card>
       </v-col>
       <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+        <matchstats :chart-data="matchesdatacollection" :height="250" :team="team"/>
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center">
             Victorias
@@ -64,12 +65,15 @@
 
 <script>
 import colors from 'vuetify/lib/util/colors'
-import { mapActions, mapGetters } from "vuex";
 import axios from 'axios'
+import matchstats from '../components/matchstats'
 
 export default {
   props: {
     team: Object
+  },
+  components: {
+    matchstats
   },
   data() {
     return {
@@ -78,14 +82,10 @@ export default {
     }
   },
   methods: {
-    getTeamStats() {
-      console.log("HOLA");
-      
+    getTeamStats() {      
       axios.get('getTeamStats/'+this.team.id+'/competition/'+this.team.competition).then(response => {
-        console.log(response);
         this.teamStats=response.data.teamStats
       }).catch((err) => {
-        console.log(err);
         this.teamStats=null
       })
     }
@@ -94,7 +94,21 @@ export default {
     this.getTeamStats()
   },
   computed: {
-
+    matchesdatacollection() {
+      let victorias = this.teamStats.stats.wins
+      let empates = this.teamStats.stats.draws
+      let derrotas = this.teamStats.stats.loses      
+      return {
+        labels: ["Victorias","Empates","Derrotas"],
+        datasets: [
+          {
+            data: [victorias, empates, derrotas],
+            backgroundColor: ['rgb(115, 199, 132)','rgb(255, 212, 71)','rgb(255, 117, 117)'],
+            borderColor: ['rgba(115, 199, 132,0)','rgba(255, 212, 71,0)','rgba(255, 117, 117,0)']
+          }, 
+        ]
+      }
+    },
   }
 }
 </script>

@@ -33,8 +33,8 @@ import PieChart from '../components/charts/PieChart.js'
       return {
         options: {
           title: {
-            display: true,
-            text: 'Porcentaje de victorias / empates / derrotas'
+            display: false,
+            text: '% victorias / empates / derrotas'
           },
           borderColor: 'red',
           cutoutPercentage: 50
