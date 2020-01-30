@@ -42,15 +42,9 @@
         </v-card>
       </v-col>
       <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
-        <matchstats :chart-data="matchesdatacollection" :height="250" :team="team"/>
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center">
-            Victorias
-          </v-card-title>
           <v-card-text >
-              <p style="font-size: 40px">{{this.teamStats.stats.wins}} / {{this.teamStats.stats.gamesPlayed}}</p>
-              <v-icon x-large size="1000px">mdi-check
-              </v-icon>
+            <pie-chart :chart-data="matchesdatacollection" :height="250" :options="options" class="chartStyle"></pie-chart>
           </v-card-text>
         </v-card>
       </v-col>
@@ -66,19 +60,28 @@
 <script>
 import colors from 'vuetify/lib/util/colors'
 import axios from 'axios'
-import matchstats from '../components/matchstats'
+import PieChart from '../components/charts/PieChart.js'
 
 export default {
   props: {
     team: Object
   },
   components: {
-    matchstats
+    PieChart
   },
   data() {
     return {
       teamStats: this.team,
-      colors: colors
+      colors: colors,
+      options: {
+        legend: {
+            labels: {
+                // This more specific font property overrides the global property
+                fontColor: this.$vuetify.theme.parsedTheme.item.base
+            }
+        },
+        cutoutPercentage: 50
+      }
     }
   },
   methods: {
@@ -90,8 +93,8 @@ export default {
       })
     }
   },
-  async created() {
-    this.getTeamStats()
+  async created() {    
+    this.getTeamStats()    
   },
   computed: {
     matchesdatacollection() {

@@ -13,6 +13,71 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col cols="12" sm="12" md="6" lg="4">
+        <v-card>
+          <v-card-title>
+            Total
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col cols=7>- Goles por partido: </v-col>
+              <v-col><b style="fontSize:18px">{{totalStats.goalAverage}}</b></v-col>
+            </v-row>
+            <v-row>
+              <v-col cols=7>- Goles recibidos por partido: </v-col>
+              <v-col><b style="fontSize:18px">{{totalStats.againstGoalAverage}}</b></v-col>
+            </v-row>
+            <v-row>
+              <v-col cols=7>- Partidos con la porteria a 0: </v-col>
+              <v-col><b style="fontSize:18px">{{totalStats.zeroGoals}}</b></v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" sm="12" md="6" lg="4">
+        <v-card>
+          <v-card-title>
+            Local
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col cols=7>- Goles por partido: </v-col>
+              <v-col><b style="fontSize:18px">{{totalStats.localGoalAverage}}</b></v-col>
+            </v-row>
+            <v-row>
+              <v-col cols=7>- Goles recibidos por partido: </v-col>
+              <v-col><b style="fontSize:18px">{{totalStats.localAgainstGoalAverage}}</b></v-col>
+            </v-row>
+            <v-row>
+              <v-col cols=7>- Partidos con la porteria a 0: </v-col>
+              <v-col><b style="fontSize:18px">{{totalStats.localZeroGoals}}</b></v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" sm="12" md="6" lg="4">
+        <v-card>
+          <v-card-title>
+            Visitante
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col cols=7>- Goles por partido: </v-col>
+              <v-col><b style="fontSize:18px">{{totalStats.awayGoalAverage}}</b></v-col>
+            </v-row>
+            <v-row>
+              <v-col cols=7>- Goles recibidos por partido: </v-col>
+              <v-col><b style="fontSize:18px">{{totalStats.awayAgainstGoalAverage}}</b></v-col>
+            </v-row>
+            <v-row>
+              <v-col cols=7>- Partidos con la porteria a 0: </v-col>
+              <v-col><b style="fontSize:18px">{{totalStats.awayZeroGoals}}</b></v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col><teamMatchList :team="team" :rounds="rounds"></teamMatchList></v-col>
     </v-row>
   </v-container>
@@ -37,7 +102,6 @@ import teamMatchList from '../../../components/teamMatchList'
       constants: constants,
     }),
     async created() {
-      //do something after creating vue instance
       await this.getTeam(this.$route.params.id)
       await this.getCompetition(this.team.competition)
       await this.getCompetitionRounds(this.team.competition)
@@ -73,13 +137,26 @@ import teamMatchList from '../../../components/teamMatchList'
         getCompetitionRounds: 'competition/getCompetitionRounds',
       })
     },
+    watch: {
+      async id() {
+        await this.getTeam(this.$route.params.id)
+        await this.getCompetition(this.team.competition)
+        await this.getCompetitionRounds(this.team.competition)
+      }
+    },
     computed: {
       ...mapGetters({
         rankedTeams: 'competition/rankedTeams',
-        statsPerRound: 'competition/statsPerRound',
         team: 'team/team',
-        rounds: 'competition/rounds'
+        rounds: 'competition/rounds',
+        statsPerRound: 'competition/statsPerRound'
       }),
+      teamMatchesPerRound() {
+        return this.$store.getters['competition/teamMatchesPerRound'](this.$route.params.id)
+      },
+      id(){
+        return this.$route.params.id
+      },
       positiondatacollection: function () {      
         let labels = []
         let positions = []
@@ -131,7 +208,6 @@ import teamMatchList from '../../../components/teamMatchList'
         let goals = this.getTeamGoals()
         let labels = []        
         for (let i = 0; i < goals.goalsperround.length; i++) {
-          // labels.push(this.statsPerRound[i].name)
           labels.push("J"+(i+1))
         }     
         return {
@@ -154,6 +230,46 @@ import teamMatchList from '../../../components/teamMatchList'
           ],
         }
       },
+      totalStats() {
+        let localGoals = 0
+        let awayGoals = 0
+        let localAgainstGoals = 0
+        let awayAgainstGoals = 0
+        let localZeroGoals = 0
+        let awayZeroGoals = 0
+        let localMatches = 0
+        let awayMatches = 0
+        for (let i = 0; i < this.teamMatchesPerRound.length; i++) {
+          let match = this.teamMatchesPerRound[i]
+          if (match.localTeam.id == this.$route.params.id) {
+            localMatches++
+            localGoals += match.localTeamGoals
+            localAgainstGoals += match.awayTeamGoals
+            if (match.awayTeamGoals == 0) {
+              localZeroGoals++
+            }
+          }
+          else {
+            awayMatches++
+            awayGoals += match.awayTeamGoals
+            awayAgainstGoals += match.localTeamGoals
+            if (match.localTeamGoals == 0) {
+              awayZeroGoals++
+            }
+          }
+        }
+        return {
+          goalAverage: ((localGoals+awayGoals)/(localMatches+awayMatches)).toFixed(2),
+          againstGoalAverage: ((localAgainstGoals+awayAgainstGoals)/(localMatches+awayMatches)).toFixed(2),
+          zeroGoals: (localZeroGoals+awayZeroGoals)+' de '+(localMatches+awayMatches),
+          localGoalAverage: (localGoals/localMatches).toFixed(2),
+          localAgainstGoalAverage: (localAgainstGoals/localMatches).toFixed(2),
+          localZeroGoals: localZeroGoals+' de '+localMatches,
+          awayGoalAverage: (awayGoals/awayMatches).toFixed(2),
+          awayAgainstGoalAverage: (awayAgainstGoals/awayMatches).toFixed(2),
+          awayZeroGoals: awayZeroGoals+' de '+awayMatches,
+        }
+      }
     },
   }
 </script>

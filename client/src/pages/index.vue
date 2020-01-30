@@ -5,7 +5,7 @@
         <v-card class="animated fadeInRight">
           <v-card-title class="justify-center"><v-badge inline color="primary" :content="this.myTeams.length">Equipos</v-badge></v-card-title>
           <v-card-text v-if="this.myTeams.length == 0" class="text-center">Aún no hay equipos</v-card-text>
-          <carousel v-else autoplayHoverPause :per-page="1" :loop="true" :autoplay="true" :autoplayTimeout="4000" paginationActiveColor="var(--v-primary-darken1)" paginationColor="var(--v-item-lighten2)">
+          <carousel v-else autoplayHoverPause :per-page="1" :loop="true" :autoplay="false" :autoplayTimeout="4000" paginationActiveColor="var(--v-primary-darken1)" paginationColor="var(--v-item-lighten2)">
             <slide v-for="team in this.myTeams" :key="team.id">
               <h5 class="text-center">{{team.name}}</h5>
               <teamCarousel :team="team"></teamCarousel>
@@ -56,7 +56,6 @@ export default {
     })
   },
   created() {
-    //do something after creating vue instance
     this.getUserCompetitions(this.user.id)
     this.getUserTeams(this.user.id)
   }
