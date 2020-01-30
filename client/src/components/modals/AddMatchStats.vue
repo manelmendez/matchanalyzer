@@ -53,7 +53,7 @@ export default {
     awayTeam: Object
   },
   components: {
-    AddMatchStatsContent
+    addMatchStatsContent
   },
   data() {
     return {

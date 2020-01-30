@@ -473,6 +473,27 @@ export const competitionModule = {
       else {
         return []
       }
+    },
+    teamMatchesPerRound: state => (id) => {      
+      if (state.competition.teams && state.rounds && state.rounds.length != 0){
+        let teamMatchesPerRound = []
+        for (let r = 0; r < state.rounds.length; r++) {
+          let found = false
+          let m = 0
+          while (m < state.rounds[r].matches.length && !found) {
+            let match = state.rounds[r].matches[m]            
+            if (match.localTeam.id == id || match.awayTeam.id == id) {
+              teamMatchesPerRound.push(match)
+              found = true
+            }
+            m++
+          }
+        }
+        return teamMatchesPerRound
+      }
+      else {
+        return []
+      }
     }
   },
   mutations: {

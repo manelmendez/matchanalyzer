@@ -13,7 +13,7 @@
       class="elevation-1"
     >
       <template v-slot:item.equipos="{ item }">
-        {{item.localTeam.name}} - {{item.awayTeam.name}}
+        <router-link :to="'/teams/'+item.localTeam.id+'/competitionstats'">{{item.localTeam.name}}</router-link> - <a :href="'/teams/'+item.awayTeam.id+'/competitionstats'">{{item.awayTeam.name}}</a>
       </template>
       <template v-slot:item.resultados="{ item }">
         {{item.localTeamGoals}} - {{item.awayTeamGoals}}
