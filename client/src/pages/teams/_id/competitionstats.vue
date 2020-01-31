@@ -15,12 +15,12 @@
     <v-row>
       <v-col cols="12" sm="12" md="6" lg="4">
         <v-card>
-          <v-card-title>
+          <v-card-title class="justify-center">
             Total
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col cols=7>- Goles por partido: </v-col>
+              <v-col cols=7>- Goles a favor por partido: </v-col>
               <v-col><b style="fontSize:18px">{{totalStats.goalAverage}}</b></v-col>
             </v-row>
             <v-row>
@@ -36,12 +36,12 @@
       </v-col>
       <v-col cols="12" sm="12" md="6" lg="4">
         <v-card>
-          <v-card-title>
+          <v-card-title class="justify-center">
             Local
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col cols=7>- Goles por partido: </v-col>
+              <v-col cols=7>- Goles a favor por partido: </v-col>
               <v-col><b style="fontSize:18px">{{totalStats.localGoalAverage}}</b></v-col>
             </v-row>
             <v-row>
@@ -57,12 +57,12 @@
       </v-col>
       <v-col cols="12" sm="12" md="6" lg="4">
         <v-card>
-          <v-card-title>
+          <v-card-title class="justify-center">
             Visitante
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col cols=7>- Goles por partido: </v-col>
+              <v-col cols=7>- Goles a favor por partido: </v-col>
               <v-col><b style="fontSize:18px">{{totalStats.awayGoalAverage}}</b></v-col>
             </v-row>
             <v-row>

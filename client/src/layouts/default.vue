@@ -2,7 +2,7 @@
   <v-content>
     <v-app-bar app fixed flat clipped-left collapse-on-scroll color="primary darken-1">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
-      <v-toolbar-title @click="changeTheme" class="white--text">MatchAnalyzer</v-toolbar-title>
+      <v-toolbar-title @click="changeTheme" class="white--text" style="cursor:pointer">MatchAnalyzer</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
