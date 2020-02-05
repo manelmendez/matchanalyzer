@@ -59,7 +59,7 @@ import BarChart from '../components/charts/BarChart.js'
     }
   }
 </script>
-<style>
+<style scoped>
 .v-sheet--offset {
   top: -24px;
   position: relative;

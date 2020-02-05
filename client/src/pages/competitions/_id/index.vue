@@ -56,7 +56,7 @@ import constants from '../../../assets/constants/constants'
     }
   }
 </script>
-<style>
+<style scoped>
 .compTab:hover {
   color: rgb(255, 255, 255)
 }

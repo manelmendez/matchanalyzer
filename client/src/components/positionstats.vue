@@ -61,7 +61,7 @@ import LineChart from '../components/charts/LineChart.js'
     }
   }
 </script>
-<style>
+<style scoped>
 .v-sheet--offset {
   top: -24px;
   position: relative;

@@ -121,7 +121,7 @@ import constants from '../../assets/constants/constants'
     }
   }
 </script>
-<style>
+<style scoped>
 .uploadPhoto {
   align-items: center;
   justify-content: center;

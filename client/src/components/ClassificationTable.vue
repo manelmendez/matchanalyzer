@@ -114,12 +114,6 @@ export default {
 .first:hover{
   background-color: rgba(117, 255, 131, 0.8) !important
 }
-/* .second{
-  background-color: rgba(255, 216, 117, 0.55)
-}
-.second:hover{
-  background-color: rgba(255, 216, 117, 0.9) !important
-} */
 .descending{
   background-color: rgba(255, 117, 117, 0.55)
 }

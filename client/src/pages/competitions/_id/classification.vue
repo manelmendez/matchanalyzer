@@ -85,7 +85,7 @@ import classificationTable from '../../../components/classificationTable'
     }
   }
 </script>
-<style>
+<style scoped>
 .no-data {
   width: 100%;
 }
