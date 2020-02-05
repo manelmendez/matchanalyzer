@@ -13,7 +13,9 @@
       class="elevation-1"
     >
       <template v-slot:item.equipos="{ item }">
-        <router-link :to="'/teams/'+item.localTeam.id+'/competitionstats'">{{item.localTeam.name}}</router-link> - <a :href="'/teams/'+item.awayTeam.id+'/competitionstats'">{{item.awayTeam.name}}</a>
+        <router-link :class="item.localTeam.id==team.id ? 'team':'rival'" :to="'/teams/'+item.localTeam.id+'/competitionstats'">{{item.localTeam.name}}</router-link>
+         - 
+        <router-link :class="item.awayTeam.id==team.id ? 'team':'rival'" :to="'/teams/'+item.awayTeam.id+'/competitionstats'">{{item.awayTeam.name}}</router-link>
       </template>
       <template v-slot:item.resultados="{ item }">
         {{item.localTeamGoals}} - {{item.awayTeamGoals}}
@@ -85,8 +87,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, .1);
+}
+.rival {
+  text-decoration: none;
+}
+.team {
+  text-decoration: none;
+  color:  var(--v-primary-lighten2) !important;
 }
 </style>

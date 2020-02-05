@@ -43,7 +43,7 @@ import PieChart from '../components/charts/PieChart.js'
     }
   }
 </script>
-<style>
+<style scoped>
 .v-sheet--offset {
   top: -24px;
   position: relative;

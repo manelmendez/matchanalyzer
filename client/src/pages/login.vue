@@ -234,7 +234,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .welcome-content {
   width: 100%;
   min-height: 100%;

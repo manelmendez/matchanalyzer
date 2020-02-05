@@ -273,5 +273,5 @@ import teamMatchList from '../../../components/teamMatchList'
     },
   }
 </script>
-<style>
+<style scoped>
 </style>
