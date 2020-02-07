@@ -1,42 +1,52 @@
 <template>
   <v-row justify-center>
-    <v-col cols=4>
+    <v-col cols=12 sm=5 md=4>
       <v-card class="match elevation-2" @click="$router.push('/teams/'+match.localTeam.id+'/competitionstats')">
-        <v-card-text
-          class="text-center"
-          :class="resultClass(match.localTeamGoals,match.awayTeamGoals)"
-        ><v-img 
+        <v-row
+          align="center"
           justify="center"
-          :src="constants.ADDRESS+match.localTeam.avatar"
-          @error="match.localTeam.avatar=constants.DEFAULT_TEAM_URL"
-          aspect-ratio="10"
-          contain
-        ></v-img> {{match.localTeam.name}}</v-card-text>
+          :class="resultClass(match.localTeamGoals,match.awayTeamGoals)"
+        >
+          <v-col>
+            <v-img 
+              :src="constants.ADDRESS+match.localTeam.avatar"
+              @error="match.localTeam.avatar=constants.DEFAULT_TEAM_URL"
+              aspect-ratio="10"
+              contain
+            ></v-img> {{match.localTeam.name}}
+          </v-col>
+        </v-row>
       </v-card>
     </v-col>
-    <v-col cols=2>
+    <v-col cols=12 sm=2 md=2>
       <v-card class="match elevation-2">
-        <v-card-text
-          class="text-center align-center result"
-        ><v-col>{{match.localTeamGoals}} - {{match.awayTeamGoals}}</v-col></v-card-text>
+        <v-row
+          align="center"
+          justify="center"
+          class="result"
+        ><v-col>{{match.localTeamGoals}} - {{match.awayTeamGoals}}</v-col></v-row>
       </v-card>
     </v-col>
-    <v-col cols=4>
+    <v-col cols=12 sm=5 md=4>
       <v-card class="match elevation-2" @click="$router.push('/teams/'+match.awayTeam.id+'/competitionstats')">
-        <v-card-text
-          class="text-center"
+        <v-row
+          align="center"
+          justify="center"
           :class="resultClass(match.awayTeamGoals,match.localTeamGoals)"
         >
-        <v-img 
-          justify="center"
-          :src="constants.ADDRESS+match.awayTeam.avatar"
-          @error="match.awayTeam.avatar=constants.DEFAULT_TEAM_URL"
-          aspect-ratio="10"
-          contain
-        ></v-img>{{match.awayTeam.name}}</v-card-text>
+        <v-col>
+          <v-img 
+            justify="center"
+            :src="constants.ADDRESS+match.awayTeam.avatar"
+            @error="match.awayTeam.avatar=constants.DEFAULT_TEAM_URL"
+            aspect-ratio="10"
+            contain
+          ></v-img>{{match.awayTeam.name}}
+          </v-col>
+        </v-row>
       </v-card>
     </v-col>
-    <v-col cols=2>
+    <v-col cols=12 sm=12 md=2>
       <v-card class="match-actions elevation-2">
         <v-card-text class="text-center">
           <v-row>
