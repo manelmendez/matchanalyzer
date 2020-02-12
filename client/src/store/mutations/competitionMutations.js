@@ -92,8 +92,13 @@ export const competitionMutations = {
     let previousCompetition = state.competitions.find(a => a.id === competition.id)    
     Object.assign(previousCompetition, competition)
   },
+
   [types.DELETE_COMPETITION] (state, competitionId) {
     let index = state.competitions.findIndex(item => item.id == competitionId)
     state.competitions.splice(index, 1)
+  },
+
+  [types.ADD_MATCHSTATS] (state, data) {      
+    
   },
 }

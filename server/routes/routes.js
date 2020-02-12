@@ -6,6 +6,7 @@ const playerCtrl = require('../controllers/playerCtrl')
 const competitionCtrl = require('../controllers/competitionCtrl')
 const roundCtrl = require('../controllers/roundCtrl')
 const matchCtrl = require('../controllers/matchCtrl')
+const matchpartCtrl = require('../controllers/matchpartCtrl')
 // const teamStatsCtrl = require('../controllers/teamStatsCtrl')
 const imageServices = require('../services/image-services')
 const auth = require('../middlewares/auth')
@@ -55,5 +56,8 @@ api.get('/getCompetitionRounds/:id', auth.checkAuth, roundCtrl.getCompetitionRou
 api.post('/addMatch', auth.checkAuth, matchCtrl.addMatch)
 api.put('/updateMatch/:id', auth.checkAuth, matchCtrl.updateMatch)
 api.delete('/deleteMatch/:id', auth.checkAuth, matchCtrl.deleteMatch)
+
+// MATCHPART
+api.post('/addMatchparts', auth.checkAuth, matchpartCtrl.addMatchparts)
 
 module.exports = api

@@ -1,39 +1,39 @@
 const con = require('../config/mysql')
 
-function findById(id) {
+function findById(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matches WHERE id = ?", id ,function(err, goal) {
+    con.query("SELECT * FROM assists WHERE id = ? AND userId = ?", [id, userId] ,function(err, assist) {
       if (err) reject(err)
-      else resolve(goal)
+      else resolve(assist)
     })
   })
 }
 
-function findByMatch(id) {
+function findByMatch(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM goals WHERE match = ?", id ,function(err, goals) {
+    con.query("SELECT * FROM assists WHERE match = ? AND userId = ?", [id, userId] ,function(err, assists) {
       if (err) reject(err)
-      else resolve(goals)
+      else resolve(assists)
     })
   })
 }
 
-function saveGoal(goal) {
+function saveAssist(assist) {
   return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO goals SET ?", goal, function(err,result,fields) {
+    con.query("INSERT INTO assists SET ?", assist, function(err,result,fields) {
       if (err) reject(err)
       else {
-        goal.id = result.insertId
-        resolve(goal)
+        assist.id = result.insertId
+        resolve(assist)
       }
     })
   })
 }
-function deleteGoal(id) {
+function deleteAssist(id) {
   return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM goals WHERE id = ?", id, function(err, result) {
+    con.query("DELETE FROM assists WHERE id = ?", id, function(err, result) {
       if (err) reject(err)
-      else resolve(goal)
+      else resolve(assist)
     })
   })
 }
@@ -41,6 +41,6 @@ function deleteGoal(id) {
 module.exports = {
   findById,
   findByMatch,
-  saveGoal,
-  deleteGoal
+  saveAssist,
+  deleteAssist
 }

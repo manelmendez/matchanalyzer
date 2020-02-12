@@ -23,9 +23,9 @@
               </v-col>
             </v-row>
             <v-row>
-              <addMatchStatsContent :team="localTeamWithPlayers"></addMatchStatsContent>
+              <addMatchStatsContent ref="localchild" :team="localTeamWithPlayers" :matchId="matchId"></addMatchStatsContent>
               <v-divider vertical></v-divider>
-              <addMatchStatsContent :team="awayTeamWithPlayers"></addMatchStatsContent>
+              <addMatchStatsContent ref="awaychild" :team="awayTeamWithPlayers" :matchId="matchId"></addMatchStatsContent>
             </v-row>
             <br><br>
             <v-divider></v-divider>
@@ -50,7 +50,8 @@ export default {
   props:{
     show: Boolean,
     localTeam: Object,
-    awayTeam: Object
+    awayTeam: Object,
+    matchId: Number
   },
   components: {
     addMatchStatsContent
@@ -68,7 +69,24 @@ export default {
       this.$emit("close")
     },
     addStats() {
-      this.$emit("addStats")
+      let myTeamParts = []
+      let child='localchild'
+      if(this.localTeam.manager==null) {
+        child = 'awaychild'
+      }
+      for (let i = 0; i < this.parts; i++) {        
+        let part = {
+          formation: this.$refs[child][i].formacion,
+          duration: this.$refs[child][i].duration,
+          players: this.$refs[child][i].players,
+          goals: this.$refs[child][i].goals,
+          cards: this.$refs[child][i].cards,
+          substitutions: this.$refs[child][i].substitutions
+        }
+        console.log(part);
+        myTeamParts.push(part)
+      }
+      console.log(myTeamParts);
     },
     ...mapActions({
       getTeam: 'team/getTeam'
