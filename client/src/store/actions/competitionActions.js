@@ -130,3 +130,13 @@ export const deleteCompetition = ({commit}, data) => {
     return err.response
   })
 }
+
+export const addMatchStats = ({commit}, body) => {
+  console.log("ACTION -- addMatch")
+  return axios.post('addMatchStats', body).then(response => {
+    commit(types.ADD_MATCHSTATS, response.data)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}

@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="show" persistent max-width="450">
+  <v-dialog v-model="show" persistent max-width="400">
     <v-card>
-      <v-card-title class="headline">Añadir Tarjeta</v-card-title>
+      <v-card-title class="headline">Añadir Sustitución</v-card-title>
       <v-card-text>
         <v-row dense>
           <v-col>
@@ -9,21 +9,22 @@
               dense
               outlined
               shaped  
-              v-model="player"
+              v-model="playerOut"
               :items="players"
               item-text="player.name"
               return-object
-              label="Jugador"></v-select>
+              label="Sale"></v-select>
           </v-col>
           <v-col>
             <v-select 
               dense
               outlined
               shaped  
-              v-model="type"
-              :items="types"
-              item-text="type"
-              label="Tipo"></v-select>
+              v-model="playerIn"
+              :items="players"
+              item-text="player.name"
+              return-object
+              label="Entra"></v-select>
           </v-col>
           <v-col>
             <v-text-field dense outlined shaped label="Minuto" :max="duration" class="centered-input ml-2" type="number" v-model="minute" required></v-text-field>
@@ -58,21 +59,17 @@ export default {
   },
   data() {
     return {
-      player: null,
-      minute: null,
-      type: null,
-      types: [
-        'amarilla',
-        'roja'
-      ]
+      playerIn: null,
+      playerOut: null,
+      minute: null
     }
   },
   methods: {
     close() {
       this.$emit('close')
     },
-    add() {            
-      this.$emit('confirm', {'player':this.player['player'], 'type': this.type, 'minute':this.minute})
+    add() {      
+      this.$emit('confirm', {'playerIn':this.playerIn['player'], 'playerOut':this.playerOut['player'], 'minute':this.minute})
     }
   }
 }

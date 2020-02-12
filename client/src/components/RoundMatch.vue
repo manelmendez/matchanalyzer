@@ -24,7 +24,7 @@
           align="center"
           justify="center"
           class="result"
-        ><v-col>{{match.localTeamGoals}} - {{match.awayTeamGoals}}</v-col></v-row>
+        ><v-col style="font-size:25px">{{match.localTeamGoals}} - {{match.awayTeamGoals}}</v-col></v-row>
       </v-card>
     </v-col>
     <v-col cols=12 sm=5 md=4>
@@ -105,6 +105,7 @@
       :show="addStatsDialog"
       :localTeam="match.localTeam"
       :awayTeam="match.awayTeam"
+      :matchId="match.id"
       @close="addStatsDialog=!addStatsDialog"
       @addStats="addStats"> </AddMatchStats>
   </v-row>

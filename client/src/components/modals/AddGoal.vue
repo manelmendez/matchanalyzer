@@ -36,7 +36,7 @@ export default {
       type: Boolean,
       required: true,
       default: false
-    },
+    }, 
     players: {
       type: Array,
       required: true

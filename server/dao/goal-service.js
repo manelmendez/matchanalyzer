@@ -1,17 +1,17 @@
 const con = require('../config/mysql')
 
-function findById(id) {
+function findById(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matches WHERE id = ?", id ,function(err, goal) {
+    con.query("SELECT * FROM goals WHERE id = ? AND userId = ?", [id, userId] ,function(err, goal) {
       if (err) reject(err)
       else resolve(goal)
     })
   })
 }
 
-function findByMatch(id) {
+function findByMatch(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM goals WHERE match = ?", id ,function(err, goals) {
+    con.query("SELECT * FROM goals WHERE match = ? AND userId = ?", [id, userId] ,function(err, goals) {
       if (err) reject(err)
       else resolve(goals)
     })

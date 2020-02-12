@@ -44,4 +44,4 @@ export const NEXT_ROUND = 'NEXT_ROUND'
 export const UPDATE_MATCH = 'UPDATE_MATCH'
 export const DELETE_MATCH = 'DELETE_MATCH'
 export const DELETE_ROUND = 'DELETE_ROUND'
-
+export const ADD_MATCHSTATS = 'ADD_MATCHSTATS'

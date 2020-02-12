@@ -314,13 +314,9 @@ async function getCompetitionRanking(competitions, userId) {
         //devuelve +1 o -1 según quien tenga más goles
         return (a.stats.goals-a.stats.againstGoals) > (b.stats.goals-b.stats.againstGoals) ? 1 : -1;
       })
-      console.log("A");
       competitions[c].teams = updatedTeams
       competitionsWithStats.push(competitions[c])
-
-      console.log(competitions[c].teams.length);
     }    
-    console.log(competitionsWithStats);
     resolve(competitionsWithStats)
   })
 }
