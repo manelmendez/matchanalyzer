@@ -77,22 +77,29 @@ export default {
       for (let i = 0; i < this.parts; i++) {        
         let part = {
           formation: this.$refs[child][i].formacion,
-          duration: this.$refs[child][i].duration,
+          time: this.$refs[child][i].duration,
+          team: this.$refs[child][i].team.id,
+          match: this.matchId,
           players: this.$refs[child][i].players,
           goals: this.$refs[child][i].goals,
           cards: this.$refs[child][i].cards,
-          substitutions: this.$refs[child][i].substitutions
+          substitutions: this.$refs[child][i].subs
         }
-        console.log(part);
         myTeamParts.push(part)
       }
       console.log(myTeamParts);
+      this.addMatchparts(myTeamParts).then((value) => {
+        this.$emit('confirm')
+      })
     },
     ...mapActions({
-      getTeam: 'team/getTeam'
+      getTeam: 'team/getTeam',
+      addMatchparts: 'competition/addMatchparts',
+      getMatchpartsByMatchId: 'competition/getMatchpartsByMatchId'
     })
   },
-  async created(){    
+  async created(){
+    await this.getMatchpartsByMatchId(this.matchId)
     this.localTeamWithPlayers = await this.getTeam(this.localTeam.id)
     this.awayTeamWithPlayers = await this.getTeam(this.awayTeam.id)
   }

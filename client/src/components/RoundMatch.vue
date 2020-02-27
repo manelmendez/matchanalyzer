@@ -57,7 +57,7 @@
                     <v-icon size="18">fa-file-alt</v-icon>
                   </v-btn>
                 </template>
-                <span>Añadir stats</span>
+                <span>Añadir/editar stats</span>
               </v-tooltip>
             </v-col>
             <v-col>

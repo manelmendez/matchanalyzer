@@ -123,4 +123,7 @@ export default {
 };
 </script>
 <style scoped>
+.centered-input >>> input {
+  text-align: center
+}
 </style>

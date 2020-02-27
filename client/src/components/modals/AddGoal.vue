@@ -56,8 +56,8 @@ export default {
     close() {
       this.$emit('close')
     },
-    add() {      
-      this.$emit('confirm', {'player':this.player['player'], 'minute':this.minute})
+    add() {
+      this.$emit('confirm', {'player':this.player['player'], 'minute':this.minute, 'assist': null})
     }
   }
 }

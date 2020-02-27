@@ -98,7 +98,12 @@ export const competitionMutations = {
     state.competitions.splice(index, 1)
   },
 
-  [types.ADD_MATCHSTATS] (state, data) {      
-    
+  [types.ADD_MATCHPARTS] (state, data) {      
+    console.log(data);
   },
+
+  [types.GET_MATCHPARTBYMATCHID] (state, data) {
+    console.log(data);
+    
+  }
 }

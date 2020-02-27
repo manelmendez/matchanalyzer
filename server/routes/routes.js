@@ -59,5 +59,5 @@ api.delete('/deleteMatch/:id', auth.checkAuth, matchCtrl.deleteMatch)
 
 // MATCHPART
 api.post('/addMatchparts', auth.checkAuth, matchpartCtrl.addMatchparts)
-
+api.get('/getMatchpartsByMatchId/:matchId', auth.checkAuth, matchpartCtrl.getMatchpartsByMatchId)
 module.exports = api
