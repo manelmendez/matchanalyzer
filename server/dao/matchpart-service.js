@@ -1,19 +1,19 @@
 const con = require('../config/mysql')
 
-function findByMatch(ids, userId) {
+function findByMatch(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matchparts WHERE match = ? AND userId = ?", [ids, userId] ,function(err, match) {
+    con.query("SELECT * FROM matchparts WHERE matchId = ? AND userId = ?", [id, userId] ,function(err, matchparts) {
       if (err) reject(err)
-      else resolve(match)
+      else resolve(matchparts)
     })
   })
 }
 
 function findByRound(ids, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matchparts WHERE round = ? AND userId = ?", [ids, userId] ,function(err, match) {
+    con.query("SELECT * FROM matchparts WHERE round = ? AND userId = ?", [ids, userId] ,function(err, matchpart) {
       if (err) reject(err)
-      else resolve(match)
+      else resolve(matchpart)
     })
   })
 }

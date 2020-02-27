@@ -11,7 +11,7 @@ function findById(id, userId) {
 
 function findByMatch(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM goals WHERE match = ? AND userId = ?", [id, userId] ,function(err, goals) {
+    con.query("SELECT * FROM goals WHERE matchId = ? AND userId = ?", [id, userId] ,function(err, goals) {
       if (err) reject(err)
       else resolve(goals)
     })

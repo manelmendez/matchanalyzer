@@ -145,7 +145,7 @@
               md="6"
               lg="6"
               xl="6"
-              v-for="(card, index) in cards" :key="index"
+              v-for="(sub, index) in subs" :key="index"
               >
               <v-row dense>
                 <v-col class="players-content">
@@ -154,9 +154,9 @@
                     color="primary"
                     text-color="white"
                   >
-                    {{card["player"].name}} <v-icon>mdi-cached</v-icon> {{card["player"].name}}
+                    {{sub["playerOut"].name}} <v-icon>mdi-cached</v-icon> {{sub["playerIn"].name}}
                   </v-chip>
-                  <p>min.{{card["minute"]}}</p>
+                  <p>min.{{sub["minute"]}}</p>
                 </v-col>
               </v-row>
             </v-col>
@@ -231,23 +231,35 @@ export default {
       this.$emit('close')
     },
     addPlayer(data) { 
-      this.players.push(data)
+      let player = {
+        ...data,
+        match: this.matchId
+      } 
+      this.players.push(player)
       this.addplayerDialog = false
     },
     addGoal(data) {    
       let goal = {
         ...data,
-        match: matchId
+        match: this.matchId
       }  
-      this.goals.push(data)
+      this.goals.push(goal)
       this.addgoalDialog = false
     },
-    addCard(data) {      
-      this.cards.push(data)
+    addCard(data) {    
+      let card = {
+        ...data,
+        match: this.matchId
+      }
+      this.cards.push(card)
       this.addcardDialog = false
     },
-    addSub(data) {      
-      this.subs.push(data)
+    addSub(data) {   
+      let sub = {
+        ...data,
+        match: this.matchId
+      }   
+      this.subs.push(sub)      
       this.addsubDialog = false
     }
   },

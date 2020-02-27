@@ -131,12 +131,22 @@ export const deleteCompetition = ({commit}, data) => {
   })
 }
 
-export const addMatchStats = ({commit}, body) => {
-  console.log("ACTION -- addMatch")
-  return axios.post('addMatchStats', body).then(response => {
-    commit(types.ADD_MATCHSTATS, response.data)
+export const addMatchparts = ({commit}, body) => {
+  console.log("ACTION -- addMatchparts")
+  return axios.post('addMatchparts', body).then(response => {
+    commit(types.ADD_MATCHPARTS, response.data)
     return response
   }).catch((err) => {
     return err.response
   })
+}
+
+export const getMatchpartsByMatchId = ({commit}, id) => {
+  console.log("ACTION -- getMatchpartsByMatchId")
+  return axios.get('getMatchpartsByMatchId/'+id)
+    .then(response => {
+      console.log(response);
+      
+      commit(types.GET_MATCHPARTBYMATCHID, response.data)
+    })
 }

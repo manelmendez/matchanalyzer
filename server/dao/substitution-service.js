@@ -11,7 +11,7 @@ function findById(id, userId) {
 
 function findByMatch(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM substitutions WHERE match = ? AND userId = ?", [id, userId] ,function(err, substitutions) {
+    con.query("SELECT * FROM substitutions WHERE matchId = ? AND userId = ?", [id, userId] ,function(err, substitutions) {
       if (err) reject(err)
       else resolve(substitutions)
     })
