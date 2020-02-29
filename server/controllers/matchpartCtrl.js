@@ -93,22 +93,20 @@ async function addMatchparts(req, res) {
 async function getMatchpartsByMatchId(req, res) {
   let userId = req.user.id
   let matchId = req.params.matchId
-  try {
-    console.log("HOLA");
-    
+  try {    
     let matchParts = await matchpartService.findByMatch(matchId, userId)
     console.log(matchParts);
     let minutes = await minuteService.findByMatch(matchId, userId)
     let goals = await goalService.findByMatch(matchId, userId)
-    let assist = await assistService.findByMatch(matchId, userId)
-    let card = await cardService.findByMatch(matchId, userId)
+    let assists = await assistService.findByMatch(matchId, userId)
+    let cards = await cardService.findByMatch(matchId, userId)
     let substitutions = await substitutionService.findByMatch(matchId, userId)
     return res.status(200).send({
       matchParts: matchParts,
       minutes: minutes,
       goals: goals,
-      assist: assist,
-      card: card,
+      assists: assists,
+      cards: cards,
       substitutions: substitutions
     })  
   } catch (error) {

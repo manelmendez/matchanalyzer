@@ -103,7 +103,12 @@ export const competitionMutations = {
   },
 
   [types.GET_MATCHPARTBYMATCHID] (state, data) {
-    console.log(data);
-    
+    // state.matchparts = data.matchparts
+    // state.goals = data.goals
+    // state.minutes = data.minutes
+    // state.cards = data.cards
+    // state.assists = data.assists
+    // state.substitutions = data.substitutions
+    return data
   }
 }

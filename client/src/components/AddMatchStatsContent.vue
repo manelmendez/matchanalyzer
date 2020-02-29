@@ -54,6 +54,8 @@
                     class="ma-2"
                     color="primary"
                     text-color="white"
+                    close
+                    @click:close="players.splice(index,1)"
                   >
                     <v-avatar left class="primary darken-4">
                       {{player["position"]}}
@@ -89,6 +91,8 @@
                     class="ma-2"
                     color="primary"
                     text-color="white"
+                    close
+                    @click:close="goals.splice(index,1)"
                   >
                     {{goal["player"].name}} <v-icon>mdi-soccer</v-icon> min.{{goal["minute"]}}
                   </v-chip>
@@ -121,6 +125,8 @@
                     class="ma-2"
                     color="primary"
                     text-color="white"
+                    close
+                    @click:close="cards.splice(index,1)"
                   >
                     {{card["player"].name}} <v-icon :color="card['type']=='amarilla'?'yellow':'red'">mdi-cards</v-icon> min.{{card["minute"]}}
                   </v-chip>
@@ -153,6 +159,8 @@
                     class="ma-2"
                     color="primary"
                     text-color="white"
+                    close
+                    @click:close="subs.splice(index,1)"
                   >
                     {{sub["playerOut"].name}} <v-icon>mdi-cached</v-icon> {{sub["playerIn"].name}}
                   </v-chip>
@@ -181,7 +189,8 @@ export default {
     matchId: {
       type: Number,
       required: true
-    }
+    },
+    previousData: Object
   },
   components: {
     AddPlayer,
@@ -235,7 +244,7 @@ export default {
         ...data,
         match: this.matchId
       } 
-      this.players.push(player)
+      this.players.push(player)      
       this.addplayerDialog = false
     },
     addGoal(data) {    
@@ -265,6 +274,53 @@ export default {
   },
   computed: {
     ...mapGetters("competition", ["competition"])
+  },
+  created() {
+    
+  },
+  watch: {
+    previousData() {
+      if (this.previousData) {
+        this.formacion = this.previousData.formation
+        this.duration = this.previousData.time
+        for (let minutePlayer of this.previousData.minutes) {                    
+          this.players.push({
+            player: this.team.players.find(p => p.id == minutePlayer.player),
+            position: minutePlayer.position,
+            match: minutePlayer.matchId
+          })
+        }
+        for (let goalPlayer of this.previousData.goals) {                    
+          this.goals.push({
+            player: this.team.players.find(p => p.id == goalPlayer.player),
+            minute: goalPlayer.minute,
+            match: goalPlayer.matchId
+          })
+        }
+        for (let assistPlayer of this.previousData.assists) {                    
+          this.assists.push({
+            player: this.team.players.find(p => p.id == assistPlayer.player),
+            minute: assistPlayer.minute,
+            match: assistPlayer.matchId
+          })
+        }
+        for (let cardPlayer of this.previousData.cards) {                    
+          this.cards.push({
+            player: this.team.players.find(p => p.id == cardPlayer.player),
+            minute: cardPlayer.minute,
+            match: cardPlayer.matchId
+          })
+        }
+        for (let substitutionPlayer of this.previousData.substitutions) {                    
+          this.substitutions.push({
+            playerIn: this.team.players.find(p => p.id == substitutionPlayer.playerIn),
+            playerOut: this.team.players.find(p => p.id == substitutionPlayer.playerOut),
+            minute: substitutionPlayer.minute,
+            match: substitutionPlayer.matchId
+          })
+        }      
+      }
+    }
   }
 }
 </script>

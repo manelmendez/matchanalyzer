@@ -145,8 +145,7 @@ export const getMatchpartsByMatchId = ({commit}, id) => {
   console.log("ACTION -- getMatchpartsByMatchId")
   return axios.get('getMatchpartsByMatchId/'+id)
     .then(response => {
-      console.log(response);
-      
       commit(types.GET_MATCHPARTBYMATCHID, response.data)
+      return response.data
     })
 }

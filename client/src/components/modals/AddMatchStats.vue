@@ -23,9 +23,9 @@
               </v-col>
             </v-row>
             <v-row>
-              <addMatchStatsContent ref="localchild" :team="localTeamWithPlayers" :matchId="matchId"></addMatchStatsContent>
+              <addMatchStatsContent ref="localchild" :team="localTeamWithPlayers" :matchId="matchId" :previousData="localMatchparts[part -1]"></addMatchStatsContent>
               <v-divider vertical></v-divider>
-              <addMatchStatsContent ref="awaychild" :team="awayTeamWithPlayers" :matchId="matchId"></addMatchStatsContent>
+              <addMatchStatsContent ref="awaychild" :team="awayTeamWithPlayers" :matchId="matchId" :previousData="awayMatchparts[part -1]"></addMatchStatsContent>
             </v-row>
             <br><br>
             <v-divider></v-divider>
@@ -61,7 +61,9 @@ export default {
       constants: constants,
       parts:1,
       localTeamWithPlayers: this.localTeam,
-      awayTeamWithPlayers: this.awayTeam
+      awayTeamWithPlayers: this.awayTeam,
+      localMatchparts: [],
+      awayMatchparts: []
     }
   },
   methods: {
@@ -92,6 +94,25 @@ export default {
         this.$emit('confirm')
       })
     },
+    putData(data) {
+      if (data) {
+        for (let matchpart of data.matchParts) {
+          matchpart.minutes = data.minutes.filter(minute => minute.matchpart == matchpart.id);
+          matchpart.goals = data.goals.filter(goal => goal.matchpart == matchpart.id);
+          matchpart.assists = data.assists.filter(assist => assist.matchpart == matchpart.id);
+          matchpart.cards = data.cards.filter(card => card.matchpart == matchpart.id);
+          matchpart.substitutions = data.substitutions.filter(substitution => substitution.matchpart == matchpart.id);
+          if (matchpart.team == this.localTeam.id) {
+            this.localMatchparts.push(matchpart)
+          }
+          else {
+            this.awayMatchparts.push(matchpart)
+          }
+        }
+        console.log(this.localMatchparts);
+        
+      }      
+    },
     ...mapActions({
       getTeam: 'team/getTeam',
       addMatchparts: 'competition/addMatchparts',
@@ -99,9 +120,12 @@ export default {
     })
   },
   async created(){
-    await this.getMatchpartsByMatchId(this.matchId)
+    let data = await this.getMatchpartsByMatchId(this.matchId)
     this.localTeamWithPlayers = await this.getTeam(this.localTeam.id)
     this.awayTeamWithPlayers = await this.getTeam(this.awayTeam.id)
+    console.log(data);
+    
+    this.putData(data)
   }
 }
 </script>
