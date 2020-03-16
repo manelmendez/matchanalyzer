@@ -33,7 +33,7 @@ function deleteMinute(id) {
   return new Promise ((resolve, reject) =>{
     con.query("DELETE FROM minutes WHERE id = ?", id, function(err, result) {
       if (err) reject(err)
-      else resolve(minute)
+      else resolve(result)
     })
   })
 }

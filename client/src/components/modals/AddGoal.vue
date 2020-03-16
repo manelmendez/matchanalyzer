@@ -11,7 +11,7 @@
               shaped  
               v-model="player"
               :items="players"
-              item-text="player.name"
+              item-text="name"
               return-object
               label="Jugador"></v-select>
           </v-col>
@@ -57,7 +57,7 @@ export default {
       this.$emit('close')
     },
     add() {
-      this.$emit('confirm', {'player':this.player['player'], 'minute':this.minute, 'assist': null})
+      this.$emit('confirm', {'playerId':this.player.id, 'minute':this.minute, 'assist': null})
     }
   }
 }

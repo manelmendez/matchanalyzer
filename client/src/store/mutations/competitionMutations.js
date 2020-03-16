@@ -98,17 +98,87 @@ export const competitionMutations = {
     state.competitions.splice(index, 1)
   },
 
-  [types.ADD_MATCHPARTS] (state, data) {      
+  [types.ADD_MATCHPART] (state, data) {      
     console.log(data);
   },
 
-  [types.GET_MATCHPARTBYMATCHID] (state, data) {
-    // state.matchparts = data.matchparts
-    // state.goals = data.goals
-    // state.minutes = data.minutes
-    // state.cards = data.cards
-    // state.assists = data.assists
-    // state.substitutions = data.substitutions
+  [types.ADD_MINUTE] (state, data) {      
+    console.log(data);
+  },
+
+  [types.ADD_GOAL] (state, data) {      
+    console.log(data);
+  },
+
+  [types.ADD_ASSIST] (state, data) {      
+    console.log(data);
+  },
+
+  [types.ADD_CARD] (state, data) {      
+    console.log(data);
+  },
+
+  [types.ADD_SUBSTITUTION] (state, data) {      
+    console.log(data);
+  },
+
+  [types.GET_MATCHPARTSBYMATCHID] (state, data) {
+    state.matchparts = data.matchparts
     return data
-  }
+  },
+
+  [types.GET_MINUTESBYMATCHID] (state, data) {
+    state.minutes = data.minutes
+    return data
+  },
+
+  [types.GET_GOALSBYMATCHID] (state, data) {
+    state.goals = data.goals
+    return data
+  },
+
+  [types.GET_ASSISTSBYMATCHID] (state, data) {
+    state.assists = data.assists
+    return data
+  },
+
+  [types.GET_CARDSBYMATCHID] (state, data) {
+    state.cards = data.cards
+    return data
+  },
+
+  [types.GET_SUBSTITUTIONSBYMATCHID] (state, data) {
+    state.substitutions = data.substitutions
+    return data
+  },
+
+  [types.DELETE_MATCHPART] (state, matchpartId) {
+    let index = state.matchparts.findIndex(item => item.id == matchpartId)
+    state.matchparts.splice(index, 1)
+  },
+
+  [types.DELETE_MINUTE] (state, minuteId) {
+    let index = state.minutes.findIndex(item => item.id == minuteId)
+    state.minutes.splice(index, 1)
+  },
+
+  [types.DELETE_GOAL] (state, goalId) {
+    let index = state.goals.findIndex(item => item.id == goalId)
+    state.goals.splice(index, 1)
+  },
+
+  [types.DELETE_ASSIST] (state, assistId) {
+    let index = state.assists.findIndex(item => item.id == assistId)
+    state.assists.splice(index, 1)
+  },
+
+  [types.DELETE_CARD] (state, cardId) {
+    let index = state.cards.findIndex(item => item.id == cardId)
+    state.cards.splice(index, 1)
+  },
+
+  [types.DELETE_SUBSTITUTION] (state, substitutionId) {
+    let index = state.substitutions.findIndex(item => item.id == substitutionId)
+    state.substitutions.splice(index, 1)
+  },
 }

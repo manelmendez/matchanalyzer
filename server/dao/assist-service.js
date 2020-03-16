@@ -33,7 +33,7 @@ function deleteAssist(id) {
   return new Promise ((resolve, reject) =>{
     con.query("DELETE FROM assists WHERE id = ?", id, function(err, result) {
       if (err) reject(err)
-      else resolve(assist)
+      else resolve(result)
     })
   })
 }

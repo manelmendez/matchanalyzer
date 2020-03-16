@@ -11,7 +11,7 @@
               shaped  
               v-model="playerOut"
               :items="players"
-              item-text="player.name"
+              item-text="name"
               return-object
               label="Sale"></v-select>
           </v-col>
@@ -22,7 +22,7 @@
               shaped  
               v-model="playerIn"
               :items="players"
-              item-text="player.name"
+              item-text="name"
               return-object
               label="Entra"></v-select>
           </v-col>
@@ -69,7 +69,7 @@ export default {
       this.$emit('close')
     },
     add() {      
-      this.$emit('confirm', {'playerIn':this.playerIn['player'], 'playerOut':this.playerOut['player'], 'minute':this.minute})
+      this.$emit('confirm', {'playerIn':this.playerIn.id, 'playerOut':this.playerOut.id, 'minute':this.minute})
     }
   }
 }
