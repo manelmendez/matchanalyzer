@@ -7,6 +7,11 @@ const competitionCtrl = require('../controllers/competitionCtrl')
 const roundCtrl = require('../controllers/roundCtrl')
 const matchCtrl = require('../controllers/matchCtrl')
 const matchpartCtrl = require('../controllers/matchpartCtrl')
+const minuteCtrl = require('../controllers/minuteCtrl')
+const goalCtrl = require('../controllers/goalCtrl')
+const assistCtrl = require('../controllers/assistCtrl')
+const cardCtrl = require('../controllers/cardCtrl')
+const substitutionCtrl = require('../controllers/substitutionCtrl')
 // const teamStatsCtrl = require('../controllers/teamStatsCtrl')
 const imageServices = require('../services/image-services')
 const auth = require('../middlewares/auth')
@@ -58,6 +63,33 @@ api.put('/updateMatch/:id', auth.checkAuth, matchCtrl.updateMatch)
 api.delete('/deleteMatch/:id', auth.checkAuth, matchCtrl.deleteMatch)
 
 // MATCHPART
-api.post('/addMatchparts', auth.checkAuth, matchpartCtrl.addMatchparts)
+api.post('/addMatchpart', auth.checkAuth, matchpartCtrl.addMatchpart)
 api.get('/getMatchpartsByMatchId/:matchId', auth.checkAuth, matchpartCtrl.getMatchpartsByMatchId)
+api.delete('/deleteMatchpart/:matchpartId', auth.checkAuth, matchpartCtrl.deleteMatchpart)
+
+// MINUTES
+api.get('/getMinutesByMatchId/:matchId', auth.checkAuth, minuteCtrl.getMinutesByMatchId)
+api.post('/addMinute', auth.checkAuth, minuteCtrl.addMinute)
+api.delete('/deleteMinute/:minuteId', auth.checkAuth, minuteCtrl.deleteMinute)
+
+// GOALS
+api.get('/getGoalsByMatchId/:matchId', auth.checkAuth, goalCtrl.getGoalsByMatchId)
+api.post('/addGoal', auth.checkAuth, goalCtrl.addGoal)
+api.delete('/deleteGoal/:goalId', auth.checkAuth, goalCtrl.deleteGoal)
+
+// ASSISTS
+api.get('/getAssistsByMatchId/:matchId', auth.checkAuth, assistCtrl.getAssistsByMatchId)
+api.post('/addAssist', auth.checkAuth, assistCtrl.addAssist)
+api.delete('/deleteAssist/:assistId', auth.checkAuth, assistCtrl.deleteAssist)
+
+// CARDS
+api.get('/getCardsByMatchId/:matchId', auth.checkAuth, cardCtrl.getCardsByMatchId)
+api.post('/addCard', auth.checkAuth, cardCtrl.addCard)
+api.delete('/deleteCard/:cardId', auth.checkAuth, cardCtrl.deleteCard)
+
+// SUBSTITUTIONS
+api.get('/getSubstitutionsByMatchId/:matchId', auth.checkAuth, substitutionCtrl.getSubstitutionsByMatchId)
+api.post('/addSubstitution', auth.checkAuth, substitutionCtrl.addSubstitution)
+api.delete('/deleteSubstitution/:substitutionId', auth.checkAuth, substitutionCtrl.deleteSubstitution)
+
 module.exports = api

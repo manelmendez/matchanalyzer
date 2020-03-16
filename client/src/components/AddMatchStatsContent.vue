@@ -35,18 +35,18 @@
         <v-col>
           <v-row class="text-center" justify="center" align="center" dense>
             Añadir jugadores:
-            <v-btn class="ml-2" fab color="accent" x-small dark @click.stop="addplayerDialog= true">
+            <v-btn class="ml-2" fab color="accent" x-small dark @click.stop="addMinuteDialog= true">
               <v-icon class="material-icons">mdi-plus</v-icon>
-              <AddPlayer v-if="addplayerDialog" :show="addplayerDialog" :players="team.players" @close="addplayerDialog=false" @confirm="addPlayer"></AddPlayer>
+              <AddPlayer v-if="addMinuteDialog" :show="addMinuteDialog" :players="team.players" @close="addMinuteDialog=false" @confirm="addNewMinute"></AddPlayer>
             </v-btn>
           </v-row>
           <v-row dense>
             <v-col cols="12"
               sm="12"
-              md="4"
+              md="6"
               lg="4"
               xl="4"
-              v-for="(player,index) in players" :key="index"
+              v-for="(minute,index) in minutes" :key="index"
               >
               <v-row dense>
                 <v-col class="players-content">
@@ -55,12 +55,12 @@
                     color="primary"
                     text-color="white"
                     close
-                    @click:close="players.splice(index,1)"
+                    @click:close="delMinute(minute.id)"
                   >
                     <v-avatar left class="primary darken-4">
-                      {{player["position"]}}
+                      {{minute["position"]}}
                     </v-avatar>
-                    {{player["player"].name}}
+                    {{minute["player"].name}}
                   </v-chip>
                 </v-col>
               </v-row>
@@ -75,7 +75,7 @@
             <v-btn class="ml-2" fab color="accent" x-small dark @click.stop="addgoalDialog=true">
               <v-icon class="material-icons">mdi-plus</v-icon>
             </v-btn>
-            <AddGoal v-if="addgoalDialog" :show="addgoalDialog" :players="players" :duration="Number(duration)" @close="addgoalDialog=false" @confirm="addGoal"></AddGoal>
+            <AddGoal v-if="addgoalDialog" :show="addgoalDialog" :players="team.players" :duration="Number(duration)" @close="addgoalDialog=false" @confirm="addNewGoal"></AddGoal>
           </v-row>
           <v-row dense>
             <v-col cols="12"
@@ -92,7 +92,7 @@
                     color="primary"
                     text-color="white"
                     close
-                    @click:close="goals.splice(index,1)"
+                    @click:close="delGoal(goal.id)"
                   >
                     {{goal["player"].name}} <v-icon>mdi-soccer</v-icon> min.{{goal["minute"]}}
                   </v-chip>
@@ -109,7 +109,7 @@
             <v-btn class="ml-2" fab color="accent" x-small dark @click.stop="addcardDialog=true">
               <v-icon class="material-icons">mdi-plus</v-icon>
             </v-btn>
-            <AddCard v-if="addcardDialog" :show="addcardDialog" :players="players" :duration="Number(duration)" @close="addcardDialog=false" @confirm="addCard"></AddCard>
+            <AddCard v-if="addcardDialog" :show="addcardDialog" :players="team.players" :duration="Number(duration)" @close="addcardDialog=false" @confirm="addNewCard"></AddCard>
           </v-row>
           <v-row dense>
             <v-col cols="12"
@@ -126,7 +126,7 @@
                     color="primary"
                     text-color="white"
                     close
-                    @click:close="cards.splice(index,1)"
+                    @click:close="delCard(card.id)"
                   >
                     {{card["player"].name}} <v-icon :color="card['type']=='amarilla'?'yellow':'red'">mdi-cards</v-icon> min.{{card["minute"]}}
                   </v-chip>
@@ -142,16 +142,16 @@
             Añadir cambios:
             <v-btn class="ml-2" fab color="accent" x-small dark @click.stop="addsubDialog=true">
               <v-icon dense class="material-icons">mdi-plus</v-icon>
-                <AddSub v-if="addsubDialog" :show="addsubDialog" :players="players" :duration="Number(duration)" @close="addsubDialog=false" @confirm="addSub"></AddSub>
+                <AddSub v-if="addsubDialog" :show="addsubDialog" :players="team.players" :duration="Number(duration)" @close="addsubDialog=false" @confirm="addNewSub"></AddSub>
             </v-btn>
           </v-row>
           <v-row dense>
             <v-col cols="12"
               sm="12"
-              md="6"
+              md="12"
               lg="6"
               xl="6"
-              v-for="(sub, index) in subs" :key="index"
+              v-for="(sub, index) in substitutions" :key="index"
               >
               <v-row dense>
                 <v-col class="players-content">
@@ -160,7 +160,7 @@
                     color="primary"
                     text-color="white"
                     close
-                    @click:close="subs.splice(index,1)"
+                    @click:close="delSub(sub.id)"
                   >
                     {{sub["playerOut"].name}} <v-icon>mdi-cached</v-icon> {{sub["playerIn"].name}}
                   </v-chip>
@@ -179,7 +179,7 @@ import AddPlayer from '../components/modals/AddPlayer'
 import AddGoal from '../components/modals/AddGoal'
 import AddCard from '../components/modals/AddCard'
 import AddSub from '../components/modals/AddSub'
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 export default {
   props: {
     team: {
@@ -190,7 +190,10 @@ export default {
       type: Number,
       required: true
     },
-    previousData: Object
+    matchpart: {
+      type: Object,
+      required: true
+    },
   },
   components: {
     AddPlayer,
@@ -224,103 +227,188 @@ export default {
 
       ],
       formacion: '',
-      players: [],
+      minutes: [],
       goals: [],
       cards: [],
-      subs: [],
+      substitutions: [],
       duration: null,
-      addplayerDialog: false,
+      addMinuteDialog: false,
       addgoalDialog: false,
       addcardDialog: false,
       addsubDialog: false
     }
   },
   methods: {
+    ...mapActions({
+      addMatchpart: 'competition/addMatchpart',
+      addMinute: 'competition/addMinute',
+      addGoal: 'competition/addGoal',
+      addAssist: 'competition/addAssist',
+      addCard: 'competition/addCard',
+      addSubstitution: 'competition/addSubstitution',
+      deleteMatchpart: 'competition/deleteMatchpart',
+      deleteMinute: 'competition/deleteMinute',
+      deleteGoal: 'competition/deleteGoal',
+      deleteAssist: 'competition/deleteAssist',
+      deleteCard: 'competition/deleteCard',
+      deleteSubstitution: 'competition/deleteSubstitution',
+    }),
     close() {
       this.$emit('close')
     },
-    addPlayer(data) { 
-      let player = {
+    async addNewMinute(data) { 
+      let minute = {
         ...data,
-        match: this.matchId
-      } 
-      this.players.push(player)      
-      this.addplayerDialog = false
+        matchId: this.matchId,
+        matchpartId: this.matchpart.id
+      }       
+      let response = await this.addMinute(minute)   
+      if (response.status == 200) {
+        this.minutes.push({
+          ...response.data.minuteSaved,
+          player: this.team.players.find(p => p.id == response.data.minuteSaved.player),
+        })
+      }   
+      this.addMinuteDialog = false
     },
-    addGoal(data) {    
+    async addNewGoal(data) {          
       let goal = {
         ...data,
-        match: this.matchId
+        matchId: this.matchId,
+        matchpartId: this.matchpart.id
       }  
-      this.goals.push(goal)
+      let response = await this.addGoal(goal)        
+      if (response.status == 200) {
+        this.goals.push({
+          ...response.data.goalSaved,
+          player: this.team.players.find(p => p.id == response.data.goalSaved.player)
+        })
+      }
       this.addgoalDialog = false
     },
-    addCard(data) {    
+    async addNewCard(data) {    
       let card = {
         ...data,
-        match: this.matchId
+        matchId: this.matchId,
+        matchpartId: this.matchpart.id
       }
-      this.cards.push(card)
+      let response = await this.addCard(card)  
+      if (response.status == 200) {
+        this.cards.push({
+          ...response.data.cardSaved,
+          player: this.team.players.find(p => p.id == response.data.cardSaved.player)
+        })
+      }
       this.addcardDialog = false
     },
-    addSub(data) {   
+    async addNewSub(data) {   
       let sub = {
         ...data,
-        match: this.matchId
-      }   
-      this.subs.push(sub)      
+        matchId: this.matchId,
+        matchpartId: this.matchpart.id
+      }      
+      let response = await this.addSubstitution(sub)      
+      if (response.status == 200) {
+        this.substitutions.push({
+          ...response.data.substitutionSaved,
+          playerIn: this.team.players.find(p => p.id == response.data.substitutionSaved.playerIn),
+          playerOut: this.team.players.find(p => p.id == response.data.substitutionSaved.playerOut)
+        })        
+      }
       this.addsubDialog = false
+    },
+    async delMinute(id){
+      let response = await this.deleteMinute(id)
+      if (response.status == 200) {
+        let index = this.minutes.findIndex(minute => minute.id == id)        
+        this.minutes.splice(index, 1)
+      }
+    },
+    async delGoal(id){
+      let response = await this.deleteGoal(id)
+      if (response.status == 200) {
+        let index = this.goals.findIndex(goal => goal.id == id)        
+        this.goals.splice(index, 1)
+      }
+    },
+    async delAssist(id){
+      let response = await this.deleteAssist(id)
+      if (response.status == 200) {
+        let index = this.assists.findIndex(assist => assist.id == id)        
+        this.assists.splice(index, 1)
+      }
+    },
+    async delCard(id){
+      let response = await this.deleteCard(id)
+      if (response.status == 200) {
+        let index = this.cards.findIndex(card => card.id == id)        
+        this.cards.splice(index, 1)
+      }
+    },
+    async delSub(id){
+      let response = await this.deleteSubstitution(id)
+      if (response.status == 200) {
+        let index = this.substitutions.findIndex(substitution => substitution.id == id)        
+        this.substitutions.splice(index, 1)
+      }
+    },
+    async setPreviousData() {
+      if (this.matchpart) {
+        this.formacion = this.matchpart.formation
+        this.duration = this.matchpart.time
+        if (this.matchpart.minutes) {
+          for (let minutePlayer of this.matchpart.minutes) {                    
+            this.minutes.push({
+              ...minutePlayer,
+              player: this.team.players.find(p => p.id == minutePlayer.player)
+            })
+          }
+        }
+        if (this.matchpart.goals) {
+          for (let goalPlayer of this.matchpart.goals) {                    
+            this.goals.push({
+              ...goalPlayer,
+              player: this.team.players.find(p => p.id == goalPlayer.player)
+            })
+          }
+        }
+        if (this.matchpart.assists) {
+          for (let assistPlayer of this.matchpart.assists) {                    
+            this.assists.push({
+              ...assistPlayer,
+              player: this.team.players.find(p => p.id == assistPlayer.player)
+            })
+          }
+        }
+        if (this.matchpart.cards) {
+          for (let cardPlayer of this.matchpart.cards) {                    
+            this.cards.push({
+              ...cardPlayer,
+              player: this.team.players.find(p => p.id == cardPlayer.player)
+            })
+          }
+        }
+        if (this.matchpart.substitutions) {
+          for (let substitutionPlayer of this.matchpart.substitutions) {                    
+            this.substitutions.push({
+              ...substitutionPlayer,
+              playerIn: this.team.players.find(p => p.id == substitutionPlayer.playerIn),
+              playerOut: this.team.players.find(p => p.id == substitutionPlayer.playerOut)
+            })
+          } 
+        }     
+      }
+    
     }
   },
   computed: {
     ...mapGetters("competition", ["competition"])
   },
   created() {
-    
+    this.setPreviousData()
   },
-  watch: {
-    previousData() {
-      if (this.previousData) {
-        this.formacion = this.previousData.formation
-        this.duration = this.previousData.time
-        for (let minutePlayer of this.previousData.minutes) {                    
-          this.players.push({
-            player: this.team.players.find(p => p.id == minutePlayer.player),
-            position: minutePlayer.position,
-            match: minutePlayer.matchId
-          })
-        }
-        for (let goalPlayer of this.previousData.goals) {                    
-          this.goals.push({
-            player: this.team.players.find(p => p.id == goalPlayer.player),
-            minute: goalPlayer.minute,
-            match: goalPlayer.matchId
-          })
-        }
-        for (let assistPlayer of this.previousData.assists) {                    
-          this.assists.push({
-            player: this.team.players.find(p => p.id == assistPlayer.player),
-            minute: assistPlayer.minute,
-            match: assistPlayer.matchId
-          })
-        }
-        for (let cardPlayer of this.previousData.cards) {                    
-          this.cards.push({
-            player: this.team.players.find(p => p.id == cardPlayer.player),
-            minute: cardPlayer.minute,
-            match: cardPlayer.matchId
-          })
-        }
-        for (let substitutionPlayer of this.previousData.substitutions) {                    
-          this.substitutions.push({
-            playerIn: this.team.players.find(p => p.id == substitutionPlayer.playerIn),
-            playerOut: this.team.players.find(p => p.id == substitutionPlayer.playerOut),
-            minute: substitutionPlayer.minute,
-            match: substitutionPlayer.matchId
-          })
-        }      
-      }
-    }
+  watch: {      
+      
   }
 }
 </script>

@@ -33,7 +33,7 @@ function deleteCard(id) {
   return new Promise ((resolve, reject) =>{
     con.query("DELETE FROM cards WHERE id = ?", id, function(err, result) {
       if (err) reject(err)
-      else resolve(card)
+      else resolve(result)
     })
   })
 }

@@ -10,6 +10,11 @@ export const competitionModule = {
     },
     rounds: [],
     selectedRound: null,
+    minutes: [],
+    goals: [],
+    assists: [],
+    cards: [],
+    substitutions: []
   },
   getters: {
     competitions: state => {

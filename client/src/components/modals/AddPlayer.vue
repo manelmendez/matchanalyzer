@@ -72,7 +72,7 @@ export default {
       this.$emit('close')
     },
     add() {
-      this.$emit('confirm', {'player':this.player, 'position':this.position})
+      this.$emit('confirm', {'playerId':this.player.id, 'position':this.position})
     }
   }
 }

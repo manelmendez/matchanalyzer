@@ -33,7 +33,7 @@ function deleteGoal(id) {
   return new Promise ((resolve, reject) =>{
     con.query("DELETE FROM goals WHERE id = ?", id, function(err, result) {
       if (err) reject(err)
-      else resolve(goal)
+      else resolve(result)
     })
   })
 }

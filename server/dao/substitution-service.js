@@ -32,8 +32,8 @@ function saveSubstitution(substitution) {
 function deleteSubstitution(id) {
   return new Promise ((resolve, reject) =>{
     con.query("DELETE FROM substitutions WHERE id = ?", id, function(err, result) {
-      if (err) reject(err)
-      else resolve(substitution)
+      if (err) reject(err) 
+      else resolve(result)
     })
   })
 }

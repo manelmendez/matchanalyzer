@@ -131,10 +131,10 @@ export const deleteCompetition = ({commit}, data) => {
   })
 }
 
-export const addMatchparts = ({commit}, body) => {
-  console.log("ACTION -- addMatchparts")
-  return axios.post('addMatchparts', body).then(response => {
-    commit(types.ADD_MATCHPARTS, response.data)
+export const addMatchpart = ({commit}, body) => {
+  console.log("ACTION -- addMatchpart")
+  return axios.post('addMatchpart', body).then(response => {
+    commit(types.ADD_MATCHPART, response.data)
     return response
   }).catch((err) => {
     return err.response
@@ -145,7 +145,152 @@ export const getMatchpartsByMatchId = ({commit}, id) => {
   console.log("ACTION -- getMatchpartsByMatchId")
   return axios.get('getMatchpartsByMatchId/'+id)
     .then(response => {
-      commit(types.GET_MATCHPARTBYMATCHID, response.data)
-      return response.data
+      commit(types.GET_MATCHPARTSBYMATCHID, response.data)
+      return response.data.matchParts
     })
+}
+
+export const addMinute = ({commit}, body) => {
+  console.log("ACTION -- addMinute")
+  return axios.post('addMinute', body).then(response => {
+    commit(types.ADD_MINUTE, response.data)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}
+
+export const addGoal = ({commit}, body) => {
+  console.log("ACTION -- addGoal")
+  return axios.post('addGoal', body).then(response => {
+    commit(types.ADD_GOAL, response.data)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}
+
+export const addAssist = ({commit}, body) => {
+  console.log("ACTION -- addAssist")
+  return axios.post('addAssist', body).then(response => {
+    commit(types.ADD_ASSIST, response.data)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}
+
+export const addCard = ({commit}, body) => {
+  console.log("ACTION -- addCard")
+  return axios.post('addCard', body).then(response => {
+    commit(types.ADD_CARD, response.data)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}
+
+export const addSubstitution = ({commit}, body) => {
+  console.log("ACTION -- addSubstitution")
+  return axios.post('addSubstitution', body).then(response => {
+    commit(types.ADD_SUBSTITUTION, response.data)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}
+
+export const getMinutesByMatchId = ({commit}, id) => {
+  console.log("ACTION -- getMinutesByMatchId")
+  return axios.get('getMinutesByMatchId/'+id)
+    .then(response => {
+      commit(types.GET_MINUTESBYMATCHID, response.data)
+      return response.data.minutes
+    })
+}
+
+export const getGoalsByMatchId = ({commit}, id) => {
+  console.log("ACTION -- getGoalsByMatchId")
+  return axios.get('getGoalsByMatchId/'+id)
+    .then(response => {
+      commit(types.GET_GOALSBYMATCHID, response.data)
+      return response.data.goals
+    })
+}
+
+export const getAssistsByMatchId = ({commit}, id) => {
+  console.log("ACTION -- getAssistsByMatchId")
+  return axios.get('getAssistsByMatchId/'+id)
+    .then(response => {
+      commit(types.GET_ASSISTSBYMATCHID, response.data)
+      return response.data.assists
+    })
+}
+
+export const getCardsByMatchId = ({commit}, id) => {
+  console.log("ACTION -- getCardsByMatchId")
+  return axios.get('getCardsByMatchId/'+id)
+    .then(response => {
+      commit(types.GET_CARDSBYMATCHID, response.data)
+      return response.data.cards
+    })
+}
+
+export const getSubstitutionsByMatchId = ({commit}, id) => {
+  console.log("ACTION -- getSubstitutionsByMatchId")
+  return axios.get('getSubstitutionsByMatchId/'+id)
+    .then(response => {
+      commit(types.GET_SUBSTITUTIONSBYMATCHID, response.data)
+      return response.data.substitutions
+    })
+}
+
+export const deleteMinute = ({commit}, data) => {
+  console.log("ACTION -- deleteMinute")
+  return axios.delete('deleteMinute/'+data).then(response => {
+    commit(types.DELETE_MINUTE, response.data.id)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}
+
+export const deleteGoal = ({commit}, data) => {
+  console.log("ACTION -- deleteGoal")
+  return axios.delete('deleteGoal/'+data).then(response => {
+    commit(types.DELETE_GOAL, response.data.id)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}
+
+export const deleteAssist = ({commit}, data) => {
+  console.log("ACTION -- deleteAssist")
+  return axios.delete('deleteAssist/'+data).then(response => {
+    commit(types.DELETE_ASSIST, response.data.id)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}
+
+export const deleteCard = ({commit}, data) => {
+  console.log("ACTION -- deleteCard")
+  return axios.delete('deleteCard/'+data).then(response => {
+    commit(types.DELETE_CARD, response.data.id)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
+}
+
+export const deleteSubstitution = ({commit}, data) => {
+  console.log("ACTION -- deleteSubstitution")
+  return axios.delete('deleteSubstitution/'+data).then(response => {
+    commit(types.DELETE_SUBSTITUTION, response.data.id)
+    return response
+  }).catch((err) => {
+    return err.response
+  })
 }

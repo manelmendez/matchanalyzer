@@ -14,6 +14,14 @@ if (JSON.parse(window.localStorage.getItem('authUser'))!= null)
 }
 
 axios.interceptors.response.use(function (response) {
+  // if (response.status == 200 && response.config.method != "get") {
+  //   let snackbar = {
+  //     show: true,
+  //     color: "success",
+  //     text: response.data.message
+  //   }
+  //   store.commit("root/SNACKBAR", snackbar);
+  // }
   return response;
 }, function (error) {
   let snackbar = {
