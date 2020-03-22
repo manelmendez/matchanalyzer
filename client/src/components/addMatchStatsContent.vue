@@ -353,6 +353,8 @@ export default {
       }
     },
     async setPreviousData() {
+      console.log(this.matchpart);
+      
       if (this.matchpart) {
         this.formacion = this.matchpart.formation
         this.duration = this.matchpart.time
@@ -404,8 +406,8 @@ export default {
   computed: {
     ...mapGetters("competition", ["competition"])
   },
-  created() {
-    this.setPreviousData()
+  async created() {
+    await this.setPreviousData()
   },
   watch: {      
       

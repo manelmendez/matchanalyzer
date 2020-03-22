@@ -17,15 +17,15 @@ USE `matchanalyzer`;
 
 DROP TABLE IF EXISTS `assists`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `assists` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(50) DEFAULT NULL,
-  `goal` int(11) unsigned DEFAULT NULL,
-  `matchId` int(11) unsigned DEFAULT NULL,
-  `matchpart` int(11) unsigned DEFAULT NULL,
-  `player` int(11) unsigned DEFAULT NULL,
-  `userId` int(11) unsigned DEFAULT NULL,
+  `goal` int unsigned DEFAULT NULL,
+  `matchId` int unsigned DEFAULT NULL,
+  `matchpart` int unsigned DEFAULT NULL,
+  `player` int unsigned DEFAULT NULL,
+  `userId` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `assist_playerId` (`player`),
   KEY `assist_match` (`matchId`),
@@ -55,15 +55,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cards` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `minute` int(11) DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `minute` int DEFAULT '0',
   `type` varchar(50) DEFAULT '',
-  `player` int(11) unsigned DEFAULT NULL,
-  `matchId` int(11) unsigned DEFAULT NULL,
-  `userId` int(11) unsigned NOT NULL,
-  `matchpart` int(11) unsigned DEFAULT NULL,
+  `player` int unsigned DEFAULT NULL,
+  `matchId` int unsigned DEFAULT NULL,
+  `userId` int unsigned NOT NULL,
+  `matchpart` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `card_playerId` (`player`),
   KEY `card_matchId` (`matchId`),
@@ -91,16 +91,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `competitions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `competitions` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `season` varchar(50) DEFAULT NULL,
   `discipline` varchar(50) DEFAULT NULL,
   `category` varchar(50) DEFAULT NULL,
-  `manager` int(11) unsigned NOT NULL,
+  `manager` int unsigned NOT NULL,
   `signupDate` datetime DEFAULT NULL,
-  `userId` int(11) unsigned NOT NULL,
+  `userId` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `competition_managerId` (`manager`),
@@ -126,15 +126,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `goals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `goals` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `minute` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `minute` int NOT NULL DEFAULT '0',
   `type` varchar(50) DEFAULT '',
-  `player` int(11) unsigned DEFAULT NULL,
-  `matchId` int(11) unsigned DEFAULT NULL,
-  `userId` int(11) unsigned NOT NULL,
-  `matchpart` int(11) unsigned DEFAULT NULL,
+  `player` int unsigned DEFAULT NULL,
+  `matchId` int unsigned DEFAULT NULL,
+  `userId` int unsigned NOT NULL,
+  `matchpart` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `goal_matchId` (`matchId`),
   KEY `goal_userId` (`userId`),
@@ -144,7 +144,7 @@ CREATE TABLE `goals` (
   CONSTRAINT `goal_matchpartId` FOREIGN KEY (`matchpart`) REFERENCES `matchparts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `goal_playerId` FOREIGN KEY (`player`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `goal_userId` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `goals` (
 
 LOCK TABLES `goals` WRITE;
 /*!40000 ALTER TABLE `goals` DISABLE KEYS */;
-INSERT INTO `goals` VALUES (26,6,NULL,10,10,4,22),(27,9,NULL,9,10,4,22),(28,12,NULL,9,10,4,22),(29,10,NULL,3,10,4,23),(30,10,NULL,6,10,4,24),(31,7,NULL,7,10,4,25),(32,13,NULL,8,10,4,25);
+INSERT INTO `goals` VALUES (26,6,NULL,10,10,4,22),(27,9,NULL,9,10,4,22),(28,12,NULL,9,10,4,22),(29,10,NULL,3,10,4,23),(30,10,NULL,6,10,4,24),(31,7,NULL,7,10,4,25),(32,13,NULL,8,10,4,25),(33,4,NULL,9,15,4,26),(34,8,NULL,8,15,4,26),(35,10,NULL,10,15,4,26),(36,12,NULL,10,15,4,26),(37,1,NULL,7,15,4,27),(38,10,NULL,6,15,4,28),(39,12,NULL,5,15,4,28),(40,14,NULL,10,15,4,28),(41,15,NULL,6,15,4,28),(42,15,NULL,10,15,4,28),(43,1,NULL,9,15,4,29),(44,2,NULL,4,15,4,29),(45,4,NULL,4,15,4,29),(46,6,NULL,9,15,4,29),(47,7,NULL,8,15,4,29),(48,9,NULL,10,15,4,29),(49,11,NULL,8,15,4,29);
 /*!40000 ALTER TABLE `goals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,17 +163,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `matches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `matches` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `localTeam` int(11) unsigned DEFAULT NULL,
-  `awayTeam` int(11) unsigned DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `localTeam` int unsigned DEFAULT NULL,
+  `awayTeam` int unsigned DEFAULT NULL,
   `matchDay` date DEFAULT NULL,
-  `round` int(11) unsigned NOT NULL,
-  `competition` int(11) unsigned NOT NULL,
-  `localTeamGoals` int(11) NOT NULL,
-  `awayTeamGoals` int(11) NOT NULL,
-  `userId` int(11) unsigned NOT NULL,
+  `round` int unsigned NOT NULL,
+  `competition` int unsigned NOT NULL,
+  `localTeamGoals` int NOT NULL,
+  `awayTeamGoals` int NOT NULL,
+  `userId` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `match_competitionId` (`competition`),
   KEY `match_localTeamId` (`localTeam`),
@@ -204,14 +204,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `matchparts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `matchparts` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `matchId` int(11) unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `matchId` int unsigned NOT NULL,
   `formation` varchar(50) DEFAULT NULL,
-  `time` int(11) DEFAULT NULL,
-  `team` int(11) unsigned DEFAULT NULL,
-  `userId` int(11) unsigned NOT NULL,
+  `time` int DEFAULT NULL,
+  `team` int unsigned DEFAULT NULL,
+  `userId` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `matchpart_match` (`matchId`),
   KEY `matchpart_team` (`team`),
@@ -219,7 +219,7 @@ CREATE TABLE `matchparts` (
   CONSTRAINT `matchpart_match` FOREIGN KEY (`matchId`) REFERENCES `matches` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `matchpart_team` FOREIGN KEY (`team`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `matchpart_userId` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,7 +228,7 @@ CREATE TABLE `matchparts` (
 
 LOCK TABLES `matchparts` WRITE;
 /*!40000 ALTER TABLE `matchparts` DISABLE KEYS */;
-INSERT INTO `matchparts` VALUES (22,10,'3-1-2',15,13,4),(23,10,'3-1-2',15,13,4),(24,10,'3-1-2',15,13,4),(25,10,'3-1-2',15,13,4);
+INSERT INTO `matchparts` VALUES (22,10,'3-1-2',15,13,4),(23,10,'3-1-2',15,13,4),(24,10,'3-1-2',15,13,4),(25,10,'3-1-2',15,13,4),(26,15,'3-1-2',15,13,4),(27,15,'3-1-2',15,13,4),(28,15,'3-1-2',15,13,4),(29,15,'3-1-2',15,13,4);
 /*!40000 ALTER TABLE `matchparts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,13 +238,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `minutes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `minutes` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `player` int(11) unsigned NOT NULL,
-  `matchpart` int(11) unsigned NOT NULL,
-  `matchId` int(11) unsigned NOT NULL,
-  `userId` int(11) unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `player` int unsigned NOT NULL,
+  `matchpart` int unsigned NOT NULL,
+  `matchId` int unsigned NOT NULL,
+  `userId` int unsigned NOT NULL,
   `position` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `minute_playerId` (`player`),
@@ -255,7 +255,7 @@ CREATE TABLE `minutes` (
   CONSTRAINT `minute_matchpartId` FOREIGN KEY (`matchpart`) REFERENCES `matchparts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `minute_playerId` FOREIGN KEY (`player`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `minute_userId` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +264,7 @@ CREATE TABLE `minutes` (
 
 LOCK TABLES `minutes` WRITE;
 /*!40000 ALTER TABLE `minutes` DISABLE KEYS */;
-INSERT INTO `minutes` VALUES (2,1,22,10,4,'PT'),(3,2,22,10,4,'CT'),(4,4,22,10,4,'LD'),(5,6,22,10,4,'LI'),(6,7,22,10,4,'MC'),(7,10,22,10,4,'DC'),(12,9,22,10,4,'DC'),(13,1,23,10,4,'PT'),(14,2,23,10,4,'CT'),(15,3,23,10,4,'LD'),(16,5,23,10,4,'LI'),(17,8,23,10,4,'MC'),(18,9,23,10,4,'DC'),(19,10,23,10,4,'DC'),(20,1,24,10,4,'PT'),(22,3,24,10,4,'CT'),(23,4,24,10,4,'LD'),(24,5,24,10,4,'LI'),(25,7,24,10,4,'MC'),(26,6,24,10,4,'DC'),(27,8,24,10,4,'DC'),(28,1,25,10,4,'PT'),(29,2,25,10,4,'CT'),(30,4,25,10,4,'LD'),(31,6,25,10,4,'LI'),(32,7,25,10,4,'MC'),(33,10,25,10,4,'DC'),(34,9,25,10,4,'DC');
+INSERT INTO `minutes` VALUES (2,1,22,10,4,'PT'),(3,2,22,10,4,'CT'),(4,4,22,10,4,'LD'),(5,6,22,10,4,'LI'),(6,7,22,10,4,'MC'),(7,10,22,10,4,'DC'),(12,9,22,10,4,'DC'),(13,1,23,10,4,'PT'),(14,2,23,10,4,'CT'),(15,3,23,10,4,'LD'),(16,5,23,10,4,'LI'),(17,8,23,10,4,'MC'),(18,9,23,10,4,'DC'),(19,10,23,10,4,'DC'),(20,1,24,10,4,'PT'),(22,3,24,10,4,'CT'),(23,4,24,10,4,'LD'),(24,5,24,10,4,'LI'),(25,7,24,10,4,'MC'),(26,6,24,10,4,'DC'),(27,8,24,10,4,'DC'),(28,1,25,10,4,'PT'),(29,2,25,10,4,'CT'),(30,4,25,10,4,'LD'),(31,6,25,10,4,'LI'),(32,7,25,10,4,'MC'),(33,10,25,10,4,'DC'),(34,9,25,10,4,'DC'),(35,1,26,15,4,'PT'),(36,3,26,15,4,'CT'),(37,4,26,15,4,'LD'),(38,5,26,15,4,'LI'),(39,8,26,15,4,'MC'),(40,9,26,15,4,'DC'),(41,10,26,15,4,'DC'),(42,1,27,15,4,'PT'),(43,2,27,15,4,'CT'),(44,3,27,15,4,'LD'),(45,6,27,15,4,'LI'),(46,7,27,15,4,'MC'),(47,9,27,15,4,'DC'),(48,8,27,15,4,'DC'),(49,1,28,15,4,'PT'),(50,2,28,15,4,'CT'),(51,4,28,15,4,'LD'),(52,5,28,15,4,'LI'),(53,7,28,15,4,'MC'),(54,6,28,15,4,'DC'),(55,10,28,15,4,'DC'),(56,1,29,15,4,'PT'),(57,3,29,15,4,'CT'),(58,4,29,15,4,'LD'),(59,5,29,15,4,'LI'),(60,2,29,15,4,'MC'),(61,8,29,15,4,'DC'),(62,9,29,15,4,'DC');
 /*!40000 ALTER TABLE `minutes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,15 +274,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `players`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `players` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `avatar` varchar(255) DEFAULT NULL,
-  `year` year(4) NOT NULL,
-  `team` int(11) unsigned DEFAULT NULL,
+  `year` year NOT NULL,
+  `team` int unsigned DEFAULT NULL,
   `position` varchar(255) NOT NULL DEFAULT '',
-  `userId` int(11) unsigned NOT NULL,
+  `userId` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `player_teamId` (`team`),
   KEY `player_userId` (`userId`),
@@ -307,13 +307,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `rounds`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rounds` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `date` date DEFAULT NULL,
-  `competition` int(11) unsigned NOT NULL,
-  `userId` int(11) unsigned NOT NULL,
+  `competition` int unsigned NOT NULL,
+  `userId` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `round_competitionId` (`competition`),
   KEY `round_userId` (`userId`),
@@ -338,15 +338,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `substitutions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `substitutions` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `playerIn` int(11) unsigned DEFAULT NULL,
-  `playerOut` int(11) unsigned DEFAULT NULL,
-  `minute` int(11) DEFAULT '0',
-  `matchId` int(11) unsigned DEFAULT NULL,
-  `userId` int(11) unsigned NOT NULL,
-  `matchpart` int(11) unsigned DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `playerIn` int unsigned DEFAULT NULL,
+  `playerOut` int unsigned DEFAULT NULL,
+  `minute` int DEFAULT '0',
+  `matchId` int unsigned DEFAULT NULL,
+  `userId` int unsigned NOT NULL,
+  `matchpart` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `substitution_playerIn` (`playerIn`),
   KEY `substitution_playerOut` (`playerOut`),
@@ -358,7 +358,7 @@ CREATE TABLE `substitutions` (
   CONSTRAINT `substitution_playerIn` FOREIGN KEY (`playerIn`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `substitution_playerOut` FOREIGN KEY (`playerOut`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `substitution_userId` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,7 +367,7 @@ CREATE TABLE `substitutions` (
 
 LOCK TABLES `substitutions` WRITE;
 /*!40000 ALTER TABLE `substitutions` DISABLE KEYS */;
-INSERT INTO `substitutions` VALUES (5,3,4,7,10,4,25),(6,5,6,7,10,4,25),(7,8,9,7,10,4,25),(8,6,10,10,10,4,25);
+INSERT INTO `substitutions` VALUES (5,3,4,7,10,4,25),(6,5,6,7,10,4,25),(7,8,9,7,10,4,25),(8,6,10,10,10,4,25),(9,6,4,7,15,4,29),(10,7,2,7,15,4,29),(11,10,9,7,15,4,29);
 /*!40000 ALTER TABLE `substitutions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,16 +377,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `teams`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `teams` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `avatar` varchar(255) DEFAULT NULL,
   `signupDate` datetime DEFAULT NULL,
-  `manager` int(11) unsigned DEFAULT NULL,
+  `manager` int unsigned DEFAULT NULL,
   `season` varchar(50) NOT NULL DEFAULT '',
-  `competition` int(11) unsigned DEFAULT NULL,
-  `userId` int(11) unsigned NOT NULL,
+  `competition` int unsigned DEFAULT NULL,
+  `userId` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `team_competitionId` (`competition`),
   KEY `team_userId` (`userId`),
@@ -401,7 +401,7 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
-INSERT INTO `teams` VALUES (13,'FUNDACIÓ CORNELLÀ \"D\"','assets/images/1575279505166-fcornella.png','2019-12-02 10:38:25',4,'19/20',3,4),(14,'C.E.L\'HOSPITALET \"E\"','assets/images/1575296242288-1553118652927-hospi.png','2019-12-02 15:17:22',NULL,'19/20',3,4),(15,'SANTBOIÀ \"B\"','assets/images/1575296321525-1571061665668-santboia.png','2019-12-02 15:18:42',NULL,'19/20',3,4),(16,'CAN BUXERES \"B\"','assets/images/1575296446027-1553117716055-canbu.png','2019-12-02 15:20:46',NULL,'19/20',3,4),(17,'E.F.GAVÀ \"E\"','assets/images/1575296472232-1571058607030-gava.png','2019-12-02 15:21:12',NULL,'19/20',3,4),(18,'ATLÈTIC SANT JUST \"C\"','assets/images/1575299500403-1571062061749-santjust.png','2019-12-02 16:11:40',NULL,'19/20',3,4),(19,'CAN VIDALET \"B\"','assets/images/1575299530956-CANVI.png','2019-12-02 16:12:11',NULL,'19/20',3,4),(20,'ESPLUGUENC \"A\"','assets/images/1575299554710-espluguenc.png','2019-12-02 16:12:35',NULL,'19/20',3,4),(21,'CASTELLDEFELS \"C\"','assets/images/1575299576665-castelldefels.png','2019-12-02 16:12:57',NULL,'19/20',3,4),(22,'A.E.PRAT \"B\"','assets/images/1575299605473-aeprat.png','2019-12-02 16:13:26',NULL,'19/20',3,4),(23,'U.D.VILADECANS \"B\"','assets/images/1575299633875-viladecans.png','2019-12-02 16:13:54',NULL,'19/20',3,4),(24,'CIUDAD COOPERATIVA \"A\"','assets/images/1575299651962-COOPE.png','2019-12-02 16:14:12',NULL,'19/20',3,4),(25,'FUNDACIÓ EUROPA \"B\"','assets/images/1575299728372-fundeuropa.png','2019-12-02 16:15:28',NULL,'19/20',3,4),(26,'PUBILLA CASAS \"A\"','assets/images/1575299746614-pubilla.png','2019-12-02 16:15:47',NULL,'19/20',3,4),(27,'UNIFICACIÓN BELLVITGE \"A\"','assets/images/1575299770738-bellvitge.png','2019-12-02 16:16:11',NULL,'19/20',3,4),(28,'CUBELLES \"D\"','assets/images/1575299787451-cubelles.png','2019-12-02 16:16:27',NULL,'19/20',3,4),(31,'E.F. GAVÀ \"B\"','assets/images/1579261242766-1571057821354-gava.png','2020-01-17 12:40:43',4,'18/19',6,4),(32,'F.C.BARCELONA \"D\"','assets/images/1579270970331-1553001042279-fcb.png','2020-01-17 15:22:50',NULL,'18/19',6,4),(33,'TERLENKA BARCELONISTA C.F. \"A\"','assets/images/1579271003143-1553117652298-terlenka.png','2020-01-17 15:23:23',NULL,'18/19',6,4),(34,'C.E.L\'HOSPITALET \"D\"','assets/images/1579271077878-1553118652927-hospi.png','2020-01-17 15:24:38',NULL,'18/19',6,4),(35,'C.P.SARRIÀ \"A\"','assets/images/1579271107246-1553117989772-cp-sarria.png','2020-01-17 15:25:07',NULL,'18/19',6,4),(36,'MARTINENC \"C\"','assets/images/1579271145181-1553117509144-martinenc.png','2020-01-17 15:25:45',NULL,'18/19',6,4),(37,'P.B.ANGUERA \"A\"','assets/images/1579271176551-1553118622698-anguera.png','2020-01-17 15:26:17',NULL,'18/19',6,4),(38,'CAN BUXERES \"A\"','assets/images/1579271213015-1553117716055-canbu.png','2020-01-17 15:26:53',NULL,'18/19',6,4),(39,'CATALONIA \"A\"','assets/images/1579271259432-1553118307987-catalonia.png','2020-01-17 15:27:39',NULL,'18/19',6,4),(40,'P.B.COLLBLANC SANTS \"A\"','assets/images/1579271278271-1571057982148-1553118001847-pb-collblanc.png','2020-01-17 15:27:58',NULL,'18/19',6,4),(41,'RACING SARRIÀ \"A\"','assets/images/1579271309739-1553001179734-racing.jpg','2020-01-17 15:28:30',NULL,'18/19',6,4),(42,'VILA OLÍMPICA \"B\"','assets/images/1579271363453-1553118636953-vila.png','2020-01-17 15:29:23',NULL,'18/19',6,4),(43,'CAN RULL RÓMULO TRONCHONI \"A\"','assets/images/1579271431023-1553118666257-canrull.png','2020-01-17 15:30:31',NULL,'18/19',6,4),(44,'C.E.EUROPA \"B\"','assets/images/1579271462702-1553118316534-ceeuropa.png','2020-01-17 15:31:03',NULL,'18/19',6,4),(45,'MATARÓ C.E. \"C\"','assets/images/1579271516103-1553118328490-mataro.png','2020-01-17 15:31:56',NULL,'18/19',6,4),(49,'ESPLUGUENC \"A\"','assets/images/1579271668834-1553104592299-espluguenc.png','2020-01-17 15:34:29',NULL,'18/19',6,4);
+INSERT INTO `teams` VALUES (13,'FUNDACIÓ CORNELLÀ \"D\"','assets/images/fcornella.png','2019-12-02 10:38:25',4,'19/20',3,4),(14,'C.E.L\'HOSPITALET \"E\"','assets/images/hospi.png','2019-12-02 15:17:22',NULL,'19/20',3,4),(15,'SANTBOIÀ \"B\"','assets/images/santboia.png','2019-12-02 15:18:42',NULL,'19/20',3,4),(16,'CAN BUXERES \"B\"','assets/images/canbu.png','2019-12-02 15:20:46',NULL,'19/20',3,4),(17,'E.F.GAVÀ \"E\"','assets/images/gava.png','2019-12-02 15:21:12',NULL,'19/20',3,4),(18,'ATLÈTIC SANT JUST \"C\"','assets/images/santjust.png','2019-12-02 16:11:40',NULL,'19/20',3,4),(19,'CAN VIDALET \"B\"','assets/images/canvi.png','2019-12-02 16:12:11',NULL,'19/20',3,4),(20,'ESPLUGUENC \"A\"','assets/images/espluguenc.png','2019-12-02 16:12:35',NULL,'19/20',3,4),(21,'CASTELLDEFELS \"C\"','assets/images/castelldefels.png','2019-12-02 16:12:57',NULL,'19/20',3,4),(22,'A.E.PRAT \"B\"','assets/images/aeprat.png','2019-12-02 16:13:26',NULL,'19/20',3,4),(23,'U.D.VILADECANS \"B\"','assets/images/viladecans.png','2019-12-02 16:13:54',NULL,'19/20',3,4),(24,'CIUDAD COOPERATIVA \"A\"','assets/images/coope.png','2019-12-02 16:14:12',NULL,'19/20',3,4),(25,'FUNDACIÓ EUROPA \"B\"','assets/images/fundeuropa.png','2019-12-02 16:15:28',NULL,'19/20',3,4),(26,'PUBILLA CASAS \"A\"','assets/images/pubilla.png','2019-12-02 16:15:47',NULL,'19/20',3,4),(27,'UNIFICACIÓN BELLVITGE \"A\"','assets/images/bellvitge.png','2019-12-02 16:16:11',NULL,'19/20',3,4),(28,'CUBELLES \"D\"','assets/images/cubelles.png','2019-12-02 16:16:27',NULL,'19/20',3,4),(31,'E.F. GAVÀ \"B\"','assets/images/gava.png','2020-01-17 12:40:43',4,'18/19',6,4),(32,'F.C.BARCELONA \"D\"','assets/images/fcb.png','2020-01-17 15:22:50',NULL,'18/19',6,4),(33,'TERLENKA BARCELONISTA C.F. \"A\"','assets/images/terlenka.png','2020-01-17 15:23:23',NULL,'18/19',6,4),(34,'C.E.L\'HOSPITALET \"D\"','assets/images/hospi.png','2020-01-17 15:24:38',NULL,'18/19',6,4),(35,'C.P.SARRIÀ \"A\"','assets/images/cp-sarria.png','2020-01-17 15:25:07',NULL,'18/19',6,4),(36,'MARTINENC \"C\"','assets/images/martinenc.png','2020-01-17 15:25:45',NULL,'18/19',6,4),(37,'P.B.ANGUERA \"A\"','assets/images/anguera.png','2020-01-17 15:26:17',NULL,'18/19',6,4),(38,'CAN BUXERES \"A\"','assets/images/canbu.png','2020-01-17 15:26:53',NULL,'18/19',6,4),(39,'CATALONIA \"A\"','assets/images/catalonia.png','2020-01-17 15:27:39',NULL,'18/19',6,4),(40,'P.B.COLLBLANC SANTS \"A\"','assets/images/collblanc.png','2020-01-17 15:27:58',NULL,'18/19',6,4),(41,'RACING SARRIÀ \"A\"','assets/images/racing.jpg','2020-01-17 15:28:30',NULL,'18/19',6,4),(42,'VILA OLÍMPICA \"B\"','assets/images/vila.png','2020-01-17 15:29:23',NULL,'18/19',6,4),(43,'CAN RULL RÓMULO TRONCHONI \"A\"','assets/images/canrull.png','2020-01-17 15:30:31',NULL,'18/19',6,4),(44,'C.E.EUROPA \"B\"','assets/images/ceeuropa.png','2020-01-17 15:31:03',NULL,'18/19',6,4),(45,'MATARÓ C.E. \"C\"','assets/images/mataro.png','2020-01-17 15:31:56',NULL,'18/19',6,4),(49,'ESPLUGUENC \"A\"','assets/images/espluguenc.png','2020-01-17 15:34:29',NULL,'18/19',6,4);
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -411,14 +411,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   `provider` varchar(255) NOT NULL DEFAULT '',
-  `provider_id` int(11) DEFAULT NULL,
+  `provider_id` int DEFAULT NULL,
   `password` varchar(255) NOT NULL DEFAULT '',
   `signupDate` datetime DEFAULT NULL,
   `lastLogin` datetime DEFAULT NULL,
@@ -433,7 +433,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (4,'manel@gmail.com','Manel Méndez',NULL,'local',NULL,'$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.','2019-11-22 11:40:38','2020-03-12 00:47:52'),(5,'cristian@gmail.com','Cristian',NULL,'local',NULL,'$2a$10$3dyoWvpMwsyvvmrNFTzTYuwHIYjv4ttxG3qquFCKumec9s5TOCLAm','2019-12-02 12:46:52','2019-12-13 16:07:55');
+INSERT INTO `users` VALUES (4,'manel@gmail.com','Manel Méndez',NULL,'local',NULL,'$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.','2019-11-22 11:40:38','2020-03-18 10:41:32'),(5,'cristian@gmail.com','Cristian',NULL,'local',NULL,'$2a$10$3dyoWvpMwsyvvmrNFTzTYuwHIYjv4ttxG3qquFCKumec9s5TOCLAm','2019-12-02 12:46:52','2019-12-13 16:07:55');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -446,4 +446,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-18  0:26:08
+-- Dump completed on 2020-03-22 10:02:16

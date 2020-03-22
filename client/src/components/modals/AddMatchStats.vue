@@ -15,7 +15,7 @@
           <v-col class="text-center">{{localTeam.name}}</v-col>
           <v-col class="text-center">{{awayTeam.name}}</v-col>
         </v-row>
-        <v-row v-for="(part, index) of localMatchparts" :key="part.id">
+        <v-row v-for="(part, index) of localTeam.manager ? localMatchparts : awayMatchparts" :key="part.id">
           <v-col class="text-center">
             <v-row>
               <v-col class="text-center">
