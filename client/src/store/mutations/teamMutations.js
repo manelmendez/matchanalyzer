@@ -21,7 +21,7 @@ export const teamMutations = {
     state.myTeams = teams
   },
 
-  [types.UPDATE_TEAM] (state) {
+  [types.UPDATE_TEAM] () {
 
   },
 

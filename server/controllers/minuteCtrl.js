@@ -17,7 +17,7 @@ async function addMinute(req, res) {
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      message: `Error al añadir partes: ${err}`
+      message: `Error al añadir partes: ${error}`
     })
   }
 }

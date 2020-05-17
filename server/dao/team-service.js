@@ -33,7 +33,7 @@ function findByCompetition(id, userId) {
 
 function saveTeam(teamToSave) {
   return new Promise ((resolve, reject) =>{ 
-    con.query("INSERT INTO teams SET ?", teamToSave, function(err,result,fields) {
+    con.query("INSERT INTO teams SET ?", teamToSave, function(err,result) {
       if (err) reject(err)
       else {
         teamToSave.id = result.insertId

@@ -46,7 +46,7 @@ export const addNoManagerTeam = ({commit}, body) => {
   })
 }
 
-export const uploadTeamImage = ({commit}, formData) => {
+export const uploadTeamImage = (formData) => {
   console.log("ACTION -- uploadTeamImage")
   return axios.post('uploadImage', formData,{
     onUploadProgress: progressEvent => {

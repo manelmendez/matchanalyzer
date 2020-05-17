@@ -1,5 +1,5 @@
 const mysql = require('mysql')
-const fs = require('fs')
+// const fs = require('fs')
 require('dotenv').config({path: __dirname + '/../.env'}) //cargar archivo .env
 
 // Con archivo .mysql.json

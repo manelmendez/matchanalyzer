@@ -20,7 +20,7 @@ function findByCompetition(id, userId) {
 
 function saveRound(round) {
   return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO rounds SET ?", round, function(err,result,fields) {
+    con.query("INSERT INTO rounds SET ?", round, function(err,result) {
       if (err) reject(err)
       else {
         round.id = result.insertId
@@ -31,7 +31,7 @@ function saveRound(round) {
 }
 function deleteRound(id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM rounds WHERE id = ? AND userId = ?", [id, userId], function(err, result) {
+    con.query("DELETE FROM rounds WHERE id = ? AND userId = ?", [id, userId], function(err) {
       if (err) reject(err)
       else resolve(id)
     })

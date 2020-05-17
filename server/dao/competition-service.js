@@ -36,7 +36,7 @@ function findAll() {
 }
 function saveCompetition(competition) {
   return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO competitions SET ?", competition, function(err,result,fields) {
+    con.query("INSERT INTO competitions SET ?", competition, function(err,result) {
       if (err) reject(err)
       else {
         competition.id = result.insertId
@@ -47,7 +47,7 @@ function saveCompetition(competition) {
 }
 function updateCompetition(competition, id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("UPDATE competitions SET ? WHERE id = ? AND userId = ?", [competition, id, userId], function(err,result) {
+    con.query("UPDATE competitions SET ? WHERE id = ? AND userId = ?", [competition, id, userId], function(err) {
       if (err) reject(err)
       else resolve(competition)
     })

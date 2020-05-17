@@ -20,7 +20,7 @@ function findByRound(ids, userId) {
 
 function saveMatchpart(matchpart) {
   return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO matchparts SET ?", matchpart, function(err,result,fields) {
+    con.query("INSERT INTO matchparts SET ?", matchpart, function(err,result) {
       if (err) reject(err)
       else {
         matchpart.id = result.insertId
@@ -31,7 +31,7 @@ function saveMatchpart(matchpart) {
 }
 function updateMatchpart(match, id, userId) {
   return new Promise ((resolve, reject) =>{
-    con.query("UPDATE matchparts SET ? WHERE id = ? AND userId = ?", [match, id, userId], function(err,result) {
+    con.query("UPDATE matchparts SET ? WHERE id = ? AND userId = ?", [match, id, userId], function(err) {
       if (err) reject(err)
       else resolve(match)
     })
@@ -39,7 +39,7 @@ function updateMatchpart(match, id, userId) {
 }
 function deleteMatchpart (id, userId) {
   return new Promise ((resolve, reject) =>{ 
-    con.query("DELETE FROM matchparts WHERE id = ? AND userId = ?", [id, userId], function(err,result) {
+    con.query("DELETE FROM matchparts WHERE id = ? AND userId = ?", [id, userId], function(err) {
       if (err) reject(err)
       else resolve(id)
     })
