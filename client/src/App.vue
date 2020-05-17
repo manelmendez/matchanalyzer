@@ -28,8 +28,7 @@ export default {
     },
     ...mapGetters("root",[
       'snackbar'
-    ]),
-
+    ])
   }
 }
 

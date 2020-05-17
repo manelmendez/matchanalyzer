@@ -4,7 +4,16 @@
   "description": "Server of MatchAnalyzer App",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "lint": "eslint . --fix --ext .js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint -cache -fix"
   },
   "keywords": [
     "node",
@@ -28,5 +37,12 @@
     "multer": "latest",
     "mysql": "latest",
     "nodemon": "latest"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.3",
+    "prettier": "^2.0.4"
   }
 }

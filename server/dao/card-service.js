@@ -20,7 +20,7 @@ function findByMatch(id, userId) {
 
 function saveCard(card) {
   return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO cards SET ?", card, function(err,result,fields) {
+    con.query("INSERT INTO cards SET ?", card, function(err,result) {
       if (err) reject(err)
       else {
         card.id = result.insertId

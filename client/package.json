@@ -6,7 +6,8 @@
   "scripts": {
     "start": "parcel -p 9999 ./src/index.html",
     "build": "parcel build ./src/index.html --no-minify",
-    "docker": "cross-env DOCKER=true parcel build ./src/index.html --no-minify"
+    "docker": "cross-env DOCKER=true parcel build ./src/index.html --no-minify",
+    "lint": "eslint . --fix"
   },
   "keywords": [
     "node",
@@ -41,7 +42,22 @@
     "@babel/preset-env": "latest",
     "@vue/component-compiler-utils": "latest",
     "cross-env": "latest",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.3",
     "parcel-bundler": "latest",
+    "prettier": "^2.0.4",
     "vue-template-compiler": "latest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue}": [
+      "eslint -cache -fix"
+    ]
   }
 }

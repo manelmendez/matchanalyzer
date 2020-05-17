@@ -1,6 +1,4 @@
 const matchService = require('../dao/match-service')
-const goalService = require('../dao/goal-service')
-const assistService = require('../dao/assist-service')
 
 function getCompetitionMatches(req, res) {
   let competition = req.competition
@@ -77,25 +75,12 @@ function deleteMatch (req, res) {
   let matchId = req.params.id
   let userId = req.user.id
   matchService.deleteMatch(matchId, userId)
-  .then((value) => {
+  .then(() => {
     res.status(200).send({match: matchId})
   })
   .catch((err) => {
     console.log(err);
     res.status(500).send({message: `Error al borrar el partido`})
-  })
-}
-
-function addStats(req, res) {
-  let goals = req.body.goals
-  let substitutions = req.body.substitutions
-  let assists = req.body.assists
-  let cards = req.body.cards
-
-  goalService.saveGoal(goals).then(() => {
-    assistService.saveAssist(assists).then(() => {
-
-    })
   })
 }
 module.exports = {

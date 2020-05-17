@@ -52,17 +52,13 @@ export const competitionMutations = {
   },
 
   [types.UPDATE_MATCH] (state, data) {    
-    let updatedMatch = data    
-    let round = 0
-    let match = 0
+    let updatedMatch = data
     for (var i = 0; i < state.rounds.length; i++) {
       if (state.rounds[i].id == updatedMatch.round) {  
-        round = i              
         for (let j = 0; j < state.rounds[i].matches.length; j++) {
           if (state.rounds[i].matches[j].id == updatedMatch.id) {
             // EN PRINCIPIO EL INDEXOF() ES LO MISMO QUE LA J
             let index = state.rounds[i].matches.indexOf(state.rounds[i].matches[j])   
-            match = index                                  
             state.rounds[i].matches[index] = updatedMatch            
           }
         }

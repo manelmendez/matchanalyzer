@@ -63,7 +63,7 @@ function updatePlayer(req, res) {
   let player = req.body
   let userId = req.user.id
   playerService.updatePlayer(req.params.id, player, userId)
-  .then((value) => {    
+  .then(() => {    
     res.status(200).send({player: player})
   })
   .catch((err) => {
@@ -76,10 +76,11 @@ function deletePlayer (req, res) {
   let playerId = req.params.id
   let userId = req.user.id
   playerService.deletePlayer(playerId, userId)
-  .then((value) => {    
+  .then(() => {    
     res.status(200).send({player: playerId})
   })
   .catch((err) => {
+    console.log(err);
     res.status(500).send({message: `Error al borrar el jugador`})
   })
 }

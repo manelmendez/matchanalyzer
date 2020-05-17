@@ -18,7 +18,7 @@ async function addGoal(req, res) {
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      message: `Error al añadir gol: ${err}`
+      message: `Error al añadir gol: ${error}`
     })
   }
 }

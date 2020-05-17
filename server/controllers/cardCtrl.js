@@ -18,7 +18,7 @@ async function addCard(req, res) {
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      message: `Error al añadir tarjeta: ${err}`
+      message: `Error al añadir tarjeta: ${error}`
     })
   }
 }

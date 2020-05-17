@@ -9,5 +9,5 @@ export default {
   info: colors.blue,
   success: colors.green,
   warning: colors.orange,
-  item: colors.grey
+  item: colors.grey
 }

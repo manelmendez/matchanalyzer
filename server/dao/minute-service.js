@@ -20,7 +20,7 @@ function findByMatch(id, userId) {
 
 function saveMinute(minute) {
   return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO minutes SET ?", minute, function(err,result,fields) {
+    con.query("INSERT INTO minutes SET ?", minute, function(err,result) {
       if (err) reject(err)
       else {
         minute.id = result.insertId

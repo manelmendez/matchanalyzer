@@ -20,7 +20,7 @@ function findByMatch(id, userId) {
 
 function saveAssist(assist) {
   return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO assists SET ?", assist, function(err,result,fields) {
+    con.query("INSERT INTO assists SET ?", assist, function(err,result) {
       if (err) reject(err)
       else {
         assist.id = result.insertId

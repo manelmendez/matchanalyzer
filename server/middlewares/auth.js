@@ -2,7 +2,7 @@
 
 const tokenServices = require('../services/token-services')
 
-function isAuth(req, res, next) {
+function isAuth(req, res) {
   console.log(req.headers);
   if (!req.headers.authorization) {
     console.log('Sin cabeceras. No autorizado');
@@ -55,8 +55,9 @@ function checkAuth(req, res, next) {
         console.log("No está autorizado");
       }
     })
-    .catch(reject => {
+    .catch(error => {
       console.log("No está autorizado");
+      console.log(error);
       return res.status(401).send({
         message: 'No tienes autorización'
       })

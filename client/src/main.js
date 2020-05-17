@@ -3,7 +3,6 @@ import Vuetify from 'vuetify'
 import GSignInButton from 'vue-google-signin-button'
 import FBSignInButton from 'vue-facebook-signin-button'
 
-import constants from './assets/constants/constants'
 import router from './routes'
 import App from './App.vue'
 import store from './store/store'

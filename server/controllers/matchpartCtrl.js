@@ -17,7 +17,7 @@ async function addMatchpart(req, res) {
   }
   else {
     return res.status(500).send({
-      message: `Error al añadir partes: ${err}`
+      message: `Error al añadir partes`
     })
   }
 }
@@ -26,14 +26,13 @@ async function getMatchpartsByMatchId(req, res) {
   let userId = req.user.id
   let matchId = req.params.matchId
   let matchParts = await matchpartService.findByMatch(matchId, userId)
-  if (matchParts) {
+  if (matchParts) {
     return res.status(200).send({
       matchParts: matchParts
     })  
   } else {
-    console.log(error);
     return res.status(500).send({
-      message: `Error al obtener partes: ${error}`
+      message: `Error al obtener partes`
     })
   }  
 }

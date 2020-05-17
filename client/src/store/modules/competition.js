@@ -43,8 +43,7 @@ export const competitionModule = {
     matches: state => {
       if (state.rounds && state.rounds.length != 0) {
         return state.rounds[state.selectedRound!=null ? state.selectedRound -1 : state.rounds.length -1].matches
-      }
-      else {
+      } else {
         return []
       }
     },

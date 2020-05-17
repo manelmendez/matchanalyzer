@@ -20,7 +20,7 @@ function findByMatch(id, userId) {
 
 function saveSubstitution(substitution) {
   return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO substitutions SET ?", substitution, function(err,result,fields) {
+    con.query("INSERT INTO substitutions SET ?", substitution, function(err,result) {
       if (err) reject(err)
       else {
         substitution.id = result.insertId

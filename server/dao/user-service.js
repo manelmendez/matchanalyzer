@@ -28,7 +28,7 @@ function findAll() {
 }
 function saveUser(user) {
   return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO users SET ?", user, function(err,result,fields) {
+    con.query("INSERT INTO users SET ?", user, function(err) {
       if (err) reject(err)
       else resolve(user)
     })

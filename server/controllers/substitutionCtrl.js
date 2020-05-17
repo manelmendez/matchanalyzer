@@ -18,7 +18,7 @@ async function addSubstitution(req, res) {
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      message: `Error al añadir sustitucion: ${err}`
+      message: `Error al añadir sustitucion: ${error}`
     })
   }
 }
