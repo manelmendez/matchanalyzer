@@ -13,7 +13,7 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint -cache -fix"
+    "*.js": "npm run lint"
   },
   "keywords": [
     "node",
@@ -43,6 +43,7 @@
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "husky": "^4.2.3",
+    "lint-staged": "^10.2.2",
     "prettier": "^2.0.4"
   }
 }
