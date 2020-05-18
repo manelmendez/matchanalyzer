@@ -57,9 +57,9 @@ export default {
       competitions:'competition/competitions'
     })
   },
-  created() {
-    this.getUserCompetitions(this.user.id)
-    this.getUserTeams(this.user.id)
+  async created() {
+    await this.getUserCompetitions(this.user.id)
+    await this.getUserTeams(this.user.id)    
   }
 }
 </script>
