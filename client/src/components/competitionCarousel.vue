@@ -49,8 +49,11 @@
       </v-col>
       <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
+          <v-card-title style="justify-content: center">
+            Año
+          </v-card-title>
           <v-card-text>
-            Hola
+              <p style="font-size: 40px">{{competition.season}}</p>
           </v-card-text>
         </v-card>
       </v-col>
