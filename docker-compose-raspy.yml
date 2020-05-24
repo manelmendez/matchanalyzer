@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.8'
 
 services:
   mysql:
@@ -11,8 +11,8 @@ services:
       - ./server/resources:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_USER: 'root'
-      MYSQL_PASSWORD: 'root'
+      MYSQL_USER: 'matchanalyzer'
+      MYSQL_PASSWORD: 'matchanalyzer'
       MYSQL_DATABASE: 'matchanalyzer'
     networks:
       - ma_backend
@@ -30,7 +30,11 @@ services:
     networks:
       - ma_backend
   matchanalyzer:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        environment: "raspy"
     container_name: "matchanalyzer"
     restart: always
     stdin_open: true
