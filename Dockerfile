@@ -3,7 +3,7 @@ FROM node:12-alpine
 # setting up MatchAnalyzer
 ARG environment
 RUN echo "environment: $environment"
-
+RUN apk add g++ make python
 # set work directory on Docker
 WORKDIR /projects/matchanalyzer
 
