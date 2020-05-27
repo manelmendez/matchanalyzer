@@ -1,11 +1,9 @@
-FROM node:11.12.0-alpine
+FROM node:12-alpine
 
 # setting up MatchAnalyzer
 ARG environment
 RUN echo "environment: $environment"
-RUN apk add --no-cache --virtual .build-deps alpine-sdk python \
- && npm install --production --silent \
- && apk del .build-deps
+
 # set work directory on Docker
 WORKDIR /projects/matchanalyzer
 
