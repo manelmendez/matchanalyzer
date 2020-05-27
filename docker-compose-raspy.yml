@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mysql:
-    image: hypriot/rpi-mysql:5.5
+    image: mariadb:latest
     container_name: "mysql"
     restart: always
     stdin_open: true
@@ -16,6 +16,11 @@ services:
       MYSQL_DATABASE: 'matchanalyzer'
     networks:
       - ma_backend
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8009:8080
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: "phpmyadmin"
