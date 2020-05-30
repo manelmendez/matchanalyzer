@@ -43,11 +43,19 @@ function updateUser(conditions, id) {
     })
   })
 }
-
+function deleteUser (userId) {
+  return new Promise ((resolve, reject) =>{ 
+    con.query("DELETE FROM users WHERE id = ?", [userId], function(err) {
+      if (err) reject(err)
+      else resolve()
+    })
+  })
+}
 module.exports = {
   findById,
   findByEmail,
   findAll,
   saveUser,
-  updateUser
+  updateUser,
+  deleteUser
 }

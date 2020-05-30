@@ -135,9 +135,37 @@ function getAllUsers(req, res) {
   })
 }
 
+function updateUser(req, res) {
+  console.log("Buscando todos los usuarios...");
+  let userId = req.params.id
+  let data
+  userService.updateUser(userId, data).then((users) => {
+    console.log("Usuarios encontrados.");
+    res.status(200).send({
+      users: users
+    })
+  }).catch((err) => {
+    console.log(`Error: ${err}`)
+  })
+}
+
+function deleteUser(req, res) {
+  console.log("Buscando todos los usuarios...");
+  let userId = req.params.id
+  userService.deleteUser(userId).then(() => {
+    console.log("Usuario eliminado.");
+    res.status(200).send({
+      message: "Usuario eliminado"
+    })
+  }).catch((err) => {
+    console.log(`Error: ${err}`)
+  })
+}
 module.exports = {
   signUp,
   signIn,
   getUser,
-  getAllUsers
+  getAllUsers,
+  updateUser,
+  deleteUser
 }

@@ -7,7 +7,8 @@ const config = require('../config/config')
 function createToken(user) {
   const userData = {
     email: user.email,
-    id: user.id
+    id: user.id,
+    role: user.role
   }
   const payload = {
     sub: userData,

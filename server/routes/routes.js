@@ -31,6 +31,8 @@ api.post('/signUp', userCtrl.signUp)
 api.post('/signIn', userCtrl.signIn)
 api.get('/getUser/:id', auth.checkAuth, userCtrl.getUser)
 api.get('/getAllUsers', auth.checkAuth, userCtrl.getAllUsers)
+api.put('/updateUser/:id', auth.checkAdmin, userCtrl.updateUser)
+api.delete('/deleteUser/:id', auth.checkAdmin, userCtrl.deleteUser)
 
 // TEAM
 api.post('/addTeam', auth.checkAuth, teamCtrl.addTeam)
