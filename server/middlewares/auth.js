@@ -64,7 +64,41 @@ function checkAuth(req, res, next) {
     })
 }
 
+function checkAdmin(req, res, next) {
+  console.log("");
+  console.log("Comprobando header Authorization");
+    if (!req.headers.authorization) {
+      console.log("No existe");
+      return res.status(401).send({
+        message: 'No tienes autorización como administrador'
+      })
+    }
+    // extract 'Bearer' from Auth header
+    const tokenBearer = req.get("authorization")
+    let arr = tokenBearer.split(" ")
+    const token = arr[1]
+    tokenServices.decodeToken(token)
+    .then((response) => {
+      if (response && response.role == "admin") {
+        console.log(response);
+        console.log("Está autorizado como administrador");
+        req.user = response
+        next()
+      }
+      else{
+        throw "No está autorizado como administrador"
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return res.status(401).send({
+        message: 'No tienes autorización como administrador'
+      })
+    })
+}
+
 module.exports = {
   isAuth,
-  checkAuth
+  checkAuth,
+  checkAdmin
 }
