@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "lint": "eslint . --fix --ext .js",
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "husky": {
     "hooks": {
