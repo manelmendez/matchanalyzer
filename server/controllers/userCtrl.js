@@ -52,11 +52,19 @@ function signUp(req, res) {
  *
  */
 function signIn(req, res) {
+  console.log(req.headers)
+  // check for basic auth header
+  if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
+    return res.status(401).json({ message: 'Missing Authorization Header' });
+  }
   // search for user in DB
-  userService.findByEmail(req.body.email).then((userFound) => {
+  const base64Credentials =  req.headers.authorization.split(' ')[1];
+  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');  
+  const [email, password] = credentials.split(':');
+  userService.findByEmail(email).then((userFound) => {
     if (userFound) {
       // check if password is OK
-      if (bcrypt.compareSync(req.body.password, userFound.password)) {
+      if (bcrypt.compareSync(password, userFound.password)) {
         // setting loginDate on DB
         // User.loginDate(userFound.id, function(err, userLoged) {
         //   if(err) return console.log(err);

@@ -1,9 +1,14 @@
 const con = require('../config/mysql')
 
 function findById(id) {
-  con.query("SELECT * FROM users WHERE id = ?", id ,function(err, user) {
-    if (err) throw err
-    else return user
+  return new Promise ((resolve, reject) =>{
+    con.query("SELECT * FROM users WHERE id = ?", id ,function(err, user) {
+      if (err) reject(err)
+      else {        
+        console.log(user);
+        resolve(user[0])
+      }
+    })
   })
 }
 function findByEmail(email) {
@@ -12,7 +17,6 @@ function findByEmail(email) {
       if (err) reject(err)
       else {        
         console.log(user);
-        
         resolve(user[0])
       }
     })
