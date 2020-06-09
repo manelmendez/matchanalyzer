@@ -142,11 +142,11 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        let body = {
-          email: this.email,
+        let credentials = {
+          username: this.email,
           password: this.password
         };
-        this.signIn(body)
+        this.signIn(credentials)
           .then(response => {
             let snackbar = {
               show: true,
