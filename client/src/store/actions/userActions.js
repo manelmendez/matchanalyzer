@@ -5,9 +5,9 @@ export const initializeStore = ({commit}) => {
   console.log("ACTION -- initializeStore")
   commit(types.INITIALIZE)
 }
-export const signIn = ({commit}, body) => {
+export const signIn = ({commit}, credentials) => {
   console.log("ACTION -- signIn")
-  return axios.post('signIn', body)
+  return axios.post('signIn',{},{auth: credentials})
     .then(response => {      
       let authUser = {
         token: response.data.token,
@@ -20,9 +20,9 @@ export const signIn = ({commit}, body) => {
       return response
     })
 }
-export const signUp = ({commit}, body) => {
+export const signUp = ({commit}, credentials) => {
   console.log("ACTION -- signUp")
-  return axios.post('signup', body)
+  return axios.post('signup',{},{auth: credentials})
     .then(response => {
       let authUser = {
         token: response.data.token,
