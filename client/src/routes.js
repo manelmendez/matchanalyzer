@@ -2,6 +2,7 @@ import Vue from 'vue'
 import login from './pages/login.vue'
 import index from './pages/index.vue'
 import error404 from './pages/error/404.vue'
+import error500 from './pages/error/500.vue'
 import teams from './pages/teams/index.vue'
 import team from './pages/teams/_id/index.vue'
 import competitionList from './pages/competitions/index.vue'
@@ -78,14 +79,20 @@ const router = new VueRouter({
           name: 'classification',
           component: classification,
           meta: { requiresAuth: true, layout: 'default' }
-        }
+        },
       ]
+    },
+    {
+      path: '/500',
+      name: 'error500',
+      component: error500,
+      meta: { requiresAuth: false, layout: "empty" }
     },
     {
       path: '*',
       name: 'error',
       component: error404,
-      meta: { requiresAuth: false, layout: "default" }
+      meta: { requiresAuth: false, layout: "empty" }
     },
   ]
 })

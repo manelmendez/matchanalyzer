@@ -26,7 +26,6 @@ function addCompetition(req, res) {
       message: `Error al crear competición`
     })
   })
-    
 }
 
 function getCompetition(req, res) {  
@@ -34,7 +33,7 @@ function getCompetition(req, res) {
   let userId = req.user.id
   console.log("Buscando competición con id: " + id + " en la base de datos...");
   competitionService.findById(id, req.user.id, userId).then((result => {    
-    if (result) {     
+    if (result.length != 0) {
       let competition = JSON.parse(JSON.stringify(result[0]))
       teamService.findByCompetition(id, userId).then((teams => {
         competition.teams = JSON.parse(JSON.stringify(teams))        

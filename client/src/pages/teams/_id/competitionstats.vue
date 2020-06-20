@@ -2,10 +2,10 @@
   <v-container fluid>
     {{team.name}}
     <v-row>
-      <v-col cols="12" sm="12" md="6" lg="4">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <positionstats :chart-data="positiondatacollection" :height="250" :team="team"/>
       </v-col>
-      <v-col cols="12" sm="12" md="6" lg="4">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <matchstats :chart-data="matchesdatacollection" :height="250" :team="team"/>
       </v-col>
       <v-col cols="12" sm="12" md="6" lg="4">
@@ -34,7 +34,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="12" md="6" lg="4">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <v-card>
           <v-card-title class="justify-center">
             Local
@@ -55,7 +55,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="12" md="6" lg="4">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <v-card>
           <v-card-title class="justify-center">
             Visitante

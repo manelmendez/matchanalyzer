@@ -1,6 +1,7 @@
 import axios from 'axios'
 import constants from './constants/constants'
 import store from '../store/store'
+import router from '../routes'
 
 axios.defaults.baseURL = constants.API_ADDRESS
 
@@ -33,6 +34,9 @@ axios.interceptors.response.use(function (response) {
     if (error.response.status >= 400) {
       snackbar.text = error.response.data.message
       store.commit("root/SNACKBAR", snackbar);
+      if (error.response.status == 404) {
+        router.push({name: "error"})
+      }
     }
     else {
       snackbar.text = "Error en la petición"
@@ -41,6 +45,7 @@ axios.interceptors.response.use(function (response) {
   }
   else if (error.request) {
     snackbar.text = "Se ha perdido la conexión con el servidor"
+    router.push("500")
     store.commit("root/SNACKBAR", snackbar)
   }
   return Promise.reject(error);

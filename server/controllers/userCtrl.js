@@ -6,10 +6,23 @@ const userService = require('../dao/user-service')
  *
  */
 function signUp(req, res) {
+  // check for basic auth header
+  if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
+    return res.status(401).json({ message: 'Missing Authorization Header' });
+  }
+  // search for user in DB
+  const base64Credentials =  req.headers.authorization.split(' ')[1];
+  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');  
+  const [email, password] = credentials.split(':');
+  if (!email || !password) {
+    return res.status(500).send({
+      message: `Te faltan el email o contraseña por rellenar`
+    })
+  }
   const user = {
-    email: req.body.email,
+    email: email,
     name: req.body.name,
-    password: req.body.password,
+    password: password,
     provider: 'local',
     signupDate: new Date(),
     lastLogin: new Date()

@@ -9,6 +9,21 @@
           <v-col>  
             {{team.name}}
           </v-col>
+          <v-spacer></v-spacer>
+          <v-col>
+            <v-card outline class="rounded-xl" color="background lighten-1" :to="{ name: 'summary', params: { id: team.competition }}">
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-subtitle>
+                  Ir a la competición
+                </v-list-item-subtitle>
+              </v-list-item-content>
+              <v-list-item-action>
+                <v-icon large>mdi-chevron-right</v-icon>
+              </v-list-item-action>
+            </v-list-item>
+            </v-card>
+          </v-col>
         </v-row>
       </v-card-title>
       <v-data-table

@@ -6,13 +6,15 @@
     :color="color"
   >
     {{ text }}
-    <v-btn
-      color="black"
-      text
-      @click="close"
-    >
-      Close
-    </v-btn>
+    <template v-slot:action>
+      <v-btn
+        color="black"
+        text
+        @click="close"
+      >
+        Close
+      </v-btn>
+    </template>
   </v-snackbar>
 </template>
 <script>
@@ -23,11 +25,9 @@ export default {
     color: String
   },
   methods: {
-    close() {
+    close() {      
       this.$store.commit('root/SNACKBAR_OFF')
     }
-  },
-  created() {
   }
 }
 </script>
