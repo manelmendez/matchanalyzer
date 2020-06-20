@@ -1,5 +1,5 @@
-import { competitionMutations } from '../mutations/competitionMutations'
-import * as competitionActions from '../actions/competitionActions'
+import { competitionMutations } from '../mutations/competitionMutations.js'
+import * as competitionActions from '../actions/competitionActions.js'
 
 export const competitionModule = {
   namespaced: true,
@@ -17,7 +17,7 @@ export const competitionModule = {
     substitutions: []
   },
   getters: {
-    competitions: state => {
+    competitions: (state) => {
       return state.competitions
     },
     competition: state => {
@@ -29,6 +29,9 @@ export const competitionModule = {
     },
     round: state => {
       return state.rounds[state.selectedRound - 1]
+    },
+    minutesByMatch: state => (matchId) => {
+      return state.minutes.filter(minute=> minute.matchId == matchId)
     },
     selectedRound: state => {
       if (state.selectedRound==null) {

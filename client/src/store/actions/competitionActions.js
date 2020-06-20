@@ -205,7 +205,7 @@ export const getMinutesByMatchId = ({commit}, id) => {
   return axios.get('getMinutesByMatchId/'+id)
     .then(response => {
       commit(types.GET_MINUTESBYMATCHID, response.data)
-      return response.data.minutes
+      // return response.data.minutes
     })
 }
 

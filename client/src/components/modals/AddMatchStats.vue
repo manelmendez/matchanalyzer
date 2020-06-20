@@ -78,7 +78,6 @@ export default {
       localMatchparts: [],
       awayMatchparts: [],
       matchparts: [],
-      minutes: [],
       goals: [],
       assists: [],
       cards: [],
@@ -137,15 +136,21 @@ export default {
   },
   async created(){
     this.matchparts = await this.getMatchpartsByMatchId(this.matchId)
-    this.minutes = await this.getMinutesByMatchId(this.matchId)
+    await this.getMinutesByMatchId(this.matchId)
     this.goals = await this.getGoalsByMatchId(this.matchId)
     this.assists = await this.getAssistsByMatchId(this.matchId)
     this.cards = await this.getCardsByMatchId(this.matchId)
     this.substitutions = await this.getSubstitutionsByMatchId(this.matchId)
     this.localTeamWithPlayers = await this.getTeam(this.localTeam.id)
     this.awayTeamWithPlayers = await this.getTeam(this.awayTeam.id)
+    console.log(this.minutes)
     await this.putData()
-  }
+  },
+  computed: {
+    minutes() {
+      return this.$store.getters['competition/minutesByMatch'](this.matchId)
+    }
+  },
 }
 </script>
 

@@ -125,7 +125,7 @@ export const competitionMutations = {
 
   [types.GET_MINUTESBYMATCHID] (state, data) {
     state.minutes = data.minutes
-    return data
+    // return data
   },
 
   [types.GET_GOALSBYMATCHID] (state, data) {
