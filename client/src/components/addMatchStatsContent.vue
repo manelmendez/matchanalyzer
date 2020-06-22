@@ -352,9 +352,7 @@ export default {
         this.substitutions.splice(index, 1)
       }
     },
-    async setPreviousData() {
-      console.log(this.matchpart);
-      
+    async setPreviousData() {      
       if (this.matchpart) {
         this.formacion = this.matchpart.formation
         this.duration = this.matchpart.time

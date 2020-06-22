@@ -1,5 +1,5 @@
-import { userMutations } from '../mutations/userMutations'
-import * as userActions from '../actions/userActions'
+import { userMutations } from '../mutations/userMutations';
+import * as userActions from '../actions/userActions';
 
 export const userModule = {
   namespaced: true,
@@ -8,10 +8,10 @@ export const userModule = {
   },
   getters: {
     user: state => {
-      return state.user
+      return state.user;
     },
     isLogged: state => {
-      return state.user.isLogged
+      return state.user.isLogged;
     },
   },
   mutations: {
@@ -20,4 +20,4 @@ export const userModule = {
   actions: {
     ...userActions
   }
-}
+};

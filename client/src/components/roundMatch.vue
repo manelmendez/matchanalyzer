@@ -53,7 +53,7 @@
             <v-col v-if="match.awayTeam.manager != null || match.localTeam.manager != null">
               <v-tooltip top v-if="match.awayTeam.manager != null || match.localTeam.manager != null">
                 <template v-slot:activator="{ on }">
-                  <v-btn x-small text icon color="green lighten-2" @click.stop="addStatsDialog=true" v-on="on">
+                  <v-btn x-small text icon color="green lighten-2" :to="{name: 'match-id', params: {matchId: match.id}}" v-on="on">
                     <v-icon size="18">fa-file-alt</v-icon>
                   </v-btn>
                 </template>
@@ -100,14 +100,6 @@
       @close="deleteDialog=!deleteDialog"
       @delete="deleteMatchFunction"
     ></DeleteDialog>
-    <AddMatchStats 
-      v-if="addStatsDialog"
-      :show="addStatsDialog"
-      :localTeam="match.localTeam"
-      :awayTeam="match.awayTeam"
-      :matchId="match.id"
-      @close="addStatsDialog=!addStatsDialog"
-      @addStats="addStats"> </AddMatchStats>
   </v-row>
 </template>
 <script>
@@ -115,14 +107,12 @@ import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
 import CreateMatch from "./modals/CreateMatch";
 import DeleteDialog from "./modals/DeleteDialog";
-import AddMatchStats from "./modals/AddMatchStats"
 import constants from "../assets/constants/constants"
 export default {
   name: "RoundMatch",
   components: {
     CreateMatch,
-    DeleteDialog,
-    AddMatchStats
+    DeleteDialog
   },
   props: {
     match: Object
@@ -163,10 +153,6 @@ export default {
         this.roundDialog = false
         this.$emit("loading") 
       }
-    },
-    addStats(data){
-      console.log(data)
-      this.addStatsDialog = false
     },
     ...mapActions("competition", [
       "updateMatch",

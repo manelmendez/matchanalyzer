@@ -1,21 +1,22 @@
-import Vue from 'vue'
-import login from './pages/login.vue'
-import index from './pages/index.vue'
-import error404 from './pages/error/404.vue'
-import error500 from './pages/error/500.vue'
-import teams from './pages/teams/index.vue'
-import team from './pages/teams/_id/index.vue'
-import competitionList from './pages/competitions/index.vue'
-import competitionBase from './pages/competitions/_id/index.vue'
-import summary from './pages/competitions/_id/summary.vue'
-import results from './pages/competitions/_id/results.vue'
-import classification from './pages/competitions/_id/classification.vue'
-import competitionStats from './pages/teams/_id/competitionstats.vue'
+import Vue from 'vue';
+import login from './pages/login.vue';
+import index from './pages/index.vue';
+import error404 from './pages/error/404.vue';
+import error500 from './pages/error/500.vue';
+import teams from './pages/teams/index.vue';
+import team from './pages/teams/_id/index.vue';
+import competitionList from './pages/competitions/index.vue';
+import competitionBase from './pages/competitions/_id/index.vue';
+import summary from './pages/competitions/_id/summary.vue';
+import results from './pages/competitions/_id/results.vue';
+import match from './pages/match/_id.vue';
+import classification from './pages/competitions/_id/classification.vue';
+import competitionStats from './pages/teams/_id/competitionstats.vue';
 
-import VueRouter from 'vue-router'
-import axios from 'axios'
+import VueRouter from 'vue-router';
+import axios from 'axios';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
@@ -72,7 +73,7 @@ const router = new VueRouter({
           path: 'results',
           name: 'results',
           component: results,
-          meta: { requiresAuth: true, layout: 'default' }
+          meta: { requiresAuth: true, layout: 'default' },
         },
         {
           path: 'rankings',
@@ -81,6 +82,12 @@ const router = new VueRouter({
           meta: { requiresAuth: true, layout: 'default' }
         },
       ]
+    },
+    {
+      path: '/competitions/:id/match/:matchId',
+      name: 'match-id',
+      component: match,
+      meta: { requiresAuth: true, layout: 'default' }
     },
     {
       path: '/500',
@@ -95,7 +102,7 @@ const router = new VueRouter({
       meta: { requiresAuth: false, layout: "empty" }
     },
   ]
-})
+});
 /**
  * Function to check some things before redirect to a page
  *
@@ -103,29 +110,29 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // method to check if user needs to be logged to access a page
   if(to.meta.requiresAuth) {
-    const authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    const authUser = JSON.parse(window.localStorage.getItem('authUser'));
     if(!authUser) {
-      next({name:'login'})
+      next({name:'login'});
     }
     else {
-      isAuth()
-      next()
+      isAuth();
+      next();
     }
   }
   // method to not allow a user to go to certain pages once logged
   else if (to.meta.onceLogged) {
-    const authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    const authUser = JSON.parse(window.localStorage.getItem('authUser'));
     if(authUser) {
-      next({name:'index'})
+      next({name:'index'});
     }
     else {
-      next()
+      next();
     }
   }
   else {
-    next()
+    next();
   }
-})
+});
 function isAuth() {
   axios.post('private', null)
   .then(response => {
@@ -144,8 +151,8 @@ function isAuth() {
     else if (error.response.status === 500) {
       console.log("No estás autorizado");
     }
-    window.localStorage.removeItem('authUser')
-    router.push({ path: "/" })
-  })
+    window.localStorage.removeItem('authUser');
+    router.push({ path: "/" });
+  });
 }
-export default router
+export default router;

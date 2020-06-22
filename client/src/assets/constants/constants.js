@@ -5,4 +5,4 @@ module.exports = {
   DEFAULT_PLAYER_URL: 'assets/images/person_icon.png',
   // LOCAL_API_ADDRESS : 'http://37.133.124.200:9000/api/',
   // LOCAL_ADDRESS : 'http://37.133.124.200:9000/',
-}
+};

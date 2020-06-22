@@ -116,7 +116,6 @@ import constants from '../../assets/constants/constants'
       })
     },
     created() {
-      //do something after creating vue instance
       this.getUserTeams(this.user.id)
     }
   }

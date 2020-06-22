@@ -1,123 +1,117 @@
-import * as types from '../mutations/mutation-types'
-import axios from 'axios'
+import * as types from '../mutations/mutation-types';
+import axios from 'axios';
 
+// TEAM
 export const addTeam = ({commit}, body) => {
-  console.log("ACTION -- addTeam")
-  console.log(body);
-  
+  console.log("ACTION -- addTeam");  
   return axios.post('addTeam', body).then(response => {
-    commit(types.ADD_MYTEAM, response.data.team)
-    return response
+    commit(types.ADD_MYTEAM, response.data.team);
+    return response;
   })
   .catch((err) => {
-    throw err.response
-  })
-}
+    throw err.response;
+  });
+};
 export const getTeam = ({commit}, id) => {
-  console.log("ACTION -- getTeam")
+  console.log("ACTION -- getTeam");
   return axios.get('getTeam/'+id).then(response => {
-    commit(types.GET_TEAM, response.data.team)
-    return response.data.team
-  })
-}
-export const getAllTeams = ({commit}) => {
-  console.log("ACTION -- getAllTeams")
-  return axios.get('getAllTeams').then(response => {
-    commit(types.GET_TEAMS, response.data.teams)
-  })
-}
-
+    commit(types.GET_TEAM, response.data.team);
+    return response.data.team;
+  });
+};
 export const getUserTeams = ({commit}, userId) => {
-  console.log("ACTION -- getUserTeams")
+  console.log("ACTION -- getUserTeams");
   return axios.get('getUserTeams/'+userId).then(response => {
-    commit(types.GET_MYTEAMS, response.data.teams)
-  })
-}
-
+    commit(types.GET_MYTEAMS, response.data.teams);
+  });
+};
 export const addNoManagerTeam = ({commit}, body) => {
-  console.log("ACTION -- addNoManagerTeam")
+  console.log("ACTION -- addNoManagerTeam");
   return axios.post('addNoManagerTeam', body).then(response => {
     // ESTA USANDO UNA MUTATION DE COMPETITION DESDE TEAM por eso el root:true        
-    commit('competition/'+types.ADD_TEAM_TO_COMPETITION, response.data.team, { root: true })
-    return response
+    commit('competition/'+types.ADD_TEAM_TO_COMPETITION, response.data.team, { root: true });
+    return response;
   })
   .catch((err) => {
-    throw err.response
-  })
-}
-
+    throw err.response;
+  });
+};
 export const uploadTeamImage = (formData) => {
-  console.log("ACTION -- uploadTeamImage")
+  console.log("ACTION -- uploadTeamImage");
   return axios.post('uploadImage', formData,{
     onUploadProgress: progressEvent => {
-      console.log("Progress: "+Math.round(progressEvent.loaded / progressEvent.total*100)+ '%')
+      console.log("Progress: "+Math.round(progressEvent.loaded / progressEvent.total*100)+ '%');
     }
   })
   .then(response => {
-    return response
+    return response;
   })
   .catch((err) => {
-    throw err.response
-  })
-}
-
+    throw err.response;
+  });
+};
 export const updateTeam = ({commit}, data) => {
-  console.log("ACTION -- updateTeam")
+  console.log("ACTION -- updateTeam");
   return axios.put('updateTeam/'+data.id, data.body).then(response => {
-    commit(types.UPDATE_TEAM)
-    return response
+    commit(types.UPDATE_TEAM);
+    return response;
   }).catch((err) => {    
-    throw err.response
-  })
-}
+    throw err.response;
+  });
+};
 export const deleteTeam = ({commit}, id) => {
-  console.log("ACTION -- deleteTeam")  
+  console.log("ACTION -- deleteTeam");  
   return axios.delete('deleteTeam/'+id)
   .then(response => {
-    commit(types.DELETE_TEAM, id)
-    return response
+    commit(types.DELETE_TEAM, id);
+    return response;
   })
   .catch((err) => {
-    throw err.response
-  })
-}
+    throw err.response;
+  });
+};
+
+// PLAYER
 export const addPlayer = ({commit}, body) => {
-  console.log("ACTION -- addPlayer")
+  console.log("ACTION -- addPlayer");
   return axios.post('addPlayer', body)
   .then(response => {
-    commit(types.ADD_PLAYER, response.data.player)
-    return response
+    commit(types.ADD_PLAYER, response.data.player);
+    return response;
   })
   .catch((err) => {
-    throw err.response
+    throw err.response;
+  });
+};
+export const getPlayersByTeamId = ({commit}, teamId) => {
+  console.log("ACTION -- getPlayersByTeamId");  
+  return axios.get('getPlayersByTeamId/'+teamId)
+  .then(response => {    
+    commit(types.GET_PLAYERS_BY_TEAMID, response.data.players);
   })
-}
-export const getPlayerByTeamId = ({commit}, id) => {
-  console.log("ACTION -- getPlayerByTeamId")
-  return axios.get('getPlayerByTeamId/'+id)
-  .then(response => {
-    commit(types.GET_TEAMPLAYERS, response.data)
-  })
-}
+  .catch((err) => {
+    throw err.response;
+  });
+};
 export const updatePlayer = ({commit}, body) => {
-  console.log("ACTION -- updatePlayer")  
+  console.log("ACTION -- updatePlayer");  
   return axios.put('updatePlayer/'+body.id, body)
   .then(response => {    
-    commit(types.UPDATE_PLAYER, response.data.player)
-    return response
+    commit(types.UPDATE_PLAYER, response.data.player);
+    return response;
   })
   .catch((err) => {
-    throw err.response
-  })
-}
+    throw err.response;
+  });
+};
 export const deletePlayer = ({commit}, id) => {
-  console.log("ACTION -- deletePlayer")  
+  console.log("ACTION -- deletePlayer");  
   return axios.delete('deletePlayer/'+id)
   .then(response => {
-    commit(types.DELETE_PLAYER, id)
-    return response
+    commit(types.DELETE_PLAYER, id);
+    return response;
   })
   .catch((err) => {
-    throw err.response
-  })
-}
+    throw err.response;
+  });
+};

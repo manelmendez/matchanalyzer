@@ -1,15 +1,15 @@
-import * as types from './mutation-types'
+import * as types from './mutation-types';
 
 export const rootMutations = {
   [types.SNACKBAR] (state, snackbar) {
-    state.snackbar = snackbar
+    state.snackbar = snackbar;
     setTimeout(() => {
       let snackoff ={
         color : "",
         text : "", 
         show : false
-      }
-      state.snackbar = snackoff
+      };
+      state.snackbar = snackoff;
     }, 4000);
   },
   [types.SNACKBAR_OFF] (state) {
@@ -17,6 +17,6 @@ export const rootMutations = {
       color : "",
       text : "", 
       show : false
-    }
+    };
   }
-}
+};
