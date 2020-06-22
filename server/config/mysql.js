@@ -1,6 +1,6 @@
-const mysql = require('mysql')
+const mysql = require('mysql');
 // const fs = require('fs')
-require('dotenv').config({path: __dirname + '/../.env'}) //cargar archivo .env
+require('dotenv').config({path: __dirname + '/../.env'}); //cargar archivo .env
 
 // Con archivo .mysql.json
 // let config = fs.readFileSync(__dirname + '/mysql.json', 'utf8')
@@ -12,7 +12,7 @@ let config = {
   password: process.env.DB_PASS || connection.DB_PASS,
   database: process.env.DB_NAME || connection.DB_NAME,
   multipleStatements: true
-}
+};
 
 var connection = mysql.createPool(config);
 
@@ -49,7 +49,7 @@ connection.getConnection(function(err){
     
     connection = reconnect(connection);
   }else {
-    console.log("\n\t *** New connection established with the database. ***")
+    console.log("\n\t *** New connection established with the database. ***");
   }
 });
 
@@ -68,10 +68,10 @@ function reconnect(connection){
         if(err) {
             //- Try to connect every 5 seconds.
           setTimeout(function(){
-            reconnect(connection)
+            reconnect(connection);
           },5000);
         }else {
-            console.log("\n\t *** New connection established with the database. ***")
+            console.log("\n\t *** New connection established with the database. ***");
             return connection;
         }
     });
@@ -80,10 +80,10 @@ function reconnect(connection){
 connection.on('error', function onError(err) {
     console.log('DB ERROR', err);
     if (err.code == 'PROTOCOL_CONNECTION_LOST' || err.code == 'ECONNREFUSED' || err.code == 'ENOTFOUND') {
-      reconnect(connection)
+      reconnect(connection);
     } else {
       throw err;
     }
 });
 
-module.exports = connection
+module.exports = connection;

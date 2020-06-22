@@ -1,4 +1,4 @@
-import { rootMutations } from '../mutations/rootMutations'
+import { rootMutations } from '../mutations/rootMutations';
 
 export const rootModule = {
   namespaced: true,
@@ -11,7 +11,7 @@ export const rootModule = {
   },
   getters: {
     snackbar: state => {
-      return state.snackbar
+      return state.snackbar;
     },
   },
   mutations: {
@@ -20,4 +20,4 @@ export const rootModule = {
   actions: {
 
   }
-}
+};

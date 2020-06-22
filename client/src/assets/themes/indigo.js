@@ -1,4 +1,4 @@
-import colors from 'vuetify/lib/util/colors'
+import colors from 'vuetify/lib/util/colors';
 
 export default {
   primary:'#3f51b5',
@@ -10,4 +10,4 @@ export default {
   success: colors.green,
   warning: colors.orange,
   item: colors.grey
-}
+};

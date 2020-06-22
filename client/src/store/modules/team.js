@@ -1,33 +1,32 @@
-import { teamMutations } from '../mutations/teamMutations'
-import * as teamActions from '../actions/teamActions'
+import { teamMutations } from '../mutations/teamMutations';
+import * as teamActions from '../actions/teamActions';
 
 export const teamModule = {
   namespaced: true,
   state: {
-    team: {players:[]},
-    teams: [], // NO SE SI SE ESTA USANDO
+    teams: [],
     myTeams: [],
+    players: []
   },
   getters: {
-    team: state => {
-      return state.team
-    },   
     teams: state => {
-      return state.teams
+      return state.teams;
     },
     myTeams: state => {
-      return state.myTeams
+      return state.myTeams;
     },
     teamPlayers: state => {
-      return state.team.players
+      return state.team.players;
     },
-    getTeamNameById: (state) => (id) => { //ejemplo de getter con parametro
-      for (let i = 0; i < state.myTeams.length; i++) {
-        if (state.teams[i].id == id) {
-          return state.teams[i].name
-        }
-      }
-    }
+    teamById: state => id =>{
+      return state.teams.find(team => team.id == id);
+    },
+    myTeamById: state => id =>{
+      return state.myTeams.find(team => team.id == id);
+    },
+    playersByTeamId: state => teamId =>{
+      return state.players.filter(player => player.team == teamId);
+    },
   },
   mutations: {
     ...teamMutations
@@ -35,4 +34,4 @@ export const teamModule = {
   actions: {
     ...teamActions
   }
-}
+};

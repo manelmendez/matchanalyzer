@@ -1,15 +1,17 @@
 module.exports = {
   root: true,
   parserOptions: {
-    "ecmaVersion": 2018
+    "ecmaVersion": 9
   },
-  extends: ["eslint:recommended", "prettier"],
+  extends: ["eslint:recommended","prettier"],
   env: {
     "es6": true,
     "node": true,
     "jest": true
   },
   rules: {
-    "no-console": 1
+    "semi": "off",
+    "no-console": 0,
+    "no-var": "error"
   }
-}
+};

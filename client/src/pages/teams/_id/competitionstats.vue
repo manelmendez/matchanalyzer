@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid v-if="team">
     {{team.name}}
     <v-row>
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -147,10 +147,12 @@ import teamMatchList from '../../../components/teamMatchList'
     computed: {
       ...mapGetters({
         rankedTeams: 'competition/rankedTeams',
-        team: 'team/team',
         rounds: 'competition/rounds',
         statsPerRound: 'competition/statsPerRound'
       }),
+      team() {
+        return this.$store.getters['team/teamById'](this.$route.params.id)
+      },
       teamMatchesPerRound() {
         return this.$store.getters['competition/teamMatchesPerRound'](this.$route.params.id)
       },

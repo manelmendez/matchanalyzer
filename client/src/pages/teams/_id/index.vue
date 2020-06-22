@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card>
+    <v-card v-if="team">
       <v-card-title>
         <v-row align-center>
           <v-col cols="1">
@@ -27,9 +27,9 @@
         </v-row>
       </v-card-title>
       <v-data-table
-        v-if="team"
+        v-if="players"
         :headers="headers"
-        :items="team.players"
+        :items="players"
         class="elevation-1 text-center"
         hide-default-footer
         :items-per-page="-1"
@@ -128,17 +128,21 @@ import constants from '../../../assets/constants/constants'
       },
       ...mapActions({
         getTeam: 'team/getTeam',
+        getPlayersByTeamId: 'team/getPlayersByTeamId',
         deletePlayer: 'team/deletePlayer'
       })
     },
     computed: {
-      ...mapGetters({
-        team:'team/team',
-        teamPlayers: 'team/teamPlayers'
-      })
+      team() {
+        return this.$store.getters['team/teamById'](this.$route.params.id)
+      },
+      players() {
+        return this.$store.getters['team/playersByTeamId'](this.$route.params.id)
+      }
     },
     async created() {
       await this.getTeam(this.$route.params.id)
+      await this.getPlayersByTeamId(this.$route.params.id)
     }
   }
 </script>
