@@ -11,7 +11,7 @@
             v-on="on"
             icon
           >
-            <v-icon>palette</v-icon>
+            <v-icon>mdi-palette</v-icon>
           </v-btn>
         </template>
         <v-list>
@@ -37,7 +37,7 @@
       <v-menu open-on-hover offset-y id="user">
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" icon dark class="mr-5">
-            <v-icon>account_circle</v-icon>
+            <v-icon>mdi-account-circle</v-icon>
           </v-btn>
         </template>
         <v-list>

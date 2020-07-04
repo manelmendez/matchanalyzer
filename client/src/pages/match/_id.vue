@@ -2,15 +2,16 @@
   <v-container>
       <v-card v-if="dataLoaded">
         <v-toolbar dark color="primary darken-1">
-          <v-toolbar-title>Añadir estadísticas del partido</v-toolbar-title>
+          <v-toolbar-title>Estadísticas del partido</v-toolbar-title>
           <v-spacer></v-spacer>
           <!-- <v-toolbar-items>
             <v-btn dark text @click.native="addStats">Guardar</v-btn>
           </v-toolbar-items> -->
         </v-toolbar>
         <v-row v-if="match.localTeam && match.awayTeam">
-          <v-col class="text-center">{{match.localTeam.name}}</v-col>
-          <v-col class="text-center">{{match.awayTeam.name}}</v-col>
+          <v-col class="text-end">{{match.localTeam.name}}</v-col>
+          <v-col cols="2" class="text-center">VS</v-col> 
+          <v-col class="text-start">{{match.awayTeam.name}}</v-col>
         </v-row>
         <v-row v-for="(part, index) of match.localTeam.manager ? match.localTeam.matchparts : match.awayTeam.matchparts" :key="part.id">
           <v-col class="text-center">
@@ -23,16 +24,16 @@
               <addMatchStatsContent 
                 ref="localchild" 
                 :team="match.localTeam" 
-                :matchId="$route.params.matchId" 
+                :matchId="Number($route.params.matchId)" 
                 :matchpart="part"
               ></addMatchStatsContent>
-              <v-divider vertical></v-divider>
+              <!-- <v-divider vertical></v-divider>
               <addMatchStatsContent 
                 ref="awaychild" 
                 :team="match.awayTeam" 
-                :matchId="$route.params.matchId" 
+                :matchId="Number($route.params.matchId)" 
                 :matchpart="part"
-              ></addMatchStatsContent>
+              ></addMatchStatsContent> -->
             </v-row>
             <br><br>
             <v-divider></v-divider>
@@ -40,7 +41,7 @@
         </v-row>
         <v-row>
           <v-col class="text-center">
-            <v-btn v-if="this.matchparts.length < 3" fab color="accent" dark @click.stop="addMatchpartDialog=true">
+            <v-btn v-if="this.matchparts.length < 3 && checkManagerTeam(match.localTeam, match.awayTeam)" fab color="accent" dark @click.stop="addMatchpartDialog=true">
               <v-icon class="material-icons">mdi-plus</v-icon>
             </v-btn>
           </v-col>
@@ -71,6 +72,11 @@ export default {
   methods: {
     close() {
       this.$emit("close")
+    },
+    checkManagerTeam(team1, team2) {
+      if (team1.manager != null || team2.manager != null) {
+        return true
+      } else return false
     },
     async createMatchpart(data) {
       let matchpart = {
@@ -156,9 +162,7 @@ export default {
     },
   },
   watch: {
-    async match() {
-      console.log(this.match);
-      
+    async match() {      
       await this.getTeam(this.match.localTeam)
       this.match.localTeam = this.$store.getters['team/teamById'](this.match.localTeam)
       await this.getPlayersByTeamId(this.match.localTeam.id)

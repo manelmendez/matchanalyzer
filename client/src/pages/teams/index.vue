@@ -17,7 +17,7 @@
           <v-tooltip top>
             <template v-slot:activator="{ on }">
               <v-btn text icon color="info" @click.stop="updatingTeam=team, dialog=true" v-on="on">
-                <v-icon size="18">edit</v-icon>
+                <v-icon size="18">mdi-pencil</v-icon>
               </v-btn>
             </template>
             <span>Editar equipo</span>
@@ -27,7 +27,7 @@
           <v-tooltip top>
             <template v-slot:activator="{ on }">
             <v-btn text icon color="error" v-on="on" @click.stop="deletingTeam=team.id ,deleteDialog=true">
-              <v-icon size="18">delete</v-icon>
+              <v-icon size="18">mdi-delete</v-icon>
             </v-btn>
             </template>
             <span>Borrar equipo</span>
@@ -47,7 +47,7 @@
           @click.stop="dialog=!dialog"
           v-on="on"
         >
-          <i class="material-icons">add</i>
+          <v-icon class="material-icons">mdi-plus</v-icon>
         </v-btn>
         </template>
       <span>Añadir equipo</span>

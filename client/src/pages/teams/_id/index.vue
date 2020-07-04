@@ -43,7 +43,7 @@
           <v-tooltip top>
             <template v-slot:activator="{ on }">
               <v-btn text icon color="info" @click="editingPlayer=item, dialog=true" v-on="on">
-                <v-icon size="18">edit</v-icon>
+                <v-icon size="18">mdi-pencil</v-icon>
               </v-btn>
             </template>
             <span>Editar jugador</span>
@@ -51,7 +51,7 @@
           <v-tooltip top>
             <template v-slot:activator="{ on }">
             <v-btn text icon color="error" v-on="on" @click="deletingPlayer=item.id ,deleteDialog=true">
-              <v-icon size="18">delete</v-icon>
+              <v-icon size="18">mdi-delete</v-icon>
             </v-btn>
             </template>
             <span>Borrar jugador</span>
@@ -78,7 +78,7 @@
           @click.stop="dialog=!dialog"
           v-on="on"
         >
-          <i class="material-icons">add</i>
+          <v-icon class="material-icons">mdi-plus</v-icon>
         </v-btn>
         </template>
       <span>Añadir jugador</span>
