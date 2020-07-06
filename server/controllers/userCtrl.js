@@ -1,6 +1,6 @@
-const tokenServices = require('../services/token-services');
-const bcrypt = require('bcrypt-nodejs');
-const userService = require('../dao/user-service');
+import tokenServices from '../services/token-services.js'
+import bcrypt from 'bcrypt-nodejs'
+import userService from '../dao/user-service.js'
 /**
  * Function to sign up a new user in the DB
  *
@@ -27,6 +27,7 @@ function signUp(req, res) {
     signupDate: new Date(),
     lastLogin: new Date()
   };
+  
   console.log("Registrando usuario con nombre: " + user.name + "...");  
   console.log(req.body);
   bcrypt.genSalt(10, (err, salt) => {
@@ -182,7 +183,8 @@ function deleteUser(req, res) {
     console.log(`Error: ${err}`);
   });
 }
-module.exports = {
+
+export default {
   signUp,
   signIn,
   getUser,

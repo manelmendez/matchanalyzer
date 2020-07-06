@@ -1,8 +1,8 @@
 // const Team = require('../models/team.js')
 // const competitionService = require('../dao/competition-service')
-const teamService = require('../dao/team-service');
-const roundService = require('../dao/round-service');
-const matchService = require('../dao/match-service');
+import teamService from '../dao/team-service.js'
+import roundService from '../dao/round-service.js'
+import matchService from '../dao/match-service.js'
 
 function addTeam(req, res) {
   let userId = req.user.id;
@@ -371,7 +371,7 @@ function getTeamStats(req, res) {
   });
 }
 
-module.exports = {
+export default {
   addTeam,
   getTeam,
   getAllTeams,//

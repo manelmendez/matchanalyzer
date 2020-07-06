@@ -1,4 +1,4 @@
-const cardService = require('../dao/card-service');
+import cardService from '../dao/card-service.js'
 
 async function addCard(req, res) {
   let userId = req.user.id;
@@ -54,8 +54,8 @@ async function deleteCard(req, res) {
   }
 }
 
-module.exports = {
+export default {
   addCard,
   getCardsByMatchId,
   deleteCard
-};
+}

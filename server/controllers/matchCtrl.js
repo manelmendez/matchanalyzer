@@ -1,4 +1,4 @@
-const matchService = require('../dao/match-service');
+import matchService from '../dao/match-service.js'
 
 function getCompetitionMatches(req, res) {
   let competition = req.competition;
@@ -97,7 +97,8 @@ function deleteMatch (req, res) {
     res.status(500).send({message: `Error al borrar el partido`});
   });
 }
-module.exports = {
+
+export default {
   getCompetitionMatches,
   addMatch,
   getMatch,

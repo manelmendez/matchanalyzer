@@ -1,6 +1,6 @@
-const roundService = require('../dao/round-service');
-const matchService = require('../dao/match-service');
-const teamService = require('../dao/team-service');
+import roundService from '../dao/round-service.js'
+import matchService from '../dao/match-service.js'
+import teamService from '../dao/team-service.js'
 
 function addRound(req, res) {
   let userId = req.user.id;
@@ -73,8 +73,8 @@ function getCompetitionRounds(req, res) {
 }
 
 
-module.exports = {
+export default {
   addRound,
   deleteRound,
   getCompetitionRounds
-};
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-const tokenServices = require('../services/token-services');
+import tokenServices from '../services/token-services.js'
 
 function isAuth(req, res) {
   console.log(req.headers);
@@ -97,8 +97,8 @@ function checkAdmin(req, res, next) {
     });
 }
 
-module.exports = {
+export default {
   isAuth,
   checkAuth,
   checkAdmin
-};
+}

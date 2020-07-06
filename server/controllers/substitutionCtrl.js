@@ -1,4 +1,4 @@
-const substitutionService = require('../dao/substitution-service');
+import substitutionService from '../dao/substitution-service.js'
 
 async function addSubstitution(req, res) {
   let userId = req.user.id;
@@ -54,8 +54,8 @@ async function deleteSubstitution(req, res) {
   }
 }
 
-module.exports = {
+export default {
   addSubstitution,
   getSubstitutionsByMatchId,
   deleteSubstitution
-};
+}

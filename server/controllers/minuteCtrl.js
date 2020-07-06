@@ -1,4 +1,4 @@
-const minuteService = require('../dao/minute-service');
+import minuteService from '../dao/minute-service.js'
 
 async function addMinute(req, res) {
   let userId = req.user.id;
@@ -53,8 +53,8 @@ async function deleteMinute(req, res) {
   }
 }
 
-module.exports = {
+export default {
   addMinute,
   getMinutesByMatchId,
   deleteMinute
-};
+}

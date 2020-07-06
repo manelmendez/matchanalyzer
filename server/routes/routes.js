@@ -1,19 +1,19 @@
-const express = require('express');
+import express from 'express'
 // const oauth2Ctrl = require('../controllers/oauth2Ctrl')
-const userCtrl = require('../controllers/userCtrl.js');
-const teamCtrl = require('../controllers/teamCtrl.js');
-const playerCtrl = require('../controllers/playerCtrl.js');
-const competitionCtrl = require('../controllers/competitionCtrl.js');
-const roundCtrl = require('../controllers/roundCtrl.js');
-const matchCtrl = require('../controllers/matchCtrl.js');
-const matchpartCtrl = require('../controllers/matchpartCtrl.js');
-const minuteCtrl = require('../controllers/minuteCtrl.js');
-const goalCtrl = require('../controllers/goalCtrl.js');
-const assistCtrl = require('../controllers/assistCtrl.js');
-const cardCtrl = require('../controllers/cardCtrl.js');
-const substitutionCtrl = require('../controllers/substitutionCtrl.js');
-const imageServices = require('../services/image-services.js');
-const auth = require('../middlewares/auth.js');
+import userCtrl from '../controllers/userCtrl.js'
+import teamCtrl from '../controllers/teamCtrl.js'
+import playerCtrl from '../controllers/playerCtrl.js'
+import competitionCtrl from '../controllers/competitionCtrl.js'
+import roundCtrl from '../controllers/roundCtrl.js'
+import matchCtrl from '../controllers/matchCtrl.js'
+import matchpartCtrl from '../controllers/matchpartCtrl.js'
+import minuteCtrl from '../controllers/minuteCtrl.js'
+import goalCtrl from '../controllers/goalCtrl.js'
+import assistCtrl from '../controllers/assistCtrl.js'
+import cardCtrl from '../controllers/cardCtrl.js'
+import substitutionCtrl from '../controllers/substitutionCtrl.js'
+import imageServices from '../services/image-services.js'
+import auth from '../middlewares/auth.js'
 const api = express.Router();
 
 // AUTH
@@ -95,4 +95,4 @@ api.get('/getSubstitutionsByMatchId/:matchId', auth.checkAuth, substitutionCtrl.
 api.post('/addSubstitution', auth.checkAuth, substitutionCtrl.addSubstitution);
 api.delete('/deleteSubstitution/:substitutionId', auth.checkAuth, substitutionCtrl.deleteSubstitution);
 
-module.exports = api;
+export default api;

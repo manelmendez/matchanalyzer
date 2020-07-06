@@ -1,4 +1,4 @@
-const con = require('../config/mysql');
+import con from '../config/mysql.js'
 
 function findById(id) {
   return new Promise ((resolve, reject) =>{
@@ -55,7 +55,7 @@ function deleteUser (userId) {
     });
   });
 }
-module.exports = {
+export default {
   findById,
   findByEmail,
   findAll,

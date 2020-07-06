@@ -1,4 +1,4 @@
-const assistService = require('../dao/assist-service');
+import assistService from '../dao/assist-service.js'
 
 async function addAssist(req, res) {
   let userId = req.user.id;
@@ -54,8 +54,8 @@ async function deleteAssist(req, res) {
   }
 }
 
-module.exports = {
+export default {
   addAssist,
   getAssistsByMatchId,
   deleteAssist
-};
+}

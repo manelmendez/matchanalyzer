@@ -1,4 +1,4 @@
-const matchpartService = require('../dao/matchpart-service');
+import matchpartService from '../dao/matchpart-service.js'
 
 async function addMatchpart(req, res) {
   let userId = req.user.id;
@@ -52,8 +52,8 @@ async function deleteMatchpart(req, res) {
     });
   }
 }
-module.exports = {
+export default {
   addMatchpart,
   getMatchpartsByMatchId,
   deleteMatchpart
-};
+}

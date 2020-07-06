@@ -1,8 +1,8 @@
 /* eslint-disable no-async-promise-executor */
-const competitionService = require('../dao/competition-service');
-const teamService = require('../dao/team-service');
-const roundService = require('../dao/round-service');
-const matchService = require('../dao/match-service');
+import competitionService from '../dao/competition-service.js'
+import teamService from '../dao/team-service.js'
+import roundService from '../dao/round-service.js'
+import matchService from '../dao/match-service.js'
 
 function addCompetition(req, res) {
   let userId = req.user.id;
@@ -320,10 +320,10 @@ async function getCompetitionRanking(competitions, userId) {
   return competitionsWithStats;
 }
 
-module.exports = {
+export default {
   addCompetition,
   getCompetition,
   getUserCompetitions,
   updateCompetition,
   deleteCompetition
-};
+}

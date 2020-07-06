@@ -1,4 +1,4 @@
-const con = require('../config/mysql');
+import con from '../config/mysql.js'
 
 function findById(id, userId) {
   return new Promise ((resolve, reject) =>{
@@ -55,7 +55,7 @@ function deleteMatch (id, userId) {
   });
 }
 
-module.exports = {
+export default {
   findById,
   findByCompetition,
   findByRound,
