@@ -1,5 +1,5 @@
 // const Player = require('../models/player.js')
-const playerService = require('../dao/player-service');
+import playerService from '../dao/player-service.js'
 
 function addPlayer(req, res) {
   let userId = req.user.id;
@@ -97,9 +97,10 @@ function deletePlayer (req, res) {
     res.status(500).send({message: `Error al borrar el jugador`});
   });
 }
-module.exports = {
+
+export default {
   addPlayer,
   getPlayersByTeamId,
   updatePlayer,
   deletePlayer
-};
+}

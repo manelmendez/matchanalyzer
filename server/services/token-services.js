@@ -1,8 +1,6 @@
-'use strict';
-
-const jwt = require('jsonwebtoken');
-const moment = require('moment');
-const config = require('../config/config');
+import jwt from 'jsonwebtoken'
+import moment from 'moment'
+import config from '../config/config.js'
 
 function createToken(user) {
   const userData = {
@@ -46,7 +44,7 @@ function decodeToken(token) {
   });
 }
 
-module.exports = {
+export default {
   createToken,
   decodeToken
-};
+}

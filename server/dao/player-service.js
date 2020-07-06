@@ -1,4 +1,4 @@
-const con = require('../config/mysql');
+import con from '../config/mysql.js'
 
 function savePlayer(player) {
   return new Promise ((resolve, reject) =>{ 
@@ -41,7 +41,7 @@ function deletePlayer (id, userId) {
   });
 }
 
-module.exports = {
+export default {
   savePlayer,
   findByTeam,
   updatePlayer,

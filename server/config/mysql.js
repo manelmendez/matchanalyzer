@@ -1,20 +1,23 @@
-const mysql = require('mysql');
+import mysql from 'mysql'
 // const fs = require('fs')
-require('dotenv').config({path: __dirname + '/../.env'}); //cargar archivo .env
+import dotenv from 'dotenv'
+
+dotenv.config(); //cargar archivo .env
 
 // Con archivo .mysql.json
 // let config = fs.readFileSync(__dirname + '/mysql.json', 'utf8')
 // const connection = mysql.createPool(JSON.parse(config))
 
 let config = {
-  host: process.env.PMA_HOST || process.env.MYSQL_PORT_3306_TCP_ADDR || process.env.DB_HOST || connection.DB_HOST,
-  user: process.env.DB_USER || connection.DB_USER,
-  password: process.env.DB_PASS || connection.DB_PASS,
-  database: process.env.DB_NAME || connection.DB_NAME,
+  host: process.env.PMA_HOST || process.env.MYSQL_PORT_3306_TCP_ADDR || process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
   multipleStatements: true
 };
+console.log(config);
 
-var connection = mysql.createPool(config);
+let connection = mysql.createPool(config);
 
 // function handleDisconnect() {
 //     if (connection) connection.destroy()
@@ -86,4 +89,4 @@ connection.on('error', function onError(err) {
     }
 });
 
-module.exports = connection;
+export default connection;

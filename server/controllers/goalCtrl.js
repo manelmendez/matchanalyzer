@@ -1,4 +1,4 @@
-const goalService = require('../dao/goal-service');
+import goalService from '../dao/goal-service.js'
 
 async function addGoal(req, res) {
   let userId = req.user.id;
@@ -54,8 +54,8 @@ async function deleteGoal(req, res) {
   }
 }
 
-module.exports = {
+export default {
   addGoal,
   getGoalsByMatchId,
   deleteGoal
-};
+}
