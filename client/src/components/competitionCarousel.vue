@@ -1,7 +1,7 @@
 <template>
   <v-container fluid v-if="competition">
     <v-row justify="center">
-      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+      <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center">
             Líder
@@ -18,7 +18,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+      <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center">
             Último
@@ -35,9 +35,9 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+      <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center">
+          <v-card-title style="justify-content: center; word-break: keep-all;">
             Total de goles
           </v-card-title>
           <v-card-text>
@@ -47,7 +47,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+      <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center">
             Año

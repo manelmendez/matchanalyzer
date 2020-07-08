@@ -1,9 +1,9 @@
 <template>
   <v-container fluid v-if="this.teamStats.stats">
     <v-row justify="center">
-      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+      <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center">
+          <v-card-title style="justify-content: center; word-break: keep-all;">
             Posicion en liga
           </v-card-title>
           <v-card-text>
@@ -19,7 +19,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+      <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center">
             Puntos
@@ -29,7 +29,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+      <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center">
             Goles
@@ -41,9 +41,12 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col class="text-center" cols="12" sm="6" md="3" lg="3">
+      <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-text >
+          <v-card-title style="justify-content: center; word-break: keep-all;">
+            Resumen partidos
+          </v-card-title>
+          <v-card-text>
             <pie-chart :chart-data="matchesdatacollection" :height="250" :options="options" class="chartStyle"></pie-chart>
           </v-card-text>
         </v-card>
@@ -75,6 +78,7 @@ export default {
       colors: colors,
       options: {
         legend: {
+            display: false,
             labels: {
                 // This more specific font property overrides the global property
                 fontColor: this.$vuetify.theme.parsedTheme.item.base
