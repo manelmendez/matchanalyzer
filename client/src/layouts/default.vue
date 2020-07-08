@@ -53,6 +53,7 @@
       expand-on-hover
       v-model="drawer"
       width="200"
+      bottom="true"
       app
     >
       <v-list dense>
@@ -98,7 +99,7 @@ import constants from '../assets/constants/constants'
     name: "Layout",
     data: () => ({
       constants: constants,
-      drawer: true,
+      drawer: null,
       items: [
         { title: 'Sign Out' },
       ],
