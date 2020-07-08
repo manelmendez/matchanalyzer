@@ -50,10 +50,10 @@
     <v-navigation-drawer
       clipped
       fixed
-      expand-on-hover
+      :expand-on-hover="!checkMobile"
       v-model="drawer"
       width="200"
-      bottom="true"
+      :bottom="checkMobile"
       app
     >
       <v-list dense>
@@ -151,6 +151,16 @@ import constants from '../assets/constants/constants'
         set() {
           window.localStorage.setItem('dark', !this.dark)
           this.$vuetify.theme.dark=!this.dark          
+        }
+      },
+      checkMobile() {
+        console.log(this.$vuetify.breakpoint.name)
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return true
+          case 'sm': return true
+          case 'md': return false
+          case 'lg': return false
+          case 'xl': return false
         }
       }
     }
