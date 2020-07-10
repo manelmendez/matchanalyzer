@@ -2,24 +2,28 @@
   <v-container fluid>
     <v-card v-if="team">
       <v-card-title>
-        <v-row align-center>
-          <v-col cols="1">
-            <v-img v-if="team.avatar" :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" alt="avatar" :contain="true" height="40" width="40">
-          </v-col>
-          <v-col>  
-            {{team.name}}
+        <v-row align="center">
+          <v-col justify="center" cols="12" sm="6">
+            <v-chip
+              label
+            >
+              <v-avatar left>
+                <v-img v-if="team.avatar" :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" alt="avatar" :contain="true" height="40" width="40">
+              </v-avatar>
+              {{team.name}}
+            </v-chip>
           </v-col>
           <v-spacer></v-spacer>
           <v-col>
-            <v-card outline class="rounded-xl" color="background lighten-1" :to="{ name: 'summary', params: { id: team.competition }}">
+            <v-card outline class="rounded-xl" color="primary darken-1" :to="{ name: 'summary', params: { id: team.competition }}">
             <v-list-item>
               <v-list-item-content>
-                <v-list-item-subtitle>
+                <v-list-item-subtitle class="white--text">
                   Ir a la competición
                 </v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
-                <v-icon large>mdi-chevron-right</v-icon>
+                <v-icon large class="white--text">mdi-chevron-right</v-icon>
               </v-list-item-action>
             </v-list-item>
             </v-card>
