@@ -39,7 +39,8 @@
     "morgan": "latest",
     "multer": "latest",
     "mysql": "latest",
-    "nodemon": "latest"
+    "nodemon": "latest",
+    "pg": "^8.3.0"
   },
   "devDependencies": {
     "eslint": "latest",

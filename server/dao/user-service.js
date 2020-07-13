@@ -22,13 +22,8 @@ function findByEmail(email) {
     });
   });
 }
-function findAll() {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM users", function(err, users) {
-      if (err) reject(err);
-      else resolve(users);
-    });
-  });
+const findAll = async() => {
+  return con.query("SELECT * FROM users")  
 }
 function saveUser(user) {
   return new Promise ((resolve, reject) =>{

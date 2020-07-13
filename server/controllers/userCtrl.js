@@ -1,11 +1,11 @@
 import tokenServices from '../services/token-services.js'
 import bcrypt from 'bcrypt-nodejs'
-import userService from '../dao/user-service.js'
+import userService from '../dao-postgres/user-service.js'
 /**
  * Function to sign up a new user in the DB
  *
  */
-function signUp(req, res) {
+async function signUp(req, res) {
   // check for basic auth header
   if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
     return res.status(401).json({ message: 'Missing Authorization Header' });
@@ -30,22 +30,24 @@ function signUp(req, res) {
   
   console.log("Registrando usuario con nombre: " + user.name + "...");  
   console.log(req.body);
-  bcrypt.genSalt(10, (err, salt) => {
+  bcrypt.genSalt(10, async(err, salt) => {
     if (err) return err;
 
-    bcrypt.hash(user.password, salt, null, (err, hash) => {
+    bcrypt.hash(user.password, salt, null, async(err, hash) => {
       if (err) return err;
       user.password = hash;
       // saving user in DB
-      userService.saveUser(user).then((userSaved) => {
+      try {
+        let userSaved = await userService.saveUser(user)
         delete user['password'];
         return res.status(200).send({
           message: 'Te has registrado correctamente',
           token: tokenServices.createToken(userSaved),
           user: userSaved
         });
-      })
-      .catch((err) => {
+      }
+      catch(err) {
+        console.log(err);
         if (err.code == "ER_DUP_ENTRY") {
           console.log("Este usuario ya existe");
           return res.status(403).send({
@@ -56,7 +58,7 @@ function signUp(req, res) {
         return res.status(500).send({
           message: `Error al registrar el usuario: ${err}`
         });
-      });
+      }
     });
   });
 }
@@ -65,7 +67,7 @@ function signUp(req, res) {
  * Function to sign in the web
  *
  */
-function signIn(req, res) {
+async function signIn(req, res) {
   console.log(req.headers);
   // check for basic auth header
   if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
@@ -75,22 +77,19 @@ function signIn(req, res) {
   const base64Credentials =  req.headers.authorization.split(' ')[1];
   const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');  
   const [email, password] = credentials.split(':');
-  userService.findByEmail(email).then((userFound) => {
+  try {
+    let userFound = await userService.findByEmail(email)
     if (userFound) {
       // check if password is OK
       if (bcrypt.compareSync(password, userFound.password)) {
         // setting loginDate on DB
-        // User.loginDate(userFound.id, function(err, userLoged) {
-        //   if(err) return console.log(err);
-        //   console.log(`${userFound.email} se ha logueado correctamente`)
-        // });        
-        userFound.lastLogin = new Date();
-        userService.updateUser(userFound ,userFound.id);
-        delete userFound['password'];
+        userFound.lastlogin = new Date()
+        let userUpdated = await userService.updateUser(userFound ,userFound.id)
+        delete userUpdated['password']
         res.status(200).send({
           message: 'Te has logueado correctamente',
-          token: tokenServices.createToken(userFound),
-          user: userFound
+          token: tokenServices.createToken(userUpdated),
+          user: userUpdated
         });
       }
       //case if password is incorrect
@@ -107,13 +106,13 @@ function signIn(req, res) {
         message: 'Algunos de los datos introducidos son incorrectos.'
       });
     }
-  })
-  .catch((err)=>{
+  }
+  catch(err) {
     console.log(`Error: ${err}`);
     return res.status(500).send({
       message: `Error al iniciar sessión`
     });
-  });  
+  };  
 }
 
 function getUser(req, res) {
@@ -145,16 +144,16 @@ function getUser(req, res) {
   });
 }
 
-function getAllUsers(req, res) {
+const getAllUsers = async(req, res) => {
   console.log("Buscando todos los usuarios...");
-  userService.findAll().then((users) => {
-    console.log("Usuarios encontrados.");
+  try {
+    let users = await userService.findAll()
     res.status(200).send({
       users: users
-    });
-  }).catch((err) => {
-    console.log(`Error: ${err}`);
-  });
+    })
+  } catch (error) {
+    console.log(`Error: ${error}`);
+  };
 }
 
 function updateUser(req, res) {
