@@ -1,6 +1,6 @@
-import cardService from '../dao/card-service.js'
+import cardService from '../dao-postgres/card-service.js'
 
-async function addCard(req, res) {
+const addCard = async(req, res) => {
   let userId = req.user.id;
   let cardToSave = {
     minute: req.body.minute,
@@ -23,7 +23,7 @@ async function addCard(req, res) {
   }
 }
 
-async function getCardsByMatchId(req, res) {
+const getCardsByMatchId = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
@@ -38,7 +38,7 @@ async function getCardsByMatchId(req, res) {
   }  
 }
 
-async function deleteCard(req, res) {
+const deleteCard = async(req, res) => {
   let userId = req.user.id;
   let cardId = req.params.cardId;
   try {

@@ -1,6 +1,6 @@
-import matchService from '../dao/match-service.js'
+import matchService from '../dao-postgres/match-service.js'
 
-function getCompetitionMatches(req, res) {
+const getCompetitionMatches = async(req, res) => {
   let competition = req.competition;
   let userId = req.user.id;
   matchService.findByCompetition(req.competition.id, userId).then((matches) => {
@@ -24,7 +24,7 @@ function getCompetitionMatches(req, res) {
     });
   });
 }
-async function getMatch(req, res) {
+const getMatch = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
@@ -38,7 +38,7 @@ async function getMatch(req, res) {
     });
   }  
 }
-function addMatch(req, res) {
+const addMatch = async(req, res) => {
   let userId = req.user.id;
   // getting data
   let match = {
@@ -65,7 +65,7 @@ function addMatch(req, res) {
   });
 }
 
-function updateMatch (req, res) {
+const updateMatch = async(req, res) => {
   let id = req.params.id;
   let userId = req.user.id;
   let match = {
@@ -85,7 +85,7 @@ function updateMatch (req, res) {
   });
 }
 
-function deleteMatch (req, res) {
+const deleteMatch = async(req, res) => {
   let matchId = req.params.id;
   let userId = req.user.id;
   matchService.deleteMatch(matchId, userId)

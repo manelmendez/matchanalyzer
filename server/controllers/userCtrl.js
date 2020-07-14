@@ -24,8 +24,8 @@ const signUp = async(req, res) => {
     name: req.body.name,
     password: password,
     provider: 'local',
-    signupdate: new Date(),
-    lastlogin: new Date()
+    signupDate: new Date(),
+    lastLogin: new Date()
   };
   
   console.log("Registrando usuario con nombre: " + user.name + "...");  
@@ -83,7 +83,7 @@ const signIn = async(req, res) => {
       // check if password is OK
       if (bcrypt.compareSync(password, userFound.password)) {
         // setting loginDate on DB
-        userFound.lastlogin = new Date()
+        userFound.lastLogin = new Date()
         let userUpdated = await userService.updateUser(userFound ,userFound.id)
         delete userUpdated['password']
         res.status(200).send({
@@ -170,7 +170,7 @@ const updateUser = async(req, res) => {
   });
 }
 
-function deleteUser(req, res) {
+const deleteUser = async(req, res) => {
   console.log("Buscando todos los usuarios...");
   let userId = req.params.id;
   userService.deleteUser(userId).then(() => {

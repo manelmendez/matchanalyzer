@@ -1,6 +1,6 @@
-import goalService from '../dao/goal-service.js'
+import goalService from '../dao-postgres/goal-service.js'
 
-async function addGoal(req, res) {
+const addGoal = async(req, res) => {
   let userId = req.user.id;
   let goalToSave = {
     minute: req.body.minute,
@@ -23,7 +23,7 @@ async function addGoal(req, res) {
   }
 }
 
-async function getGoalsByMatchId(req, res) {
+const getGoalsByMatchId = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
@@ -38,7 +38,7 @@ async function getGoalsByMatchId(req, res) {
   }  
 }
 
-async function deleteGoal(req, res) {
+const deleteGoal = async(req, res) => {
   let userId = req.user.id;
   let goalId = req.params.goalId;
   try {

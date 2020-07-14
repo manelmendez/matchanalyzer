@@ -1,4 +1,4 @@
-import matchpartService from '../dao/matchpart-service.js'
+import matchpartService from '../dao-postgres/matchpart-service.js'
 
 async function addMatchpart(req, res) {
   let userId = req.user.id;

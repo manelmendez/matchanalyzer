@@ -1,6 +1,6 @@
-import assistService from '../dao/assist-service.js'
+import assistService from '../dao-postgres/assist-service.js'
 
-async function addAssist(req, res) {
+const addAssist = async(req, res) => {
   let userId = req.user.id;
   let assistToSave = {
     goal: req.body.goal,
@@ -23,7 +23,7 @@ async function addAssist(req, res) {
   }
 }
 
-async function getAssistsByMatchId(req, res) {
+const getAssistsByMatchId = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
@@ -38,7 +38,7 @@ async function getAssistsByMatchId(req, res) {
   }  
 }
 
-async function deleteAssist(req, res) {
+const deleteAssist = async(req, res) => {
   let userId = req.user.id;
   let assistId = req.params.assistId;
   try {
