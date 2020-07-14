@@ -5,7 +5,7 @@ function findById(id, managerId, userId) {
     con.query("SELECT * FROM competitions WHERE id = ? AND manager = ? AND userId = ?", [id, managerId, userId] ,function(err, result) {
       if (err) reject(err);
       else {        
-        resolve(result);
+        resolve(result[0]);
       }
     });
   });

@@ -1,10 +1,10 @@
 /* eslint-disable no-async-promise-executor */
-import competitionService from '../dao/competition-service.js'
-import teamService from '../dao/team-service.js'
-import roundService from '../dao/round-service.js'
-import matchService from '../dao/match-service.js'
+import competitionService from '../dao-postgres/competition-service.js'
+import teamService from '../dao-postgres/team-service.js'
+import roundService from '../dao-postgres/round-service.js'
+import matchService from '../dao-postgres/match-service.js'
 
-function addCompetition(req, res) {
+const addCompetition = async(req, res) => {
   let userId = req.user.id;
   let competition = {
     name: req.body.name,
@@ -28,19 +28,19 @@ function addCompetition(req, res) {
   });
 }
 
-function getCompetition(req, res) {  
+const getCompetition = async(req, res) => {  
   let id = req.params.id;
   let userId = req.user.id;
   console.log("Buscando competición con id: " + id + " en la base de datos...");
-  competitionService.findById(id, req.user.id, userId).then((result => {    
+  try {
+    let result = await competitionService.findById(id, req.user.id, userId)
     if (result.length != 0) {
-      let competition = JSON.parse(JSON.stringify(result[0]));
-      teamService.findByCompetition(id, userId).then((teams => {
-        competition.teams = JSON.parse(JSON.stringify(teams));        
-        res.status(200).send({
-          competition: competition
-        });
-      })); 
+      let competition = JSON.parse(JSON.stringify(result))
+      let teams = await teamService.findByCompetition(id, userId)
+      competition.teams = JSON.parse(JSON.stringify(teams))
+      res.status(200).send({
+        competition: competition
+      });
     }
     else {
       console.log("No existe la competición.");
@@ -48,15 +48,15 @@ function getCompetition(req, res) {
         message: 'No se ha encontrado la competición'
       });
     }
-  })).catch((err) => {
+  } catch (err) {
     console.log(`Error: ${err}`);
     return res.status(500).send({
       message: `Error al buscar`
     });
-  });
+  }
 }
 
-async function getUserCompetitions(req, res) {
+const getUserCompetitions = async(req, res) => {
   let id = req.params.id;
   let userId = req.user.id;
   console.log("Buscando todas las competiciones en la base de datos...");
@@ -74,7 +74,7 @@ async function getUserCompetitions(req, res) {
   }
 }
 
-function updateCompetition(req, res) {
+const updateCompetition = async(req, res) => {
   let userId = req.user.id;
   const competition = {
     name: req.body.name,
@@ -90,7 +90,7 @@ function updateCompetition(req, res) {
     res.status(500).send({message: `Error al actualizar el partido`});
   });
 }
-function deleteCompetition(req, res) {
+const deleteCompetition = async(req, res) => {
   let userId = req.user.id;
   competitionService.deleteCompetition(req.params.id, userId).then(() => {
     return res.status(200).send({competition: req.params.id});
@@ -102,7 +102,7 @@ function deleteCompetition(req, res) {
   });
 }
 
-async function getCompetitionRanking(competitions, userId) {
+const getCompetitionRanking = async(competitions, userId) => {
   let competitionsWithStats = [];
   for (let c = 0; c < competitions.length; c++) {
     let rounds = await roundService.findByCompetition(competitions[c].id, userId);
@@ -124,9 +124,6 @@ async function getCompetitionRanking(competitions, userId) {
         }
       }
     }
-    console.log(teams.length);
-    console.log(rounds.length);
-    
     let updatedTeams = [];
     // sumar todas las jornadas hasta la seleccionada
     for (let i = 0; i < teams.length; i++) {
@@ -165,25 +162,25 @@ async function getCompetitionRanking(competitions, userId) {
           if (matches[x].localTeam.id == teams[i].id) {  
             teamStats.gamesPlayed+=1;
             teamStats.homeGamesPlayed+=1;
-            teamStats.goals+= matches[x].localTeamGoals;
-            teamStats.goalDif+= matches[x].localTeamGoals-matches[x].awayTeamGoals;
-            teamStats.homeGoals+= matches[x].localTeamGoals;
-            teamStats.homeGoalDif+= matches[x].localTeamGoals-matches[x].awayTeamGoals;
-            teamStats.againstGoals+= matches[x].awayTeamGoals;
-            teamStats.homeAgainstGoals+= matches[x].awayTeamGoals;
-            if (matches[x].localTeamGoals > matches[x].awayTeamGoals) {
+            teamStats.goals+= Number(matches[x].localTeamGoals);
+            teamStats.goalDif+= Number(matches[x].localTeamGoals)-Number(matches[x].awayTeamGoals);
+            teamStats.homeGoals+= Number(matches[x].localTeamGoals);
+            teamStats.homeGoalDif+= Number(matches[x].localTeamGoals)-Number(matches[x].awayTeamGoals);
+            teamStats.againstGoals+= Number(matches[x].awayTeamGoals);
+            teamStats.homeAgainstGoals+= Number(matches[x].awayTeamGoals);
+            if (Number(matches[x].localTeamGoals) > Number(matches[x].awayTeamGoals)) {
               teamStats.homePoints+= 3;
               teamStats.points+= 3;
               teamStats.wins+= 1;
               teamStats.homeWins+= 1;
             }
-            else if (matches[x].localTeamGoals == matches[x].awayTeamGoals) {
+            else if (Number(matches[x].localTeamGoals) == Number(matches[x].awayTeamGoals)) {
               teamStats.homePoints += 1;
               teamStats.points+= 1;
               teamStats.draws+= 1;
               teamStats.homeDraws+= 1;
             }
-            else if (matches[x].localTeamGoals < matches[x].awayTeamGoals) {
+            else if (Number(matches[x].localTeamGoals) < Number(matches[x].awayTeamGoals)) {
               teamStats.homePoints += 0;
               teamStats.points+= 0;
               teamStats.loses+= 1;
@@ -194,25 +191,25 @@ async function getCompetitionRanking(competitions, userId) {
           else if (matches[x].awayTeam.id == teams[i].id) {
             teamStats.gamesPlayed+=1;
             teamStats.awayGamesPlayed+=1;
-            teamStats.goals+= matches[x].awayTeamGoals;
-            teamStats.awayGoals+= matches[x].awayTeamGoals;
-            teamStats.goalDif+= matches[x].awayTeamGoals-matches[x].localTeamGoals;
-            teamStats.againstGoals+= matches[x].localTeamGoals;
-            teamStats.awayGoalDif+= matches[x].awayTeamGoals-matches[x].localTeamGoals;
-            teamStats.awayAgainstGoals+= matches[x].localTeamGoals;
-            if (matches[x].awayTeamGoals > matches[x].localTeamGoals) {
+            teamStats.goals+= Number(matches[x].awayTeamGoals);
+            teamStats.awayGoals+= Number(matches[x].awayTeamGoals);
+            teamStats.goalDif+= Number(matches[x].awayTeamGoals)-Number(matches[x].localTeamGoals);
+            teamStats.againstGoals+= Number(matches[x].localTeamGoals);
+            teamStats.awayGoalDif+= Number(matches[x].awayTeamGoals)-Number(matches[x].localTeamGoals);
+            teamStats.awayAgainstGoals+= Number(matches[x].localTeamGoals);
+            if (Number(matches[x].awayTeamGoals) > Number(matches[x].localTeamGoals)) {
               teamStats.awayPoints += 3;
               teamStats.points+= 3;
               teamStats.wins+= 1;
               teamStats.awayWins+= 1;
             }
-            else if (matches[x].awayTeamGoals == matches[x].localTeamGoals) {
+            else if (Number(matches[x].awayTeamGoals) == Number(matches[x].localTeamGoals)) {
               teamStats.awayPoints += 1;
               teamStats.points+= 1;
               teamStats.draws+= 1;
               teamStats.awayDraws+= 1;
             }
-            else if (matches[x].awayTeamGoals < matches[x].localTeamGoals) {
+            else if (Number(matches[x].awayTeamGoals) < Number(matches[x].localTeamGoals)) {
               teamStats.awayPoints += 0;
               teamStats.points+= 0;
               teamStats.loses+= 1;
@@ -316,6 +313,7 @@ async function getCompetitionRanking(competitions, userId) {
     });
     competitions[c].teams = updatedTeams;
     competitionsWithStats.push(competitions[c]);
+    console.log(competitionsWithStats[0].teams[0]);
   }    
   return competitionsWithStats;
 }

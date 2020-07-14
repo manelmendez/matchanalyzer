@@ -1,6 +1,6 @@
 import substitutionService from '../dao-postgres/substitution-service.js'
 
-async function addSubstitution(req, res) {
+const addSubstitution = async(req, res) => {
   let userId = req.user.id;
   let substitutionToSave = {
     minute: req.body.minute,
@@ -23,7 +23,7 @@ async function addSubstitution(req, res) {
   }
 }
 
-async function getSubstitutionsByMatchId(req, res) {
+const getSubstitutionsByMatchId = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
@@ -38,7 +38,7 @@ async function getSubstitutionsByMatchId(req, res) {
   }  
 }
 
-async function deleteSubstitution(req, res) {
+const deleteSubstitution = async(req, res) => {
   let userId = req.user.id;
   let substitutionId = req.params.substitutionId;
   try {
