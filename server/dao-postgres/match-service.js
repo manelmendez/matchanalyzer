@@ -1,58 +1,29 @@
-import con from '../config/mysql.js'
+import con from '../config/postgres.js'
 
-function findById(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matches WHERE id = ? AND userId = ?", [id, userId] ,function(err, match) {
-      if (err) reject(err);
-      else resolve(match);
-    });
-  });
+const findById = async(id, userId) => {
+  const result = await con.query("SELECT * FROM matches WHERE id = $1 AND userid = $2", [id, userId])
+  return result.rows[0]
 }
 
-function findByCompetition(ids, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matches WHERE competition = ? AND userId = ?", [ids, userId] ,function(err, match) {
-      if (err) reject(err);
-      else resolve(match);
-    });
-  });
+const findByCompetition = async(ids, userId) => {
+  const result = await con.query("SELECT * FROM matches WHERE competition = $1 AND userid = $2", [ids, userId])
+  return result.rows
 }
 
-function findByRound(ids, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matches WHERE round = ? AND userId = ?", [ids, userId] ,function(err, match) {
-      if (err) reject(err);
-      else resolve(match);
-    });
-  });
+const findByRound = async(ids, userId) => {
+  const result = await con.query("SELECT * FROM matches WHERE round = $1 AND userid = $2", [ids, userId])
+  return result.rows
 }
 
-function saveMatch(match) {
-  return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO matches SET ?", match, function(err,result) {
-      if (err) reject(err);
-      else {
-        match.id = result.insertId;
-        resolve(match);
-      }
-    });
-  });
+const saveMatch = async(match) => {
+  const result = await con.query("INSERT INTO matches SET ?", match)
 }
-function updateMatch(match, id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("UPDATE matches SET ? WHERE id = ? AND userId = ?", [match, id, userId], function(err) {
-      if (err) reject(err);
-      else resolve(match);
-    });
-  });
+const updateMatch = async(match, id, userId) => {
+  const result = await con.query("UPDATE matches SET ? WHERE id = ? AND userid = ?", [match, id, userId])
 }
-function deleteMatch (id, userId) {
-  return new Promise ((resolve, reject) =>{ 
-    con.query("DELETE FROM matches WHERE id = ? AND userId = ?", [id, userId], function(err) {
-      if (err) reject(err);
-      else resolve(id);
-    });
-  });
+const deleteMatch = async(id, userId) => {
+  const result = await con.query("DELETE FROM matches WHERE id = $1 AND userid = $2 RETURNING *", [id, userId])
+  return result.rows[0].id
 }
 
 export default {

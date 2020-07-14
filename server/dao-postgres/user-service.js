@@ -18,14 +18,13 @@ const saveUser = async(user) => {
   let result = await con.query(
     'INSERT INTO users(email, name, avatar, provider, provider_id, password, signupdate, lastlogin)'
     +'VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-    [user.email, user.name,user.avatar, user.provider, user.provider_id, user.password, user.signupDate, user.lastLogin])
+    [user.email, user.name,user.avatar, user.provider, user.provider_id, user.password, user.signupdate, user.lastlogin])
   return result.rows[0]
 }
 const updateUser = async(user) => {
   let userUpdated = await con.query(
     'UPDATE users SET email=$1, name=$2, avatar=$3, password=$4, lastlogin=$5 WHERE id = $6 RETURNING *',
-    [user.email, user.name,user.avatar, user.password, user.lastlogin, user.id]
-    )
+    [user.email, user.name,user.avatar, user.password, user.lastlogin, user.id])
   return userUpdated.rows[0]
 }
 const deleteUser = async(userId) => {

@@ -5,7 +5,7 @@ import userService from '../dao-postgres/user-service.js'
  * Function to sign up a new user in the DB
  *
  */
-async function signUp(req, res) {
+const signUp = async(req, res) => {
   // check for basic auth header
   if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
     return res.status(401).json({ message: 'Missing Authorization Header' });
@@ -24,8 +24,8 @@ async function signUp(req, res) {
     name: req.body.name,
     password: password,
     provider: 'local',
-    signupDate: new Date(),
-    lastLogin: new Date()
+    signupdate: new Date(),
+    lastlogin: new Date()
   };
   
   console.log("Registrando usuario con nombre: " + user.name + "...");  
@@ -67,7 +67,7 @@ async function signUp(req, res) {
  * Function to sign in the web
  *
  */
-async function signIn(req, res) {
+const signIn = async(req, res) => {
   console.log(req.headers);
   // check for basic auth header
   if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
@@ -115,7 +115,7 @@ async function signIn(req, res) {
   };  
 }
 
-function getUser(req, res) {
+const getUser = async(req, res) => {
   let userId = req.params.id;
   console.log("Buscando usuario con ID: "+userId+ "...");
   //search user on DB
@@ -156,7 +156,7 @@ const getAllUsers = async(req, res) => {
   };
 }
 
-function updateUser(req, res) {
+const updateUser = async(req, res) => {
   console.log("Buscando todos los usuarios...");
   let userId = req.params.id;
   let data;
@@ -174,13 +174,13 @@ function deleteUser(req, res) {
   console.log("Buscando todos los usuarios...");
   let userId = req.params.id;
   userService.deleteUser(userId).then(() => {
-    console.log("Usuario eliminado.");
+    console.log("Usuario eliminado.")
     res.status(200).send({
       message: "Usuario eliminado"
-    });
+    })
   }).catch((err) => {
-    console.log(`Error: ${err}`);
-  });
+    console.log(`Error: ${err}`)
+  })
 }
 
 export default {

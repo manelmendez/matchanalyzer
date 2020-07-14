@@ -1,6 +1,6 @@
-import roundService from '../dao/round-service.js'
-import matchService from '../dao/match-service.js'
-import teamService from '../dao/team-service.js'
+import roundService from '../dao-postgres/round-service.js'
+import matchService from '../dao-postgres/match-service.js'
+import teamService from '../dao-postgres/team-service.js'
 
 function addRound(req, res) {
   let userId = req.user.id;

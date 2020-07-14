@@ -1,64 +1,30 @@
-import con from '../config/mysql.js'
+import con from '../config/postgres.js'
 
-function findById(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM teams WHERE id = ? AND userId = ?", [id, userId],function(err, result) {
-      if (err) reject(err);
-      else resolve(result);
-    });
-  }); 
+const findById = async(id, userId) => {
+  const result = await con.query("SELECT * FROM teams WHERE id = $1 AND userid = $2", [id, userId])
+  return result.rows[0]
 }
 
-function findByManager(manager, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM teams WHERE manager = ? AND userId = ?", [manager, userId],function(err, teams) {
-      if (err) reject(err);
-      else {
-        resolve(teams);
-      }
-    });
-  });
+const findByManager = async(manager, userId) => {
+  const result = await con.query("SELECT * FROM teams WHERE manager = $1 AND userid = $2", [manager, userId])
+  return result.rows[0]
 }
 
-function findByCompetition(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM teams WHERE competition = ? AND userId = ?", [id, userId],function(err, teams) {
-      if (err) reject(err);
-      else {
-        resolve(teams);
-      }
-    });
-  });
+const findByCompetition = async(id, userId) => {
+  const result = await con.query("SELECT * FROM teams WHERE competition = $1 AND userid = $2", [id, userId])
+  return result.rows[0]
 }
 
-function saveTeam(teamToSave) {
-  return new Promise ((resolve, reject) =>{ 
-    con.query("INSERT INTO teams SET ?", teamToSave, function(err,result) {
-      if (err) reject(err);
-      else {
-        teamToSave.id = result.insertId;
-        resolve(teamToSave);
-      }
-    });
-  });
+const saveTeam = async(teamToSave) => {
+  const result = await con.query("INSERT INTO teams SET ?", [teamToSave])
 }
 
-function updateTeam(id, team, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("UPDATE teams SET ? WHERE id = ? AND userId = ?", [team, id, userId], function(err,team) {
-      if (err) reject(err);
-      else resolve(team);
-    });
-  });
+const updateTeam = async(id, team, userId) => {
+  const result = await con.query("UPDATE teams SET ? WHERE id = ? AND userid = ?", [team, id, userId])
 }
 
-function deleteTeam(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM teams WHERE id = ? AND userId = ?", [id, userId], function(err, team) {
-      if (err) reject(err);
-      else resolve(team);
-    });
-  });
+const deleteTeam = async(id, userId) => {
+  const result = await con.query("DELETE FROM teams WHERE id = $1 AND userid = $2 RETURNING *", [id, userId])
 }
 
 export default {
