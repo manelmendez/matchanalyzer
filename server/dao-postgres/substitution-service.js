@@ -1,41 +1,21 @@
-import con from '../config/mysql.js'
+import con from '../config/postgres.js'
 
-function findById(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM substitutions WHERE id = ? AND userId = ?", [id, userId] ,function(err, substitution) {
-      if (err) reject(err);
-      else resolve(substitution);
-    });
-  });
+const findById = async(id, userId) => {
+  const result = await con.query("SELECT * FROM substitutions WHERE id = $1 AND userid = $2", [id, userId])
+  return result.rows[0]
 }
 
-function findByMatch(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM substitutions WHERE matchId = ? AND userId = ?", [id, userId] ,function(err, substitutions) {
-      if (err) reject(err);
-      else resolve(substitutions);
-    });
-  });
+const findByMatch = async(id, userId) => {
+  const result = await con.query("SELECT * FROM substitutions WHERE matchid = ? AND userid = ?", [id, userId])
+  return result.rows
 }
 
-function saveSubstitution(substitution) {
-  return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO substitutions SET ?", substitution, function(err,result) {
-      if (err) reject(err);
-      else {
-        substitution.id = result.insertId;
-        resolve(substitution);
-      }
-    });
-  });
+const saveSubstitution = async(substitution) => {
+  const result = await con.query("INSERT INTO substitutions SET ?", [substitution])
 }
-function deleteSubstitution(id) {
-  return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM substitutions WHERE id = ?", id, function(err, result) {
-      if (err) reject(err); 
-      else resolve(result);
-    });
-  });
+const deleteSubstitution = async(id) => {
+  const result = await con.query("DELETE FROM substitutions WHERE id = $1 RETURNING *", [id])
+  return result.rows[0].id
 }
 
 export default {

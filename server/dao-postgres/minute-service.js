@@ -1,41 +1,21 @@
-import con from '../config/mysql.js'
+import con from '../config/postgres.js'
 
-function findById(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM minutes WHERE id = ? AND userId = ?", [id, userId] ,function(err, minute) {
-      if (err) reject(err);
-      else resolve(minute);
-    });
-  });
+const findById = async(id, userId) => {
+  const result = await con.query("SELECT * FROM minutes WHERE id = $1 AND userid = $2", [id, userId])
+  return result.rows[0]
 }
 
-function findByMatch(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM minutes WHERE matchId = ? AND userId = ?", [id, userId] ,function(err, minutes) {
-      if (err) reject(err);
-      else resolve(minutes);
-    });
-  });
+const findByMatch = async(id, userId) => {
+  const result = await con.query("SELECT * FROM minutes WHERE matchid = $1 AND userid = $2", [id, userId])
+  return result.rows
 }
 
-function saveMinute(minute) {
-  return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO minutes SET ?", minute, function(err,result) {
-      if (err) reject(err);
-      else {
-        minute.id = result.insertId;
-        resolve(minute);
-      }
-    });
-  });
+const saveMinute = async(minute) => {
+  const result = await con.query("INSERT INTO minutes SET ?", minute)
 }
-function deleteMinute(id) {
-  return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM minutes WHERE id = ?", id, function(err, result) {
-      if (err) reject(err);
-      else resolve(result);
-    });
-  });
+const deleteMinute = async(id) => {
+  const result = await con.query("DELETE FROM minutes WHERE id = $1 RETURNING *", [id])
+  return result.rows[0].id
 }
 
 export default {

@@ -1,4 +1,4 @@
-import substitutionService from '../dao/substitution-service.js'
+import substitutionService from '../dao-postgres/substitution-service.js'
 
 async function addSubstitution(req, res) {
   let userId = req.user.id;

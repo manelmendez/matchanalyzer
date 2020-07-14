@@ -1,4 +1,4 @@
-import minuteService from '../dao/minute-service.js'
+import minuteService from '../dao-postgres/minute-service.js'
 
 async function addMinute(req, res) {
   let userId = req.user.id;

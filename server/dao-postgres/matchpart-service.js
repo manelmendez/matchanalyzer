@@ -1,49 +1,24 @@
-import con from '../config/mysql.js'
+import con from '../config/postgres.js'
 
-function findByMatch(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matchparts WHERE matchId = ? AND userId = ?", [id, userId] ,function(err, matchparts) {
-      if (err) reject(err);
-      else resolve(matchparts);
-    });
-  });
+const findByMatch = async(id, userId) => {
+  const result = await con.query("SELECT * FROM matchparts WHERE matchid = $1 AND userid = $2", [id, userId])
+  return result.rows
 }
 
-function findByRound(ids, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM matchparts WHERE round = ? AND userId = ?", [ids, userId] ,function(err, matchpart) {
-      if (err) reject(err);
-      else resolve(matchpart);
-    });
-  });
+const findByRound = async(ids, userId) => {
+  const result = await con.query("SELECT * FROM matchparts WHERE round = $1 AND userid = $2", [ids, userId])
+  return result.rows
 }
 
-function saveMatchpart(matchpart) {
-  return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO matchparts SET ?", matchpart, function(err,result) {
-      if (err) reject(err);
-      else {
-        matchpart.id = result.insertId;
-        resolve(matchpart);
-      }
-    });
-  });
+const saveMatchpart = async(matchpart) => {
+  const result = await con.query("INSERT INTO matchparts SET ?", matchpart)
 }
-function updateMatchpart(match, id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("UPDATE matchparts SET ? WHERE id = ? AND userId = ?", [match, id, userId], function(err) {
-      if (err) reject(err);
-      else resolve(match);
-    });
-  });
+const updateMatchpart = async(match, id, userId) => {
+  const result = await con.query("UPDATE matchparts SET ? WHERE id = ? AND userid = ?", [match, id, userId])
 }
-function deleteMatchpart (id, userId) {
-  return new Promise ((resolve, reject) =>{ 
-    con.query("DELETE FROM matchparts WHERE id = ? AND userId = ?", [id, userId], function(err) {
-      if (err) reject(err);
-      else resolve(id);
-    });
-  });
+const deleteMatchpart = async(id, userId) => {
+  const result = await con.query("DELETE FROM matchparts WHERE id = $1 AND userid = $2 RETURNING *", [id, userId])
+  return result.rows[0].id
 }
 
 export default {

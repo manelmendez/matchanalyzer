@@ -1,41 +1,21 @@
-import con from '../config/mysql.js'
+import con from '../config/postgres.js'
 
-function findById(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM assists WHERE id = ? AND userId = ?", [id, userId] ,function(err, assist) {
-      if (err) reject(err);
-      else resolve(assist);
-    });
-  });
+const findById = async(id, userId) => {
+  const result = await con.query("SELECT * FROM assists WHERE id = $1 AND userid = $2", [id, userId])
+  return result.rows[0]
 }
 
-function findByMatch(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM assists WHERE matchId = ? AND userId = ?", [id, userId] ,function(err, assists) {
-      if (err) reject(err);
-      else resolve(assists);
-    });
-  });
+const findByMatch = async(id, userId) => {
+  const result = await con.query("SELECT * FROM assists WHERE matchid = $1 AND userid = $2", [id, userId])
+  return result.rows
 }
 
-function saveAssist(assist) {
-  return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO assists SET ?", assist, function(err,result) {
-      if (err) reject(err);
-      else {
-        assist.id = result.insertId;
-        resolve(assist);
-      }
-    });
-  });
+const saveAssist = async(assist) => {
+  const result = await con.query("INSERT INTO assists SET ?", assist)
 }
-function deleteAssist(id) {
-  return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM assists WHERE id = ?", id, function(err, result) {
-      if (err) reject(err);
-      else resolve(result);
-    });
-  });
+const deleteAssist = async(id) => {
+  const result = await con.query("DELETE FROM assists WHERE id = $1", [id])
+  return result.rows[0].id
 }
 
 export default {

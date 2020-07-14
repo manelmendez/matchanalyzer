@@ -1,41 +1,21 @@
-import con from '../config/mysql.js'
+import con from '../config/postgres.js'
 
-function findById(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM rounds WHERE id = ? AND userId = ?", [id, userId] ,function(err, round) {
-      if (err) reject(err);
-      else resolve(round);
-    });
-  });
+const findById = async(id, userId) => {
+  const result = await con.query("SELECT * FROM rounds WHERE id = $1 AND userid = $2", [id, userId])
+  return result.rows[0]
 }
 
-function findByCompetition(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM rounds WHERE competition = ? AND userId = ?", [id, userId] ,function(err, rounds) {
-      if (err) reject(err);
-      else resolve(rounds);
-    });
-  });
+const findByCompetition = async(id, userId) => {
+  const result = await con.query("SELECT * FROM rounds WHERE competition = $1 AND userid = $2", [id, userId])
+  return result.rows
 }
 
-function saveRound(round) {
-  return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO rounds SET ?", round, function(err,result) {
-      if (err) reject(err);
-      else {
-        round.id = result.insertId;
-        resolve(round);
-      }
-    });
-  });
+const saveRound = async(round) => {
+  const result = await con.query("INSERT INTO rounds SET ?", [round])
 }
-function deleteRound(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM rounds WHERE id = ? AND userId = ?", [id, userId], function(err) {
-      if (err) reject(err);
-      else resolve(id);
-    });
-  });
+const deleteRound = async(id, userId) => {
+  const result = await con.query("DELETE FROM rounds WHERE id = $1 AND userid = $2 RETURNING *", [id, userId])
+  result.rows[0].id
 }
 
 export default {

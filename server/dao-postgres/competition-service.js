@@ -1,65 +1,30 @@
-import con from '../config/mysql.js'
+import con from '../config/postgres.js'
 
-function findById(id, managerId, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM competitions WHERE id = ? AND manager = ? AND userId = ?", [id, managerId, userId] ,function(err, result) {
-      if (err) reject(err);
-      else {        
-        resolve(result);
-      }
-    });
-  });
+const findById = async(id, managerId, userId) => {
+  const result = await con.query("SELECT * FROM competitions WHERE id = $1 AND manager = $2 AND userid = $3", [id, managerId, userId])
+  return result.rows[0]
 }
-function findByName(name, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM competitions WHERE name = ? AND userId = ?", [name, userId] ,function(err, competition) {
-      if (err) reject(err);
-      else resolve(competition);
-    });
-  });
+const findByName = async(name, userId) => {
+  const result = await con.query("SELECT * FROM competitions WHERE name = $1 AND userid = $2", [name, userId])
+  return result.rows[0]
 }
-function findByManager(id, userId) {
-  return new Promise ((resolve, reject) => {
-    con.query("SELECT * FROM competitions WHERE manager = ? AND userId = ?", [id, userId] ,function(err, competition) {
-      if (err) reject(err);
-      else resolve(competition);
-    });
-  });
+const findByManager = async(id, userId) => {
+  const result = await con.query("SELECT * FROM competitions WHERE manager = $1 AND userid = $2", [id, userId])
+  return result.rows
 }
-function findAll() {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM competitions",function(err, competitions) {
-      if (err) reject(err);
-      else resolve(competitions);
-    });
-  });
+const findAll = async() => {
+  const result = await con.query("SELECT * FROM competitions")
+  return result.rows
 }
-function saveCompetition(competition) {
-  return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO competitions SET ?", competition, function(err,result) {
-      if (err) reject(err);
-      else {
-        competition.id = result.insertId;
-        resolve(competition);
-      }
-    });
-  });
+const saveCompetition = async(competition) => {
+  const result = await con.query("INSERT INTO competitions SET ?", competition)
 }
-function updateCompetition(competition, id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("UPDATE competitions SET ? WHERE id = ? AND userId = ?", [competition, id, userId], function(err) {
-      if (err) reject(err);
-      else resolve(competition);
-    });
-  });
+const updateCompetition = async(competition, id, userId) => {
+  const result = await con.query("UPDATE competitions SET ? WHERE id = ? AND userid = ?", [competition, id, userId])
 }
-function deleteCompetition(id, userId) {
-  return new Promise ((resolve, reject) =>{ 
-    con.query("DELETE FROM competitions WHERE id = ? AND userId = ?", [id, userId], function(err, result) {
-      if (err) reject(err);
-      else resolve(result);
-    });
-  });
+const deleteCompetition = async(id, userId) => {
+  const result = await con.query("DELETE FROM competitions WHERE id = $1 AND userid = $2 RETURNING *", [id, userId])
+  return result.rows[0].id
 }
 export default {
   findById,

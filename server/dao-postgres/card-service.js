@@ -1,41 +1,22 @@
-import con from '../config/mysql.js'
+import con from '../config/postgres.js'
 
-function findById(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM cards WHERE id = ? AND userId = ?", [id, userId] ,function(err, card) {
-      if (err) reject(err);
-      else resolve(card);
-    });
-  });
+const findById = async(id, userId) => {
+  const result = await con.query("SELECT * FROM cards WHERE id = $1 AND userid = $2", [id, userId])
+  return result.rows[0]
 }
 
-function findByMatch(id, userId) {
-  return new Promise ((resolve, reject) =>{
-    con.query("SELECT * FROM cards WHERE matchId = ? AND userId = ?", [id, userId] ,function(err, cards) {
-      if (err) reject(err);
-      else resolve(cards);
-    });
-  });
+const findByMatch = async(id, userId) => {
+  const result = await con.query("SELECT * FROM cards WHERE matchid = $1 AND userid = $2", [id, userId])
+  return result.rows
 }
 
-function saveCard(card) {
-  return new Promise ((resolve, reject) =>{
-    con.query("INSERT INTO cards SET ?", card, function(err,result) {
-      if (err) reject(err);
-      else {
-        card.id = result.insertId;
-        resolve(card);
-      }
-    });
-  });
+const saveCard = async(card) => {
+  const result = await con.query("INSERT INTO cards SET ?", card)
 }
-function deleteCard(id) {
-  return new Promise ((resolve, reject) =>{
-    con.query("DELETE FROM cards WHERE id = ?", id, function(err, result) {
-      if (err) reject(err);
-      else resolve(result);
-    });
-  });
+
+const deleteCard = async(id) => {
+  const result = await con.query("DELETE FROM cards WHERE id = $1 RETURNING *", [id])
+  return result.rows[0].id
 }
 
 export default {

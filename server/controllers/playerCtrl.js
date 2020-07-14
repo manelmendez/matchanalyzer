@@ -1,5 +1,5 @@
 // const Player = require('../models/player.js')
-import playerService from '../dao/player-service.js'
+import playerService from '../dao-postgres/player-service.js'
 
 function addPlayer(req, res) {
   let userId = req.user.id;
