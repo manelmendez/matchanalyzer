@@ -20,9 +20,10 @@ export const signIn = ({commit}, credentials) => {
       return response;
     });
 };
-export const signUp = ({commit}, credentials) => {
+export const signUp = ({commit}, data) => {
   console.log("ACTION -- signUp");
-  return axios.post('signup',{},{auth: credentials})
+  console.log(data);
+  return axios.post('signup',{body: data.body}, {auth: data.credentials})
     .then(response => {
       let authUser = {
         token: response.data.token,

@@ -19,6 +19,8 @@ const signUp = async(req, res) => {
       message: `Te faltan el email o contraseña por rellenar`
     });
   }
+  console.log(credentials);
+  console.log(req.body);
   const user = {
     email: email,
     name: req.body.name,
@@ -29,7 +31,6 @@ const signUp = async(req, res) => {
   };
   
   console.log("Registrando usuario con nombre: " + user.name + "...");  
-  console.log(req.body);
   bcrypt.genSalt(10, async(err, salt) => {
     if (err) return err;
 
