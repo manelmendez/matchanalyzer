@@ -1,31 +1,40 @@
 import pg from 'pg'
-const {Client} = pg
-const client = new Client({
-  user: 'matchanalyzer',
-  host: 'localhost',
-  database: 'matchanalyzer',
-  password: 'matchanalyzer',
+import dotenv from 'dotenv'
+
+dotenv.config(); //cargar archivo .env
+
+const {Pool} = pg
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.PMA_HOST || process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
   port: 5432,
 })
-client.connect()
+pool.connect().then(() =>{
+  console.log("Connected to postgresql");
+}).catch((err) =>{
+  console.log("Connection failed");
+  console.log(err);
+  console.log("Trying connection again...");
+  reconnect();
+})
+const reconnect = async() => {
+  pool.connect().then(() => {
+    console.log("Connected to postgresql");
+  }).catch((err) =>{
+    console.log("Connection failed");
+    console.log(err);
+    setTimeout(function(){
+      console.log("Trying connection again...");
+      reconnect();
+    },5000);
+  })
+}
 
-// let competition = {
-//   name: '2a División Grupo 5asdasd',
-//   season: '19/21',
-//   discipline: 'F8',
-//   category: 'Alevín',
-//   manager: 4,
-//   signupdate: Date.now(),
-//   userid: 4
-// }
-// client.query('INSERT INTO competitions(name, season, discipline, category, manager, signupdate, userid) VALUES($1,$2,$3,$4,$5,to_timestamp($6 / 1000.0),$7)', 
-//   [competition.name, competition.season, competition.discipline, competition.category, 
-//   competition.manager, competition.signupdate, competition.userid], (err, res) => {
-//   console.log(err, res)
-// })
+pool.on('error', (err) => {
+  console.error('Conexión perdida', err.stack)
+  reconnect()
+})
 
-// client.query('select * from competitions', (err, res) => {
-//   console.log(err, res)
-// })
-
-export default client
+export default pool

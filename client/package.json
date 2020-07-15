@@ -6,6 +6,7 @@
   "scripts": {
     "start": "parcel -p 9999 ./src/index.html",
     "build": "parcel build ./src/index.html --no-minify",
+    "docker": "cross-env DOCKER=true parcel build ./src/index.html --no-minify",
     "raspy": "cross-env RASPY=true parcel build ./src/index.html --no-minify",
     "lint": "eslint ./src --fix"
   },

@@ -1,32 +1,54 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:5.7.30
-    container_name: "mysql"
-    restart: always
+  # mysql:
+  #   image: mariadb:latest
+  #   container_name: "mysql"
+  #   restart: always
+  #   stdin_open: true
+  #   tty: true
+  #   volumes:
+  #     - ./server/resources:/docker-entrypoint-initdb.d
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 'root'
+  #     MYSQL_USER: 'matchanalyzer'
+  #     MYSQL_PASSWORD: 'matchanalyzer'
+  #     MYSQL_DATABASE: 'matchanalyzer'
+  #   networks:
+  #     - ma_backend
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   container_name: "phpmyadmin"
+  #   stdin_open: true
+  #   tty: true
+  #   restart: always
+  #   environment:
+  #     PMA_HOST: mysql
+  #     PMA_PORT: 3306
+  #   ports:
+  #     - "1111:80"
+  #   networks:
+  #     - ma_backend
+  db:
+    image: "postgres" # use latest official postgres version
+    container_name: "postgres"
     stdin_open: true
     tty: true
-    volumes:
-      - ./server/resources:/docker-entrypoint-initdb.d
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_USER: 'matchanalyzer'
-      MYSQL_PASSWORD: 'matchanalyzer'
-      MYSQL_DATABASE: 'matchanalyzer'
+      POSTGRES_PASSWORD: matchanalyzer
+      POSTGRES_DB: matchanalyzer
+      POSTGRES_USER: matchanalyzer
+    volumes:
+      - ./server/resources/matchanalyzer-pg.sql:/docker-entrypoint-initdb.d/init.sql 
+      - ./server/backup:/var/lib/postgresql/data # persist data even if container shuts down
     networks:
       - ma_backend
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: "phpmyadmin"
-    stdin_open: true
-    tty: true
+  adminer:
+    image: adminer
     restart: always
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
     ports:
-      - "1111:80"
+      - 2222:8080
     networks:
       - ma_backend
   matchanalyzer:
@@ -34,16 +56,16 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        environment: "build"
+        environment: "docker"
     container_name: "matchanalyzer"
     restart: always
     stdin_open: true
     tty: true
     depends_on:
-      - mysql
+      - db
     environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
+      PMA_HOST: db
+    #   PMA_PORT: 3306
     ports:
       - "9009:9000"
     networks:

@@ -162,12 +162,14 @@ export default {
     },
     submit2() {
       if (this.$refs.form2.validate()) {
+        let credentials = {
+          username: this.email2,
+          password: this.password2
+        };
         let body = {
-          email: this.email2,
-          password: this.password2,
           name: this.name
         };
-        this.signUp(body).then(response => {
+        this.signUp({body, credentials}).then(response => {
           setTimeout(() => {
             let snackbar = {
               show: true,
