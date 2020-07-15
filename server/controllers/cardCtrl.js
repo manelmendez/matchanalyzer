@@ -11,7 +11,7 @@ const addCard = async(req, res) => {
     userId: userId,
   };
   try {
-    let cardSaved = await cardService.saveCard(cardToSave);
+    const cardSaved = await cardService.saveCard(cardToSave);
     return res.status(200).send({
       cardSaved: cardSaved
     });
@@ -27,7 +27,7 @@ const getCardsByMatchId = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
-    let cards = await cardService.findByMatch(matchId, userId);
+    const cards = await cardService.findByMatch(matchId, userId);
     return res.status(200).send({
       cards: cards
     });
@@ -42,7 +42,7 @@ const deleteCard = async(req, res) => {
   let userId = req.user.id;
   let cardId = req.params.cardId;
   try {
-    let cardDeleted = await cardService.deleteCard(cardId, userId);
+    const cardDeleted = await cardService.deleteCard(cardId, userId);
     return res.status(200).send({
       cardDeleted: cardDeleted
     }); 

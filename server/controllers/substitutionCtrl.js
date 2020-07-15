@@ -11,7 +11,7 @@ const addSubstitution = async(req, res) => {
     userId: userId
   };
   try {
-    let substitutionSaved = await substitutionService.saveSubstitution(substitutionToSave);
+    const substitutionSaved = await substitutionService.saveSubstitution(substitutionToSave);
     return res.status(200).send({
       substitutionSaved: substitutionSaved
     });
@@ -27,7 +27,7 @@ const getSubstitutionsByMatchId = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
-    let substitutions = await substitutionService.findByMatch(matchId, userId);
+    const substitutions = await substitutionService.findByMatch(matchId, userId);
     return res.status(200).send({
       substitutions: substitutions
     });
@@ -42,7 +42,7 @@ const deleteSubstitution = async(req, res) => {
   let userId = req.user.id;
   let substitutionId = req.params.substitutionId;
   try {
-    let substitutionDeleted = await substitutionService.deleteSubstitution(substitutionId, userId);
+    const substitutionDeleted = await substitutionService.deleteSubstitution(substitutionId, userId);
     return res.status(200).send({
       substitutionDeleted: substitutionDeleted
     }); 

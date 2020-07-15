@@ -16,16 +16,17 @@ const addCompetition = async(req, res) => {
     userId: userId
   };
   console.log("Registrando competicion con nombre: " + competition.name + "...");
-  competitionService.saveCompetition(competition).then((competitionSaved) => {
+  try {
+    const competitionSaved = await competitionService.saveCompetition(competition)
     return res.status(200).send({
       competition: competitionSaved
     });
-  }).catch((err) => {
+  } catch (err) {
     console.log(err);
     return res.status(500).send({
       message: `Error al crear competición`
     });
-  });
+  }
 }
 
 const getCompetition = async(req, res) => {  
@@ -92,14 +93,15 @@ const updateCompetition = async(req, res) => {
 }
 const deleteCompetition = async(req, res) => {
   let userId = req.user.id;
-  competitionService.deleteCompetition(req.params.id, userId).then(() => {
+  try {
+    await competitionService.deleteCompetition(req.params.id, userId)
     return res.status(200).send({competition: req.params.id});
-  }).catch((err) => {
+  } catch(err) {
     console.log(err);
     return res.status(500).send({
       message: `Error al borrar la competición`
     });
-  });
+  }
 }
 
 const getCompetitionRanking = async(competitions, userId) => {
@@ -127,7 +129,7 @@ const getCompetitionRanking = async(competitions, userId) => {
     let updatedTeams = [];
     // sumar todas las jornadas hasta la seleccionada
     for (let i = 0; i < teams.length; i++) {
-      let updatedTeam = {...teams[i]};
+      let updatedTeam = JSON.parse(JSON.stringify(teams[i]))
       let teamStats = {
         gamesPlayed:0,
         homeGamesPlayed:0,
@@ -313,8 +315,7 @@ const getCompetitionRanking = async(competitions, userId) => {
     });
     competitions[c].teams = updatedTeams;
     competitionsWithStats.push(competitions[c]);
-    console.log(competitionsWithStats[0].teams[0]);
-  }    
+  }
   return competitionsWithStats;
 }
 

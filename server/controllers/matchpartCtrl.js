@@ -9,15 +9,21 @@ async function addMatchpart(req, res) {
     team: req.body.team,
     userId: userId
   };
-  let savedPart = await matchpartService.saveMatchpart(matchpartToSave);
-  if (savedPart) {
-    return res.status(200).send({
-      savedPart: savedPart
-    });  
-  }
-  else {
+  try {
+    const savedPart = await matchpartService.saveMatchpart(matchpartToSave);
+    if (savedPart) {
+      return res.status(200).send({
+        savedPart: savedPart
+      });  
+    }
+    else {
+      return res.status(500).send({
+        message: `Error al añadir partes`
+      });
+    }
+  } catch (error) {
     return res.status(500).send({
-      message: `Error al añadir partes`
+      message: `Error al añadir partes ${error}`
     });
   }
 }
@@ -25,7 +31,8 @@ async function addMatchpart(req, res) {
 async function getMatchpartsByMatchId(req, res) {
   let userId = req.user.id;
   let matchId = req.params.matchId;
-  let matchParts = await matchpartService.findByMatch(matchId, userId);
+  try {
+    const matchParts = await matchpartService.findByMatch(matchId, userId);
   if (matchParts) {
     return res.status(200).send({
       matchParts: matchParts
@@ -35,13 +42,18 @@ async function getMatchpartsByMatchId(req, res) {
       message: `Error al obtener partes`
     });
   }  
+  } catch (error) {
+    return res.status(500).send({
+      message: `Error al obtener partes ${error}`
+    });
+  }
 }
 
 async function deleteMatchpart(req, res) {
   let userId = req.user.id;
   let matchpartId = req.params.matchpartId;
   try {
-    let matchpartDeleted = await matchpartService.deleteMatchpart(matchpartId, userId);
+    const matchpartDeleted = await matchpartService.deleteMatchpart(matchpartId, userId);
     return res.status(200).send({
       matchpartDeleted: matchpartDeleted
     }); 

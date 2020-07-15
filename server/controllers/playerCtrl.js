@@ -1,7 +1,7 @@
 // const Player = require('../models/player.js')
 import playerService from '../dao-postgres/player-service.js'
 
-function addPlayer(req, res) {
+const addPlayer = async(req, res) => {
   let userId = req.user.id;
   let player = {
     name: req.body.name,
@@ -12,22 +12,22 @@ function addPlayer(req, res) {
     userId: userId
   };
   console.log("No existe jugador con ese nombre, registrando...");
-  playerService.savePlayer(player).then((playerSaved) => {
+  try {
+    const playerSaved = await playerService.savePlayer(player)
     return res.status(200).send({
       player: playerSaved
     });
-  })
-  .catch((err) => {
+  } catch(err) {
     return res.status(500).send({
       message: `Error al crear el jugador: ${err}`
-    });
-  });
+    })
+  }
 }
-async function getPlayersByTeamId(req, res) {
+const getPlayersByTeamId = async(req, res) => {
   let userId = req.user.id;
   let teamId = req.params.teamId;
   try {
-    let players = await playerService.findByTeam(teamId, userId);
+    const players = await playerService.findByTeam(teamId, userId);
     return res.status(200).send({
       players: players
     });
@@ -37,65 +37,29 @@ async function getPlayersByTeamId(req, res) {
     });
   }  
 }
-// function getPlayer(req, res) {
-//   let playerId = req.params.id
-//   //search player on DB
-//   playerService.findById(playerId).then((player) => {
-//     if (!player) {
-//       console.log("No existe el usuario")
-//       return res.status(401).send({
-//         message: 'Algunos de los datos introducidos son incorrectos.'
-//       })
-//     }
-//     if (player) {
-//       console.log(player);
-//       res.status(200).send({
-//         message: 'Datos obtenidos correctamente',
-//         player: player
-//       })
-//     }
-//   }).catch((err) => {
-//     console.log(`Error: ${err}`)
-//     return res.status(500).send({
-//       message: `Error al buscar`
-//     })
-//   })
-// }
 
-// function getAllPlayers(req, res) {
-//   playerService.findAll().then((players) => {
-//     res.status(200).send({
-//       players: players
-//     })
-//   }).catch((err) => {
-//     console.log(`Error: ${err}`)
-//   })
-// }
-
-function updatePlayer(req, res) {
+const updatePlayer = async(req, res) => {
   let player = req.body;
   let userId = req.user.id;
-  playerService.updatePlayer(req.params.id, player, userId)
-  .then(() => {    
-    res.status(200).send({player: player});
-  })
-  .catch((err) => {
+  try {
+    const playerUpdated = await playerService.updatePlayer(req.params.id, player, userId)
+    res.status(200).send({player: playerUpdated});
+  } catch(err) {
     console.log(err);
     res.status(500).send({message: `Error al editar player: ${err}`});
-  });
+  }
 }
 
-function deletePlayer (req, res) {
+const deletePlayer = async(req, res) => {
   let playerId = req.params.id;
   let userId = req.user.id;
-  playerService.deletePlayer(playerId, userId)
-  .then(() => {    
+  try {
+    await playerService.deletePlayer(playerId, userId)
     res.status(200).send({player: playerId});
-  })
-  .catch((err) => {
+  } catch(err) {
     console.log(err);
     res.status(500).send({message: `Error al borrar el jugador`});
-  });
+  }
 }
 
 export default {

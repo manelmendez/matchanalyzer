@@ -11,7 +11,7 @@ const addAssist = async(req, res) => {
     userId: userId,
   };
   try {
-    let assistSaved = await assistService.saveAssist(assistToSave);
+    const assistSaved = await assistService.saveAssist(assistToSave);
     return res.status(200).send({
       assistSaved: assistSaved
     });
@@ -27,7 +27,7 @@ const getAssistsByMatchId = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
-    let assists = await assistService.findByMatch(matchId, userId);
+    const assists = await assistService.findByMatch(matchId, userId);
     return res.status(200).send({
       assists: assists
     });
@@ -42,7 +42,7 @@ const deleteAssist = async(req, res) => {
   let userId = req.user.id;
   let assistId = req.params.assistId;
   try {
-    let assistDeleted = await assistService.deleteAssist(assistId, userId);
+    const assistDeleted = await assistService.deleteAssist(assistId, userId);
     return res.status(200).send({
       assistDeleted: assistDeleted
     }); 

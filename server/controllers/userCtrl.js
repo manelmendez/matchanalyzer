@@ -120,8 +120,8 @@ const getUser = async(req, res) => {
   let userId = req.params.id;
   console.log("Buscando usuario con ID: "+userId+ "...");
   //search user on DB
-  // User.findOne({_id:userId}, (err, user) => {
-  userService.findById(userId).then((user) => {
+  try{
+    const user = await userService.findById(userId)
     // case if user found
     if (user) {
       console.log("Usuario encontrado.");
@@ -137,18 +137,18 @@ const getUser = async(req, res) => {
         message: 'No existe el usuario'
       });
     }
-  }).catch((err) => {
+  } catch(err) {
     console.log(`Error: ${err}`);
     return res.status(500).send({
       message: `Error al buscar`
-    });
-  });
+    })
+  }
 }
 
 const getAllUsers = async(req, res) => {
   console.log("Buscando todos los usuarios...");
   try {
-    let users = await userService.findAll()
+    const users = await userService.findAll()
     res.status(200).send({
       users: users
     })
@@ -160,28 +160,30 @@ const getAllUsers = async(req, res) => {
 const updateUser = async(req, res) => {
   console.log("Buscando todos los usuarios...");
   let userId = req.params.id;
-  let data;
-  userService.updateUser(userId, data).then((users) => {
+  let user = req.body.user
+  try {
+    const userUpdated = await userService.updateUser(userId, user)
     console.log("Usuarios encontrados.");
     res.status(200).send({
-      users: users
+      user: userUpdated
     });
-  }).catch((err) => {
+  } catch(err) {
     console.log(`Error: ${err}`);
-  });
+  }
 }
 
 const deleteUser = async(req, res) => {
   console.log("Buscando todos los usuarios...");
   let userId = req.params.id;
-  userService.deleteUser(userId).then(() => {
+  try {
+    await userService.deleteUser(userId)
     console.log("Usuario eliminado.")
     res.status(200).send({
       message: "Usuario eliminado"
     })
-  }).catch((err) => {
+  } catch(err) {
     console.log(`Error: ${err}`)
-  })
+  }
 }
 
 export default {
