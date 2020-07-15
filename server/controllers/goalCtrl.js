@@ -11,7 +11,7 @@ const addGoal = async(req, res) => {
     userId: userId
   };
   try {
-    let goalSaved = await goalService.saveGoal(goalToSave);
+    const goalSaved = await goalService.saveGoal(goalToSave);
     return res.status(200).send({
       goalSaved: goalSaved
     });
@@ -27,7 +27,7 @@ const getGoalsByMatchId = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
-    let goals = await goalService.findByMatch(matchId, userId);
+    const goals = await goalService.findByMatch(matchId, userId);
     return res.status(200).send({
       goals: goals
     });
@@ -42,7 +42,7 @@ const deleteGoal = async(req, res) => {
   let userId = req.user.id;
   let goalId = req.params.goalId;
   try {
-    let goalDeleted = await goalService.deleteGoal(goalId, userId);
+    const goalDeleted = await goalService.deleteGoal(goalId, userId);
     return res.status(200).send({
       goalDeleted: goalDeleted
     }); 

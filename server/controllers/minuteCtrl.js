@@ -10,7 +10,7 @@ async function addMinute(req, res) {
     userId: userId
   };
   try {
-    let minuteSaved = await minuteService.saveMinute(minute);
+    const minuteSaved = await minuteService.saveMinute(minute);
     return res.status(200).send({
       minuteSaved: minuteSaved
     });
@@ -26,7 +26,7 @@ async function getMinutesByMatchId(req, res) {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
-    let minutes = await minuteService.findByMatch(matchId, userId);
+    const minutes = await minuteService.findByMatch(matchId, userId);
     return res.status(200).send({
       minutes: minutes
     });  
@@ -41,7 +41,7 @@ async function deleteMinute(req, res) {
   let userId = req.user.id;
   let minuteId = req.params.minuteId;
   try {
-    let minuteDeleted = await minuteService.deleteMinute(minuteId, userId);
+    const minuteDeleted = await minuteService.deleteMinute(minuteId, userId);
     return res.status(200).send({
       minuteDeleted: minuteDeleted
     }); 

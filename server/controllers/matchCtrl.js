@@ -1,36 +1,12 @@
 import matchService from '../dao-postgres/match-service.js'
 
-const getCompetitionMatches = async(req, res) => {
-  let competition = req.competition;
-  let userId = req.user.id;
-  matchService.findByCompetition(req.competition.id, userId).then((matches) => {
-    console.log(matches);
-    
-    for (let i = 0; i < competition.rounds.length; i++) {
-      for (let j = 0; j < matches.length; j++) {
-        if (matches[j].round == competition.rounds[i].id) {
-          competition.rounds[i].matches.push(matches[j]);     
-        }
-      }
-    } 
-    return res.status(200).send({
-      competition: competition
-    });
-  }).catch((err) => {
-    console.log(err);
-    
-    return res.status(500).send({
-      message: `Error al crear competición: ${err}`
-    });
-  });
-}
 const getMatch = async(req, res) => {
   let userId = req.user.id;
   let matchId = req.params.matchId;
   try {
-    let match = await matchService.findById(matchId, userId);
+    const match = await matchService.findById(matchId, userId);
     return res.status(200).send({
-      match: match[0]
+      match: match
     });
   } catch (error) {
     return res.status(500).send({
@@ -52,17 +28,17 @@ const addMatch = async(req, res) => {
     userId: userId
   };
   console.log("Añadiendo partido...");
-  matchService.saveMatch(match).then((matchSaved) => {
+  try {
+    const matchSaved = await matchService.saveMatch(match)
     return res.status(200).send({
       match: matchSaved
     });
-  }).catch((err) => {
+  } catch(err) {
     console.log(err);
-    
     return res.status(500).send({
       message: `Error al crear competición: ${err}`
-    });
-  });
+    })
+  }
 }
 
 const updateMatch = async(req, res) => {
@@ -77,18 +53,19 @@ const updateMatch = async(req, res) => {
     round: req.body.round,
   };
   console.log("Actualizar partido");
-  matchService.updateMatch(match, id, userId).then((matchUpdated) => {    
+  try {
+    const matchUpdated = await matchService.updateMatch(match, id, userId)
     res.status(200).send({match: matchUpdated});
-  }).catch((err) => {
+  } catch(err) {
     console.log(err);
     res.status(500).send({message: `Error al actualizar el partido`});
-  });
+  }
 }
 
 const deleteMatch = async(req, res) => {
   let matchId = req.params.id;
   let userId = req.user.id;
-  matchService.deleteMatch(matchId, userId)
+  await matchService.deleteMatch(matchId, userId)
   .then(() => {
     res.status(200).send({match: matchId});
   })
@@ -99,7 +76,6 @@ const deleteMatch = async(req, res) => {
 }
 
 export default {
-  getCompetitionMatches,
   addMatch,
   getMatch,
   updateMatch,

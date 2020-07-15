@@ -3,7 +3,6 @@
 import tokenServices from '../services/token-services.js'
 
 function isAuth(req, res) {
-  console.log(req.headers);
   if (!req.headers.authorization) {
     console.log('Sin cabeceras. No autorizado');
     return res.status(403).send({
@@ -46,7 +45,6 @@ function checkAuth(req, res, next) {
     tokenServices.decodeToken(token)
     .then((response) => {
       if (response) {
-        console.log(response);
         console.log("Está autorizado");
         req.user = response;
         next();
@@ -80,7 +78,6 @@ function checkAdmin(req, res, next) {
     tokenServices.decodeToken(token)
     .then((response) => {
       if (response && response.role == "admin") {
-        console.log(response);
         console.log("Está autorizado como administrador");
         req.user = response;
         next();

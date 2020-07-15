@@ -174,11 +174,11 @@ const getTeamStats = async(req, res) => {
     }
     let roundRankings = [];
     for (let r = 0; r < rounds.length; r++) {
-      let roundRanking = {...rounds[r]};
+      let roundRanking = JSON.parse(JSON.stringify(rounds[r]))
       let updatedTeams = [];
       // sumar todas las jornadas hasta la seleccionada
       for (let i = 0; i < teams.length; i++) {
-        let updatedTeam = {...teams[i]};
+        let updatedTeam = JSON.parse(JSON.stringify(teams[i]))
         let teamStats = {
           gamesPlayed:0,
           homeGamesPlayed:0,
