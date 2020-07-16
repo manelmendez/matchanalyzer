@@ -11,10 +11,13 @@ const findByMatch = async(id, userId) => {
 }
 
 const saveSubstitution = async(substitution) => {
-  const result = await con.query('INSERT INTO substitutions SET ?', [substitution])
+  const result = await con.query('INSERT INTO substitutions (playerIn, playerOut, minute, "matchId", "userId", matchpart) '+
+  'VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
+  substitution.playerIn, substitution.playerOut, substitution.minute, substitution.matchId, substitution.userId, substitution.matchpart)
+  return result.rows[0]
 }
-const deleteSubstitution = async(id) => {
-  const result = await con.query('DELETE FROM substitutions WHERE id = $1 RETURNING *', [id])
+const deleteSubstitution = async(id, userId) => {
+  const result = await con.query('DELETE FROM substitutions WHERE id = $1 AND "userId"=$2 RETURNING *', [id, userId])
   return result.rows[0].id
 }
 

@@ -11,10 +11,13 @@ const findByMatch = async(id, userId) => {
 }
 
 const saveMinute = async(minute) => {
-  const result = await con.query('INSERT INTO minutes SET ?', minute)
+  const result = await con.query('INSERT INTO minutes(player, matchpart, "matchId", "userId", position) '+
+  'VALUES($1,$2,$3,$4,$5) RETURNING *',
+  minute.player, minute.matchpart, minute.matchId, minute.userId, minute.position)
+  return result.rows[0]
 }
-const deleteMinute = async(id) => {
-  const result = await con.query('DELETE FROM minutes WHERE id = $1 RETURNING *', [id])
+const deleteMinute = async(id, userId) => {
+  const result = await con.query('DELETE FROM minutes WHERE id = $1 AND "userId"=$2 RETURNING *', [id, userId])
   return result.rows[0].id
 }
 

@@ -1,7 +1,10 @@
 import con from '../config/postgres.js'
 
 const savePlayer= async(player) => {
-  const result = await con.query('INSERT INTO players SET ?', [player])
+  const result = await con.query('INSERT INTO players(name, avatar, year, team, position, "userId")'
+  +'VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
+  [player.name,player.avatar, player.year, player.team, player.position, player.userId])
+  return result.rows[0]
 }
 
 const findByTeam= async(id, userId) => {
@@ -10,7 +13,10 @@ const findByTeam= async(id, userId) => {
 }
 
 const updatePlayer = async(id, player, userId) => {  
-  const result = await con.query('UPDATE players SET ? WHERE id = ? AND "userId" = ?', [player, id, userId])
+  const result = await con.query('UPDATE players SET name=$1, avatar=$2, year=$3, team=$4, position=$5 '+
+  'WHERE id=$6 AND "userId"=$7 RETURNING *',
+  [player.name, player.avatar, player.year, player.team, player.position, id, userId])
+  return result.rows[0]
 }
 
 const deletePlayer = async(id, userId) => {
