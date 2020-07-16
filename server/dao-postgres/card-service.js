@@ -11,11 +11,14 @@ const findByMatch = async(id, userId) => {
 }
 
 const saveCard = async(card) => {
-  const result = await con.query('INSERT INTO cards SET ?', card)
+  const result = await con.query('INSERT INTO cards(minute, type, player, "matchId", "userId", matchpart) '+
+  'VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
+  card.minute, card.type, card.player, card.matchId, card.userId, card.matchpart)
+  return result.rows[0]
 }
 
-const deleteCard = async(id) => {
-  const result = await con.query('DELETE FROM cards WHERE id = $1 RETURNING *', [id])
+const deleteCard = async(id, userId) => {
+  const result = await con.query('DELETE FROM cards WHERE id = $1 AND "userId"=$2 RETURNING *', [id, userId])
   return result.rows[0].id
 }
 

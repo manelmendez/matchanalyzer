@@ -11,10 +11,13 @@ const findByMatch = async(id, userId) => {
 }
 
 const saveAssist = async(assist) => {
-  const result = await con.query('INSERT INTO assists SET ?', assist)
+  const result = await con.query('INSERT INTO assists(type, goal, "matchId", matchpart, player, "userId") '+
+  'VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
+  assist.type, assist.goal, assist.matchId, assist.matchpart, assist.player, assist.userId)
+  return result.rows[0]
 }
-const deleteAssist = async(id) => {
-  const result = await con.query('DELETE FROM assists WHERE id = $1', [id])
+const deleteAssist = async(id, userId) => {
+  const result = await con.query('DELETE FROM assists WHERE id = $1 AND "userId"=$2 RETURNING *', [id, userId])
   return result.rows[0].id
 }
 
