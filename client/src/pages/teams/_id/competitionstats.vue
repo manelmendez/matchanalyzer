@@ -305,16 +305,16 @@ export default {
         let match = this.teamMatchesPerRound[i]
         if (match.localTeam.id == this.$route.params.id) {
           localMatches++
-          localGoals += match.localTeamGoals
-          localAgainstGoals += match.awayTeamGoals
-          if (match.awayTeamGoals == 0) {
+          localGoals += Number(match.localTeamGoals)
+          localAgainstGoals += Number(match.awayTeamGoals)
+          if (Number(match.awayTeamGoals) == 0) {
             localZeroGoals++
           }
         } else {
           awayMatches++
-          awayGoals += match.awayTeamGoals
-          awayAgainstGoals += match.localTeamGoals
-          if (match.localTeamGoals == 0) {
+          awayGoals += Number(match.awayTeamGoals)
+          awayAgainstGoals += Number(match.localTeamGoals)
+          if (Number(match.localTeamGoals) == 0) {
             awayZeroGoals++
           }
         }
