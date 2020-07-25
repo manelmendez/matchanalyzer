@@ -1,23 +1,21 @@
-import { rootMutations } from '../mutations/rootMutations';
+import { rootMutations } from '../mutations/rootMutations'
 
 export const rootModule = {
   namespaced: true,
   state: {
     snackbar: {
       show: false,
-      color: "",
-      text: ""
-    }
+      color: '',
+      text: '',
+    },
   },
   getters: {
-    snackbar: state => {
-      return state.snackbar;
+    snackbar: (state) => {
+      return state.snackbar
     },
   },
   mutations: {
-    ...rootMutations
+    ...rootMutations,
   },
-  actions: {
-
-  }
-};
+  actions: {},
+}

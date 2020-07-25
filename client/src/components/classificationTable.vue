@@ -1,6 +1,7 @@
 <template>
   <v-card>
-    <v-data-table v-if="rankedTeams"
+    <v-data-table
+      v-if="rankedTeams"
       :headers="headers"
       :items="rankedTeams"
       class="elevation-1 text-center"
@@ -9,10 +10,18 @@
     >
       <template v-slot:item="{ item, index }">
         <tr :class="setClass(index)">
-          <td class="text-center">{{ index+1 }}</td>
+          <td class="text-center">{{ index + 1 }}</td>
           <td class="text-center">
-            <v-list-item-avatar :tile="true" style="cursor:pointer" @click="$router.push('/teams/'+item.id+'/competitionstats')">
-              <v-img :src="constants.ADDRESS+item.avatar" @error="item.avatar=constants.DEFAULT_TEAM_URL" contain />
+            <v-list-item-avatar
+              :tile="true"
+              style="cursor: pointer;"
+              @click="$router.push('/teams/' + item.id + '/competitionstats')"
+            >
+              <v-img
+                :src="constants.ADDRESS + item.avatar"
+                @error="item.avatar = constants.DEFAULT_TEAM_URL"
+                contain
+              />
             </v-list-item-avatar>
           </td>
           <td class="text-center">{{ item.name }}</td>
@@ -58,66 +67,71 @@
 import constants from '../assets/constants/constants'
 
 export default {
-  name: "ClassificationTable",
+  name: 'ClassificationTable',
   props: {
-    rankedTeams: Array
+    rankedTeams: Array,
   },
   data() {
     return {
       constants: constants,
       headers: [
-        { text: 'P', align: 'center', sortable: false, value: 'name'},
-        { text: '', align: 'center', sortable: false, value: ''},
-        { text: 'Nombre', align: 'center', sortable: false, value: 'name'},
-        { text: 'PTS', value: 'points', align: 'center', sortable: false,},
-        { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false,},
-        { text: 'V', value: 'wins', align: 'center', sortable: false,},
-        { text: 'E', value: 'draws', align: 'center', sortable: false,},
-        { text: 'D', value: 'loses', align: 'center', sortable: false,},
-        { text: 'GF', value: 'goals', align: 'center', sortable: false,},
-        { text: 'GC', value: 'againstGoals', align: 'center', sortable: false,},
-        { text: 'DG', value: 'goalDif', align: 'center', sortable: false,},
+        { text: 'P', align: 'center', sortable: false, value: 'name' },
+        { text: '', align: 'center', sortable: false, value: '' },
+        { text: 'Nombre', align: 'center', sortable: false, value: 'name' },
+        { text: 'PTS', value: 'points', align: 'center', sortable: false },
+        { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false },
+        { text: 'V', value: 'wins', align: 'center', sortable: false },
+        { text: 'E', value: 'draws', align: 'center', sortable: false },
+        { text: 'D', value: 'loses', align: 'center', sortable: false },
+        { text: 'GF', value: 'goals', align: 'center', sortable: false },
+        { text: 'GC', value: 'againstGoals', align: 'center', sortable: false },
+        { text: 'DG', value: 'goalDif', align: 'center', sortable: false },
         { text: 'En Casa', sortable: false },
-        { text: 'PTS', value: 'points', align: 'center', sortable: false,},
-        { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false,},
-        { text: 'V', value: 'wins', align: 'center', sortable: false,},
-        { text: 'E', value: 'draws', align: 'center', sortable: false,},
-        { text: 'D', value: 'loses', align: 'center', sortable: false,},
-        { text: 'GF', value: 'goals', align: 'center', sortable: false,},
-        { text: 'GC', value: 'againstGoals', align: 'center', sortable: false,},
-        { text: 'DG', value: 'homeGoalDif', align: 'center', sortable: false,},
+        { text: 'PTS', value: 'points', align: 'center', sortable: false },
+        { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false },
+        { text: 'V', value: 'wins', align: 'center', sortable: false },
+        { text: 'E', value: 'draws', align: 'center', sortable: false },
+        { text: 'D', value: 'loses', align: 'center', sortable: false },
+        { text: 'GF', value: 'goals', align: 'center', sortable: false },
+        { text: 'GC', value: 'againstGoals', align: 'center', sortable: false },
+        { text: 'DG', value: 'homeGoalDif', align: 'center', sortable: false },
         { text: 'Fuera', sortable: false },
-        { text: 'PTS', value: 'points', align: 'center', sortable: false,},
-        { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false,},
-        { text: 'V', value: 'wins', align: 'center', sortable: false,},
-        { text: 'E', value: 'draws', align: 'center', sortable: false,},
-        { text: 'D', value: 'loses', align: 'center', sortable: false,},
-        { text: 'GF', value: 'goals', align: 'center', sortable: false,},
-        { text: 'GC', value: 'againstGoals', align: 'center', sortable: false,},
-        { text: 'DG', value: 'awayGoalDif', align: 'center', sortable: false,},
-      ]
+        { text: 'PTS', value: 'points', align: 'center', sortable: false },
+        { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false },
+        { text: 'V', value: 'wins', align: 'center', sortable: false },
+        { text: 'E', value: 'draws', align: 'center', sortable: false },
+        { text: 'D', value: 'loses', align: 'center', sortable: false },
+        { text: 'GF', value: 'goals', align: 'center', sortable: false },
+        { text: 'GC', value: 'againstGoals', align: 'center', sortable: false },
+        { text: 'DG', value: 'awayGoalDif', align: 'center', sortable: false },
+      ],
     }
   },
-  methods:{
+  methods: {
     setClass(index) {
-      if(index==0) return 'first'
-      else if(index==1) return 'second'
-      else if(index==this.rankedTeams.length-1||index==this.rankedTeams.length-2||index==this.rankedTeams.length-3) return 'descending'
-    }
-  }
+      if (index == 0) return 'first'
+      else if (index == 1) return 'second'
+      else if (
+        index == this.rankedTeams.length - 1 ||
+        index == this.rankedTeams.length - 2 ||
+        index == this.rankedTeams.length - 3
+      )
+        return 'descending'
+    },
+  },
 }
 </script>
 <style scoped>
-.first{
-  background-color: rgba(117, 255, 131, 0.55)
+.first {
+  background-color: rgba(117, 255, 131, 0.55);
 }
-.first:hover{
-  background-color: rgba(117, 255, 131, 0.8) !important
+.first:hover {
+  background-color: rgba(117, 255, 131, 0.8) !important;
 }
-.descending{
-  background-color: rgba(255, 117, 117, 0.55)
+.descending {
+  background-color: rgba(255, 117, 117, 0.55);
 }
-.descending:hover{
-  background-color: rgba(255, 117, 117, 0.9) !important
+.descending:hover {
+  background-color: rgba(255, 117, 117, 0.9) !important;
 }
 </style>

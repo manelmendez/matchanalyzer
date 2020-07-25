@@ -5,22 +5,25 @@ import userService from '../dao-postgres/user-service.js'
  * Function to sign up a new user in the DB
  *
  */
-const signUp = async(req, res) => {
+const signUp = async (req, res) => {
   // check for basic auth header
-  if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
-    return res.status(401).json({ message: 'Missing Authorization Header' });
+  if (
+    !req.headers.authorization ||
+    req.headers.authorization.indexOf('Basic ') === -1
+  ) {
+    return res.status(401).json({ message: 'Missing Authorization Header' })
   }
   // search for user in DB
-  const base64Credentials =  req.headers.authorization.split(' ')[1];
-  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');  
-  const [email, password] = credentials.split(':');
+  const base64Credentials = req.headers.authorization.split(' ')[1]
+  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii')
+  const [email, password] = credentials.split(':')
   if (!email || !password) {
     return res.status(500).send({
       message: `Te faltan el email o contraseña por rellenar`
-    });
+    })
   }
-  console.log(credentials);
-  console.log(req.body);
+  console.log(credentials)
+  console.log(req.body)
   const user = {
     email: email,
     name: req.body.name,
@@ -28,56 +31,58 @@ const signUp = async(req, res) => {
     provider: 'local',
     signupDate: new Date(),
     lastLogin: new Date()
-  };
-  
-  console.log("Registrando usuario con nombre: " + user.name + "...");  
-  bcrypt.genSalt(10, async(err, salt) => {
-    if (err) return err;
+  }
 
-    bcrypt.hash(user.password, salt, null, async(err, hash) => {
-      if (err) return err;
-      user.password = hash;
+  console.log('Registrando usuario con nombre: ' + user.name + '...')
+  bcrypt.genSalt(10, async (err, salt) => {
+    if (err) return err
+
+    bcrypt.hash(user.password, salt, null, async (err, hash) => {
+      if (err) return err
+      user.password = hash
       // saving user in DB
       try {
         let userSaved = await userService.saveUser(user)
-        delete user['password'];
+        delete user['password']
         return res.status(200).send({
           message: 'Te has registrado correctamente',
           token: tokenServices.createToken(userSaved),
           user: userSaved
-        });
-      }
-      catch(err) {
-        console.log(err);
-        if (err.code == "ER_DUP_ENTRY") {
-          console.log("Este usuario ya existe");
+        })
+      } catch (err) {
+        console.log(err)
+        if (err.code == 'ER_DUP_ENTRY') {
+          console.log('Este usuario ya existe')
           return res.status(403).send({
             message: `Este usuario ya existe`
-          });
+          })
         }
-        console.log("Error al crear usuario");
+        console.log('Error al crear usuario')
         return res.status(500).send({
           message: `Error al registrar el usuario: ${err}`
-        });
+        })
       }
-    });
-  });
+    })
+  })
 }
 
 /**
  * Function to sign in the web
  *
  */
-const signIn = async(req, res) => {
-  console.log(req.headers);
+const signIn = async (req, res) => {
+  console.log(req.headers)
   // check for basic auth header
-  if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
-    return res.status(401).json({ message: 'Missing Authorization Header' });
+  if (
+    !req.headers.authorization ||
+    req.headers.authorization.indexOf('Basic ') === -1
+  ) {
+    return res.status(401).json({ message: 'Missing Authorization Header' })
   }
   // search for user in DB
-  const base64Credentials =  req.headers.authorization.split(' ')[1];
-  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');  
-  const [email, password] = credentials.split(':');
+  const base64Credentials = req.headers.authorization.split(' ')[1]
+  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii')
+  const [email, password] = credentials.split(':')
   try {
     let userFound = await userService.findByEmail(email)
     if (userFound) {
@@ -85,103 +90,100 @@ const signIn = async(req, res) => {
       if (bcrypt.compareSync(password, userFound.password)) {
         // setting loginDate on DB
         userFound.lastLogin = new Date()
-        let userUpdated = await userService.updateUser(userFound ,userFound.id)
+        let userUpdated = await userService.updateUser(userFound, userFound.id)
         delete userUpdated['password']
         res.status(200).send({
           message: 'Te has logueado correctamente',
           token: tokenServices.createToken(userUpdated),
           user: userUpdated
-        });
+        })
       }
       //case if password is incorrect
       else {
-        console.log("UNAUTHORIZED. Contraseña incorrecta.");
+        console.log('UNAUTHORIZED. Contraseña incorrecta.')
         return res.status(401).send({
           message: 'Algunos de los datos introducidos son incorrectos.'
-        });
+        })
       }
-    }
-    else{
-      console.log("No existe el usuario");
+    } else {
+      console.log('No existe el usuario')
       return res.status(401).send({
         message: 'Algunos de los datos introducidos son incorrectos.'
-      });
+      })
     }
-  }
-  catch(err) {
-    console.log(`Error: ${err}`);
+  } catch (err) {
+    console.log(`Error: ${err}`)
     return res.status(500).send({
       message: `Error al iniciar sessión`
-    });
-  };  
+    })
+  }
 }
 
-const getUser = async(req, res) => {
-  let userId = req.params.id;
-  console.log("Buscando usuario con ID: "+userId+ "...");
+const getUser = async (req, res) => {
+  let userId = req.params.id
+  console.log('Buscando usuario con ID: ' + userId + '...')
   //search user on DB
-  try{
+  try {
     const user = await userService.findById(userId)
     // case if user found
     if (user) {
-      console.log("Usuario encontrado.");
+      console.log('Usuario encontrado.')
       // send user
       res.status(200).send({
         message: 'Datos obtenidos correctamente',
         user: user
-      });
-    }
-    else {
-      console.log("No existe el usuario.");
+      })
+    } else {
+      console.log('No existe el usuario.')
       return res.status(401).send({
         message: 'No existe el usuario'
-      });
+      })
     }
-  } catch(err) {
-    console.log(`Error: ${err}`);
+  } catch (err) {
+    console.log(`Error: ${err}`)
     return res.status(500).send({
       message: `Error al buscar`
     })
   }
 }
 
-const getAllUsers = async(req, res) => {
-  console.log("Buscando todos los usuarios...");
+const getAllUsers = async (req, res) => {
+  console.log('Buscando todos los usuarios...')
   try {
     const users = await userService.findAll()
     res.status(200).send({
       users: users
     })
   } catch (error) {
-    console.log(`Error: ${error}`);
-  };
-}
-
-const updateUser = async(req, res) => {
-  console.log("Buscando todos los usuarios...");
-  let userId = req.params.id;
-  let user = req.body.user
-  try {
-    const userUpdated = await userService.updateUser(userId, user)
-    console.log("Usuarios encontrados.");
-    res.status(200).send({
-      user: userUpdated
-    });
-  } catch(err) {
-    console.log(`Error: ${err}`);
+    console.log(`Error: ${error}`)
   }
 }
 
-const deleteUser = async(req, res) => {
-  console.log("Buscando todos los usuarios...");
-  let userId = req.params.id;
+const updateUser = async (req, res) => {
+  console.log('Buscando todos los usuarios...')
+  let userId = req.params.id
+  let user = req.body.user
+  try {
+    const userUpdated = await userService.updateUser(userId, user)
+    console.log('Usuarios encontrados.')
+    res.status(200).send({
+      user: userUpdated
+    })
+  } catch (err) {
+    console.log(`Error: ${err}`)
+  }
+}
+
+const deleteUser = async (req, res) => {
+  console.log('Buscando todos los usuarios...')
+  let userId = req.params.id
   try {
     await userService.deleteUser(userId)
-    console.log("Usuario eliminado.")
+    console.log('Usuario eliminado.')
     res.status(200).send({
-      message: "Usuario eliminado"
+      message: 'Usuario eliminado'
     })
-  } catch(err) {
+  } catch (err) {
     console.log(`Error: ${err}`)
   }
 }
@@ -193,4 +195,4 @@ export default {
   getAllUsers,
   updateUser,
   deleteUser
-};
+}

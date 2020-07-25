@@ -8,7 +8,11 @@
         <v-container grid-list-md>
           <v-row>
             <v-col cols="12" md="4">
-              <v-text-field label="Nombre de la competición" v-model="name" required></v-text-field>
+              <v-text-field
+                label="Nombre de la competición"
+                v-model="name"
+                required
+              ></v-text-field>
             </v-col>
             <v-col cols="12" md="4">
               <v-select
@@ -28,8 +32,8 @@
             </v-col>
             <v-col cols="12" md="4">
               <v-select
-                :disabled="discipline==''"
-                :items="(discipline=='F7') ? categoriesF7 : categoriesF11"
+                :disabled="discipline == ''"
+                :items="discipline == 'F7' ? categoriesF7 : categoriesF11"
                 label="Categoria"
                 v-model="category"
                 required
@@ -39,7 +43,11 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" @click.native="(competition) ? editCompetition() : createCompetition()">Continue</v-btn>
+        <v-btn
+          color="primary"
+          @click.native="competition ? editCompetition() : createCompetition()"
+          >Continue</v-btn
+        >
         <v-btn text @click.native="close">Cancel</v-btn>
       </v-card-actions>
     </v-card>
@@ -48,45 +56,26 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-  props:{
+  props: {
     show: Boolean,
     competition: Object,
   },
   data() {
     return {
-      name: (this.competition) ? this.competition.name : '',
-      season: (this.competition) ? this.competition.season : '',
-      seasons: [
-        "19/20",
-        "18/19",
-        "17/18",
-        "16/17",
-        "15/16",
-        "14/15",
-      ],
-      disciplines: [
-        "F7",
-        "F11"
-      ],
-      categoriesF7: [
-        "Prebenjamín",
-        "Benjamín",
-        "Alevín"
-      ],
-      categoriesF11: [
-        "Infantil",
-        "Cadete",
-        "Juvenil",
-        "Amateur"
-      ],
-      discipline: (this.competition) ? this.competition.discipline : "",
-      category: (this.competition) ? this.competition.category : ""
+      name: this.competition ? this.competition.name : '',
+      season: this.competition ? this.competition.season : '',
+      seasons: ['19/20', '18/19', '17/18', '16/17', '15/16', '14/15'],
+      disciplines: ['F7', 'F11'],
+      categoriesF7: ['Prebenjamín', 'Benjamín', 'Alevín'],
+      categoriesF11: ['Infantil', 'Cadete', 'Juvenil', 'Amateur'],
+      discipline: this.competition ? this.competition.discipline : '',
+      category: this.competition ? this.competition.category : '',
     }
   },
   computed: {
     ...mapGetters({
-      user:'user/user',
-    })
+      user: 'user/user',
+    }),
   },
   methods: {
     createCompetition() {
@@ -95,9 +84,9 @@ export default {
         season: this.season,
         manager: this.user.id,
         discipline: this.discipline,
-        category: this.category
+        category: this.category,
       }
-      this.addCompetition(competition).then((value) => {
+      this.addCompetition(competition).then(() => {
         this.$emit('confirm')
       })
     },
@@ -108,22 +97,17 @@ export default {
         season: this.season,
         manager: this.user.id,
         discipline: this.discipline,
-        category: this.category
+        category: this.category,
       }
-      this.updateCompetition(competition).then((value) => {
+      this.updateCompetition(competition).then(() => {
         this.$emit('confirm')
       })
     },
     close() {
       this.$emit('close')
     },
-    ...mapActions("competition",[
-        'addCompetition',
-        'updateCompetition'
-    ])
-  }
+    ...mapActions('competition', ['addCompetition', 'updateCompetition']),
+  },
 }
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -5,7 +5,7 @@
       background-color="primary darken-1"
       dark
       grow
-      icons-and-text 
+      icons-and-text
       color="white"
     >
       <v-tabs-slider color="secondary"></v-tabs-slider>
@@ -30,37 +30,37 @@
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
 import constants from '../../../assets/constants/constants'
-  export default {
-    name: "CompetitionBase",
-    data: () => ({
-      constants: constants,
+export default {
+  name: 'CompetitionBase',
+  data: () => ({
+    constants: constants,
+  }),
+  methods: {
+    ...mapActions({
+      getCompetition: 'competition/getCompetition',
+      getCompetitionRounds: 'competition/getCompetitionRounds',
+      getUserTeams: 'team/getUserTeams',
     }),
-    methods: {
-      ...mapActions({
-        getCompetition:'competition/getCompetition',
-        getCompetitionRounds:'competition/getCompetitionRounds',
-        getUserTeams:'team/getUserTeams',
-      })
-    },
-    computed: {
-      ...mapGetters({
-        competition: 'competition/competition',
-        user: 'user/user'
-      })
-    },
-    created: async function() {
-      //do something after creating vue instance
-      await this.getCompetition(this.$route.params.id)
-      await this.getCompetitionRounds(this.$route.params.id)
-      await this.getUserTeams(this.user.id)
-    }
-  }
+  },
+  computed: {
+    ...mapGetters({
+      competition: 'competition/competition',
+      user: 'user/user',
+    }),
+  },
+  created: async function () {
+    //do something after creating vue instance
+    await this.getCompetition(this.$route.params.id)
+    await this.getCompetitionRounds(this.$route.params.id)
+    await this.getUserTeams(this.user.id)
+  },
+}
 </script>
 <style scoped>
 .compTab:hover {
-  color: rgb(255, 255, 255)
+  color: rgb(255, 255, 255);
 }
 .nothing {
-  color: #187388
+  color: #187388;
 }
 </style>

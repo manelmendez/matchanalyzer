@@ -1,17 +1,8 @@
 <template>
-  <v-snackbar
-    v-model="show"
-    :bottom="true"
-    :left="true"
-    :color="color"
-  >
+  <v-snackbar v-model="show" :bottom="true" :left="true" :color="color">
     {{ text }}
     <template v-slot:action>
-      <v-btn
-        color="black"
-        text
-        @click="close"
-      >
+      <v-btn color="black" text @click="close">
         Close
       </v-btn>
     </template>
@@ -22,15 +13,13 @@ export default {
   props: {
     show: Boolean,
     text: String,
-    color: String
+    color: String,
   },
   methods: {
-    close() {      
+    close() {
       this.$store.commit('root/SNACKBAR_OFF')
-    }
-  }
+    },
+  },
 }
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>
