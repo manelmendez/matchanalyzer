@@ -8,7 +8,7 @@
               label
             >
               <v-avatar left>
-                <v-img v-if="team.avatar" :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" alt="avatar" :contain="true" height="40" width="40">
+                <v-img v-if="team.avatar" :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" alt="avatar" :contain="true" height="40" width="40" />
               </v-avatar>
               {{team.name}}
             </v-chip>
@@ -40,7 +40,7 @@
       >
         <template v-slot:item.avatar="{ item }">
           <v-row class="text-center">
-            <v-img :src="constants.ADDRESS+item.avatar" @error="item.avatar=constants.DEFAULT_PLAYER_URL" alt="avatar" :contain="true" height="40" width="40">
+            <v-img :src="constants.ADDRESS+item.avatar" @error="item.avatar=constants.DEFAULT_PLAYER_URL" alt="avatar" :contain="true" height="40" width="40" />
           </v-row>
         </template>
         <template v-slot:item.actions="{ item }">

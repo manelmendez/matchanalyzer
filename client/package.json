@@ -8,7 +8,8 @@
     "build": "parcel build ./src/index.html --no-minify",
     "docker": "cross-env DOCKER=true parcel build ./src/index.html --no-minify",
     "raspy": "cross-env RASPY=true parcel build ./src/index.html --no-minify",
-    "lint": "eslint ./src --fix"
+    "lint": "eslint ./src --fix",
+    "prettier": "prettier ./src --check"
   },
   "keywords": [
     "node",
@@ -48,6 +49,7 @@
     "lint-staged": "latest",
     "parcel-bundler": "latest",
     "prettier": "latest",
+    "sass": "^1.26.10",
     "vue-template-compiler": "latest"
   },
   "husky": {

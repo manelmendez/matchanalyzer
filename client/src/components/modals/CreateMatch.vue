@@ -14,7 +14,6 @@
                 return-object
                 label="Elige equipo local"
                 v-model="team"
-                v-on:change="checkTeam"
                 required
               ></v-select>
             </v-col>
@@ -37,7 +36,6 @@
                 return-object
                 label="Elige equipo visitante"
                 v-model="team2"
-                v-on:change="checkTeam"
                 required
               ></v-select>
             </v-col>
@@ -47,11 +45,9 @@
       <v-card-actions>
         <v-btn color="primary" @click.native="(type=='new')?confirm():edit()">Continue</v-btn>
         <v-btn text @click="close()">Cancel</v-btn>
-      <v-card-actions>
-      <CreateMatchDetails v-if="detailsModal" :show="detailsModal"></CreateMatchDetails>
+      </v-card-actions>
     </v-card>
   </v-dialog>
-  
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -75,22 +71,9 @@ export default {
       team: this.type == "new" ? "" : this.match.localTeam,
       team2: this.type == "new" ? "" : this.match.awayTeam,
       headline: this.type == "new" ? "Añadir Partido" : "Editar Partido",
-      detailsModal: false
     };
   },
   methods: {
-    checkTeam(team) {
-      // console.log(team);
-     
-      //   if (team.id == this.competition.myTeam.id) {
-      //     console.log("HOLA");
-          
-      //               this.detailsModal=false
-
-      //     this.detailsModal=true
-      //   }
-      
-    },
     close() {
       this.$emit("close");
     },

@@ -11,7 +11,7 @@ const findByMatch = async(id, userId) => {
 }
 
 const saveSubstitution = async(substitution) => {
-  const result = await con.query('INSERT INTO substitutions (playerIn, playerOut, minute, "matchId", "userId", matchpart) '+
+  const result = await con.query('INSERT INTO substitutions ("playerIn", "playerOut", minute, "matchId", "userId", matchpart) '+
   'VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
   substitution.playerIn, substitution.playerOut, substitution.minute, substitution.matchId, substitution.userId, substitution.matchpart)
   return result.rows[0]

@@ -19,6 +19,14 @@ export const competitionMutations = {
     let index = state.competitions.findIndex(item => item.id == competitionId);
     state.competitions.splice(index, 1);
   },
+  [types.ADD_TEAM_TO_COMPETITION] (state, team) {
+    let previousTeam = state.competition.teams.find(a => a.id === team.id);
+    if (previousTeam) {
+      Object.assign(previousTeam, team);
+    } else {
+      state.competition.teams.push(team)
+    }
+  },
 
   // ROUND
   [types.ADD_ROUND] (state, round) {
