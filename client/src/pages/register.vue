@@ -1,21 +1,28 @@
 <template>
   <v-content class="welcome-content">
     <v-container text-center>
-      <!-- LOGIN -->
-      <v-row class="login" wrap justify="center">
+      <!-- REGISTER -->
+      <v-row class="register" wrap justify="center">
         <v-col lg="6" md="6" sm="10" cols="12">
           <v-card class="elevation-0">
             <v-toolbar dark color="primary" class="elevation-0">
-              <v-toolbar-title>Iniciar sesión</v-toolbar-title>
+              <v-toolbar-title>Registrarse</v-toolbar-title>
               <v-spacer></v-spacer>
             </v-toolbar>
-            <v-form v-model="valid" ref="form" lazy-validation @submit.prevent>
-              <v-card-text>
+            <v-card-text>
+              <v-form v-model="valid" ref="form" lazy-validation>
                 <v-text-field
                   prepend-icon="person"
-                  ref="email"
+                  name="name"
+                  label="Nombre"
+                  type="text"
+                  v-model="name"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  prepend-icon="person"
+                  name="email"
                   label="Email"
-                  placeholder="Email"
                   type="text"
                   v-model="email"
                   :rules="emailRules"
@@ -23,32 +30,26 @@
                 ></v-text-field>
                 <v-text-field
                   prepend-icon="lock"
-                  ref="password"
+                  name="password"
                   label="Contraseña"
+                  autocomplete="new-password"
                   hint="At least 8 characters"
                   v-model="password"
                   min="8"
-                  :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                  :append-icon="e2 ? 'visibility' : 'visibility_off'"
                   @click:append="() => (e1 = !e1)"
                   :type="e1 ? 'password' : 'text'"
                   counter
                   :rules="passwordRules"
                   required
                 ></v-text-field>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <router-link class="info--text" style="padding-right:10px" to="register">Si aún no tienes cuenta</router-link>
-                <v-btn
-                  depressed
-                  color="var(--v-accent-darken1)"
-                  rounded
-                  type="submit"
-                  @click="submit"
-                  :disabled="!valid"
-                >Iniciar sesión</v-btn>
-              </v-card-actions>
-            </v-form>
+              </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <router-link class="info--text" style="padding-right:10px" to="login">Volver a Inicio de Sesión</router-link>
+              <v-btn depressed rounded color="info" @click="submit" :disabled="!valid2">Registrarse</v-btn>
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -61,7 +62,6 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      //LOGIN
       e1: true,
       valid: true,
       email: "",
@@ -76,7 +76,8 @@ export default {
         v => !!v || "Password is required",
         v => !(v.length < 8) || "At least 8 characters",
         v => !(v.length > 25) || "Maximum 25 characters"
-      ]
+      ],
+      name: ""
     };
   },
   methods: {
@@ -86,21 +87,25 @@ export default {
           username: this.email,
           password: this.password
         };
-        this.signIn(credentials)
-          .then(response => {
+        let body = {
+          name: this.name
+        };
+        this.signUp({body, credentials}).then(response => {
+          setTimeout(() => {
             let snackbar = {
               show: true,
               color: "success",
-              text: "Logueado correctamente"
+              text: response.data.message
             };
             this.$store.commit("root/SNACKBAR", snackbar);
             this.$router.push({
               name: "index" //si uso path: "/mainpage" el params (props) no funciona -- params: { user: response.data.user } --
             });
-          })
+          }, 2000);
+        })
       }
     },
-    ...mapActions("user", ["signIn"])
+    ...mapActions("user", ["signUp"])
   },
   events: {}
 };

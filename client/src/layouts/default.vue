@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <v-app-bar app fixed flat clipped-left collapse-on-scroll color="primary darken-1">
+    <v-app-bar app fixed flat clipped-left collapse-on-scroll color="primary darken-1" height="50px">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
       <v-toolbar-title @click="changeTheme" class="white--text" style="cursor:pointer">MatchAnalyzer</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -18,7 +18,7 @@
           <v-list-item class="text-center">
             <v-row class="justify-center">
               <v-col class="text-center">
-            <v-switch dense v-model="dark" inset color="white" label=""></v-switch>
+                <v-switch dense v-model="dark" inset color="white"></v-switch>
               </v-col>
             </v-row>
           </v-list-item>
@@ -79,6 +79,14 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Mis competicones</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item to='/planification'>
+          <v-list-item-action>
+            <v-icon>mdi-calendar-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Planificación</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -154,7 +162,7 @@ import constants from '../assets/constants/constants'
         }
       },
       checkMobile() {
-        console.log(this.$vuetify.breakpoint.name)
+        // console.log(this.$vuetify.breakpoint.name)
         switch (this.$vuetify.breakpoint.name) {
           case 'xs': return true
           case 'sm': return true

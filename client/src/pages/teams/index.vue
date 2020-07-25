@@ -8,7 +8,7 @@
         @click.stop="goTo(team.id)"
       >
         <v-list-item-avatar>
-          <v-img :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" :contain="true">
+          <v-img :src="constants.ADDRESS+team.avatar" @error="team.avatar=constants.DEFAULT_TEAM_URL" :contain="true" />
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{team.name}}</v-list-item-title>

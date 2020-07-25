@@ -36,14 +36,18 @@ export const addNoManagerTeam = ({commit}, body) => {
     throw err.response;
   });
 };
-export const uploadTeamImage = (formData) => {
+export const uploadTeamImage = ({commit}, formData) => {
   console.log("ACTION -- uploadTeamImage");
-  return axios.post('uploadImage', formData,{
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded"
+  }
+  return axios.post('uploadImage', formData, {headers:headers,
     onUploadProgress: progressEvent => {
       console.log("Progress: "+Math.round(progressEvent.loaded / progressEvent.total*100)+ '%');
     }
   })
   .then(response => {
+    commit(types.UPLOAD_IMAGE);
     return response;
   })
   .catch((err) => {
@@ -54,6 +58,7 @@ export const updateTeam = ({commit}, data) => {
   console.log("ACTION -- updateTeam");
   return axios.put('updateTeam/'+data.id, data.body).then(response => {
     commit(types.UPDATE_TEAM);
+    commit('competition/'+types.ADD_TEAM_TO_COMPETITION, response.data.team, { root: true });
     return response;
   }).catch((err) => {    
     throw err.response;

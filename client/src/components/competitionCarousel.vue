@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid v-if="competition">
+  <v-container fluid v-if="competition.teams">
     <v-row justify="center">
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">

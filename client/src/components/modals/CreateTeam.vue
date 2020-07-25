@@ -15,7 +15,7 @@
               <v-img v-else height="100px" :src="image" 
               @click="launchFilePicker" 
               @error="image=constants.DEFAULT_TEAM_URL"
-              contain>
+              contain />
             </v-col>
             <v-col cols="12" md="4">
               <v-text-field label="Nombre del equipo" v-model="name" required></v-text-field>
@@ -75,13 +75,14 @@ export default {
       this.image = URL.createObjectURL(event.target.files[0])
       this.file = event.target.files[0]
     },
-    createTeam() {
+    async createTeam() {
       if (this.myTeam) {
         if(this.file!=null){
           const fd = new FormData()
           fd.append('image', this.file, this.file.name)
-          this.uploadTeamImage(fd).then((response) => {
-            console.log(response);
+          console.log(fd);
+          try {
+            const response = await this.uploadTeamImage(fd)
             let body = {
                 season: this.season,
                 name: this.name,
@@ -95,7 +96,9 @@ export default {
                 this.$emit("confirm")
               }
             })
-          })
+          } catch(err) {
+            console.log(err);
+          }
         }
         else {
           let body = {

@@ -34,9 +34,9 @@ axios.interceptors.response.use(function (response) {
     if (error.response.status >= 400) {
       snackbar.text = error.response.data.message;
       store.commit("root/SNACKBAR", snackbar);
-      if (error.response.status == 404) {
-        router.push({name: "error"});
-      }
+      // if (error.response.status == 404) {
+      //   router.push({name: "error"});
+      // }
     }
     else {
       snackbar.text = "Error en la petición";

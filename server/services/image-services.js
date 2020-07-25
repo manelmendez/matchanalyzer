@@ -8,12 +8,24 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + '-' + file.originalname);
   }
 });
+
+const imageFilter = (req, file, cb) => {
+  // accept image only
+  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+      return cb(new Error('Only image files are allowed!'), false);
+  }
+  cb(null, true);
+};
+
 const upload = multer({storage: storage, fileFilter: imageFilter}).single('image');
 
-async function uploadImage (req, res) {
+const uploadImage = async(req, res) => {
+  console.log("Uploading image")
+  console.log(req.body);
   try {
     await upload(req, res, function (err) {
       if (err) {
+        console.log(err);
         return res.status(500).send('Fail!');
       } else {
         return res.status(200).send(req.file.path);
@@ -22,18 +34,12 @@ async function uploadImage (req, res) {
   }
   catch (err) {
     res.status(500).send({
-      error: 'Something went wrong'
+      error: 'Something went wrong uploading image'
     });
   }
 }
 
-function imageFilter (req, file, cb) {
-    // accept image only
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-        return cb(new Error('Only image files are allowed!'), false);
-    }
-    cb(null, true);
-};
+
 export default {
   uploadImage
 }

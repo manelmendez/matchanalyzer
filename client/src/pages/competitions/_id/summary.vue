@@ -56,7 +56,7 @@
                     <v-avatar tile size=36>
                       <v-img :src="constants.ADDRESS+topScorers[i-1].avatar"
                         @error="topScorers[i-1].avatar=constants.DEFAULT_TEAM_URL"
-                        contain>
+                        contain />
                     </v-avatar> {{topScorers[i-1].name}}</v-col>
                   <v-col align-self="center">{{ topScorers[i-1].stats.goals }} <v-icon class="white--text">mdi-soccer</v-icon></v-col>
                 </v-row>
@@ -86,7 +86,7 @@
                     <v-avatar tile size=36>
                       <v-img :src="constants.ADDRESS+mostTrashed[i-1].avatar"
                         @error="mostTrashed[i-1].avatar=constants.DEFAULT_TEAM_URL"
-                        contain>
+                        contain />
                     </v-avatar> {{mostTrashed[i-1].name}}</v-col>
                   <v-col>{{mostTrashed[i-1].stats.againstGoals}} <v-icon class="white--text">mdi-soccer</v-icon></v-col>
                 </v-row>
@@ -116,7 +116,7 @@
                     <v-avatar tile size=36>
                       <v-img :src="constants.ADDRESS+topDifference[i-1].avatar"
                         @error="topDifference[i-1].avatar=constants.DEFAULT_TEAM_URL"
-                        contain>
+                        contain />
                     </v-avatar> {{topDifference[i-1].name}}</v-col>
                   <v-col>{{ topDifference[i-1].stats.goalDif }} <v-icon class="white--text">mdi-soccer</v-icon></v-col>
                 </v-row>
@@ -285,7 +285,7 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
       async addMyTeam(){
         this.team.competition = Number(this.$route.params.id)
         let body = {
-          team: {competition: this.team.competition}
+          team: this.team
         }
         let data = {
           body: body,

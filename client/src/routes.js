@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import login from './pages/login.vue';
+import register from './pages/register.vue';
 import index from './pages/index.vue';
 import error404 from './pages/error/404.vue';
 import error500 from './pages/error/500.vue';
@@ -12,6 +13,7 @@ import results from './pages/competitions/_id/results.vue';
 import match from './pages/match/_id.vue';
 import classification from './pages/competitions/_id/classification.vue';
 import competitionStats from './pages/teams/_id/competitionstats.vue';
+import planification from './pages/planification/index.vue';
 
 import VueRouter from 'vue-router';
 import axios from 'axios';
@@ -25,6 +27,12 @@ const router = new VueRouter({
       path: '/login',
       name: 'login',
       component: login,
+      meta: { requiresAuth: false, onceLogged: true, layout: 'empty' }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: register,
       meta: { requiresAuth: false, onceLogged: true, layout: 'empty' }
     },
     {
@@ -87,6 +95,12 @@ const router = new VueRouter({
       path: '/competitions/:id/match/:matchId',
       name: 'match-id',
       component: match,
+      meta: { requiresAuth: true, layout: 'default' }
+    },
+    {
+      path: '/planification',
+      name: 'planification',
+      component: planification,
       meta: { requiresAuth: true, layout: 'default' }
     },
     {
