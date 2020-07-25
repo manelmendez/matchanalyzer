@@ -32,9 +32,9 @@
         <v-badge
           v-if="
             (item.localTeam.id == team.id &&
-              item.localTeamGoals > item.awayTeamGoals) ||
+              Number(item.localTeamGoals) > Number(item.awayTeamGoals)) ||
             (item.awayTeam.id == team.id &&
-              item.awayTeamGoals > item.localTeamGoals)
+              Number(item.awayTeamGoals) > Number(item.localTeamGoals))
           "
           width="20px"
           height="20px"
@@ -44,7 +44,7 @@
           tile
         ></v-badge>
         <v-badge
-          v-if="item.localTeamGoals == item.awayTeamGoals"
+          v-if="Number(item.localTeamGoals) == Number(item.awayTeamGoals)"
           width="20px"
           height="20px"
           color="warning"
@@ -55,9 +55,9 @@
         <v-badge
           v-if="
             (item.localTeam.id == team.id &&
-              item.localTeamGoals < item.awayTeamGoals) ||
+              Number(item.localTeamGoals) < Number(item.awayTeamGoals)) ||
             (item.awayTeam.id == team.id &&
-              item.awayTeamGoals < item.localTeamGoals)
+              Number(item.awayTeamGoals) < Number(item.localTeamGoals))
           "
           width="20px"
           height="20px"

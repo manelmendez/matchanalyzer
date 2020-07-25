@@ -449,24 +449,29 @@ export const competitionModule = {
                 if (matches[x].localTeam.id == teams[i].id) {
                   teamStats.gamesPlayed += 1
                   teamStats.homeGamesPlayed += 1
-                  teamStats.goals += matches[x].localTeamGoals
-                  teamStats.homeGoals += matches[x].localTeamGoals
-                  teamStats.againstGoals += matches[x].awayTeamGoals
-                  teamStats.homeAgainstGoals += matches[x].awayTeamGoals
-                  if (matches[x].localTeamGoals > matches[x].awayTeamGoals) {
+                  teamStats.goals += Number(matches[x].localTeamGoals)
+                  teamStats.homeGoals += Number(matches[x].localTeamGoals)
+                  teamStats.againstGoals += Number(matches[x].awayTeamGoals)
+                  teamStats.homeAgainstGoals += Number(matches[x].awayTeamGoals)
+                  if (
+                    Number(matches[x].localTeamGoals) >
+                    Number(matches[x].awayTeamGoals)
+                  ) {
                     teamStats.homePoints += 3
                     teamStats.points += 3
                     teamStats.wins += 1
                     teamStats.homeWins += 1
                   } else if (
-                    matches[x].localTeamGoals == matches[x].awayTeamGoals
+                    Number(matches[x].localTeamGoals) ==
+                    Number(matches[x].awayTeamGoals)
                   ) {
                     teamStats.homePoints += 1
                     teamStats.points += 1
                     teamStats.draws += 1
                     teamStats.homeDraws += 1
                   } else if (
-                    matches[x].localTeamGoals < matches[x].awayTeamGoals
+                    Number(matches[x].localTeamGoals) <
+                    Number(matches[x].awayTeamGoals)
                   ) {
                     teamStats.homePoints += 0
                     teamStats.points += 0
@@ -477,24 +482,31 @@ export const competitionModule = {
                 } else if (matches[x].awayTeam.id == teams[i].id) {
                   teamStats.gamesPlayed += 1
                   teamStats.awayGamesPlayed += 1
-                  teamStats.goals += matches[x].awayTeamGoals
-                  teamStats.awayGoals += matches[x].awayTeamGoals
-                  teamStats.againstGoals += matches[x].localTeamGoals
-                  teamStats.awayAgainstGoals += matches[x].localTeamGoals
-                  if (matches[x].awayTeamGoals > matches[x].localTeamGoals) {
+                  teamStats.goals += Number(matches[x].awayTeamGoals)
+                  teamStats.awayGoals += Number(matches[x].awayTeamGoals)
+                  teamStats.againstGoals += Number(matches[x].localTeamGoals)
+                  teamStats.awayAgainstGoals += Number(
+                    matches[x].localTeamGoals
+                  )
+                  if (
+                    Number(matches[x].awayTeamGoals) >
+                    Number(matches[x].localTeamGoals)
+                  ) {
                     teamStats.awayPoints += 3
                     teamStats.points += 3
                     teamStats.wins += 1
                     teamStats.awayWins += 1
                   } else if (
-                    matches[x].awayTeamGoals == matches[x].localTeamGoals
+                    Number(matches[x].awayTeamGoals) ==
+                    Number(matches[x].localTeamGoals)
                   ) {
                     teamStats.awayPoints += 1
                     teamStats.points += 1
                     teamStats.draws += 1
                     teamStats.awayDraws += 1
                   } else if (
-                    matches[x].awayTeamGoals < matches[x].localTeamGoals
+                    Number(matches[x].awayTeamGoals) <
+                    Number(matches[x].localTeamGoals)
                   ) {
                     teamStats.awayPoints += 0
                     teamStats.points += 0
