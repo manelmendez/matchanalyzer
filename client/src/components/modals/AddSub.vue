@@ -4,37 +4,54 @@
       <v-card-title class="headline">Añadir Sustitución</v-card-title>
       <v-card-text>
         <v-row dense>
-          <v-col cols=12>
-            <v-select 
+          <v-col cols="12">
+            <v-select
               dense
               outlined
-              shaped  
+              shaped
               v-model="playerOut"
               :items="players"
               item-text="name"
               return-object
-              label="Sale"></v-select>
+              label="Sale"
+            ></v-select>
           </v-col>
-          <v-col cols=12>
-            <v-select 
+          <v-col cols="12">
+            <v-select
               dense
               outlined
-              shaped  
+              shaped
               v-model="playerIn"
               :items="players"
               item-text="name"
               return-object
-              label="Entra"></v-select>
+              label="Entra"
+            ></v-select>
           </v-col>
-          <v-col cols=12>
-            <v-text-field dense outlined shaped label="Minuto" :max="duration" class="centered-input ml-2" type="number" v-model="minute" required></v-text-field>
+          <v-col cols="12">
+            <v-text-field
+              dense
+              outlined
+              shaped
+              label="Minuto"
+              :max="duration"
+              class="centered-input ml-2"
+              type="number"
+              v-model="minute"
+              required
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn text @click="close">Cancelar</v-btn>
-        <v-btn color="primary" :disabled="playerIn==null || playerOut==null || minute==null" @click="add">Añadir</v-btn>
+        <v-btn
+          color="primary"
+          :disabled="playerIn == null || playerOut == null || minute == null"
+          @click="add"
+          >Añadir</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -46,35 +63,37 @@ export default {
     show: {
       type: Boolean,
       required: true,
-      default: false
+      default: false,
     },
     players: {
       type: Array,
-      required: true
+      required: true,
     },
     duration: {
       type: Number,
-      required: true
+      required: true,
     },
   },
   data() {
     return {
       playerIn: null,
       playerOut: null,
-      minute: null
+      minute: null,
     }
   },
   methods: {
     close() {
       this.$emit('close')
     },
-    add() {      
-      this.$emit('confirm', {'playerIn':this.playerIn.id, 'playerOut':this.playerOut.id, 'minute':this.minute})
-    }
-  }
+    add() {
+      this.$emit('confirm', {
+        playerIn: this.playerIn.id,
+        playerOut: this.playerOut.id,
+        minute: this.minute,
+      })
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

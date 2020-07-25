@@ -1,24 +1,40 @@
 import con from '../config/postgres.js'
 
-const findById = async(id, userId) => {
-  const result = await con.query('SELECT * FROM cards WHERE id = $1 AND "userId" = $2', [id, userId])
+const findById = async (id, userId) => {
+  const result = await con.query(
+    'SELECT * FROM cards WHERE id = $1 AND "userId" = $2',
+    [id, userId]
+  )
   return result.rows[0]
 }
 
-const findByMatch = async(id, userId) => {
-  const result = await con.query('SELECT * FROM cards WHERE "matchId" = $1 AND "userId" = $2', [id, userId])
+const findByMatch = async (id, userId) => {
+  const result = await con.query(
+    'SELECT * FROM cards WHERE "matchId" = $1 AND "userId" = $2',
+    [id, userId]
+  )
   return result.rows
 }
 
-const saveCard = async(card) => {
-  const result = await con.query('INSERT INTO cards(minute, type, player, "matchId", "userId", matchpart) '+
-  'VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
-  card.minute, card.type, card.player, card.matchId, card.userId, card.matchpart)
+const saveCard = async (card) => {
+  const result = await con.query(
+    'INSERT INTO cards(minute, type, player, "matchId", "userId", matchpart) ' +
+      'VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
+    card.minute,
+    card.type,
+    card.player,
+    card.matchId,
+    card.userId,
+    card.matchpart
+  )
   return result.rows[0]
 }
 
-const deleteCard = async(id, userId) => {
-  const result = await con.query('DELETE FROM cards WHERE id = $1 AND "userId"=$2 RETURNING *', [id, userId])
+const deleteCard = async (id, userId) => {
+  const result = await con.query(
+    'DELETE FROM cards WHERE id = $1 AND "userId"=$2 RETURNING *',
+    [id, userId]
+  )
   return result.rows[0].id
 }
 
@@ -27,4 +43,4 @@ export default {
   findByMatch,
   saveCard,
   deleteCard
-};
+}

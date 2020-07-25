@@ -1,7 +1,7 @@
-import colors from 'vuetify/lib/util/colors';
+import colors from 'vuetify/lib/util/colors'
 
 export default {
-  primary:'#0b5a6b',
+  primary: '#0b5a6b',
   secondary: '#FFFF00',
   accent: '#D81B60',
   background: '#121212', //#303030
@@ -9,5 +9,5 @@ export default {
   info: colors.blue,
   success: colors.green,
   warning: colors.orange,
-  item: colors.grey
-};
+  item: colors.grey,
+}

@@ -8,17 +8,35 @@
         <v-container grid-list-md>
           <v-row>
             <v-col cols="12" md="4" class="text-xs-center">
-              <input type="file" ref="file" @change="onFileChanged" style="display:none">
-              <v-avatar v-if="!image" size="100px" class="uploadPhoto" @click="launchFilePicker">
+              <input
+                type="file"
+                ref="file"
+                @change="onFileChanged"
+                style="display: none;"
+              />
+              <v-avatar
+                v-if="!image"
+                size="100px"
+                class="uploadPhoto"
+                @click="launchFilePicker"
+              >
                 <v-icon>add_a_photo</v-icon>
               </v-avatar>
-              <v-img v-else height="100px" :src="image" 
-              @click="launchFilePicker" 
-              @error="image=constants.DEFAULT_TEAM_URL"
-              contain />
+              <v-img
+                v-else
+                height="100px"
+                :src="image"
+                @click="launchFilePicker"
+                @error="image = constants.DEFAULT_TEAM_URL"
+                contain
+              />
             </v-col>
             <v-col cols="12" md="4">
-              <v-text-field label="Nombre del equipo" v-model="name" required></v-text-field>
+              <v-text-field
+                label="Nombre del equipo"
+                v-model="name"
+                required
+              ></v-text-field>
             </v-col>
             <v-col cols="12" md="4">
               <v-select
@@ -32,8 +50,12 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-      <v-btn color="primary" @click.native="(team) ? editCompetitionTeam() : createTeam()">Continue</v-btn>
-      <v-btn text @click.native="close">Cancel</v-btn>
+        <v-btn
+          color="primary"
+          @click.native="team ? editCompetitionTeam() : createTeam()"
+          >Continue</v-btn
+        >
+        <v-btn text @click.native="close">Cancel</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -42,117 +64,107 @@
 import { mapActions, mapGetters } from 'vuex'
 import constants from '../../assets/constants/constants'
 export default {
-  props:{
+  props: {
     show: Boolean,
     team: Object,
     myTeam: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      constants:constants,
-      image: (this.team) ? constants.ADDRESS+this.team.avatar : null,
+      constants: constants,
+      image: this.team ? constants.ADDRESS + this.team.avatar : null,
       file: null,
-      temporada: [
-        "14/15",
-        "15/16",
-        "16/17",
-        "17/18",
-        "18/19",
-        "19/20"
-      ],
-      name: (this.team) ? this.team.name : '',
-      season: (this.team) ? this.team.season : ''
+      temporada: ['14/15', '15/16', '16/17', '17/18', '18/19', '19/20'],
+      name: this.team ? this.team.name : '',
+      season: this.team ? this.team.season : '',
     }
   },
   methods: {
-    launchFilePicker(){
-      this.$refs.file.click();
+    launchFilePicker() {
+      this.$refs.file.click()
     },
-    onFileChanged (event) {
+    onFileChanged(event) {
       this.image = URL.createObjectURL(event.target.files[0])
       this.file = event.target.files[0]
     },
     async createTeam() {
       if (this.myTeam) {
-        if(this.file!=null){
+        if (this.file != null) {
           const fd = new FormData()
           fd.append('image', this.file, this.file.name)
-          console.log(fd);
+          console.log(fd)
           try {
             const response = await this.uploadTeamImage(fd)
             let body = {
-                season: this.season,
-                name: this.name,
-                manager: this.user.id
+              season: this.season,
+              name: this.name,
+              manager: this.user.id,
             }
             if (response.status == 200) {
               body.avatar = response.data
             }
             this.addTeam(body).then((response) => {
-              if(response.status === 200) {
-                this.$emit("confirm")
+              if (response.status === 200) {
+                this.$emit('confirm')
               }
             })
-          } catch(err) {
-            console.log(err);
+          } catch (err) {
+            console.log(err)
           }
-        }
-        else {
+        } else {
           let body = {
-              season: this.season,
-              name: this.name,
-              avatar: null,
-              manager: this.user.id
+            season: this.season,
+            name: this.name,
+            avatar: null,
+            manager: this.user.id,
           }
           this.addTeam(body).then((response) => {
-            if(response.status === 200) {
-              this.$emit("confirm")
+            if (response.status === 200) {
+              this.$emit('confirm')
             }
           })
         }
-      }
-      else {
-        if(this.file!=null){
+      } else {
+        if (this.file != null) {
           const fd = new FormData()
           fd.append('image', this.file, this.file.name)
           this.uploadTeamImage(fd).then((response) => {
-            console.log(response);
+            console.log(response)
             let body = {
               season: this.season,
               name: this.name,
               avatar: null,
-              competition: this.competition.id
+              competition: this.competition.id,
             }
             if (response.status == 200) {
               body.avatar = response.data
             }
             this.addNoManagerTeam(body).then((response) => {
-              if(response.status === 200) {
-                this.$emit("confirm")
+              if (response.status === 200) {
+                this.$emit('confirm')
               }
             })
           })
-        }
-        else {
+        } else {
           let body = {
             season: this.season,
             name: this.name,
             avatar: null,
-            competition: this.competition.id
+            competition: this.competition.id,
           }
           this.addNoManagerTeam(body).then((response) => {
-            if(response.status === 200) {
-              this.$emit("confirm")
+            if (response.status === 200) {
+              this.$emit('confirm')
             }
           })
         }
       }
     },
     editCompetitionTeam() {
-      if(this.file!=null){
+      if (this.file != null) {
         const fd = new FormData()
         fd.append('image', this.file, this.file.name)
         this.uploadTeamImage(fd).then((response) => {
@@ -160,7 +172,7 @@ export default {
             team: {
               season: this.season,
               name: this.name,
-              competition: this.team.competition
+              competition: this.team.competition,
             },
           }
           if (response.status == 200) {
@@ -168,57 +180,55 @@ export default {
           }
           let data = {
             body: body,
-            id: this.team.id
+            id: this.team.id,
           }
           this.updateTeam(data).then((response) => {
-            if(response.status === 200) {
-              this.$emit("confirm")
+            if (response.status === 200) {
+              this.$emit('confirm')
             }
           })
         })
-      }
-      else {
+      } else {
         let body = {
           team: {
             season: this.season,
             name: this.name,
-            competition: this.team.competition
+            competition: this.team.competition,
           },
         }
         let data = {
           body: body,
-          id: this.team.id
+          id: this.team.id,
         }
-        this.updateTeam(data).then((response) => {
-          console.log(response);
-          if(response.status === 200) {
-            this.$emit("confirm")
-          }
-        }).catch((err)=>{
-          console.log(err)
-        })
+        this.updateTeam(data)
+          .then((response) => {
+            console.log(response)
+            if (response.status === 200) {
+              this.$emit('confirm')
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     },
-    close(){
-      this.$emit("close")
+    close() {
+      this.$emit('close')
     },
-    ...mapActions("team",[
+    ...mapActions('team', [
       'getUserTeams',
       'addTeam',
       'addNoManagerTeam',
       'uploadTeamImage',
       'updateTeam',
-    ])
+    ]),
   },
-  computed:{
+  computed: {
     ...mapGetters({
       competition: 'competition/competition',
-      user: 'user/user'
-    })
-  }
-
+      user: 'user/user',
+    }),
+  },
 }
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

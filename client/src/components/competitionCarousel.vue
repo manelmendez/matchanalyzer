@@ -3,35 +3,41 @@
     <v-row justify="center">
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center">
+          <v-card-title style="justify-content: center;">
             Líder
           </v-card-title>
           <v-card-text>
-            <v-img 
+            <v-img
               justify="center"
-              :src="constants.ADDRESS+competition.teams[0].avatar"
-              @error="competition.teams[0].avatar=constants.DEFAULT_TEAM_URL"
+              :src="constants.ADDRESS + competition.teams[0].avatar"
+              @error="competition.teams[0].avatar = constants.DEFAULT_TEAM_URL"
               aspect-ratio="2"
               contain
             ></v-img>
-            {{competition.teams[0].name}}
+            {{ competition.teams[0].name }}
           </v-card-text>
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center">
+          <v-card-title style="justify-content: center;">
             Último
           </v-card-title>
-          <v-card-text>  
-            <v-img 
+          <v-card-text>
+            <v-img
               justify="center"
-              :src="constants.ADDRESS+competition.teams[competition.teams.length -1].avatar"
-              @error="competition.teams[competition.teams.length -1].avatar=constants.DEFAULT_TEAM_URL"
+              :src="
+                constants.ADDRESS +
+                competition.teams[competition.teams.length - 1].avatar
+              "
+              @error="
+                competition.teams[competition.teams.length - 1].avatar =
+                  constants.DEFAULT_TEAM_URL
+              "
               aspect-ratio="2"
               contain
             ></v-img>
-            {{competition.teams[competition.teams.length -1].name}}
+            {{ competition.teams[competition.teams.length - 1].name }}
           </v-card-text>
         </v-card>
       </v-col>
@@ -41,26 +47,25 @@
             Total de goles
           </v-card-title>
           <v-card-text>
-              <p style="font-size: 40px">{{totalGoals}}</p>
-              <v-icon x-large size="1000px">mdi-soccer
-              </v-icon>
+            <p style="font-size: 40px;">{{ totalGoals }}</p>
+            <v-icon x-large size="1000px">mdi-soccer </v-icon>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center">
+          <v-card-title style="justify-content: center;">
             Año
           </v-card-title>
           <v-card-text>
-              <p style="font-size: 40px">{{competition.season}}</p>
+            <p style="font-size: 40px;">{{ competition.season }}</p>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
-  <v-container fluid v-else style="height:100%">
-    <v-row style="height:100%">
+  <v-container fluid v-else style="height: 100%;">
+    <v-row style="height: 100%;">
       <v-col align-self="center" class="text-center">No hay datos</v-col>
     </v-row>
   </v-container>
@@ -71,11 +76,11 @@ import constants from '../assets/constants/constants'
 
 export default {
   props: {
-    competition: Object
+    competition: Object,
   },
   data() {
     return {
-      constants: constants
+      constants: constants,
     }
   },
   computed: {
@@ -85,11 +90,9 @@ export default {
         goals += this.competition.teams[i].stats.goals
       }
       return goals
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

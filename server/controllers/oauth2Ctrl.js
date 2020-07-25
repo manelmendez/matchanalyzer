@@ -70,7 +70,6 @@
 // 	verify().catch(console.error);
 // }
 
-
 // module.exports = {
 //   verifyGoogleToken
 // }

@@ -1,23 +1,23 @@
-import { userMutations } from '../mutations/userMutations';
-import * as userActions from '../actions/userActions';
+import { userMutations } from '../mutations/userMutations'
+import * as userActions from '../actions/userActions'
 
 export const userModule = {
   namespaced: true,
   state: {
-    user: {}
+    user: {},
   },
   getters: {
-    user: state => {
-      return state.user;
+    user: (state) => {
+      return state.user
     },
-    isLogged: state => {
-      return state.user.isLogged;
+    isLogged: (state) => {
+      return state.user.isLogged
     },
   },
   mutations: {
-    ...userMutations
+    ...userMutations,
   },
   actions: {
-    ...userActions
-  }
-};
+    ...userActions,
+  },
+}

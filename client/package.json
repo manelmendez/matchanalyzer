@@ -8,7 +8,7 @@
     "build": "parcel build ./src/index.html --no-minify",
     "docker": "cross-env DOCKER=true parcel build ./src/index.html --no-minify",
     "raspy": "cross-env RASPY=true parcel build ./src/index.html --no-minify",
-    "lint": "eslint ./src --fix",
+    "lint": "eslint ./src --fix --ext .js,.vue",
     "prettier": "prettier ./src --check"
   },
   "keywords": [
@@ -45,6 +45,7 @@
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "eslint-plugin-prettier": "latest",
+    "eslint-plugin-vue": "^6.2.2",
     "husky": "latest",
     "lint-staged": "latest",
     "parcel-bundler": "latest",

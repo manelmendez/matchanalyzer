@@ -13,16 +13,29 @@
       class="elevation-1"
     >
       <template v-slot:item.equipos="{ item }">
-        <router-link :class="item.localTeam.id==team.id ? 'team':'rival'" :to="'/teams/'+item.localTeam.id+'/competitionstats'">{{item.localTeam.name}}</router-link>
-         - 
-        <router-link :class="item.awayTeam.id==team.id ? 'team':'rival'" :to="'/teams/'+item.awayTeam.id+'/competitionstats'">{{item.awayTeam.name}}</router-link>
+        <router-link
+          :class="item.localTeam.id == team.id ? 'team' : 'rival'"
+          :to="'/teams/' + item.localTeam.id + '/competitionstats'"
+          >{{ item.localTeam.name }}</router-link
+        >
+        -
+        <router-link
+          :class="item.awayTeam.id == team.id ? 'team' : 'rival'"
+          :to="'/teams/' + item.awayTeam.id + '/competitionstats'"
+          >{{ item.awayTeam.name }}</router-link
+        >
       </template>
       <template v-slot:item.resultados="{ item }">
-        {{item.localTeamGoals}} - {{item.awayTeamGoals}}
+        {{ item.localTeamGoals }} - {{ item.awayTeamGoals }}
       </template>
       <template v-slot:item.badge="{ item }">
         <v-badge
-          v-if="(item.localTeam.id == team.id && item.localTeamGoals > item.awayTeamGoals) || (item.awayTeam.id == team.id && item.awayTeamGoals > item.localTeamGoals)"
+          v-if="
+            (item.localTeam.id == team.id &&
+              item.localTeamGoals > item.awayTeamGoals) ||
+            (item.awayTeam.id == team.id &&
+              item.awayTeamGoals > item.localTeamGoals)
+          "
           width="20px"
           height="20px"
           color="success"
@@ -40,7 +53,12 @@
           tile
         ></v-badge>
         <v-badge
-          v-if="(item.localTeam.id == team.id && item.localTeamGoals < item.awayTeamGoals) || (item.awayTeam.id == team.id && item.awayTeamGoals < item.localTeamGoals)"
+          v-if="
+            (item.localTeam.id == team.id &&
+              item.localTeamGoals < item.awayTeamGoals) ||
+            (item.awayTeam.id == team.id &&
+              item.awayTeamGoals < item.localTeamGoals)
+          "
           width="20px"
           height="20px"
           color="error"
@@ -57,7 +75,7 @@
 export default {
   props: {
     team: Object,
-    rounds: Array
+    rounds: Array,
   },
   data() {
     return {
@@ -65,8 +83,8 @@ export default {
         { text: 'Jornada', value: 'roundName' },
         { text: 'Equipos', value: 'equipos' },
         { text: 'Resultado', value: 'resultados' },
-        { text: 'Etiqueta', value: 'badge' }
-      ]
+        { text: 'Etiqueta', value: 'badge' },
+      ],
     }
   },
   computed: {
@@ -76,26 +94,29 @@ export default {
         for (let j = 0; j < this.rounds[i].matches.length; j++) {
           let match = this.rounds[i].matches[j]
           match.roundName = this.rounds[i].name
-          if (match.localTeam.id == this.team.id || match.awayTeam.id == this.team.id) {
+          if (
+            match.localTeam.id == this.team.id ||
+            match.awayTeam.id == this.team.id
+          ) {
             matches.push(match)
           }
         }
       }
       return matches
     },
-  }
+  },
 }
 </script>
 
 <style scoped>
 tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, .1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .rival {
   text-decoration: none;
 }
 .team {
   text-decoration: none;
-  color:  var(--v-primary-lighten2) !important;
+  color: var(--v-primary-lighten2) !important;
 }
 </style>
