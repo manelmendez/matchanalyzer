@@ -7,19 +7,20 @@
       grow
       icons-and-text
       color="white"
+      height="50px"
     >
       <v-tabs-slider color="secondary"></v-tabs-slider>
       <v-tab class="compTab" to="summary">
         Resumen
-        <v-icon>mdi-chart-line</v-icon>
+        <v-icon size="20px">mdi-chart-line</v-icon>
       </v-tab>
       <v-tab class="compTab" to="results">
         Resultados
-        <v-icon>mdi-format-list-checkbox</v-icon>
+        <v-icon size="20px">mdi-format-list-checkbox</v-icon>
       </v-tab>
       <v-tab class="compTab" to="rankings">
         Clasificación
-        <v-icon>mdi-trophy-outline</v-icon>
+        <v-icon size="20px">mdi-trophy-outline</v-icon>
       </v-tab>
     </v-tabs>
     <router-view></router-view>
@@ -57,6 +58,9 @@ export default {
 }
 </script>
 <style scoped>
+.compTab {
+  font-size: 75%;
+}
 .compTab:hover {
   color: rgb(255, 255, 255);
 }

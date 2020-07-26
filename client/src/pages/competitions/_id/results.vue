@@ -51,27 +51,35 @@
               </v-row>
             </v-col>
             <v-col md="3">
-              <v-btn
-                small
-                rounded
-                color="blue-grey"
-                class="white--text resultBtn"
-                @click="createRound()"
-              >
-                Nueva Jornada
-                <v-icon right dark>add</v-icon>
-              </v-btn>
-              <v-btn
-                small
-                v-if="round.id == rounds[rounds.length - 1].id"
-                rounded
-                color="error"
-                class="white--text resultBtn"
-                @click.stop="deleteDialog = !deleteDialog"
-              >
-                Borrar Jornada
-                <v-icon right dark>delete</v-icon>
-              </v-btn>
+              <v-row>
+                <v-col>
+                  <v-btn
+                    small
+                    rounded
+                    color="blue-grey"
+                    class="white--text resultBtn"
+                    @click="createRound()"
+                  >
+                    Nueva Jornada
+                    <v-icon right dark>add</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-btn
+                    small
+                    v-if="round.id == rounds[rounds.length - 1].id"
+                    rounded
+                    color="error"
+                    class="white--text resultBtn"
+                    @click.stop="deleteDialog = !deleteDialog"
+                  >
+                    Borrar Jornada
+                    <v-icon right dark>delete</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
         </v-card-title>
@@ -80,14 +88,12 @@
             Aún no has añadido partidos en esta jornada
           </v-col>
           <v-col v-else>
-            <v-container>
               <roundMatch
                 v-for="match in matches"
                 :key="match.id"
                 :match="match"
                 @loading="loading = !loading"
               ></roundMatch>
-            </v-container>
           </v-col>
           <br />
           <v-btn

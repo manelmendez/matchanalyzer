@@ -1,66 +1,53 @@
 <template>
-  <v-row justify-center>
-    <v-col cols="12" sm="5" md="4">
-      <v-card
-        class="match elevation-2"
-        @click="
-          $router.push('/teams/' + match.localTeam.id + '/competitionstats')
-        "
-      >
-        <v-row
-          align="center"
-          justify="center"
-          :class="resultClass(match.localTeamGoals, match.awayTeamGoals)"
-        >
-          <v-col>
-            <v-img
-              :src="constants.ADDRESS + match.localTeam.avatar"
-              @error="match.localTeam.avatar = constants.DEFAULT_TEAM_URL"
-              aspect-ratio="10"
-              contain
-            ></v-img>
-            {{ match.localTeam.name }}
-          </v-col>
-        </v-row>
+  <v-row justify="center" align="center">
+    <v-col class="pt-1 pb-1" cols="12" sm="5" md="4">
+      <v-card :color="resultClass(match.localTeamGoals, match.awayTeamGoals)" outlined>
+        <v-card-actions>
+          <v-list-item class="grow">
+            <v-list-item-avatar tile>
+              <v-img
+                :src="constants.ADDRESS + match.localTeam.avatar"
+                @error="match.localTeam.avatar = constants.DEFAULT_TEAM_URL"
+                aspect-ratio="10"
+                contain
+              ></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>{{ match.localTeam.name }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card-actions>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="2" md="2">
-      <v-card class="match elevation-2">
-        <v-row align="center" justify="center" class="result"
-          ><v-col style="font-size: 25px;"
-            >{{ match.localTeamGoals }} - {{ match.awayTeamGoals }}</v-col
-          ></v-row
-        >
+    <v-col class="pt-1 pb-1" cols="12" sm="2" md="2">
+      <v-card color="rgba(199, 199, 199, 0.55)" outlined>
+        <v-card-text class="result">
+          {{ match.localTeamGoals }} - {{ match.awayTeamGoals }}
+        </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="5" md="4">
-      <v-card
-        class="match elevation-2"
-        @click="
-          $router.push('/teams/' + match.awayTeam.id + '/competitionstats')
-        "
-      >
-        <v-row
-          align="center"
-          justify="center"
-          :class="resultClass(match.awayTeamGoals, match.localTeamGoals)"
-        >
-          <v-col>
-            <v-img
-              justify="center"
-              :src="constants.ADDRESS + match.awayTeam.avatar"
-              @error="match.awayTeam.avatar = constants.DEFAULT_TEAM_URL"
-              aspect-ratio="10"
-              contain
-            ></v-img
-            >{{ match.awayTeam.name }}
-          </v-col>
-        </v-row>
+    <v-col class="pt-1 pb-1" cols="12" sm="5" md="4">
+      <v-card :color="resultClass(match.awayTeamGoals, match.localTeamGoals)" outlined>
+        <v-card-actions>
+          <v-list-item class="grow">
+            <v-list-item-avatar tile>
+              <v-img
+                :src="constants.ADDRESS + match.awayTeam.avatar"
+                @error="match.awayTeam.avatar = constants.DEFAULT_TEAM_URL"
+                aspect-ratio="10"
+                contain
+              ></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>{{ match.awayTeam.name }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card-actions>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="12" md="2">
-      <v-card class="match-actions elevation-2">
-        <v-card-text class="text-center">
+    <v-col class="pt-1 pb-1" cols="12" sm="12" md="2">
+      <v-card outlined>
+        <v-card-text class="text-center pt-0 pb-0">
           <v-row>
             <v-col
               v-if="
@@ -171,9 +158,9 @@ export default {
   },
   methods: {
     resultClass(goals1, goals2) {
-      if (goals1 == goals2) return 'draw'
-      else if (goals1 > goals2) return 'victory'
-      else return 'lose'
+      if (goals1 == goals2) return 'rgba(255, 212, 71, 0.55)'
+      else if (goals1 > goals2) return 'rgba(117, 255, 131, 0.55)'
+      else return 'rgba(255, 117, 117, 0.55)'
     },
     async deleteMatchFunction() {
       this.$emit('loading')
@@ -216,32 +203,11 @@ export default {
 }
 </script>
 <style scoped>
-.match {
-  text-align: center;
-  height: 100%;
-}
 .match-actions {
   text-align: center;
   height: 100%;
 }
-.victory {
-  background-color: rgba(117, 255, 131, 0.55);
-  height: 100%;
-  width: 100%;
-}
-.draw {
-  background-color: rgba(255, 212, 71, 0.55);
-  height: 100%;
-  width: 100%;
-}
-.lose {
-  background-color: rgba(255, 117, 117, 0.55);
-  height: 100%;
-  width: 100%;
-}
 .result {
-  background-color: rgba(199, 199, 199, 0.55);
-  height: 100%;
-  width: 100%;
+  font-size: 20px;
 }
 </style>
