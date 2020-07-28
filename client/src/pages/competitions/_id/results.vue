@@ -88,12 +88,12 @@
             Aún no has añadido partidos en esta jornada
           </v-col>
           <v-col v-else>
-              <roundMatch
-                v-for="match in matches"
-                :key="match.id"
-                :match="match"
-                @loading="loading = !loading"
-              ></roundMatch>
+            <roundMatch
+              v-for="match in matches"
+              :key="match.id"
+              :match="match"
+              @loading="loading = !loading"
+            ></roundMatch>
           </v-col>
           <br />
           <v-btn

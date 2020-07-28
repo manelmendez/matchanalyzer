@@ -1,20 +1,45 @@
-import Vue from 'vue'
-import login from './pages/login.vue'
-import register from './pages/register.vue'
-import index from './pages/index.vue'
-import error404 from './pages/error/404.vue'
-import error500 from './pages/error/500.vue'
-import teams from './pages/teams/index.vue'
-import team from './pages/teams/_id/index.vue'
-import competitionList from './pages/competitions/index.vue'
-import competitionBase from './pages/competitions/_id/index.vue'
-import summary from './pages/competitions/_id/summary.vue'
-import results from './pages/competitions/_id/results.vue'
-import match from './pages/match/_id.vue'
-import classification from './pages/competitions/_id/classification.vue'
-import competitionStats from './pages/teams/_id/competitionstats.vue'
-import planification from './pages/planification/index.vue'
+const login = () => import(/* webpackChunkName: "Login" */ './pages/login.vue')
+const register = () =>
+  import(/* webpackChunkName: "Register" */ './pages/register.vue')
+const index = () => import(/* webpackChunkName: "Index" */ './pages/index.vue')
+const error404 = () =>
+  import(/* webpackChunkName: "404" */ './pages/error/404.vue')
+const error500 = () =>
+  import(/* webpackChunkName: "500" */ './pages/error/500.vue')
+const teams = () =>
+  import(/* webpackChunkName: "Teams" */ './pages/teams/index.vue')
+const team = () =>
+  import(/* webpackChunkName: "Team" */ './pages/teams/_id/index.vue')
+const competitionList = () =>
+  import(/* webpackChunkName: "CompList" */ './pages/competitions/index.vue')
+const competitionBase = () =>
+  import(
+    /* webpackChunkName: "CompBase" */ './pages/competitions/_id/index.vue'
+  )
+const summary = () =>
+  import(
+    /* webpackChunkName: "Summary" */ './pages/competitions/_id/summary.vue'
+  )
+const results = () =>
+  import(
+    /* webpackChunkName: "Results" */ './pages/competitions/_id/results.vue'
+  )
+const match = () =>
+  import(/* webpackChunkName: "Match" */ './pages/match/_id.vue')
+const classification = () =>
+  import(
+    /* webpackChunkName: "Classification" */ './pages/competitions/_id/classification.vue'
+  )
+const competitionStats = () =>
+  import(
+    /* webpackChunkName: "CompStats" */ './pages/teams/_id/competitionstats.vue'
+  )
+const planification = () =>
+  import(
+    /* webpackChunkName: "Planification" */ './pages/planification/index.vue'
+  )
 
+import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
 
