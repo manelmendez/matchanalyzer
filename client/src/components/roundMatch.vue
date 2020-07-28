@@ -1,7 +1,10 @@
 <template>
   <v-row justify="center" align="center">
     <v-col class="pt-1 pb-1" cols="12" sm="5" md="4">
-      <v-card :color="resultClass(match.localTeamGoals, match.awayTeamGoals)" outlined>
+      <v-card
+        :color="resultClass(match.localTeamGoals, match.awayTeamGoals)"
+        outlined
+      >
         <v-card-actions>
           <v-list-item class="grow">
             <v-list-item-avatar tile>
@@ -27,7 +30,10 @@
       </v-card>
     </v-col>
     <v-col class="pt-1 pb-1" cols="12" sm="5" md="4">
-      <v-card :color="resultClass(match.awayTeamGoals, match.localTeamGoals)" outlined>
+      <v-card
+        :color="resultClass(match.awayTeamGoals, match.localTeamGoals)"
+        outlined
+      >
         <v-card-actions>
           <v-list-item class="grow">
             <v-list-item-avatar tile>
