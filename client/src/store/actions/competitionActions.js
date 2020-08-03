@@ -4,7 +4,7 @@ import axios from 'axios'
 export const addCompetition = ({ commit }, body) => {
   console.log('ACTION -- addCompetition')
   return axios
-    .post('addCompetition', body)
+    .post('competitions', body)
     .then((response) => {
       commit(types.ADD_COMPETITION, response.data.competition)
       return response
@@ -15,20 +15,20 @@ export const addCompetition = ({ commit }, body) => {
 }
 export const getCompetition = ({ commit }, id) => {
   console.log('ACTION -- getCompetition')
-  return axios.get('getCompetition/' + id).then((response) => {
+  return axios.get('competitions/' + id).then((response) => {
     commit(types.GET_COMPETITION, response.data.competition)
   })
 }
 export const getUserCompetitions = ({ commit }, id) => {
   console.log('ACTION -- getUserCompetitions')
-  return axios.get('getUserCompetitions/' + id).then((response) => {
+  return axios.get('competitions/user/' + id).then((response) => {
     commit(types.GET_COMPETITIONS, response.data.competitions)
   })
 }
 export const updateCompetition = ({ commit }, data) => {
   console.log('ACTION -- updateCompetition')
   return axios
-    .put('updateCompetition/' + data.id, data)
+    .put('competitions/' + data.id, data)
     .then((response) => {
       commit(types.UPDATE_COMPETITION, response.data)
       return response
@@ -40,7 +40,7 @@ export const updateCompetition = ({ commit }, data) => {
 export const deleteCompetition = ({ commit }, data) => {
   console.log('ACTION -- deleteCompetition')
   return axios
-    .delete('deleteCompetition/' + data)
+    .delete('competitions/' + data)
     .then((response) => {
       commit(types.DELETE_COMPETITION, response.data.id)
       return response
@@ -54,7 +54,7 @@ export const deleteCompetition = ({ commit }, data) => {
 export const addRound = ({ commit }, body) => {
   console.log('ACTION -- addRound')
   return axios
-    .post('addRound', body)
+    .post('rounds', body)
     .then((response) => {
       commit(types.ADD_ROUND, response.data.round)
       return response
@@ -65,14 +65,14 @@ export const addRound = ({ commit }, body) => {
 }
 export const getCompetitionRounds = ({ commit }, id) => {
   console.log('ACTION -- getCompetitionRounds')
-  return axios.get('getCompetitionRounds/' + id).then((response) => {
+  return axios.get('rounds/competition/' + id).then((response) => {
     commit(types.GET_COMPETITION_ROUNDS, response.data.rounds)
   })
 }
 export const deleteRound = ({ commit }, id) => {
   console.log('ACTION -- deleteRound')
   return axios
-    .delete('deleteRound/' + id)
+    .delete('rounds/' + id)
     .then((response) => {
       commit(types.DELETE_ROUND)
       return response
@@ -97,14 +97,14 @@ export const nextRound = ({ commit }) => {
 // MATCH
 export const getMatch = ({ commit }, id) => {
   console.log('ACTION -- getMatch')
-  return axios.get('getMatch/' + id).then((response) => {
+  return axios.get('matches/' + id).then((response) => {
     commit(types.GET_MATCH, response.data.match)
   })
 }
 export const addMatch = ({ commit }, body) => {
   console.log('ACTION -- addMatch')
   return axios
-    .post('addMatch', body)
+    .post('matches', body)
     .then((response) => {
       commit(types.ADD_MATCH, response.data)
       return response
@@ -116,7 +116,7 @@ export const addMatch = ({ commit }, body) => {
 export const updateMatch = ({ commit }, data) => {
   console.log('ACTION -- updateMatch')
   return axios
-    .put('updateMatch/' + data.id, data.body)
+    .put('matches/' + data.id, data.body)
     .then((response) => {
       data.body.id = data.id
       commit(types.UPDATE_MATCH, data.body)
@@ -129,7 +129,7 @@ export const updateMatch = ({ commit }, data) => {
 export const deleteMatch = ({ commit }, id) => {
   console.log('ACTION -- deleteMatch')
   return axios
-    .delete('deleteMatch/' + id)
+    .delete('matches/' + id)
     .then((response) => {
       commit(types.DELETE_MATCH, id)
       return response
@@ -143,7 +143,7 @@ export const deleteMatch = ({ commit }, id) => {
 export const addMatchpart = ({ commit }, body) => {
   console.log('ACTION -- addMatchpart')
   return axios
-    .post('addMatchpart', body)
+    .post('matchparts', body)
     .then((response) => {
       commit(types.ADD_MATCHPART, response.data)
       return response
@@ -154,7 +154,7 @@ export const addMatchpart = ({ commit }, body) => {
 }
 export const getMatchpartsByMatchId = ({ commit }, id) => {
   console.log('ACTION -- getMatchpartsByMatchId')
-  return axios.get('getMatchpartsByMatchId/' + id).then((response) => {
+  return axios.get('matchparts/match/' + id).then((response) => {
     commit(types.GET_MATCHPARTSBYMATCHID, response.data)
   })
 }
@@ -162,14 +162,14 @@ export const getMatchpartsByMatchId = ({ commit }, id) => {
 // MINUTES
 export const getMinutesByMatchId = ({ commit }, id) => {
   console.log('ACTION -- getMinutesByMatchId')
-  return axios.get('getMinutesByMatchId/' + id).then((response) => {
+  return axios.get('minutes/match/' + id).then((response) => {
     commit(types.GET_MINUTESBYMATCHID, response.data)
   })
 }
 export const addMinute = ({ commit }, body) => {
   console.log('ACTION -- addMinute')
   return axios
-    .post('addMinute', body)
+    .post('minutes', body)
     .then((response) => {
       commit(types.ADD_MINUTE, response.data)
       return response
@@ -181,7 +181,7 @@ export const addMinute = ({ commit }, body) => {
 export const deleteMinute = ({ commit }, data) => {
   console.log('ACTION -- deleteMinute')
   return axios
-    .delete('deleteMinute/' + data)
+    .delete('minutes/' + data)
     .then((response) => {
       commit(types.DELETE_MINUTE, response.data.id)
       return response
@@ -194,14 +194,14 @@ export const deleteMinute = ({ commit }, data) => {
 // GOAL
 export const getGoalsByMatchId = ({ commit }, id) => {
   console.log('ACTION -- getGoalsByMatchId')
-  return axios.get('getGoalsByMatchId/' + id).then((response) => {
+  return axios.get('goals/match/' + id).then((response) => {
     commit(types.GET_GOALSBYMATCHID, response.data)
   })
 }
 export const addGoal = ({ commit }, body) => {
   console.log('ACTION -- addGoal')
   return axios
-    .post('addGoal', body)
+    .post('goals', body)
     .then((response) => {
       commit(types.ADD_GOAL, response.data)
       return response
@@ -213,7 +213,7 @@ export const addGoal = ({ commit }, body) => {
 export const deleteGoal = ({ commit }, data) => {
   console.log('ACTION -- deleteGoal')
   return axios
-    .delete('deleteGoal/' + data)
+    .delete('goals/' + data)
     .then((response) => {
       commit(types.DELETE_GOAL, response.data.id)
       return response
@@ -226,14 +226,14 @@ export const deleteGoal = ({ commit }, data) => {
 // ASSIST
 export const getAssistsByMatchId = ({ commit }, id) => {
   console.log('ACTION -- getAssistsByMatchId')
-  return axios.get('getAssistsByMatchId/' + id).then((response) => {
+  return axios.get('assists/match/' + id).then((response) => {
     commit(types.GET_ASSISTSBYMATCHID, response.data)
   })
 }
 export const addAssist = ({ commit }, body) => {
   console.log('ACTION -- addAssist')
   return axios
-    .post('addAssist', body)
+    .post('assists', body)
     .then((response) => {
       commit(types.ADD_ASSIST, response.data)
       return response
@@ -245,7 +245,7 @@ export const addAssist = ({ commit }, body) => {
 export const deleteAssist = ({ commit }, data) => {
   console.log('ACTION -- deleteAssist')
   return axios
-    .delete('deleteAssist/' + data)
+    .delete('assists/' + data)
     .then((response) => {
       commit(types.DELETE_ASSIST, response.data.id)
       return response
@@ -258,14 +258,14 @@ export const deleteAssist = ({ commit }, data) => {
 // CARDS
 export const getCardsByMatchId = ({ commit }, id) => {
   console.log('ACTION -- getCardsByMatchId')
-  return axios.get('getCardsByMatchId/' + id).then((response) => {
+  return axios.get('cards/match/' + id).then((response) => {
     commit(types.GET_CARDSBYMATCHID, response.data)
   })
 }
 export const addCard = ({ commit }, body) => {
   console.log('ACTION -- addCard')
   return axios
-    .post('addCard', body)
+    .post('cards', body)
     .then((response) => {
       commit(types.ADD_CARD, response.data)
       return response
@@ -277,7 +277,7 @@ export const addCard = ({ commit }, body) => {
 export const deleteCard = ({ commit }, data) => {
   console.log('ACTION -- deleteCard')
   return axios
-    .delete('deleteCard/' + data)
+    .delete('cards/' + data)
     .then((response) => {
       commit(types.DELETE_CARD, response.data.id)
       return response
@@ -290,14 +290,14 @@ export const deleteCard = ({ commit }, data) => {
 // SUBSTITUTIONS
 export const getSubstitutionsByMatchId = ({ commit }, id) => {
   console.log('ACTION -- getSubstitutionsByMatchId')
-  return axios.get('getSubstitutionsByMatchId/' + id).then((response) => {
+  return axios.get('substitutions/match/' + id).then((response) => {
     commit(types.GET_SUBSTITUTIONSBYMATCHID, response.data)
   })
 }
 export const addSubstitution = ({ commit }, body) => {
   console.log('ACTION -- addSubstitution')
   return axios
-    .post('addSubstitution', body)
+    .post('substitutions', body)
     .then((response) => {
       commit(types.ADD_SUBSTITUTION, response.data)
       return response
@@ -309,7 +309,7 @@ export const addSubstitution = ({ commit }, body) => {
 export const deleteSubstitution = ({ commit }, data) => {
   console.log('ACTION -- deleteSubstitution')
   return axios
-    .delete('deleteSubstitution/' + data)
+    .delete('substitutions/' + data)
     .then((response) => {
       commit(types.DELETE_SUBSTITUTION, response.data.id)
       return response
