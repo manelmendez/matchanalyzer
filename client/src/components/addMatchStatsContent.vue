@@ -268,46 +268,46 @@ export default {
   props: {
     team: {
       type: Object,
-      required: true,
+      required: true
     },
     matchId: {
       type: Number,
-      required: true,
+      required: true
     },
     matchpart: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     AddPlayer,
     AddGoal,
     AddCard,
-    AddSub,
+    AddSub
   },
   data() {
     return {
       formacionesF7: [
         {
           name: '3-2-1',
-          image: require('/assets/images/formaciones/3-2-1.png'),
+          image: require('/assets/images/formaciones/3-2-1.png')
         },
         {
           name: '2-3-1',
-          image: require('/assets/images/formaciones/2-3-1.png'),
+          image: require('/assets/images/formaciones/2-3-1.png')
         },
         {
           name: '3-1-2',
-          image: require('/assets/images/formaciones/3-1-2.png'),
+          image: require('/assets/images/formaciones/3-1-2.png')
         },
         {
           name: '3-3',
-          image: require('/assets/images/formaciones/3-3.png'),
+          image: require('/assets/images/formaciones/3-3.png')
         },
         {
           name: '4-2',
-          image: require('/assets/images/formaciones/4-2.png'),
-        },
+          image: require('/assets/images/formaciones/4-2.png')
+        }
       ],
       formacion: '',
       minutes: [],
@@ -318,7 +318,7 @@ export default {
       addMinuteDialog: false,
       addgoalDialog: false,
       addcardDialog: false,
-      addsubDialog: false,
+      addsubDialog: false
     }
   },
   methods: {
@@ -334,7 +334,7 @@ export default {
       deleteGoal: 'competition/deleteGoal',
       deleteAssist: 'competition/deleteAssist',
       deleteCard: 'competition/deleteCard',
-      deleteSubstitution: 'competition/deleteSubstitution',
+      deleteSubstitution: 'competition/deleteSubstitution'
     }),
     close() {
       this.$emit('close')
@@ -343,7 +343,7 @@ export default {
       let minute = {
         ...data,
         matchId: this.matchId,
-        matchpartId: this.matchpart.id,
+        matchpartId: this.matchpart.id
       }
       let response = await this.addMinute(minute)
       if (response.status == 200) {
@@ -351,7 +351,7 @@ export default {
           ...response.data.minuteSaved,
           player: this.team.players.find(
             (p) => p.id == response.data.minuteSaved.player
-          ),
+          )
         })
       }
       this.addMinuteDialog = false
@@ -360,7 +360,7 @@ export default {
       let goal = {
         ...data,
         matchId: this.matchId,
-        matchpartId: this.matchpart.id,
+        matchpartId: this.matchpart.id
       }
       let response = await this.addGoal(goal)
       if (response.status == 200) {
@@ -368,7 +368,7 @@ export default {
           ...response.data.goalSaved,
           player: this.team.players.find(
             (p) => p.id == response.data.goalSaved.player
-          ),
+          )
         })
       }
       this.addgoalDialog = false
@@ -377,7 +377,7 @@ export default {
       let card = {
         ...data,
         matchId: this.matchId,
-        matchpartId: this.matchpart.id,
+        matchpartId: this.matchpart.id
       }
       let response = await this.addCard(card)
       if (response.status == 200) {
@@ -385,7 +385,7 @@ export default {
           ...response.data.cardSaved,
           player: this.team.players.find(
             (p) => p.id == response.data.cardSaved.player
-          ),
+          )
         })
       }
       this.addcardDialog = false
@@ -394,7 +394,7 @@ export default {
       let sub = {
         ...data,
         matchId: this.matchId,
-        matchpartId: this.matchpart.id,
+        matchpartId: this.matchpart.id
       }
       let response = await this.addSubstitution(sub)
       if (response.status == 200) {
@@ -405,7 +405,7 @@ export default {
           ),
           playerOut: this.team.players.find(
             (p) => p.id == response.data.substitutionSaved.playerOut
-          ),
+          )
         })
       }
       this.addsubDialog = false
@@ -455,9 +455,7 @@ export default {
           for (let minutePlayer of this.matchpart.minutes) {
             this.minutes.push({
               ...minutePlayer,
-              player: this.team.players.find(
-                (p) => p.id == minutePlayer.player
-              ),
+              player: this.team.players.find((p) => p.id == minutePlayer.player)
             })
           }
         }
@@ -465,7 +463,7 @@ export default {
           for (let goalPlayer of this.matchpart.goals) {
             this.goals.push({
               ...goalPlayer,
-              player: this.team.players.find((p) => p.id == goalPlayer.player),
+              player: this.team.players.find((p) => p.id == goalPlayer.player)
             })
           }
         }
@@ -473,9 +471,7 @@ export default {
           for (let assistPlayer of this.matchpart.assists) {
             this.assists.push({
               ...assistPlayer,
-              player: this.team.players.find(
-                (p) => p.id == assistPlayer.player
-              ),
+              player: this.team.players.find((p) => p.id == assistPlayer.player)
             })
           }
         }
@@ -483,7 +479,7 @@ export default {
           for (let cardPlayer of this.matchpart.cards) {
             this.cards.push({
               ...cardPlayer,
-              player: this.team.players.find((p) => p.id == cardPlayer.player),
+              player: this.team.players.find((p) => p.id == cardPlayer.player)
             })
           }
         }
@@ -496,20 +492,20 @@ export default {
               ),
               playerOut: this.team.players.find(
                 (p) => p.id == substitutionPlayer.playerOut
-              ),
+              )
             })
           }
         }
       }
-    },
+    }
   },
   computed: {
-    ...mapGetters('competition', ['competition']),
+    ...mapGetters('competition', ['competition'])
   },
   async created() {
     await this.setPreviousData()
   },
-  watch: {},
+  watch: {}
 }
 </script>
 <style scoped>

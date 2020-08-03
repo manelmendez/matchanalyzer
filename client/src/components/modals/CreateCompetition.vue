@@ -58,7 +58,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   props: {
     show: Boolean,
-    competition: Object,
+    competition: Object
   },
   data() {
     return {
@@ -69,13 +69,13 @@ export default {
       categoriesF7: ['Prebenjamín', 'Benjamín', 'Alevín'],
       categoriesF11: ['Infantil', 'Cadete', 'Juvenil', 'Amateur'],
       discipline: this.competition ? this.competition.discipline : '',
-      category: this.competition ? this.competition.category : '',
+      category: this.competition ? this.competition.category : ''
     }
   },
   computed: {
     ...mapGetters({
-      user: 'user/user',
-    }),
+      user: 'user/user'
+    })
   },
   methods: {
     createCompetition() {
@@ -84,7 +84,7 @@ export default {
         season: this.season,
         manager: this.user.id,
         discipline: this.discipline,
-        category: this.category,
+        category: this.category
       }
       this.addCompetition(competition).then(() => {
         this.$emit('confirm')
@@ -97,7 +97,7 @@ export default {
         season: this.season,
         manager: this.user.id,
         discipline: this.discipline,
-        category: this.category,
+        category: this.category
       }
       this.updateCompetition(competition).then(() => {
         this.$emit('confirm')
@@ -106,8 +106,8 @@ export default {
     close() {
       this.$emit('close')
     },
-    ...mapActions('competition', ['addCompetition', 'updateCompetition']),
-  },
+    ...mapActions('competition', ['addCompetition', 'updateCompetition'])
+  }
 }
 </script>
 <style scoped></style>

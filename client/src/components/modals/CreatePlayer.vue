@@ -51,7 +51,7 @@ import { mapActions } from 'vuex'
 export default {
   props: {
     show: Boolean,
-    player: Object,
+    player: Object
   },
   data() {
     return {
@@ -59,7 +59,7 @@ export default {
       position: this.player ? this.player.position : '',
       year: this.player ? this.player.year : '',
       positions: ['PT', 'LD', 'LI', 'CT', 'MCD', 'MC', 'MP', 'ED', 'EI', 'DC'],
-      years: ['2007', '2008', '2009', '2011', '2012', '2013', '2014'],
+      years: ['2007', '2008', '2009', '2011', '2012', '2013', '2014']
     }
   },
   methods: {
@@ -68,7 +68,7 @@ export default {
         name: this.name,
         position: this.position,
         year: this.year,
-        team: this.$route.params.id,
+        team: this.$route.params.id
       }
       this.addPlayer(player).then(() => {
         this.$emit('confirm')
@@ -80,7 +80,7 @@ export default {
         name: this.name,
         position: this.position,
         year: this.year,
-        team: this.$route.params.id,
+        team: this.$route.params.id
       }
       this.updatePlayer(player).then(() => {
         this.$emit('confirm')
@@ -89,8 +89,8 @@ export default {
     close() {
       this.$emit('close')
     },
-    ...mapActions('team', ['addPlayer', 'updatePlayer']),
-  },
+    ...mapActions('team', ['addPlayer', 'updatePlayer'])
+  }
 }
 </script>
 <style scoped></style>

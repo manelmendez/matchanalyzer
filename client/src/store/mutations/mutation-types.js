@@ -1,6 +1,7 @@
 export const SNACKBAR = 'SNACKBAR'
 export const SNACKBAR_OFF = 'SNACKBAR_OFF'
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE'
+export const SET_THEME = 'SET_THEME'
 /*
  *   USER
  */

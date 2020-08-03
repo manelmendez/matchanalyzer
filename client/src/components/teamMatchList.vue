@@ -75,7 +75,7 @@
 export default {
   props: {
     team: Object,
-    rounds: Array,
+    rounds: Array
   },
   data() {
     return {
@@ -83,8 +83,8 @@ export default {
         { text: 'Jornada', value: 'roundName' },
         { text: 'Equipos', value: 'equipos' },
         { text: 'Resultado', value: 'resultados' },
-        { text: 'Etiqueta', value: 'badge' },
-      ],
+        { text: 'Etiqueta', value: 'badge' }
+      ]
     }
   },
   computed: {
@@ -103,8 +103,8 @@ export default {
         }
       }
       return matches
-    },
-  },
+    }
+  }
 }
 </script>
 

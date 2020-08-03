@@ -35,33 +35,33 @@ export default {
       options: {
         title: {
           display: true,
-          text: 'Goles por jornada',
+          text: 'Goles por jornada'
         },
         scales: {
           yAxes: [
             {
               scaleLabel: {
                 display: true,
-                labelString: 'Goles',
+                labelString: 'Goles'
               },
               ticks: {
                 beginAtZero: true,
-                stepSize: 1,
-              },
-            },
+                stepSize: 1
+              }
+            }
           ],
           xAxes: [
             {
               scaleLabel: {
                 display: true,
-                labelString: 'Jornadas',
-              },
-            },
-          ],
-        },
-      },
+                labelString: 'Jornadas'
+              }
+            }
+          ]
+        }
+      }
     }
-  },
+  }
 }
 </script>
 <style scoped>

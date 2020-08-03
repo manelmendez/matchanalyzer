@@ -100,21 +100,21 @@ import DeleteDialog from '../../components/modals/DeleteDialog'
 export default {
   components: {
     CreateCompetition,
-    DeleteDialog,
+    DeleteDialog
   },
   data: () => ({
     dialog: false,
     deleteDialog: false,
     deletingCompetition: null,
-    updatingCompetition: null,
+    updatingCompetition: null
   }),
   methods: {
     goTo(id) {
       this.$router.push({
         name: 'summary',
         params: {
-          id: id,
-        },
+          id: id
+        }
       })
     },
     async confirmCreate() {
@@ -128,20 +128,20 @@ export default {
     ...mapActions({
       getUserCompetitions: 'competition/getUserCompetitions',
       getUserTeams: 'team/getUserTeams',
-      deleteCompetition: 'competition/deleteCompetition',
-    }),
+      deleteCompetition: 'competition/deleteCompetition'
+    })
   },
   computed: {
     ...mapGetters({
       user: 'user/user',
       myTeams: 'team/myTeams',
-      competitions: 'competition/competitions',
-    }),
+      competitions: 'competition/competitions'
+    })
   },
   async created() {
     //do something after creating vue instance
     await this.getUserCompetitions(this.user.id)
     await this.getUserTeams(this.user.id)
-  },
+  }
 }
 </script>

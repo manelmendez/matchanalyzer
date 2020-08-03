@@ -62,23 +62,23 @@ export default {
     show: {
       type: Boolean,
       required: true,
-      default: false,
+      default: false
     },
     players: {
       type: Array,
-      required: true,
+      required: true
     },
     duration: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       player: null,
       minute: null,
       type: null,
-      types: ['amarilla', 'roja'],
+      types: ['amarilla', 'roja']
     }
   },
   methods: {
@@ -89,10 +89,10 @@ export default {
       this.$emit('confirm', {
         playerId: this.player.id,
         type: this.type,
-        minute: this.minute,
+        minute: this.minute
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

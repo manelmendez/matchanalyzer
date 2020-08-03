@@ -31,7 +31,7 @@ axios.interceptors.response.use(
     let snackbar = {
       show: true,
       color: 'error',
-      text: '',
+      text: ''
     }
     if (error.response) {
       if (error.response.status >= 400) {

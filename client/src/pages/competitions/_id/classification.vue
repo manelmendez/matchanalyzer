@@ -66,10 +66,10 @@ import classificationTable from '../../../components/classificationTable'
 export default {
   name: 'classification',
   components: {
-    classificationTable,
+    classificationTable
   },
   data: () => ({
-    constants: constants,
+    constants: constants
   }),
   methods: {
     changeResultRound(item) {
@@ -78,7 +78,7 @@ export default {
       let res = str.split(' ')
       this.changeRound(res[1])
     },
-    ...mapActions('competition', ['changeRound', 'previousRound', 'nextRound']),
+    ...mapActions('competition', ['changeRound', 'previousRound', 'nextRound'])
   },
   computed: {
     ...mapGetters('competition', [
@@ -86,9 +86,9 @@ export default {
       'selectedRound',
       'rankedTeams',
       'rounds',
-      'round',
-    ]),
-  },
+      'round'
+    ])
+  }
 }
 </script>
 <style scoped>

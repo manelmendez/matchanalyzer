@@ -9,6 +9,7 @@ import axiosConfig from './assets/axios'
 import 'vuetify/dist/vuetify.min.css'
 import green from './assets/themes/green'
 import red from './assets/themes/red'
+import black from './assets/themes/black'
 import teal from './assets/themes/teal'
 import indigo from './assets/themes/indigo'
 import lightBlue from './assets/themes/light-blue'
@@ -34,6 +35,8 @@ if (window.localStorage.getItem('theme') != null) {
       ? teal
       : storeTheme == 'deepPurple'
       ? deepPurple
+      : storeTheme == 'black'
+      ? black
       : green
 }
 let darkMode = true
@@ -51,16 +54,16 @@ new Vue({
       dark: darkMode,
       themes: {
         dark: themeApp,
-        light: themeApp,
+        light: themeApp
       },
       options: {
-        customProperties: true,
-      },
-    },
+        customProperties: true
+      }
+    }
   }),
   beforeCreate() {
     //do something before creating vue instance
     this.$store.dispatch('user/initializeStore')
   },
-  render: (h) => h(App),
+  render: (h) => h(App)
 })

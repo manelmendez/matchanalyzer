@@ -149,17 +149,17 @@ export default {
   name: 'RoundMatch',
   components: {
     CreateMatch,
-    DeleteDialog,
+    DeleteDialog
   },
   props: {
-    match: Object,
+    match: Object
   },
   data() {
     return {
       constants: constants,
       roundDialog: false,
       deleteDialog: false,
-      addStatsDialog: false,
+      addStatsDialog: false
     }
   },
   methods: {
@@ -181,7 +181,7 @@ export default {
       } else {
         let data = {
           id: this.match.id,
-          body: match,
+          body: match
         }
         this.$emit('loading')
         await this.updateMatch(data)
@@ -193,19 +193,19 @@ export default {
     ...mapActions('competition', [
       'updateMatch',
       'deleteMatch',
-      'getCompetition',
-    ]),
+      'getCompetition'
+    ])
   },
   computed: {
     ...mapGetters('competition', [
       'selectedRound',
       'roundTeams',
-      'competition',
+      'competition'
     ]),
     newRoundTeams() {
       return [...this.roundTeams, this.match.localTeam, this.match.awayTeam]
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped>

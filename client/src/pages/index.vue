@@ -76,25 +76,25 @@ export default {
     Carousel,
     Slide,
     teamCarousel,
-    competitionCarousel,
+    competitionCarousel
   },
   methods: {
     ...mapActions({
       getUserCompetitions: 'competition/getUserCompetitions',
-      getUserTeams: 'team/getUserTeams',
-    }),
+      getUserTeams: 'team/getUserTeams'
+    })
   },
   computed: {
     ...mapGetters({
       user: 'user/user',
       myTeams: 'team/myTeams',
-      competitions: 'competition/competitions',
-    }),
+      competitions: 'competition/competitions'
+    })
   },
   async created() {
     await this.getUserCompetitions(this.user.id)
     await this.getUserTeams(this.user.id)
-  },
+  }
 }
 </script>
 <style scoped>

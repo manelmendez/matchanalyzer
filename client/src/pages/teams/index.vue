@@ -58,14 +58,13 @@
         <v-btn
           fab
           color="accent"
-          dark
           bottom
           right
           fixed
           @click.stop="dialog = !dialog"
           v-on="on"
         >
-          <v-icon class="material-icons">mdi-plus</v-icon>
+          <v-icon>mdi-plus</v-icon>
         </v-btn>
       </template>
       <span>Añadir equipo</span>
@@ -96,22 +95,22 @@ import constants from '../../assets/constants/constants'
 export default {
   components: {
     CreateTeam,
-    DeleteDialog,
+    DeleteDialog
   },
   data: () => ({
     constants: constants,
     dialog: false,
     deleteDialog: false,
     updatingTeam: null,
-    deletingTeam: null,
+    deletingTeam: null
   }),
   methods: {
     goTo(id) {
       this.$router.push({
         name: 'teams-id',
         params: {
-          id: id,
-        },
+          id: id
+        }
       })
     },
     confirmCreate() {
@@ -129,18 +128,18 @@ export default {
           this.deleteDialog = false
         })
     },
-    ...mapActions('team', ['getUserTeams', 'deleteTeam']),
+    ...mapActions('team', ['getUserTeams', 'deleteTeam'])
   },
   computed: {
     ...mapGetters({
       myTeams: 'team/myTeams',
       user: 'user/user',
-      competitions: 'competition/competitions',
-    }),
+      competitions: 'competition/competitions'
+    })
   },
   created() {
     this.getUserTeams(this.user.id)
-  },
+  }
 }
 </script>
 <style scoped>

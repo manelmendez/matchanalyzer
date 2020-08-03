@@ -79,10 +79,10 @@ import PieChart from '../components/charts/PieChart.js'
 
 export default {
   props: {
-    team: Object,
+    team: Object
   },
   components: {
-    PieChart,
+    PieChart
   },
   data() {
     return {
@@ -93,11 +93,11 @@ export default {
           display: false,
           labels: {
             // This more specific font property overrides the global property
-            fontColor: this.$vuetify.theme.parsedTheme.item.base,
-          },
+            fontColor: this.$vuetify.theme.parsedTheme.item.base
+          }
         },
-        cutoutPercentage: 50,
-      },
+        cutoutPercentage: 50
+      }
     }
   },
   methods: {
@@ -116,7 +116,7 @@ export default {
           console.log(err)
           this.teamStats = null
         })
-    },
+    }
   },
   async created() {
     this.getTeamStats()
@@ -134,18 +134,18 @@ export default {
             backgroundColor: [
               'rgb(115, 199, 132)',
               'rgb(255, 212, 71)',
-              'rgb(255, 117, 117)',
+              'rgb(255, 117, 117)'
             ],
             borderColor: [
               'rgba(115, 199, 132,0)',
               'rgba(255, 212, 71,0)',
-              'rgba(255, 117, 117,0)',
-            ],
-          },
-        ],
+              'rgba(255, 117, 117,0)'
+            ]
+          }
+        ]
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -6,7 +6,7 @@
       flat
       clipped-left
       collapse-on-scroll
-      color="primary darken-1"
+      :color="actualTheme == 'black' ? '#1e1e1e' : 'primary darken-1'"
       height="50px"
     >
       <v-app-bar-nav-icon
@@ -40,7 +40,13 @@
             @click="selectTheme(item)"
           >
             <v-row justify="center">
-              <v-avatar :color="item.value.primary" size="36"> </v-avatar>
+              <v-avatar
+                :color="
+                  item.value.primary == '#EA80FC' ? 'black' : item.value.primary
+                "
+                size="36"
+              >
+              </v-avatar>
             </v-row>
           </v-list-item>
         </v-list>
@@ -115,7 +121,10 @@ import deepPurple from '../assets/themes/deep-purple'
 import lightBlue from '../assets/themes/light-blue'
 import indigo from '../assets/themes/indigo'
 import teal from '../assets/themes/teal'
+import black from '../assets/themes/black'
 import constants from '../assets/constants/constants'
+import store from '../store/store'
+
 export default {
   name: 'Layout',
   data: () => ({
@@ -129,7 +138,9 @@ export default {
       { name: 'teal', value: teal },
       { name: 'deepPurple', value: deepPurple },
       { name: 'indigo', value: indigo },
+      { name: 'black', value: black }
     ],
+    actualTheme: window.localStorage.getItem('theme')
   }),
   methods: {
     logOut() {
@@ -145,6 +156,8 @@ export default {
         Math.floor(Math.random() * this.themes.length)
       ]
       window.localStorage.setItem('theme', randomTheme.name)
+      this.actualTheme = randomTheme.name
+      store.commit('root/SET_THEME', randomTheme.name)
       if (this.$vuetify.theme.dark) {
         this.$vuetify.theme.themes.dark = randomTheme.value
       } else {
@@ -153,12 +166,14 @@ export default {
     },
     selectTheme(theme) {
       window.localStorage.setItem('theme', theme.name)
+      this.actualTheme = theme.name
+      store.commit('root/SET_THEME', theme.name)
       if (this.$vuetify.theme.dark) {
         this.$vuetify.theme.themes.dark = theme.value
       } else {
         this.$vuetify.theme.themes.light = theme.value
       }
-    },
+    }
   },
   computed: {
     dark: {
@@ -168,7 +183,7 @@ export default {
       set() {
         window.localStorage.setItem('dark', !this.dark)
         this.$vuetify.theme.dark = !this.dark
-      },
+      }
     },
     checkMobile() {
       // console.log(this.$vuetify.breakpoint.name)
@@ -186,8 +201,8 @@ export default {
         default:
           return false
       }
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped>

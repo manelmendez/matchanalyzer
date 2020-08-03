@@ -64,35 +64,35 @@ export default {
     show: {
       type: Boolean,
       required: true,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       formacionesF7: [
         {
           name: '3-2-1',
-          image: require('/assets/images/formaciones/3-2-1.png'),
+          image: require('/assets/images/formaciones/3-2-1.png')
         },
         {
           name: '2-3-1',
-          image: require('/assets/images/formaciones/2-3-1.png'),
+          image: require('/assets/images/formaciones/2-3-1.png')
         },
         {
           name: '3-1-2',
-          image: require('/assets/images/formaciones/3-1-2.png'),
+          image: require('/assets/images/formaciones/3-1-2.png')
         },
         {
           name: '3-3',
-          image: require('/assets/images/formaciones/3-3.png'),
+          image: require('/assets/images/formaciones/3-3.png')
         },
         {
           name: '4-2',
-          image: require('/assets/images/formaciones/4-2.png'),
-        },
+          image: require('/assets/images/formaciones/4-2.png')
+        }
       ],
       formation: '',
-      duration: null,
+      duration: null
     }
   },
   methods: {
@@ -101,8 +101,8 @@ export default {
     },
     add() {
       this.$emit('confirm', { formation: this.formation, time: this.duration })
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -6,16 +6,20 @@ export const rootModule = {
     snackbar: {
       show: false,
       color: '',
-      text: '',
+      text: ''
     },
+    theme: window.localStorage.getItem('theme')
   },
   getters: {
     snackbar: (state) => {
       return state.snackbar
     },
+    theme: (state) => {
+      return state.theme
+    }
   },
   mutations: {
-    ...rootMutations,
+    ...rootMutations
   },
-  actions: {},
+  actions: {}
 }

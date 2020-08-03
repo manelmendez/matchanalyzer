@@ -142,7 +142,7 @@ export default {
   name: 'team',
   components: {
     CreatePlayer,
-    DeleteDialog,
+    DeleteDialog
   },
   data: () => ({
     deletingPlayer: null,
@@ -155,8 +155,8 @@ export default {
       { text: 'Nombre', align: 'center', sortable: true, value: 'name' },
       { text: 'Posición', value: 'position', align: 'center' },
       { text: 'Año de nacimiento', value: 'year', align: 'center' },
-      { text: 'Acciones', value: 'actions', align: 'center' },
-    ],
+      { text: 'Acciones', value: 'actions', align: 'center' }
+    ]
   }),
   methods: {
     createPlayer() {
@@ -169,8 +169,8 @@ export default {
     ...mapActions({
       getTeam: 'team/getTeam',
       getPlayersByTeamId: 'team/getPlayersByTeamId',
-      deletePlayer: 'team/deletePlayer',
-    }),
+      deletePlayer: 'team/deletePlayer'
+    })
   },
   computed: {
     team() {
@@ -178,12 +178,12 @@ export default {
     },
     players() {
       return this.$store.getters['team/playersByTeamId'](this.$route.params.id)
-    },
+    }
   },
   async created() {
     await this.getTeam(this.$route.params.id)
     await this.getPlayersByTeamId(this.$route.params.id)
-  },
+  }
 }
 </script>
 <style scoped></style>

@@ -47,7 +47,7 @@ export const addNoManagerTeam = ({ commit }, body) => {
 export const uploadTeamImage = ({ commit }, formData) => {
   console.log('ACTION -- uploadTeamImage')
   const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Type': 'application/x-www-form-urlencoded'
   }
   return axios
     .post('uploadImage', formData, {
@@ -58,7 +58,7 @@ export const uploadTeamImage = ({ commit }, formData) => {
             Math.round((progressEvent.loaded / progressEvent.total) * 100) +
             '%'
         )
-      },
+      }
     })
     .then((response) => {
       commit(types.UPLOAD_IMAGE)

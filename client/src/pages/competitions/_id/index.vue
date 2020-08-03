@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-tabs
       centered
-      background-color="primary darken-1"
+      :background-color="theme == 'black' ? '#1e1e1e' : 'primary darken-1'"
       dark
       grow
       icons-and-text
@@ -34,27 +34,28 @@ import constants from '../../../assets/constants/constants'
 export default {
   name: 'CompetitionBase',
   data: () => ({
-    constants: constants,
+    constants: constants
   }),
   methods: {
     ...mapActions({
       getCompetition: 'competition/getCompetition',
       getCompetitionRounds: 'competition/getCompetitionRounds',
-      getUserTeams: 'team/getUserTeams',
-    }),
+      getUserTeams: 'team/getUserTeams'
+    })
   },
   computed: {
     ...mapGetters({
       competition: 'competition/competition',
       user: 'user/user',
-    }),
+      theme: 'root/theme'
+    })
   },
   created: async function () {
     //do something after creating vue instance
     await this.getCompetition(this.$route.params.id)
     await this.getCompetitionRounds(this.$route.params.id)
     await this.getUserTeams(this.user.id)
-  },
+  }
 }
 </script>
 <style scoped>
