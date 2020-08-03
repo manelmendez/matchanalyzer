@@ -5,7 +5,7 @@ import axios from 'axios'
 export const addTeam = ({ commit }, body) => {
   console.log('ACTION -- addTeam')
   return axios
-    .post('addTeam', body)
+    .post('teams', body)
     .then((response) => {
       commit(types.ADD_MYTEAM, response.data.team)
       return response
@@ -16,21 +16,21 @@ export const addTeam = ({ commit }, body) => {
 }
 export const getTeam = ({ commit }, id) => {
   console.log('ACTION -- getTeam')
-  return axios.get('getTeam/' + id).then((response) => {
+  return axios.get('teams/' + id).then((response) => {
     commit(types.GET_TEAM, response.data.team)
     return response.data.team
   })
 }
 export const getUserTeams = ({ commit }, userId) => {
   console.log('ACTION -- getUserTeams')
-  return axios.get('getUserTeams/' + userId).then((response) => {
+  return axios.get('teams/user/' + userId).then((response) => {
     commit(types.GET_MYTEAMS, response.data.teams)
   })
 }
 export const addNoManagerTeam = ({ commit }, body) => {
   console.log('ACTION -- addNoManagerTeam')
   return axios
-    .post('addNoManagerTeam', body)
+    .post('teams/no-manager', body)
     .then((response) => {
       // ESTA USANDO UNA MUTATION DE COMPETITION DESDE TEAM por eso el root:true
       commit(
@@ -50,7 +50,7 @@ export const uploadTeamImage = ({ commit }, formData) => {
     'Content-Type': 'application/x-www-form-urlencoded'
   }
   return axios
-    .post('uploadImage', formData, {
+    .post('images', formData, {
       headers: headers,
       onUploadProgress: (progressEvent) => {
         console.log(
@@ -71,7 +71,7 @@ export const uploadTeamImage = ({ commit }, formData) => {
 export const updateTeam = ({ commit }, data) => {
   console.log('ACTION -- updateTeam')
   return axios
-    .put('updateTeam/' + data.id, data.body)
+    .put('teams/' + data.id, data.body)
     .then((response) => {
       commit(types.UPDATE_TEAM)
       commit(
@@ -88,7 +88,7 @@ export const updateTeam = ({ commit }, data) => {
 export const deleteTeam = ({ commit }, id) => {
   console.log('ACTION -- deleteTeam')
   return axios
-    .delete('deleteTeam/' + id)
+    .delete('teams/' + id)
     .then((response) => {
       commit(types.DELETE_TEAM, id)
       return response
@@ -102,7 +102,7 @@ export const deleteTeam = ({ commit }, id) => {
 export const addPlayer = ({ commit }, body) => {
   console.log('ACTION -- addPlayer')
   return axios
-    .post('addPlayer', body)
+    .post('players', body)
     .then((response) => {
       commit(types.ADD_PLAYER, response.data.player)
       return response
@@ -114,7 +114,7 @@ export const addPlayer = ({ commit }, body) => {
 export const getPlayersByTeamId = ({ commit }, teamId) => {
   console.log('ACTION -- getPlayersByTeamId')
   return axios
-    .get('getPlayersByTeamId/' + teamId)
+    .get('players/team/' + teamId)
     .then((response) => {
       commit(types.GET_PLAYERS_BY_TEAMID, response.data.players)
     })
@@ -125,7 +125,7 @@ export const getPlayersByTeamId = ({ commit }, teamId) => {
 export const updatePlayer = ({ commit }, body) => {
   console.log('ACTION -- updatePlayer')
   return axios
-    .put('updatePlayer/' + body.id, body)
+    .put('players/' + body.id, body)
     .then((response) => {
       commit(types.UPDATE_PLAYER, response.data.player)
       return response
@@ -137,7 +137,7 @@ export const updatePlayer = ({ commit }, body) => {
 export const deletePlayer = ({ commit }, id) => {
   console.log('ACTION -- deletePlayer')
   return axios
-    .delete('deletePlayer/' + id)
+    .delete('players/' + id)
     .then((response) => {
       commit(types.DELETE_PLAYER, id)
       return response

@@ -7,24 +7,26 @@ export const initializeStore = ({ commit }) => {
 }
 export const signIn = ({ commit }, credentials) => {
   console.log('ACTION -- signIn')
-  return axios.post('signIn', {}, { auth: credentials }).then((response) => {
-    let authUser = {
-      token: response.data.token,
-      isLogged: true,
-      ...response.data.user
-    }
-    axios.defaults.headers.common['Authorization'] =
-      'Bearer ' + response.data.token
-    window.localStorage.setItem('authUser', JSON.stringify(authUser))
-    commit(types.SIGN_IN, authUser)
-    return response
-  })
+  return axios
+    .post('users/signin', {}, { auth: credentials })
+    .then((response) => {
+      let authUser = {
+        token: response.data.token,
+        isLogged: true,
+        ...response.data.user
+      }
+      axios.defaults.headers.common['Authorization'] =
+        'Bearer ' + response.data.token
+      window.localStorage.setItem('authUser', JSON.stringify(authUser))
+      commit(types.SIGN_IN, authUser)
+      return response
+    })
 }
 export const signUp = ({ commit }, data) => {
   console.log('ACTION -- signUp')
   console.log(data)
   return axios
-    .post('signup', { body: data.body }, { auth: data.credentials })
+    .post('users', { body: data.body }, { auth: data.credentials })
     .then((response) => {
       let authUser = {
         token: response.data.token,

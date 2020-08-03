@@ -51,6 +51,6 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')))
 //    response.render('index')
 // })
 
-app.use('/api', api)
+app.use('/v1', api)
 
 export default app
