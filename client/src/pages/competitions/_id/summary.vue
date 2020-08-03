@@ -327,7 +327,7 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
 export default {
   components: {
     CreateTeam,
-    DeleteDialog,
+    DeleteDialog
   },
   data() {
     return {
@@ -338,7 +338,7 @@ export default {
       updatingTeam: null,
       deletingTeam: null,
       addOwnTeam: false,
-      team: '',
+      team: ''
     }
   },
   methods: {
@@ -356,11 +356,11 @@ export default {
     async addMyTeam() {
       this.team.competition = Number(this.$route.params.id)
       let body = {
-        team: this.team,
+        team: this.team
       }
       let data = {
         body: body,
-        id: this.team.id,
+        id: this.team.id
       }
       await this.updateTeam(data)
       this.addOwnTeam = false
@@ -377,8 +377,8 @@ export default {
       updateTeam: 'team/updateTeam',
       changeRound: 'competition/changeRound',
       previousRound: 'competition/previousRound',
-      nextRound: 'competition/nextRound',
-    }),
+      nextRound: 'competition/nextRound'
+    })
   },
   async created() {
     // await this.changeRound(this.rounds.length -1)
@@ -393,7 +393,7 @@ export default {
       rankedTeams: 'competition/rankedTeams',
       topScorers: 'competition/topScorers',
       mostTrashed: 'competition/mostTrashed',
-      topDifference: 'competition/topDifference',
+      topDifference: 'competition/topDifference'
     }),
     myTeamsWithoutCompetition() {
       let teams = []
@@ -406,8 +406,8 @@ export default {
         }
       }
       return teams
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped>

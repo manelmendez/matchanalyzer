@@ -11,7 +11,7 @@ export const signIn = ({ commit }, credentials) => {
     let authUser = {
       token: response.data.token,
       isLogged: true,
-      ...response.data.user,
+      ...response.data.user
     }
     axios.defaults.headers.common['Authorization'] =
       'Bearer ' + response.data.token
@@ -29,7 +29,7 @@ export const signUp = ({ commit }, data) => {
       let authUser = {
         token: response.data.token,
         isLogged: true,
-        ...response.data.user,
+        ...response.data.user
       }
       axios.defaults.headers.common['Authorization'] =
         'Bearer ' + response.data.token

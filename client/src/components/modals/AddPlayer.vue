@@ -49,18 +49,18 @@ export default {
     show: {
       type: Boolean,
       required: true,
-      default: false,
+      default: false
     },
     players: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       positions: ['PT', 'LD', 'LI', 'CT', 'MCD', 'MC', 'MP', 'ED', 'EI', 'DC'],
       player: null,
-      position: null,
+      position: null
     }
   },
   methods: {
@@ -70,10 +70,10 @@ export default {
     add() {
       this.$emit('confirm', {
         playerId: this.player.id,
-        position: this.position,
+        position: this.position
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

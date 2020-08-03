@@ -22,17 +22,17 @@ export default {
   components: {
     Empty,
     Default,
-    Snackbar,
+    Snackbar
   },
   data: () => ({
-    drawer: true,
+    drawer: true
   }),
   computed: {
     isLogged() {
       return this.$route.meta.layout == 'default' ? true : false
     },
-    ...mapGetters('root', ['snackbar']),
-  },
+    ...mapGetters('root', ['snackbar'])
+  }
 }
 </script>
 

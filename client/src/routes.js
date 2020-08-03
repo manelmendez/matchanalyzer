@@ -52,43 +52,43 @@ const router = new VueRouter({
       path: '/login',
       name: 'login',
       component: login,
-      meta: { requiresAuth: false, onceLogged: true, layout: 'empty' },
+      meta: { requiresAuth: false, onceLogged: true, layout: 'empty' }
     },
     {
       path: '/register',
       name: 'register',
       component: register,
-      meta: { requiresAuth: false, onceLogged: true, layout: 'empty' },
+      meta: { requiresAuth: false, onceLogged: true, layout: 'empty' }
     },
     {
       path: '/',
       name: 'index',
       component: index,
-      meta: { requiresAuth: true, layout: 'default' },
+      meta: { requiresAuth: true, layout: 'default' }
     },
     {
       path: '/teams',
       name: 'teams',
       component: teams,
-      meta: { requiresAuth: true, layout: 'default' },
+      meta: { requiresAuth: true, layout: 'default' }
     },
     {
       path: '/teams/:id?',
       name: 'teams-id',
       component: team,
-      meta: { requiresAuth: true, layout: 'default' },
+      meta: { requiresAuth: true, layout: 'default' }
     },
     {
       path: '/teams/:id?/competitionstats',
       name: 'competitionStats',
       component: competitionStats,
-      meta: { requiresAuth: true, layout: 'default' },
+      meta: { requiresAuth: true, layout: 'default' }
     },
     {
       path: '/competitions',
       name: 'competitions',
       component: competitionList,
-      meta: { requiresAuth: true, layout: 'default' },
+      meta: { requiresAuth: true, layout: 'default' }
     },
     {
       path: '/competitions/:id',
@@ -100,47 +100,47 @@ const router = new VueRouter({
           path: 'summary',
           name: 'summary',
           component: summary,
-          meta: { requiresAuth: true, layout: 'default' },
+          meta: { requiresAuth: true, layout: 'default' }
         },
         {
           path: 'results',
           name: 'results',
           component: results,
-          meta: { requiresAuth: true, layout: 'default' },
+          meta: { requiresAuth: true, layout: 'default' }
         },
         {
           path: 'rankings',
           name: 'classification',
           component: classification,
-          meta: { requiresAuth: true, layout: 'default' },
-        },
-      ],
+          meta: { requiresAuth: true, layout: 'default' }
+        }
+      ]
     },
     {
       path: '/competitions/:id/match/:matchId',
       name: 'match-id',
       component: match,
-      meta: { requiresAuth: true, layout: 'default' },
+      meta: { requiresAuth: true, layout: 'default' }
     },
     {
       path: '/planification',
       name: 'planification',
       component: planification,
-      meta: { requiresAuth: true, layout: 'default' },
+      meta: { requiresAuth: true, layout: 'default' }
     },
     {
       path: '/500',
       name: 'error500',
       component: error500,
-      meta: { requiresAuth: false, layout: 'empty' },
+      meta: { requiresAuth: false, layout: 'empty' }
     },
     {
       path: '*',
       name: 'error',
       component: error404,
-      meta: { requiresAuth: false, layout: 'empty' },
-    },
-  ],
+      meta: { requiresAuth: false, layout: 'empty' }
+    }
+  ]
 })
 /**
  * Function to check some things before redirect to a page

@@ -136,18 +136,18 @@ export default {
   components: {
     roundMatch,
     DeleteDialog,
-    CreateMatch,
+    CreateMatch
   },
   data: () => ({
     roundDialog: false,
     deleteDialog: false,
-    loading: false,
+    loading: false
   }),
   methods: {
     createRound() {
       let body = {
         name: 'Jornada ' + (this.rounds.length + 1),
-        competition: this.competition.id,
+        competition: this.competition.id
       }
       this.addRound(body)
     },
@@ -181,8 +181,8 @@ export default {
       'changeRound',
       'previousRound',
       'nextRound',
-      'deleteRound',
-    ]),
+      'deleteRound'
+    ])
   },
   computed: {
     ...mapGetters('competition', [
@@ -191,9 +191,9 @@ export default {
       'selectedRound',
       'matches',
       'rounds',
-      'round',
-    ]),
-  },
+      'round'
+    ])
+  }
 }
 </script>
 <style scoped>

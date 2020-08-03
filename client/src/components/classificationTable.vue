@@ -69,7 +69,7 @@ import constants from '../assets/constants/constants'
 export default {
   name: 'ClassificationTable',
   props: {
-    rankedTeams: Array,
+    rankedTeams: Array
   },
   data() {
     return {
@@ -103,8 +103,8 @@ export default {
         { text: 'D', value: 'loses', align: 'center', sortable: false },
         { text: 'GF', value: 'goals', align: 'center', sortable: false },
         { text: 'GC', value: 'againstGoals', align: 'center', sortable: false },
-        { text: 'DG', value: 'awayGoalDif', align: 'center', sortable: false },
-      ],
+        { text: 'DG', value: 'awayGoalDif', align: 'center', sortable: false }
+      ]
     }
   },
   methods: {
@@ -117,8 +117,8 @@ export default {
         index == this.rankedTeams.length - 3
       )
         return 'descending'
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped>

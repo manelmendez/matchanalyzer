@@ -76,11 +76,11 @@ import constants from '../assets/constants/constants'
 
 export default {
   props: {
-    competition: Object,
+    competition: Object
   },
   data() {
     return {
-      constants: constants,
+      constants: constants
     }
   },
   computed: {
@@ -90,8 +90,8 @@ export default {
         goals += this.competition.teams[i].stats.goals
       }
       return goals
-    },
-  },
+    }
+  }
 }
 </script>
 

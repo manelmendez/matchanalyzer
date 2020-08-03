@@ -4,10 +4,10 @@ export default {
   primary: '#0b5a6b',
   secondary: '#FFFF00',
   accent: '#D81B60',
-  background: '#121212', //#303030
+  background: '#121212', //#363636
   error: colors.red,
   info: colors.blue,
   success: colors.green,
   warning: colors.orange,
-  item: colors.grey,
+  item: colors.grey
 }

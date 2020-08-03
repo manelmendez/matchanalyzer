@@ -76,7 +76,7 @@ export default {
     type: String,
     roundTeams: Array,
     match: Object,
-    round: Number,
+    round: Number
   },
   data() {
     return {
@@ -85,7 +85,7 @@ export default {
       awayTeamGoals: this.type == 'new' ? 0 : Number(this.match.awayTeamGoals),
       team: this.type == 'new' ? '' : this.match.localTeam,
       team2: this.type == 'new' ? '' : this.match.awayTeam,
-      headline: this.type == 'new' ? 'Añadir Partido' : 'Editar Partido',
+      headline: this.type == 'new' ? 'Añadir Partido' : 'Editar Partido'
     }
   },
   methods: {
@@ -99,7 +99,7 @@ export default {
         localTeamGoals: Number(this.localTeamGoals),
         awayTeamGoals: Number(this.awayTeamGoals),
         competition: this.competition.id,
-        round: this.round,
+        round: this.round
       }
       this.$emit('confirm', match)
     },
@@ -110,14 +110,14 @@ export default {
         localTeamGoals: Number(this.localTeamGoals),
         awayTeamGoals: Number(this.awayTeamGoals),
         competition: this.competition.id,
-        round: this.match.round,
+        round: this.match.round
       }
       this.$emit('edit', match)
-    },
+    }
   },
   computed: {
-    ...mapGetters('competition', ['competition']),
-  },
+    ...mapGetters('competition', ['competition'])
+  }
 }
 </script>
 <style scoped>

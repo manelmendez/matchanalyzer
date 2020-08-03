@@ -146,10 +146,10 @@ export default {
     positionstats,
     matchstats,
     goalstats,
-    teamMatchList,
+    teamMatchList
   },
   data: () => ({
-    constants: constants,
+    constants: constants
   }),
   async created() {
     await this.getTeam(this.$route.params.id)
@@ -177,28 +177,28 @@ export default {
       }
       let goals = {
         goalsperround,
-        againstgoalsperround,
+        againstgoalsperround
       }
       return goals
     },
     ...mapActions({
       getTeam: 'team/getTeam',
       getCompetition: 'competition/getCompetition',
-      getCompetitionRounds: 'competition/getCompetitionRounds',
-    }),
+      getCompetitionRounds: 'competition/getCompetitionRounds'
+    })
   },
   watch: {
     async id() {
       await this.getTeam(this.$route.params.id)
       await this.getCompetition(this.team.competition)
       await this.getCompetitionRounds(this.team.competition)
-    },
+    }
   },
   computed: {
     ...mapGetters({
       rankedTeams: 'competition/rankedTeams',
       rounds: 'competition/rounds',
-      statsPerRound: 'competition/statsPerRound',
+      statsPerRound: 'competition/statsPerRound'
     }),
     team() {
       return this.$store.getters['team/teamById'](this.$route.params.id)
@@ -231,9 +231,9 @@ export default {
             data: positions,
             backgroundColor: 'rgb(0,0,0,0.1)',
             borderColor: 'rgb(76,180,179)',
-            fill: 'start', //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
-          },
-        ],
+            fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
+          }
+        ]
       }
     },
     matchesdatacollection() {
@@ -255,15 +255,15 @@ export default {
             backgroundColor: [
               'rgb(115, 199, 132)',
               'rgb(255, 212, 71)',
-              'rgb(255, 117, 117)',
+              'rgb(255, 117, 117)'
             ],
             borderColor: [
               'rgba(115, 199, 132,0)',
               'rgba(255, 212, 71,0)',
-              'rgba(255, 117, 117,0)',
-            ],
-          },
-        ],
+              'rgba(255, 117, 117,0)'
+            ]
+          }
+        ]
       }
     },
     goalsdatacollection() {
@@ -280,16 +280,16 @@ export default {
             data: goals.goalsperround,
             backgroundColor: 'rgba(220,0,0,0.2)',
             borderWidth: 1,
-            borderColor: 'rgb(220,0,0)',
+            borderColor: 'rgb(220,0,0)'
           },
           {
             label: 'Goles en contra',
             data: goals.againstgoalsperround,
             backgroundColor: 'rgba(0,0,220,0.2)',
             borderWidth: 1,
-            borderColor: 'rgb(0,0,220)',
-          },
-        ],
+            borderColor: 'rgb(0,0,220)'
+          }
+        ]
       }
     },
     totalStats() {
@@ -338,10 +338,10 @@ export default {
         localZeroGoals: localZeroGoals + ' de ' + localMatches,
         awayGoalAverage: (awayGoals / awayMatches).toFixed(2),
         awayAgainstGoalAverage: (awayAgainstGoals / awayMatches).toFixed(2),
-        awayZeroGoals: awayZeroGoals + ' de ' + awayMatches,
+        awayZeroGoals: awayZeroGoals + ' de ' + awayMatches
       }
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped></style>

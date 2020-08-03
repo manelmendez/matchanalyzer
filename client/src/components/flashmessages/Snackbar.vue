@@ -13,13 +13,13 @@ export default {
   props: {
     show: Boolean,
     text: String,
-    color: String,
+    color: String
   },
   methods: {
     close() {
       this.$store.commit('root/SNACKBAR_OFF')
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped></style>

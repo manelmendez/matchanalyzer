@@ -7,7 +7,7 @@ export const rootMutations = {
       let snackoff = {
         color: '',
         text: '',
-        show: false,
+        show: false
       }
       state.snackbar = snackoff
     }, 4000)
@@ -16,7 +16,10 @@ export const rootMutations = {
     state.snackbar = {
       color: '',
       text: '',
-      show: false,
+      show: false
     }
   },
+  [types.SET_THEME](state, theme) {
+    state.theme = theme
+  }
 }

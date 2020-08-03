@@ -76,13 +76,13 @@ export default {
         (v) => !!v || 'E-mail is required',
         (v) =>
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          'E-mail must be valid',
+          'E-mail must be valid'
       ],
       passwordRules: [
         (v) => !!v || 'Password is required',
         (v) => !(v.length < 8) || 'At least 8 characters',
-        (v) => !(v.length > 25) || 'Maximum 25 characters',
-      ],
+        (v) => !(v.length > 25) || 'Maximum 25 characters'
+      ]
     }
   },
   methods: {
@@ -90,24 +90,24 @@ export default {
       if (this.$refs.form.validate()) {
         let credentials = {
           username: this.email,
-          password: this.password,
+          password: this.password
         }
         this.signIn(credentials).then(() => {
           let snackbar = {
             show: true,
             color: 'success',
-            text: 'Logueado correctamente',
+            text: 'Logueado correctamente'
           }
           this.$store.commit('root/SNACKBAR', snackbar)
           this.$router.push({
-            name: 'index', //si uso path: "/mainpage" el params (props) no funciona -- params: { user: response.data.user } --
+            name: 'index' //si uso path: "/mainpage" el params (props) no funciona -- params: { user: response.data.user } --
           })
         })
       }
     },
-    ...mapActions('user', ['signIn']),
+    ...mapActions('user', ['signIn'])
   },
-  events: {},
+  events: {}
 }
 </script>
 

@@ -172,5 +172,5 @@ export const competitionMutations = {
       (item) => item.id == substitutionId
     )
     state.substitutions.splice(index, 1)
-  },
+  }
 }

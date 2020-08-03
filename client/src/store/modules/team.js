@@ -6,7 +6,7 @@ export const teamModule = {
   state: {
     teams: [],
     myTeams: [],
-    players: [],
+    players: []
   },
   getters: {
     teams: (state) => {
@@ -26,12 +26,12 @@ export const teamModule = {
     },
     playersByTeamId: (state) => (teamId) => {
       return state.players.filter((player) => player.team == teamId)
-    },
+    }
   },
   mutations: {
-    ...teamMutations,
+    ...teamMutations
   },
   actions: {
-    ...teamActions,
-  },
+    ...teamActions
+  }
 }

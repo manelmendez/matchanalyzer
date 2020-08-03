@@ -17,7 +17,7 @@ export const userMutations = {
 
   [types.SIGN_OUT](state) {
     state.user = {
-      isLogged: false,
+      isLogged: false
     }
-  },
+  }
 }

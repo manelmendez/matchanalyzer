@@ -76,22 +76,22 @@ export default {
         color: '#3F51B5',
         start: 1596021300000,
         end: 1596024000000,
-        timed: true,
+        timed: true
       },
       {
         name: 'Entreno',
         color: '#4CAF50',
         start: 1595440800000,
         end: 1595443500000,
-        timed: true,
-      },
+        timed: true
+      }
     ],
     type: 'month',
     typeToLabel: {
       month: 'Mensual',
       week: 'Semanal',
       day: 'Diario',
-      '4day': '4 Dias',
+      '4day': '4 Dias'
     },
     colors: [
       '#2196F3',
@@ -100,7 +100,7 @@ export default {
       '#00BCD4',
       '#4CAF50',
       '#FF9800',
-      '#757575',
+      '#757575'
     ],
     names: [
       'Meeting',
@@ -110,13 +110,13 @@ export default {
       'Event',
       'Birthday',
       'Conference',
-      'Party',
+      'Party'
     ],
     dragEvent: null,
     dragStart: null,
     createEvent: null,
     createStart: null,
-    extendOriginal: null,
+    extendOriginal: null
   }),
   methods: {
     startDrag({ event, timed }) {
@@ -140,7 +140,7 @@ export default {
           color: this.rndElement(this.colors),
           start: this.createStart,
           end: this.createStart,
-          timed: true,
+          timed: true
         }
 
         this.events.push(this.createEvent)
@@ -245,8 +245,8 @@ export default {
     },
     rndElement(arr) {
       return arr[this.rnd(0, arr.length - 1)]
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -4,7 +4,7 @@ import * as userActions from '../actions/userActions'
 export const userModule = {
   namespaced: true,
   state: {
-    user: {},
+    user: {}
   },
   getters: {
     user: (state) => {
@@ -12,12 +12,12 @@ export const userModule = {
     },
     isLogged: (state) => {
       return state.user.isLogged
-    },
+    }
   },
   mutations: {
-    ...userMutations,
+    ...userMutations
   },
   actions: {
-    ...userActions,
-  },
+    ...userActions
+  }
 }

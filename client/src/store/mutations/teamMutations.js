@@ -37,5 +37,5 @@ export const teamMutations = {
     let index = state.players.findIndex((item) => item.id == playerId)
     state.players.splice(index, 1)
   },
-  [types.UPLOAD_IMAGE]() {},
+  [types.UPLOAD_IMAGE]() {}
 }

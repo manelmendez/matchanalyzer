@@ -6,7 +6,7 @@ export const competitionModule = {
   state: {
     competitions: [],
     competition: {
-      teams: [],
+      teams: []
     },
     rounds: [],
     selectedRound: null,
@@ -16,7 +16,7 @@ export const competitionModule = {
     goals: [],
     assists: [],
     cards: [],
-    substitutions: [],
+    substitutions: []
   },
   getters: {
     competitions: (state) => {
@@ -99,7 +99,7 @@ export const competitionModule = {
             state.selectedRound != null
               ? state.selectedRound - 1
               : state.rounds.length - 1
-          ],
+          ]
         }
         let actualRoundTeams = [...actualCompetition.teams]
         for (let i = 0; i < actualCompetition.teams.length; i++) {
@@ -157,7 +157,7 @@ export const competitionModule = {
             awayGoalDif: 0,
             againstGoals: 0,
             homeAgainstGoals: 0,
-            awayAgainstGoals: 0,
+            awayAgainstGoals: 0
           }
           let actualRound = state.selectedRound
           for (let j = 0; j < actualRound; j++) {
@@ -438,7 +438,7 @@ export const competitionModule = {
               awayGoals: 0,
               againstGoals: 0,
               homeAgainstGoals: 0,
-              awayAgainstGoals: 0,
+              awayAgainstGoals: 0
             }
             let actualRound = r + 1
             for (let j = 0; j < actualRound; j++) {
@@ -670,12 +670,12 @@ export const competitionModule = {
       } else {
         return []
       }
-    },
+    }
   },
   mutations: {
-    ...competitionMutations,
+    ...competitionMutations
   },
   actions: {
-    ...competitionActions,
-  },
+    ...competitionActions
+  }
 }

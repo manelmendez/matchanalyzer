@@ -53,6 +53,7 @@
         <v-btn
           color="primary"
           @click.native="team ? editCompetitionTeam() : createTeam()"
+          light
           >Continue</v-btn
         >
         <v-btn text @click.native="close">Cancel</v-btn>
@@ -69,8 +70,8 @@ export default {
     team: Object,
     myTeam: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
@@ -79,7 +80,7 @@ export default {
       file: null,
       temporada: ['14/15', '15/16', '16/17', '17/18', '18/19', '19/20'],
       name: this.team ? this.team.name : '',
-      season: this.team ? this.team.season : '',
+      season: this.team ? this.team.season : ''
     }
   },
   methods: {
@@ -101,7 +102,7 @@ export default {
             let body = {
               season: this.season,
               name: this.name,
-              manager: this.user.id,
+              manager: this.user.id
             }
             if (response.status == 200) {
               body.avatar = response.data
@@ -119,7 +120,7 @@ export default {
             season: this.season,
             name: this.name,
             avatar: null,
-            manager: this.user.id,
+            manager: this.user.id
           }
           this.addTeam(body).then((response) => {
             if (response.status === 200) {
@@ -137,7 +138,7 @@ export default {
               season: this.season,
               name: this.name,
               avatar: null,
-              competition: this.competition.id,
+              competition: this.competition.id
             }
             if (response.status == 200) {
               body.avatar = response.data
@@ -153,7 +154,7 @@ export default {
             season: this.season,
             name: this.name,
             avatar: null,
-            competition: this.competition.id,
+            competition: this.competition.id
           }
           this.addNoManagerTeam(body).then((response) => {
             if (response.status === 200) {
@@ -172,15 +173,15 @@ export default {
             team: {
               season: this.season,
               name: this.name,
-              competition: this.team.competition,
-            },
+              competition: this.team.competition
+            }
           }
           if (response.status == 200) {
             body.team.avatar = response.data
           }
           let data = {
             body: body,
-            id: this.team.id,
+            id: this.team.id
           }
           this.updateTeam(data).then((response) => {
             if (response.status === 200) {
@@ -193,12 +194,12 @@ export default {
           team: {
             season: this.season,
             name: this.name,
-            competition: this.team.competition,
-          },
+            competition: this.team.competition
+          }
         }
         let data = {
           body: body,
-          id: this.team.id,
+          id: this.team.id
         }
         this.updateTeam(data)
           .then((response) => {
@@ -220,15 +221,15 @@ export default {
       'addTeam',
       'addNoManagerTeam',
       'uploadTeamImage',
-      'updateTeam',
-    ]),
+      'updateTeam'
+    ])
   },
   computed: {
     ...mapGetters({
       competition: 'competition/competition',
-      user: 'user/user',
-    }),
-  },
+      user: 'user/user'
+    })
+  }
 }
 </script>
 <style scoped></style>

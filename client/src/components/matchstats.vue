@@ -35,13 +35,13 @@ export default {
       options: {
         title: {
           display: false,
-          text: '% victorias / empates / derrotas',
+          text: '% victorias / empates / derrotas'
         },
         borderColor: 'red',
-        cutoutPercentage: 50,
-      },
+        cutoutPercentage: 50
+      }
     }
-  },
+  }
 }
 </script>
 <style scoped>

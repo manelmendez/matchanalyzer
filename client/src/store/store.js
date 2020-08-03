@@ -13,6 +13,6 @@ export default new Vuex.Store({
     user: userModule,
     competition: competitionModule,
     team: teamModule,
-    root: rootModule,
-  },
+    root: rootModule
+  }
 })

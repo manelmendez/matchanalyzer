@@ -35,35 +35,35 @@ export default {
       options: {
         title: {
           display: true,
-          text: 'Posición por jornada',
+          text: 'Posición por jornada'
         },
         scales: {
           yAxes: [
             {
               scaleLabel: {
                 display: false,
-                labelString: 'Posición',
+                labelString: 'Posición'
               },
               ticks: {
                 reverse: true,
                 max: 16,
                 min: 1,
-                stepSize: 1,
-              },
-            },
+                stepSize: 1
+              }
+            }
           ],
           xAxes: [
             {
               scaleLabel: {
                 display: false,
-                labelString: 'Jornada',
-              },
-            },
-          ],
-        },
-      },
+                labelString: 'Jornada'
+              }
+            }
+          ]
+        }
+      }
     }
-  },
+  }
 }
 </script>
 <style scoped>

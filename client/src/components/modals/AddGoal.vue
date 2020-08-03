@@ -51,21 +51,21 @@ export default {
     show: {
       type: Boolean,
       required: true,
-      default: false,
+      default: false
     },
     players: {
       type: Array,
-      required: true,
+      required: true
     },
     duration: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       player: null,
-      minute: null,
+      minute: null
     }
   },
   methods: {
@@ -76,10 +76,10 @@ export default {
       this.$emit('confirm', {
         playerId: this.player.id,
         minute: this.minute,
-        assist: null,
+        assist: null
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

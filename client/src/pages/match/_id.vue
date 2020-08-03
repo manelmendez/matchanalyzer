@@ -76,13 +76,13 @@ import AddMatchpart from '../../components/modals/AddMatchpart'
 export default {
   components: {
     addMatchStatsContent,
-    AddMatchpart,
+    AddMatchpart
   },
   data() {
     return {
       constants: constants,
       addMatchpartDialog: false,
-      dataLoaded: false,
+      dataLoaded: false
     }
   },
   methods: {
@@ -100,7 +100,7 @@ export default {
         matchId: this.$route.params.matchId,
         team: this.match.localTeam.manager
           ? this.match.localTeam.id
-          : this.match.awayTeam.id,
+          : this.match.awayTeam.id
       }
       let response = await this.addMatchpart(matchpart)
       if (response.status == 200) {
@@ -156,8 +156,8 @@ export default {
       getGoalsByMatchId: 'competition/getGoalsByMatchId',
       getAssistsByMatchId: 'competition/getAssistsByMatchId',
       getCardsByMatchId: 'competition/getCardsByMatchId',
-      getSubstitutionsByMatchId: 'competition/getSubstitutionsByMatchId',
-    }),
+      getSubstitutionsByMatchId: 'competition/getSubstitutionsByMatchId'
+    })
   },
   async created() {
     await this.getMatch(this.$route.params.matchId)
@@ -202,7 +202,7 @@ export default {
       return this.$store.getters['competition/substitutionsByMatch'](
         this.$route.params.matchId
       )
-    },
+    }
   },
   watch: {
     async match() {
@@ -223,8 +223,8 @@ export default {
         this.match.awayTeam.id
       )
       this.putData()
-    },
-  },
+    }
+  }
 }
 </script>
 
