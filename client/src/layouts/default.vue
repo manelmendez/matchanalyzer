@@ -6,18 +6,17 @@
       flat
       clipped-left
       collapse-on-scroll
-      :color="actualTheme == 'black' ? '#1e1e1e' : 'primary darken-1'"
+      :color="dark ? '#1e1e1e' : 'primary darken-1'"
       height="50px"
     >
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
         class="white--text"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title
-        @click="changeTheme"
-        class="white--text"
-        style="cursor: pointer;"
-        >MatchAnalyzer</v-toolbar-title
+      <v-toolbar-title :to="'/'" class="white--text" style="cursor: pointer;">
+        <router-link to="/" class="toolbar-title"
+          >MatchAnalyzer</router-link
+        ></v-toolbar-title
       >
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -40,13 +39,7 @@
             @click="selectTheme(item)"
           >
             <v-row justify="center">
-              <v-avatar
-                :color="
-                  item.value.primary == '#EA80FC' ? 'black' : item.value.primary
-                "
-                size="36"
-              >
-              </v-avatar>
+              <v-avatar :color="item.value.primary" size="36"> </v-avatar>
             </v-row>
           </v-list-item>
         </v-list>
@@ -151,7 +144,7 @@ export default {
       this.$router.push('/login')
     },
     ...mapActions('user', ['signOut']),
-    changeTheme() {
+    randomTheme() {
       let randomTheme = this.themes[
         Math.floor(Math.random() * this.themes.length)
       ]
@@ -168,11 +161,8 @@ export default {
       window.localStorage.setItem('theme', theme.name)
       this.actualTheme = theme.name
       store.commit('root/SET_THEME', theme.name)
-      if (this.$vuetify.theme.dark) {
-        this.$vuetify.theme.themes.dark = theme.value
-      } else {
-        this.$vuetify.theme.themes.light = theme.value
-      }
+      this.$vuetify.theme.themes.dark = theme.value
+      this.$vuetify.theme.themes.light = theme.value
     }
   },
   computed: {

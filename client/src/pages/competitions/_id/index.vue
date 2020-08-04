@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-tabs
       centered
-      :background-color="theme == 'black' ? '#1e1e1e' : 'primary darken-1'"
+      :background-color="dark ? '#1e1e1e' : 'primary'"
       dark
       grow
       icons-and-text
@@ -48,7 +48,10 @@ export default {
       competition: 'competition/competition',
       user: 'user/user',
       theme: 'root/theme'
-    })
+    }),
+    dark() {
+      return this.$vuetify.theme.dark
+    }
   },
   created: async function () {
     //do something after creating vue instance
