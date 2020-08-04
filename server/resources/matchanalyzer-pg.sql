@@ -202,7 +202,7 @@ CREATE TABLE matchanalyzer.matches (
     id bigint NOT NULL,
     "localTeam" bigint,
     "awayTeam" bigint,
-    matchday date,
+    "matchDay" date,
     round bigint NOT NULL,
     competition bigint NOT NULL,
     "localTeamGoals" bigint NOT NULL,
@@ -499,6 +499,18 @@ ALTER TABLE matchanalyzer.users_id_seq OWNER TO matchanalyzer;
 
 ALTER SEQUENCE matchanalyzer.users_id_seq OWNED BY matchanalyzer.users.id;
 
+
+--
+-- Name: a; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.a (
+    name text
+);
+
+
+ALTER TABLE public.a OWNER TO postgres;
+
 --
 -- Name: assists id; Type: DEFAULT; Schema: matchanalyzer; Owner: matchanalyzer
 --
@@ -606,7 +618,6 @@ COPY matchanalyzer.cards (id, minute, type, player, "matchId", "userId", matchpa
 COPY matchanalyzer.competitions (id, name, season, discipline, category, manager, "signupDate", "userId") FROM stdin;
 3	2a División Grupo 5	19/20	F7	Alevín	4	2019-11-22 15:23:25+01	4
 6	1a División Grupo 2	18/19	F7	Alevín	4	2020-01-17 12:41:28+01	4
-10	2a División Grupo 5asdasd	19/21	F8	Alevín	4	2020-07-11 01:45:49.255+02	4
 \.
 
 
@@ -646,7 +657,7 @@ COPY matchanalyzer.goals (id, minute, type, player, "matchId", "userId", matchpa
 -- Data for Name: matches; Type: TABLE DATA; Schema: matchanalyzer; Owner: matchanalyzer
 --
 
-COPY matchanalyzer.matches (id, "localTeam", "awayTeam", matchday, round, competition, "localTeamGoals", "awayTeamGoals", "userId") FROM stdin;
+COPY matchanalyzer.matches (id, "localTeam", "awayTeam", "matchDay", round, competition, "localTeamGoals", "awayTeamGoals", "userId") FROM stdin;
 6	18	19	2019-12-03	13	3	4	5	4
 7	20	21	2019-12-03	13	3	2	1	4
 8	16	22	2019-12-03	13	3	12	5	4
@@ -1137,6 +1148,17 @@ COPY matchanalyzer.players (id, name, avatar, year, team, "position", "userId") 
 8	Roberto Tomás	assets/images/person_icon.png	2009	13	MP	4
 9	Taemin Noh	assets/images/person_icon.png	2009	13	DC	4
 10	Welson Jiménez	assets/images/person_icon.png	2009	13	DC	4
+13	Michele Grondona	assets/images/person_icon.png	2007	31	CT	4
+15	Andrés Torres Castellarnau	assets/images/person_icon.png	2007	31	LD	4
+16	Natxo Montero Raya	assets/images/person_icon.png	2007	31	LI	4
+21	Alejandro Santiago Vargas	assets/images/person_icon.png	2007	31	DC	4
+12	David Lloret Montes	\N	2007	31	PT	4
+14	Álex Carrillo Espejo	\N	2007	31	LD	4
+18	Germán Guillén Sala	\N	2007	31	MC	4
+17	Xavi Pérez Molinero	\N	2007	31	MCD	4
+20	Hugo Recio Punzano	\N	2007	31	DC	4
+19	Pol Mora Cañete	\N	2007	31	MP	4
+11	Daniel Oliva Bermúdez	\N	2007	31	PT	4
 \.
 
 
@@ -1262,7 +1284,19 @@ COPY matchanalyzer.users (id, email, name, avatar, provider, provider_id, passwo
 12	aa@a.aa	Manel Mendez	\N	local	\N	$2a$10$JJY4J/NKhtCyfki2PfoW0edjNIdGVvXm3UCE.CpwzAXR0beOEb.DO	2020-07-13 01:33:17.976+02	\N	user
 14	aa@aa.aa	Manel Mendez	\N	local	\N	$2a$10$1zgk9N6woAiDRkrtEgCv/.FOXqnzNbOmo8w6ZRSmLWVfBPgC9egQ2	2020-07-13 01:35:17.833+02	\N	user
 15	aaa@aa.aa	Manel Mendez	\N	local	\N	$2a$10$OehIr5e9OsPiKnWftnbvquuFToVh5Clre.lh0n45zkoLxyJn4u3v2	2020-07-13 01:36:33.111+02	2020-07-13 01:36:33.111+02	user
-4	manel@gmail.com	Manel Méndez	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-07-15 01:09:09.303+02	user
+17	aaaa@aa.aa	Manel Mendez	\N	local	\N	$2a$10$cmV7OftCipDE2HBDX4jvUuDlkrAccloDsoudZjy4NHxLgSo9ofkIW	2020-07-15 18:54:43.285+02	2020-07-15 18:54:43.285+02	user
+21	aaaa@aa.aaaa	Manel asMendez	\N	local	\N	$2a$10$y8gcRXoQDI9njdiwOxrZ7ue8daZq3keVF.xNQUrwS4nVjgioU2eB2	2020-07-15 20:00:09.308+02	2020-07-15 20:00:09.308+02	user
+23	manelasd@gmail.com	\N	\N	local	\N	$2a$10$JsJVRqNU3DTGM3ebZuAMm.RHhPXvwWY18kBiNulN3s88iJi6IsObC	2020-07-15 20:03:34.417+02	2020-07-15 20:03:34.417+02	user
+25	aaaa@aaa.aaaa	Manel asMendez	\N	local	\N	$2a$10$nWUEHPFk.HbuLercsAVRoerACKgzx2N8DA4sFynOhI5L2Wzd.eKLe	2020-07-15 20:04:02.969+02	2020-07-15 20:04:02.969+02	user
+4	manel@gmail.com	Manel Méndez	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-08-04 02:58:57.579+02	user
+\.
+
+
+--
+-- Data for Name: a; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.a (name) FROM stdin;
 \.
 
 
@@ -1284,7 +1318,7 @@ SELECT pg_catalog.setval('matchanalyzer.cards_id_seq', 1, true);
 -- Name: competitions_id_seq; Type: SEQUENCE SET; Schema: matchanalyzer; Owner: matchanalyzer
 --
 
-SELECT pg_catalog.setval('matchanalyzer.competitions_id_seq', 11, true);
+SELECT pg_catalog.setval('matchanalyzer.competitions_id_seq', 19, true);
 
 
 --
@@ -1319,7 +1353,7 @@ SELECT pg_catalog.setval('matchanalyzer.minutes_id_seq', 62, true);
 -- Name: players_id_seq; Type: SEQUENCE SET; Schema: matchanalyzer; Owner: matchanalyzer
 --
 
-SELECT pg_catalog.setval('matchanalyzer.players_id_seq', 10, true);
+SELECT pg_catalog.setval('matchanalyzer.players_id_seq', 21, true);
 
 
 --
@@ -1340,14 +1374,14 @@ SELECT pg_catalog.setval('matchanalyzer.substitutions_id_seq', 11, true);
 -- Name: teams_id_seq; Type: SEQUENCE SET; Schema: matchanalyzer; Owner: matchanalyzer
 --
 
-SELECT pg_catalog.setval('matchanalyzer.teams_id_seq', 49, true);
+SELECT pg_catalog.setval('matchanalyzer.teams_id_seq', 52, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: matchanalyzer; Owner: matchanalyzer
 --
 
-SELECT pg_catalog.setval('matchanalyzer.users_id_seq', 15, true);
+SELECT pg_catalog.setval('matchanalyzer.users_id_seq', 25, true);
 
 
 --
