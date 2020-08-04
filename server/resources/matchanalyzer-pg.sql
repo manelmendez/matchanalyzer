@@ -16,9 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-CREATE DATABASE matchanalyzer;
-GRANT ALL PRIVILEGES ON DATABASE matchnalyzer TO matchnalyzer;
-
 --
 -- Name: matchanalyzer; Type: SCHEMA; Schema: -; Owner: matchanalyzer
 --
