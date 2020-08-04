@@ -499,22 +499,6 @@ ALTER TABLE matchanalyzer.users_id_seq OWNER TO matchanalyzer;
 
 ALTER SEQUENCE matchanalyzer.users_id_seq OWNED BY matchanalyzer.users.id;
 
-
---
--- Name: a; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.a (
-    name text
-);
-
-
-ALTER TABLE public.a OWNER TO postgres;
-
---
--- Name: assists id; Type: DEFAULT; Schema: matchanalyzer; Owner: matchanalyzer
---
-
 ALTER TABLE ONLY matchanalyzer.assists ALTER COLUMN id SET DEFAULT nextval('matchanalyzer.assists_id_seq'::regclass);
 
 
@@ -1289,14 +1273,6 @@ COPY matchanalyzer.users (id, email, name, avatar, provider, provider_id, passwo
 23	manelasd@gmail.com	\N	\N	local	\N	$2a$10$JsJVRqNU3DTGM3ebZuAMm.RHhPXvwWY18kBiNulN3s88iJi6IsObC	2020-07-15 20:03:34.417+02	2020-07-15 20:03:34.417+02	user
 25	aaaa@aaa.aaaa	Manel asMendez	\N	local	\N	$2a$10$nWUEHPFk.HbuLercsAVRoerACKgzx2N8DA4sFynOhI5L2Wzd.eKLe	2020-07-15 20:04:02.969+02	2020-07-15 20:04:02.969+02	user
 4	manel@gmail.com	Manel Méndez	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-08-04 02:58:57.579+02	user
-\.
-
-
---
--- Data for Name: a; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.a (name) FROM stdin;
 \.
 
 
