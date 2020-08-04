@@ -16,19 +16,6 @@ services:
   #     MYSQL_DATABASE: 'matchanalyzer'
   #   networks:
   #     - ma_backend
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   container_name: "phpmyadmin"
-  #   stdin_open: true
-  #   tty: true
-  #   restart: always
-  #   environment:
-  #     PMA_HOST: mysql
-  #     PMA_PORT: 3306
-  #   ports:
-  #     - "1111:80"
-  #   networks:
-  #     - ma_backend
   db:
     image: "postgres" # use latest official postgres version
     container_name: "postgres"
@@ -65,7 +52,6 @@ services:
       - db
     environment:
       PMA_HOST: db
-    #   PMA_PORT: 3306
     ports:
       - "9009:9000"
     networks:
