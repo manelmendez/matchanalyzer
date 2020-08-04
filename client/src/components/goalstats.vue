@@ -2,7 +2,7 @@
   <v-card class="mt-9">
     <v-sheet
       class="v-sheet--offset mx-auto"
-      color="rgb(255,255,255,0.9)"
+      color="rgb(220,220,220,0.9)"
       elevation="12"
       max-width="calc(100% - 32px)"
       max-height="calc(100% - 32px)"

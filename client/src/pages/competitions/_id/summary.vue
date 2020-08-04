@@ -54,7 +54,7 @@
         <v-card v-if="topScorers.length != 0" class="mt-9 no-teams">
           <v-sheet
             class="v-sheet--offset mx-auto"
-            color="#e91e63"
+            color="primary"
             elevation="12"
             max-width="calc(100% - 32px)"
             max-height="calc(100% - 32px)"
@@ -93,7 +93,7 @@
         <v-card v-if="mostTrashed.length != 0" class="mt-9 no-teams">
           <v-sheet
             class="v-sheet--offset mx-auto"
-            color="#4caf50"
+            color="primary"
             elevation="12"
             max-width="calc(100% - 32px)"
             max-height="calc(100% - 32px)"
@@ -132,7 +132,7 @@
         <v-card v-if="topDifference.length != 0" class="mt-9 no-teams">
           <v-sheet
             class="v-sheet--offset mx-auto"
-            color="#00cae3"
+            color="primary"
             elevation="12"
             max-width="calc(100% - 32px)"
             max-height="calc(100% - 32px)"

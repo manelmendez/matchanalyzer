@@ -101,14 +101,10 @@ export default {
     }
   },
   methods: {
+    // TODO mover esto a store
     getTeamStats() {
       axios
-        .get(
-          'getTeamStats/' +
-            this.team.id +
-            '/competition/' +
-            this.team.competition
-        )
+        .get('teams/' + this.team.id + '/competition/' + this.team.competition)
         .then((response) => {
           this.teamStats = response.data.teamStats
         })
