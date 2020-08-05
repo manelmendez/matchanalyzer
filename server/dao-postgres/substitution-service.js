@@ -10,7 +10,7 @@ const findById = async (id, userId) => {
 
 const findByMatch = async (id, userId) => {
   const result = await con.query(
-    'SELECT * FROM substitutions WHERE "matchId" = ? AND "userId" = ?',
+    'SELECT * FROM substitutions WHERE "matchId" = $1 AND "userId" = $2',
     [id, userId]
   )
   return result.rows

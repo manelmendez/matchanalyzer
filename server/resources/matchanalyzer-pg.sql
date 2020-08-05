@@ -391,7 +391,7 @@ CREATE TABLE matchanalyzer.substitutions (
     "playerIn" bigint,
     "playerOut" bigint,
     minute bigint DEFAULT '0'::bigint,
-    matchid bigint,
+    "matchId" bigint,
     "userId" bigint NOT NULL,
     matchpart bigint
 );
@@ -1207,7 +1207,7 @@ COPY matchanalyzer.rounds (id, name, date, competition, "userId") FROM stdin;
 -- Data for Name: substitutions; Type: TABLE DATA; Schema: matchanalyzer; Owner: matchanalyzer
 --
 
-COPY matchanalyzer.substitutions (id, "playerIn", "playerOut", minute, matchid, "userId", matchpart) FROM stdin;
+COPY matchanalyzer.substitutions (id, "playerIn", "playerOut", minute, "matchId", "userId", matchpart) FROM stdin;
 5	3	4	7	10	4	25
 6	5	6	7	10	4	25
 7	8	9	7	10	4	25
@@ -1684,7 +1684,7 @@ CREATE INDEX idx_16455_round_userid ON matchanalyzer.rounds USING btree ("userId
 -- Name: idx_16462_substitution_match; Type: INDEX; Schema: matchanalyzer; Owner: matchanalyzer
 --
 
-CREATE INDEX idx_16462_substitution_match ON matchanalyzer.substitutions USING btree (matchid);
+CREATE INDEX idx_16462_substitution_match ON matchanalyzer.substitutions USING btree ("matchId");
 
 
 --
@@ -1989,7 +1989,7 @@ ALTER TABLE ONLY matchanalyzer.rounds
 --
 
 ALTER TABLE ONLY matchanalyzer.substitutions
-    ADD CONSTRAINT substitution_match FOREIGN KEY (matchid) REFERENCES matchanalyzer.matches(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT substitution_match FOREIGN KEY ("matchId") REFERENCES matchanalyzer.matches(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

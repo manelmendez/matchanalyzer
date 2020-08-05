@@ -19,30 +19,40 @@
         ></v-toolbar-title
       >
       <v-spacer></v-spacer>
-      <v-menu offset-y>
+      <v-menu offset-y :close-on-content-click="false">
         <template v-slot:activator="{ on }">
           <v-btn dark v-on="on" icon>
             <v-icon>mdi-palette</v-icon>
           </v-btn>
         </template>
-        <v-list>
-          <v-list-item class="text-center">
-            <v-row class="justify-center">
-              <v-col class="text-center">
-                <v-switch dense v-model="dark" inset color="white"></v-switch>
-              </v-col>
-            </v-row>
-          </v-list-item>
-          <v-list-item
-            v-for="(item, index) in themes"
-            :key="index"
-            @click="selectTheme(item)"
-          >
-            <v-row justify="center">
-              <v-avatar :color="item.value.primary" size="36"> </v-avatar>
-            </v-row>
-          </v-list-item>
-        </v-list>
+        <v-card>
+          <v-list>
+            <v-list-item class="text-center">
+              <v-row class="justify-center">
+                <v-col class="text-center">
+                  <v-switch
+                    dense
+                    v-model="dark"
+                    inset
+                    color="white"
+                    label="Dark"
+                  ></v-switch>
+                </v-col>
+              </v-row>
+            </v-list-item>
+            <v-divider></v-divider>
+            <v-subheader class="justify-center">Elegir tema</v-subheader>
+            <v-list-item
+              v-for="(item, index) in themes"
+              :key="index"
+              @click="selectTheme(item)"
+            >
+              <v-row justify="center">
+                <v-avatar :color="item.value.primary" size="36"> </v-avatar>
+              </v-row>
+            </v-list-item>
+          </v-list>
+        </v-card>
       </v-menu>
       <v-menu open-on-hover offset-y id="user">
         <template v-slot:activator="{ on }">
