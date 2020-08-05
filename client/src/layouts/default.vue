@@ -19,7 +19,13 @@
         ></v-toolbar-title
       >
       <v-spacer></v-spacer>
-      <v-menu offset-y :close-on-content-click="false">
+      <v-menu
+        offset-y
+        :close-on-content-click="false"
+        transition="slide-y-transition"
+        rounded="b-xl"
+        :nudge-width="140"
+      >
         <template v-slot:activator="{ on }">
           <v-btn dark v-on="on" icon>
             <v-icon>mdi-palette</v-icon>
@@ -27,18 +33,14 @@
         </template>
         <v-card>
           <v-list>
-            <v-list-item class="text-center">
-              <v-row class="justify-center">
-                <v-col class="text-center">
-                  <v-switch
-                    dense
-                    v-model="dark"
-                    inset
-                    color="white"
-                    label="Dark"
-                  ></v-switch>
-                </v-col>
-              </v-row>
+            <v-list-item class="text-center justify-center">
+              <v-switch
+                dense
+                v-model="dark"
+                inset
+                color="white"
+                label="Dark"
+              ></v-switch>
             </v-list-item>
             <v-divider></v-divider>
             <v-subheader class="justify-center">Elegir tema</v-subheader>
@@ -54,7 +56,7 @@
           </v-list>
         </v-card>
       </v-menu>
-      <v-menu open-on-hover offset-y id="user">
+      <v-menu offset-y id="user" :close-on-content-click="false">
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" icon dark class="mr-5">
             <v-icon>mdi-account-circle</v-icon>
