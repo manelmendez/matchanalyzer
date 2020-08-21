@@ -51,125 +51,25 @@
     </v-card>
     <v-row>
       <v-col cols="12" sm="12" md="6" lg="4">
-        <v-card v-if="topScorers.length != 0" class="mt-9 no-teams">
-          <v-sheet
-            class="v-sheet--offset mx-auto"
-            color="primary"
-            elevation="12"
-            max-width="calc(100% - 32px)"
-            max-height="calc(100% - 32px)"
-          >
-            <v-card class="transparent">
-              <v-card-text v-for="i in 4" :key="i" class="white--text">
-                <v-row no-gutters>
-                  <v-col cols="9">
-                    <v-avatar tile size="36">
-                      <v-img
-                        :src="constants.ADDRESS + topScorers[i - 1].avatar"
-                        @error="
-                          topScorers[i - 1].avatar = constants.DEFAULT_TEAM_URL
-                        "
-                        contain
-                      />
-                    </v-avatar>
-                    {{ topScorers[i - 1].name }}</v-col
-                  >
-                  <v-col align-self="center"
-                    >{{ topScorers[i - 1].stats.goals }}
-                    <v-icon class="white--text">mdi-soccer</v-icon></v-col
-                  >
-                </v-row>
-              </v-card-text>
-            </v-card>
-          </v-sheet>
-          <v-card-text class="pt-0">
-            <v-card-title class="justify-center"
-              >Equipos más goleadores</v-card-title
-            >
-          </v-card-text>
-        </v-card>
+        <TopScorers
+          v-if="topScorers.length != 0"
+          :topScorers="topScorers"
+        ></TopScorers>
       </v-col>
       <v-col cols="12" sm="12" md="6" lg="4">
-        <v-card v-if="mostTrashed.length != 0" class="mt-9 no-teams">
-          <v-sheet
-            class="v-sheet--offset mx-auto"
-            color="primary"
-            elevation="12"
-            max-width="calc(100% - 32px)"
-            max-height="calc(100% - 32px)"
-          >
-            <v-card class="transparent">
-              <v-card-text v-for="i in 4" :key="i" class="white--text">
-                <v-row no-gutters>
-                  <v-col cols="9">
-                    <v-avatar tile size="36">
-                      <v-img
-                        :src="constants.ADDRESS + mostTrashed[i - 1].avatar"
-                        @error="
-                          mostTrashed[i - 1].avatar = constants.DEFAULT_TEAM_URL
-                        "
-                        contain
-                      />
-                    </v-avatar>
-                    {{ mostTrashed[i - 1].name }}</v-col
-                  >
-                  <v-col
-                    >{{ mostTrashed[i - 1].stats.againstGoals }}
-                    <v-icon class="white--text">mdi-soccer</v-icon></v-col
-                  >
-                </v-row>
-              </v-card-text>
-            </v-card>
-          </v-sheet>
-          <v-card-text class="pt-0">
-            <v-card-title class="justify-center"
-              >Equipos menos goleados</v-card-title
-            >
-          </v-card-text>
-        </v-card>
+        <MostTrashed
+          v-if="mostTrashed.length != 0"
+          :mostTrashed="mostTrashed"
+        ></MostTrashed>
       </v-col>
       <v-col cols="12" sm="12" md="6" lg="4">
-        <v-card v-if="topDifference.length != 0" class="mt-9 no-teams">
-          <v-sheet
-            class="v-sheet--offset mx-auto"
-            color="primary"
-            elevation="12"
-            max-width="calc(100% - 32px)"
-            max-height="calc(100% - 32px)"
-          >
-            <v-card class="transparent">
-              <v-card-text v-for="i in 4" :key="i" class="white--text">
-                <v-row no-gutters>
-                  <v-col cols="9">
-                    <v-avatar tile size="36">
-                      <v-img
-                        :src="constants.ADDRESS + topDifference[i - 1].avatar"
-                        @error="
-                          topDifference[i - 1].avatar =
-                            constants.DEFAULT_TEAM_URL
-                        "
-                        contain
-                      />
-                    </v-avatar>
-                    {{ topDifference[i - 1].name }}</v-col
-                  >
-                  <v-col
-                    >{{ topDifference[i - 1].stats.goalDif }}
-                    <v-icon class="white--text">mdi-soccer</v-icon></v-col
-                  >
-                </v-row>
-              </v-card-text>
-            </v-card>
-          </v-sheet>
-          <v-card-text class="pt-0">
-            <v-card-title class="justify-center"
-              >Mejor diferencia de goles</v-card-title
-            >
-          </v-card-text>
-        </v-card>
+        <TopDifference
+          v-if="topDifference.length != 0"
+          :topDifference="topDifference"
+        ></TopDifference>
       </v-col>
     </v-row>
-    <v-row dense>
+    <v-row dense v-if="competition.teams">
       <v-col
         cols="6"
         sm="4"
@@ -183,7 +83,10 @@
           class="teamCard d-flex flex-column"
           min-height="100%"
           @click.native.stop="
-            $router.push('/teams/' + team.id + '/competitionstats')
+            $router.push({
+              name: 'competitionStats',
+              params: { teamId: team.id }
+            })
           "
         >
           <v-col>
@@ -324,10 +227,16 @@ import { mapActions, mapGetters } from 'vuex'
 import constants from '../../../assets/constants/constants'
 import CreateTeam from '../../../components/modals/CreateTeam'
 import DeleteDialog from '../../../components/modals/DeleteDialog'
+import TopScorers from '../../../components/competition/summary/topScorers'
+import MostTrashed from '../../../components/competition/summary/mostTrashed'
+import TopDifference from '../../../components/competition/summary/topDifference'
 export default {
   components: {
     CreateTeam,
-    DeleteDialog
+    DeleteDialog,
+    TopScorers,
+    MostTrashed,
+    TopDifference
   },
   data() {
     return {
@@ -369,31 +278,75 @@ export default {
       //coger el numero de round y ponerlo en selectedRound
       let str = item.name
       let res = str.split(' ')
-      this.changeRound(res[1])
+      // this.changeRound(res[1])
+      this.$router.push({
+        name: 'summary',
+        params: {
+          id: this.$route.params.id,
+          roundId: res[1]
+        }
+      })
+    },
+    previousRound() {
+      const actualRound =
+        this.$route.params.roundId == 'latest'
+          ? this.rounds.length
+          : this.$route.params.roundId
+      this.$router.push({
+        name: 'summary',
+        params: {
+          id: this.$route.params.id,
+          roundId: Number(actualRound) - 1
+        }
+      })
+    },
+    nextRound() {
+      const actualRound =
+        this.$route.params.roundId == 'latest'
+          ? this.rounds.length
+          : this.$route.params.roundId
+      this.$router.push({
+        name: 'summary',
+        params: {
+          id: this.$route.params.id,
+          roundId: Number(actualRound) + 1
+        }
+      })
     },
     ...mapActions({
       getCompetition: 'competition/getCompetition',
       deleteTeam: 'team/deleteTeam',
-      updateTeam: 'team/updateTeam',
-      changeRound: 'competition/changeRound',
-      previousRound: 'competition/previousRound',
-      nextRound: 'competition/nextRound'
+      updateTeam: 'team/updateTeam'
     })
   },
   async created() {
     // await this.changeRound(this.rounds.length -1)
   },
   computed: {
+    round() {
+      return this.$store.getters['competition/round'](
+        this.$route.params.roundId
+      )
+    },
+    topScorers() {
+      return this.$store.getters['competition/topScorers'](
+        this.$route.params.roundId
+      )
+    },
+    mostTrashed() {
+      return this.$store.getters['competition/mostTrashed'](
+        this.$route.params.roundId
+      )
+    },
+    topDifference() {
+      return this.$store.getters['competition/topDifference'](
+        this.$route.params.roundId
+      )
+    },
     ...mapGetters({
       competition: 'competition/competition',
       myTeams: 'team/myTeams',
-      rounds: 'competition/rounds',
-      round: 'competition/round',
-      selectedRound: 'competition/selectedRound',
-      rankedTeams: 'competition/rankedTeams',
-      topScorers: 'competition/topScorers',
-      mostTrashed: 'competition/mostTrashed',
-      topDifference: 'competition/topDifference'
+      rounds: 'competition/rounds'
     }),
     myTeamsWithoutCompetition() {
       let teams = []

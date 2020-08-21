@@ -59,10 +59,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
 import constants from '../../../assets/constants/constants'
-import classificationTable from '../../../components/classificationTable'
+import classificationTable from '../../../components/competition/classificationTable'
 export default {
   name: 'classification',
   components: {
@@ -73,21 +72,55 @@ export default {
   }),
   methods: {
     changeResultRound(item) {
-      //coger el numero de round y ponerlo en selectedRound
       let str = item.name
       let res = str.split(' ')
-      this.changeRound(res[1])
+      this.$router.push({
+        name: 'classification',
+        params: {
+          id: this.$route.params.id,
+          roundId: res[1]
+        }
+      })
     },
-    ...mapActions('competition', ['changeRound', 'previousRound', 'nextRound'])
+    previousRound() {
+      const actualRound =
+        this.$route.params.roundId == 'latest'
+          ? this.rounds.length
+          : this.$route.params.roundId
+      this.$router.push({
+        name: 'classification',
+        params: {
+          id: this.$route.params.id,
+          roundId: Number(actualRound) - 1
+        }
+      })
+    },
+    nextRound() {
+      const actualRound =
+        this.$route.params.roundId == 'latest'
+          ? this.rounds.length
+          : this.$route.params.roundId
+      this.$router.push({
+        name: 'classification',
+        params: {
+          id: this.$route.params.id,
+          roundId: Number(actualRound) + 1
+        }
+      })
+    }
   },
   computed: {
-    ...mapGetters('competition', [
-      'competition',
-      'selectedRound',
-      'rankedTeams',
-      'rounds',
-      'round'
-    ])
+    ...mapGetters('competition', ['competition', 'rounds']),
+    round() {
+      return this.$store.getters['competition/round'](
+        this.$route.params.roundId
+      )
+    },
+    rankedTeams() {
+      return this.$store.getters['competition/rankedTeams'](
+        this.$route.params.roundId
+      )
+    }
   }
 }
 </script>

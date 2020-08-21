@@ -7,6 +7,7 @@ async function addMinute(req, res) {
     position: req.body.position,
     matchpart: req.body.matchpartId,
     matchId: req.body.matchId,
+    roundId: req.body.roundId,
     userId: userId
   }
   try {

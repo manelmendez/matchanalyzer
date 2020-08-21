@@ -15,13 +15,13 @@
       <template v-slot:item.equipos="{ item }">
         <router-link
           :class="item.localTeam.id == team.id ? 'team' : 'rival'"
-          :to="'/teams/' + item.localTeam.id + '/competitionstats'"
+          :to="item.localTeam.id"
           >{{ item.localTeam.name }}</router-link
         >
         -
         <router-link
           :class="item.awayTeam.id == team.id ? 'team' : 'rival'"
-          :to="'/teams/' + item.awayTeam.id + '/competitionstats'"
+          :to="item.awayTeam.id"
           >{{ item.awayTeam.name }}</router-link
         >
       </template>

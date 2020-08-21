@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import BarChart from '../components/charts/BarChart.js'
+import BarChart from '../../../components/charts/BarChart.js'
 
 export default {
   components: { BarChart },

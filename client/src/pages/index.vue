@@ -67,8 +67,8 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { Carousel, Slide } from 'vue-carousel'
-import teamCarousel from '../components/teamCarousel'
-import competitionCarousel from '../components/competitionCarousel'
+import teamCarousel from '../components/index/teamCarousel'
+import competitionCarousel from '../components/index/competitionCarousel'
 
 export default {
   name: 'index',

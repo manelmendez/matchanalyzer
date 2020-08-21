@@ -25,14 +25,16 @@ const results = () =>
     /* webpackChunkName: "Results" */ './pages/competitions/_id/results.vue'
   )
 const match = () =>
-  import(/* webpackChunkName: "Match" */ './pages/match/_id.vue')
+  import(
+    /* webpackChunkName: "Match" */ './pages/competitions/_id/match/_id.vue'
+  )
 const classification = () =>
   import(
     /* webpackChunkName: "Classification" */ './pages/competitions/_id/classification.vue'
   )
 const competitionStats = () =>
   import(
-    /* webpackChunkName: "CompStats" */ './pages/teams/_id/competitionstats.vue'
+    /* webpackChunkName: "CompStats" */ './pages/competitions/_id/team/_id.vue'
   )
 const planification = () =>
   import(
@@ -79,19 +81,13 @@ const router = new VueRouter({
       meta: { requiresAuth: true, layout: 'default' }
     },
     {
-      path: '/teams/:id?/competitionstats',
-      name: 'competitionStats',
-      component: competitionStats,
-      meta: { requiresAuth: true, layout: 'default' }
-    },
-    {
       path: '/competitions',
       name: 'competitions',
       component: competitionList,
       meta: { requiresAuth: true, layout: 'default' }
     },
     {
-      path: '/competitions/:id',
+      path: '/competitions/:id/round/:roundId',
       name: 'competition-id',
       component: competitionBase,
       meta: { requiresAuth: true, layout: 'default' },
@@ -120,6 +116,12 @@ const router = new VueRouter({
       path: '/competitions/:id/match/:matchId',
       name: 'match-id',
       component: match,
+      meta: { requiresAuth: true, layout: 'default' }
+    },
+    {
+      path: '/competitions/:id/team/:teamId',
+      name: 'competitionStats',
+      component: competitionStats,
       meta: { requiresAuth: true, layout: 'default' }
     },
     {

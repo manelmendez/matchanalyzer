@@ -1,4 +1,5 @@
 import goalService from '../dao-postgres/goal-service.js'
+import playerService from '../dao-postgres/player-service.js'
 
 const addGoal = async (req, res) => {
   let userId = req.user.id
@@ -8,6 +9,7 @@ const addGoal = async (req, res) => {
     player: req.body.playerId,
     matchId: req.body.matchId,
     matchpart: req.body.matchpartId,
+    roundId: req.body.roundId,
     userId: userId
   }
   try {
@@ -53,8 +55,23 @@ const deleteGoal = async (req, res) => {
   }
 }
 
+const getPlayerTeamGoals = async (teamId, userId) => {
+  try {
+    const players = await playerService.findByTeam(teamId, userId)
+    for (const player of players) {
+      const playerGoals = await goalService.findByPlayer(player.id, userId)
+      player.goals = playerGoals
+    }
+    return players
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
 export default {
   addGoal,
   getGoalsByMatchId,
-  deleteGoal
+  deleteGoal,
+  getPlayerTeamGoals
 }

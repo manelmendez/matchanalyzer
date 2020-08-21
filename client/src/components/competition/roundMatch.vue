@@ -142,9 +142,9 @@
 <script>
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
-import CreateMatch from './modals/CreateMatch'
-import DeleteDialog from './modals/DeleteDialog'
-import constants from '../assets/constants/constants'
+import CreateMatch from '../modals/CreateMatch'
+import DeleteDialog from '../modals/DeleteDialog'
+import constants from '../../assets/constants/constants'
 export default {
   name: 'RoundMatch',
   components: {

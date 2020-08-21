@@ -136,11 +136,11 @@
 <script>
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
-import constants from '../../../assets/constants/constants'
-import positionstats from '../../../components/positionstats'
-import matchstats from '../../../components/matchstats'
-import goalstats from '../../../components/goalstats'
-import teamMatchList from '../../../components/teamMatchList'
+import constants from '../../../../assets/constants/constants'
+import positionstats from '../../../../components/competition/team/positionstats'
+import matchstats from '../../../../components/competition/team/matchstats'
+import goalstats from '../../../../components/competition/team/goalstats'
+import teamMatchList from '../../../../components/competition/team/teamMatchList'
 export default {
   components: {
     positionstats,
@@ -152,9 +152,9 @@ export default {
     constants: constants
   }),
   async created() {
-    await this.getTeam(this.$route.params.id)
-    await this.getCompetition(this.team.competition)
-    await this.getCompetitionRounds(this.team.competition)
+    await this.getTeam(this.$route.params.teamId)
+    await this.getCompetition(this.$route.params.id)
+    await this.getCompetitionRounds(this.$route.params.id)
   },
   methods: {
     getRandomInt() {
@@ -189,27 +189,29 @@ export default {
   },
   watch: {
     async id() {
-      await this.getTeam(this.$route.params.id)
-      await this.getCompetition(this.team.competition)
-      await this.getCompetitionRounds(this.team.competition)
+      await this.getTeam(this.$route.params.teamId)
+      await this.getCompetition(this.$route.params.id)
+      await this.getCompetitionRounds(this.$route.params.id)
     }
   },
   computed: {
     ...mapGetters({
-      rankedTeams: 'competition/rankedTeams',
       rounds: 'competition/rounds',
       statsPerRound: 'competition/statsPerRound'
     }),
+    rankedTeams() {
+      return this.$store.getters['competition/rankedTeams']('latest')
+    },
     team() {
-      return this.$store.getters['team/teamById'](this.$route.params.id)
+      return this.$store.getters['team/teamById'](this.$route.params.teamId)
     },
     teamMatchesPerRound() {
       return this.$store.getters['competition/teamMatchesPerRound'](
-        this.$route.params.id
+        this.$route.params.teamId
       )
     },
     id() {
-      return this.$route.params.id
+      return this.$route.params.teamId
     },
     positiondatacollection: function () {
       let labels = []
@@ -303,7 +305,7 @@ export default {
       let awayMatches = 0
       for (let i = 0; i < this.teamMatchesPerRound.length; i++) {
         let match = this.teamMatchesPerRound[i]
-        if (match.localTeam.id == this.$route.params.id) {
+        if (match.localTeam.id == this.$route.params.teamId) {
           localMatches++
           localGoals += Number(match.localTeamGoals)
           localAgainstGoals += Number(match.awayTeamGoals)

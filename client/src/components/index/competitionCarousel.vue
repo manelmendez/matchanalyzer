@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import constants from '../assets/constants/constants'
+import constants from '../../assets/constants/constants'
 
 export default {
   props: {

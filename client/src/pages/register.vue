@@ -1,5 +1,5 @@
 <template>
-  <v-content class="welcome-content">
+  <v-main class="welcome-content">
     <v-container text-center>
       <!-- REGISTER -->
       <v-row class="register" wrap justify="center">
@@ -17,6 +17,7 @@
                   label="Nombre"
                   type="text"
                   v-model="name"
+                  :rules="nameRules"
                   required
                 ></v-text-field>
                 <v-text-field
@@ -58,7 +59,7 @@
                 rounded
                 color="info"
                 @click="submit"
-                :disabled="!valid2"
+                :disabled="!valid"
                 >Registrarse</v-btn
               >
             </v-card-actions>
@@ -66,7 +67,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-content>
+  </v-main>
 </template>
 
 <script>
@@ -76,8 +77,13 @@ export default {
     return {
       e1: true,
       valid: true,
+      name: '',
       email: '',
       password: '',
+      nameRules: [
+        (v) => !!v || 'Name is required',
+        () => !'' || 'Name is required'
+      ],
       emailRules: [
         (v) => !!v || 'E-mail is required',
         (v) =>
@@ -88,8 +94,7 @@ export default {
         (v) => !!v || 'Password is required',
         (v) => !(v.length < 8) || 'At least 8 characters',
         (v) => !(v.length > 25) || 'Maximum 25 characters'
-      ],
-      name: ''
+      ]
     }
   },
   methods: {

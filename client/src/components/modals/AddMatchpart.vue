@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" persistent max-width="450">
+  <v-dialog v-model="show" persistent max-width="50%">
     <v-card>
       <v-card-title class="headline">Añadir Parte</v-card-title>
       <v-card-text>

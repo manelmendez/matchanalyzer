@@ -8,6 +8,7 @@ const addCard = async (req, res) => {
     player: req.body.playerId,
     matchId: req.body.matchId,
     matchpart: req.body.matchpartId,
+    roundId: req.body.roundId,
     userId: userId
   }
   try {
