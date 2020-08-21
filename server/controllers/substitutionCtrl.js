@@ -8,6 +8,7 @@ const addSubstitution = async (req, res) => {
     playerOut: req.body.playerOut,
     matchId: req.body.matchId,
     matchpart: req.body.matchpartId,
+    roundId: req.body.roundId,
     userId: userId
   }
   try {

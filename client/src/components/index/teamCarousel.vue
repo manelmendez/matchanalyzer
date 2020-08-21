@@ -75,7 +75,7 @@
 <script>
 import colors from 'vuetify/lib/util/colors'
 import axios from 'axios'
-import PieChart from '../components/charts/PieChart.js'
+import PieChart from '../../components/charts/PieChart.js'
 
 export default {
   props: {

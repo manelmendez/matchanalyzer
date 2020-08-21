@@ -18,14 +18,17 @@ const findByMatch = async (id, userId) => {
 
 const saveCard = async (card) => {
   const result = await con.query(
-    'INSERT INTO cards(minute, type, player, "matchId", "userId", matchpart) ' +
-      'VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
-    card.minute,
-    card.type,
-    card.player,
-    card.matchId,
-    card.userId,
-    card.matchpart
+    'INSERT INTO cards(minute, type, player, "matchId", "roundId", "userId", matchpart) ' +
+      'VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *',
+    [
+      card.minute,
+      card.type,
+      card.player,
+      card.matchId,
+      card.roundId,
+      card.userId,
+      card.matchpart
+    ]
   )
   return result.rows[0]
 }

@@ -84,7 +84,7 @@
           </v-row>
         </v-card-title>
         <v-card-text class="text-center" v-if="rounds">
-          <v-col v-if="rounds[selectedRound - 1].matches.length == 0">
+          <v-col v-if="round.matches.length == 0">
             Aún no has añadido partidos en esta jornada
           </v-col>
           <v-col v-else>
@@ -112,7 +112,7 @@
         :show="roundDialog"
         type="new"
         :roundTeams="roundTeams"
-        :round="rounds[selectedRound - 1].id"
+        :round="round.id"
         @close="roundDialog = !roundDialog"
         @confirm="createMatch"
       ></CreateMatch>
@@ -129,7 +129,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
-import roundMatch from '../../../components/roundMatch'
+import roundMatch from '../../../components/competition/roundMatch'
 import DeleteDialog from '../../../components/modals/DeleteDialog'
 import CreateMatch from '../../../components/modals/CreateMatch'
 export default {
@@ -165,7 +165,39 @@ export default {
       //coger el numero de round y ponerlo en selectedRound
       let str = item.name
       let res = str.split(' ')
-      this.changeRound(res[1])
+      this.$router.push({
+        name: 'results',
+        params: {
+          id: this.$route.params.id,
+          roundId: res[1]
+        }
+      })
+    },
+    previousRound() {
+      const actualRound =
+        this.$route.params.roundId == 'latest'
+          ? this.rounds.length
+          : this.$route.params.roundId
+      this.$router.push({
+        name: 'results',
+        params: {
+          id: this.$route.params.id,
+          roundId: Number(actualRound) - 1
+        }
+      })
+    },
+    nextRound() {
+      const actualRound =
+        this.$route.params.roundId == 'latest'
+          ? this.rounds.length
+          : this.$route.params.roundId
+      this.$router.push({
+        name: 'results',
+        params: {
+          id: this.$route.params.id,
+          roundId: Number(actualRound) + 1
+        }
+      })
     },
     async deleteRoundFunction() {
       this.loading = true
@@ -178,21 +210,21 @@ export default {
       'getCompetition',
       'addRound',
       'addMatch',
-      'changeRound',
-      'previousRound',
-      'nextRound',
       'deleteRound'
     ])
   },
   computed: {
-    ...mapGetters('competition', [
-      'competition',
-      'roundTeams',
-      'selectedRound',
-      'matches',
-      'rounds',
-      'round'
-    ])
+    ...mapGetters('competition', ['competition', 'roundTeams', 'rounds']),
+    round() {
+      return this.$store.getters['competition/round'](
+        this.$route.params.roundId
+      )
+    },
+    matches() {
+      return this.$store.getters['competition/matches'](
+        this.$route.params.roundId
+      )
+    }
   }
 }
 </script>

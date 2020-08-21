@@ -81,18 +81,6 @@ export const deleteRound = ({ commit }, id) => {
       return err.response
     })
 }
-export const changeRound = ({ commit }, round) => {
-  console.log('ACTION -- changeRound')
-  return commit(types.CHANGE_ROUND, round)
-}
-export const previousRound = ({ commit }) => {
-  console.log('ACTION -- previousRound')
-  return commit(types.PREVIOUS_ROUND)
-}
-export const nextRound = ({ commit }) => {
-  console.log('ACTION -- nextRound')
-  return commit(types.NEXT_ROUND)
-}
 
 // MATCH
 export const getMatch = ({ commit }, id) => {

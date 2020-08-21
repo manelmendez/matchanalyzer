@@ -16,7 +16,7 @@
     </v-sheet>
 
     <v-card-text class="pt-0">
-      <div class="title font-weight-light mb-2">Recorrido del equipo</div>
+      <div class="title font-weight-light mb-2">Pichichis del equipo</div>
       <div class="subheading font-weight-light grey--text">
         Temporada {{ team.season }}
       </div>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import LineChart from '../components/charts/LineChart.js'
+import LineChart from '../../../components/charts/LineChart.js'
 
 export default {
   components: { LineChart },
@@ -35,7 +35,7 @@ export default {
       options: {
         title: {
           display: true,
-          text: 'Posición por jornada'
+          text: 'Goles por jornada'
         },
         scales: {
           yAxes: [

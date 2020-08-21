@@ -113,7 +113,8 @@ export default {
       this.$router.push({
         name: 'summary',
         params: {
-          id: id
+          id: id,
+          roundId: 'latest'
         }
       })
     },

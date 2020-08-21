@@ -40,17 +40,10 @@ export const competitionMutations = {
     state.selectedRound = Number(state.rounds.length)
   },
   [types.GET_COMPETITION_ROUNDS](state, rounds) {
+    if (state.selectedRound == null) {
+      state.selectedRound = rounds.length
+    }
     state.rounds = rounds
-    state.selectedRound = rounds.length
-  },
-  [types.CHANGE_ROUND](state, round) {
-    state.selectedRound = Number(round)
-  },
-  [types.PREVIOUS_ROUND](state) {
-    state.selectedRound -= 1
-  },
-  [types.NEXT_ROUND](state) {
-    state.selectedRound += 1
   },
 
   // MATCH

@@ -27,15 +27,17 @@ const findByRound = async (ids, userId) => {
 const saveMatch = async (match) => {
   const result = await con.query(
     'INSERT INTO matches("localTeam", "awayTeam", "matchDay", round, competition,' +
-      '"localTeamGoals", "awayTeamGoals", "userId" VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
-    match.localTeam,
-    match.awayTeam,
-    match.matchDay,
-    match.round,
-    match.competition,
-    match.localTeamGoals,
-    match.awayTeamGoals,
-    match.userId
+      '"localTeamGoals", "awayTeamGoals", "userId") VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+    [
+      match.localTeam,
+      match.awayTeam,
+      match.matchDay,
+      match.round,
+      match.competition,
+      match.localTeamGoals,
+      match.awayTeamGoals,
+      match.userId
+    ]
   )
   return result.rows[0]
 }

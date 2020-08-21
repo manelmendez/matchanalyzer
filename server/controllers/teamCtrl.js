@@ -3,6 +3,7 @@
 import teamService from '../dao-postgres/team-service.js'
 import roundService from '../dao-postgres/round-service.js'
 import matchService from '../dao-postgres/match-service.js'
+import playerCtrl from './playerCtrl.js'
 
 const addTeam = async (req, res) => {
   let userId = req.user.id
@@ -428,6 +429,28 @@ const getTeamStats = async (req, res) => {
     res.status(404).send({ message: 'No hay jornadas disputadas' })
   }
 }
+
+// const getTeamScorers = async (req, res) => {
+//   let userId = req.user.id
+//   let teamId = req.params.id
+//   let competitionId = req.params.competitionId
+//   try {
+//     const players = await playerCtrl.getPlayersByTeamId(teamId, userId)
+//     const rounds = await roundService.findByCompetition(competitionId, userId)
+//     let pichichiList = []
+//     for (const round of rounds) {
+//       for (const player of players) {
+//         let pichichiItem = {
+//           playerId: player.id,
+//           playerName: player.name,
+//           totalGoals: 0,
+//           rounds: []
+//         }
+//       }
+//     }
+//   } catch (error) {
+//   }
+// }
 
 export default {
   addTeam,

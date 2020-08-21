@@ -259,15 +259,19 @@
   </v-col>
 </template>
 <script>
-import AddPlayer from '../components/modals/AddPlayer'
-import AddGoal from '../components/modals/AddGoal'
-import AddCard from '../components/modals/AddCard'
-import AddSub from '../components/modals/AddSub'
+import AddPlayer from '../../../components/modals/AddPlayer'
+import AddGoal from '../../../components/modals/AddGoal'
+import AddCard from '../../../components/modals/AddCard'
+import AddSub from '../../../components/modals/AddSub'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   props: {
     team: {
       type: Object,
+      required: true
+    },
+    roundId: {
+      type: Number,
       required: true
     },
     matchId: {
@@ -323,13 +327,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      addMatchpart: 'competition/addMatchpart',
       addMinute: 'competition/addMinute',
       addGoal: 'competition/addGoal',
       addAssist: 'competition/addAssist',
       addCard: 'competition/addCard',
       addSubstitution: 'competition/addSubstitution',
-      deleteMatchpart: 'competition/deleteMatchpart',
       deleteMinute: 'competition/deleteMinute',
       deleteGoal: 'competition/deleteGoal',
       deleteAssist: 'competition/deleteAssist',
@@ -342,6 +344,7 @@ export default {
     async addNewMinute(data) {
       let minute = {
         ...data,
+        roundId: this.roundId,
         matchId: this.matchId,
         matchpartId: this.matchpart.id
       }
@@ -359,6 +362,7 @@ export default {
     async addNewGoal(data) {
       let goal = {
         ...data,
+        roundId: this.roundId,
         matchId: this.matchId,
         matchpartId: this.matchpart.id
       }
@@ -376,6 +380,7 @@ export default {
     async addNewCard(data) {
       let card = {
         ...data,
+        roundId: this.roundId,
         matchId: this.matchId,
         matchpartId: this.matchpart.id
       }
@@ -393,6 +398,7 @@ export default {
     async addNewSub(data) {
       let sub = {
         ...data,
+        roundId: this.roundId,
         matchId: this.matchId,
         matchpartId: this.matchpart.id
       }

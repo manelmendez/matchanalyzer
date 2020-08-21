@@ -7,6 +7,7 @@ async function addMatchpart(req, res) {
     formation: req.body.formation,
     time: req.body.time,
     team: req.body.team,
+    roundId: req.body.roundId,
     userId: userId
   }
   try {
@@ -21,8 +22,9 @@ async function addMatchpart(req, res) {
       })
     }
   } catch (error) {
+    console.log(error);
     return res.status(500).send({
-      message: `Error al añadir partes ${error}`
+      message: `Error al añadir partes`
     })
   }
 }

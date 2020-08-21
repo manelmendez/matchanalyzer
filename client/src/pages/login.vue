@@ -1,5 +1,5 @@
 <template>
-  <v-content class="welcome-content">
+  <v-main class="welcome-content">
     <v-container text-center>
       <!-- LOGIN -->
       <v-row class="login" wrap justify="center">
@@ -59,7 +59,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-content>
+  </v-main>
 </template>
 
 <script>

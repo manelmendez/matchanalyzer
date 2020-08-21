@@ -7,16 +7,16 @@
       max-width="calc(100% - 32px)"
       max-height="calc(100% - 32px)"
     >
-      <pie-chart
+      <line-chart
         :chart-data="this.chartData"
         :height="this.height"
         :options="options"
         class="chartStyle"
-      ></pie-chart>
+      ></line-chart>
     </v-sheet>
 
     <v-card-text class="pt-0">
-      <div class="title font-weight-light mb-2">Partidos del equipo</div>
+      <div class="title font-weight-light mb-2">Recorrido del equipo</div>
       <div class="subheading font-weight-light grey--text">
         Temporada {{ team.season }}
       </div>
@@ -25,20 +25,42 @@
 </template>
 
 <script>
-import PieChart from '../components/charts/PieChart.js'
+import LineChart from '../../../components/charts/LineChart.js'
 
 export default {
-  components: { PieChart },
+  components: { LineChart },
   props: ['chart-data', 'height', 'team'],
   data() {
     return {
       options: {
         title: {
-          display: false,
-          text: '% victorias / empates / derrotas'
+          display: true,
+          text: 'Posición por jornada'
         },
-        borderColor: 'red',
-        cutoutPercentage: 50
+        scales: {
+          yAxes: [
+            {
+              scaleLabel: {
+                display: false,
+                labelString: 'Posición'
+              },
+              ticks: {
+                reverse: true,
+                max: 16,
+                min: 1,
+                stepSize: 1
+              }
+            }
+          ],
+          xAxes: [
+            {
+              scaleLabel: {
+                display: false,
+                labelString: 'Jornada'
+              }
+            }
+          ]
+        }
       }
     }
   }

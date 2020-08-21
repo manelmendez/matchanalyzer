@@ -45,6 +45,12 @@ api.get(
   auth.checkAuth,
   teamCtrl.getTeamStats
 )
+// api.get(
+//   '/teams/:id/competition/:competitionId/pichihi',
+//   auth.checkAuth,
+//   teamCtrl.getTeamScorers
+// )
+
 // PLAYER
 api.post('/players', auth.checkAuth, playerCtrl.addPlayer)
 api.get('/players/team/:teamId', auth.checkAuth, playerCtrl.getPlayersByTeamId)

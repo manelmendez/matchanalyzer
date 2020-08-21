@@ -9,7 +9,6 @@ export const competitionModule = {
       teams: []
     },
     rounds: [],
-    selectedRound: null,
     match: null,
     matchparts: [],
     minutes: [],
@@ -29,8 +28,12 @@ export const competitionModule = {
     rounds: (state) => {
       return state.rounds
     },
-    round: (state) => {
-      return state.rounds[state.selectedRound - 1]
+    round: (state) => (selectedRound) => {
+      if (selectedRound == 'latest') {
+        return state.rounds[state.rounds.length - 1]
+      } else {
+        return state.rounds[selectedRound - 1]
+      }
     },
     match: (state) => {
       return state.match
@@ -62,22 +65,11 @@ export const competitionModule = {
     teamById: (state) => (teamId) => {
       return state.competition.teams.find((team) => team.id == teamId)
     },
-    selectedRound: (state) => {
-      if (state.selectedRound == null) {
-        if (state.rounds) {
-          return state.rounds.length
-        }
-      } else {
-        return state.selectedRound
-      }
-    },
-    matches: (state) => {
+    matches: (state) => (selectedRound) => {
+      const selRound =
+        selectedRound == 'latest' ? state.rounds.length - 1 : selectedRound - 1
       if (state.rounds && state.rounds.length != 0) {
-        return state.rounds[
-          state.selectedRound != null
-            ? state.selectedRound - 1
-            : state.rounds.length - 1
-        ].matches
+        return state.rounds[selRound].matches
       } else {
         return []
       }
@@ -126,7 +118,7 @@ export const competitionModule = {
         return actualRoundTeams
       }
     },
-    rankedTeams: (state) => {
+    rankedTeams: (state) => (selectedRound) => {
       if (state.competition.teams && state.rounds && state.rounds.length != 0) {
         let teams = [...state.competition.teams]
         let updatedTeams = []
@@ -159,7 +151,8 @@ export const competitionModule = {
             homeAgainstGoals: 0,
             awayAgainstGoals: 0
           }
-          let actualRound = state.selectedRound
+          const actualRound =
+            selectedRound == 'latest' ? state.rounds.length : selectedRound
           for (let j = 0; j < actualRound; j++) {
             let matches = state.rounds[j].matches
             let x = 0
@@ -377,8 +370,10 @@ export const competitionModule = {
         return []
       }
     },
-    topScorers: (state, getters) => {
-      let orderTeams = JSON.parse(JSON.stringify(getters.rankedTeams))
+    topScorers: (state, getters) => (selectedRound) => {
+      let orderTeams = JSON.parse(
+        JSON.stringify(getters.rankedTeams(selectedRound))
+      )
       return JSON.parse(
         JSON.stringify(
           orderTeams.sort(function (b, a) {
@@ -387,8 +382,10 @@ export const competitionModule = {
         )
       )
     },
-    mostTrashed: (state, getters) => {
-      let orderTeams = JSON.parse(JSON.stringify(getters.rankedTeams))
+    mostTrashed: (state, getters) => (selectedRound) => {
+      let orderTeams = JSON.parse(
+        JSON.stringify(getters.rankedTeams(selectedRound))
+      )
       return JSON.parse(
         JSON.stringify(
           orderTeams.sort(function (b, a) {
@@ -397,8 +394,10 @@ export const competitionModule = {
         )
       )
     },
-    topDifference: (state, getters) => {
-      let orderTeams = JSON.parse(JSON.stringify(getters.rankedTeams))
+    topDifference: (state, getters) => (selectedRound) => {
+      let orderTeams = JSON.parse(
+        JSON.stringify(getters.rankedTeams(selectedRound))
+      )
       return JSON.parse(
         JSON.stringify(
           orderTeams.sort(function (b, a) {

@@ -22,6 +22,7 @@
           <v-spacer></v-spacer>
           <v-col>
             <v-card
+              v-if="team.competition != null"
               outline
               class="rounded-xl"
               color="primary darken-1"
@@ -41,64 +42,71 @@
           </v-col>
         </v-row>
       </v-card-title>
-      <v-data-table
-        v-if="players"
-        :headers="headers"
-        :items="players"
-        class="elevation-1 text-center"
-        hide-default-footer
-        :items-per-page="-1"
-      >
-        <template v-slot:item.avatar="{ item }">
-          <v-row class="text-center">
-            <v-img
-              :src="constants.ADDRESS + item.avatar"
-              @error="item.avatar = constants.DEFAULT_PLAYER_URL"
-              alt="avatar"
-              :contain="true"
-              height="40"
-              width="40"
-            />
-          </v-row>
-        </template>
-        <template v-slot:item.actions="{ item }">
-          <v-tooltip top>
-            <template v-slot:activator="{ on }">
-              <v-btn
-                text
-                icon
-                color="info"
-                @click=";(editingPlayer = item), (dialog = true)"
-                v-on="on"
-              >
-                <v-icon size="18">mdi-pencil</v-icon>
-              </v-btn>
+      <v-row>
+        <v-col v-if="team.competition != null">
+          Hola
+        </v-col>
+        <v-col>
+          <v-data-table
+            v-if="players"
+            :headers="headers"
+            :items="players"
+            class="elevation-1 text-center"
+            hide-default-footer
+            :items-per-page="-1"
+          >
+            <template v-slot:item.avatar="{ item }">
+              <v-row class="text-center">
+                <v-img
+                  :src="constants.ADDRESS + item.avatar"
+                  @error="item.avatar = constants.DEFAULT_PLAYER_URL"
+                  alt="avatar"
+                  :contain="true"
+                  height="40"
+                  width="40"
+                />
+              </v-row>
             </template>
-            <span>Editar jugador</span>
-          </v-tooltip>
-          <v-tooltip top>
-            <template v-slot:activator="{ on }">
-              <v-btn
-                text
-                icon
-                color="error"
-                v-on="on"
-                @click=";(deletingPlayer = item.id), (deleteDialog = true)"
-              >
-                <v-icon size="18">mdi-delete</v-icon>
-              </v-btn>
+            <template v-slot:item.actions="{ item }">
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    text
+                    icon
+                    color="info"
+                    @click=";(editingPlayer = item), (dialog = true)"
+                    v-on="on"
+                  >
+                    <v-icon size="18">mdi-pencil</v-icon>
+                  </v-btn>
+                </template>
+                <span>Editar jugador</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    text
+                    icon
+                    color="error"
+                    v-on="on"
+                    @click=";(deletingPlayer = item.id), (deleteDialog = true)"
+                  >
+                    <v-icon size="18">mdi-delete</v-icon>
+                  </v-btn>
+                </template>
+                <span>Borrar jugador</span>
+              </v-tooltip>
             </template>
-            <span>Borrar jugador</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:no-data>
-          <v-col>
-            <v-alert :value="true" type="error" icon="warning">
-              No hay jugadores en este equipo :(
-            </v-alert>
-          </v-col>
-        </template>
-      </v-data-table>
+            <template v-slot:no-data>
+              <v-col>
+                <v-alert :value="true" type="error" icon="warning">
+                  No hay jugadores en este equipo :(
+                </v-alert>
+              </v-col>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
     </v-card>
     <v-tooltip left>
       <template v-slot:activator="{ on }">

@@ -26,17 +26,18 @@
           <v-row>
             <addMatchStatsContent
               ref="localchild"
-              :team="match.localTeam"
+              v-if="match.localTeam.manager || match.awayTeam.manager"
+              :team="
+                match.localTeam.manager
+                  ? match.localTeam
+                  : match.awayTeam.manager
+                  ? match.awayTeam
+                  : null
+              "
+              :roundId="Number(match.round)"
               :matchId="Number($route.params.matchId)"
               :matchpart="part"
             ></addMatchStatsContent>
-            <!-- <v-divider vertical></v-divider>
-              <addMatchStatsContent 
-                ref="awaychild" 
-                :team="match.awayTeam" 
-                :matchId="Number($route.params.matchId)" 
-                :matchpart="part"
-              ></addMatchStatsContent> -->
           </v-row>
           <br /><br />
           <v-divider></v-divider>
@@ -70,9 +71,9 @@
 
 <script>
 import { mapActions } from 'vuex'
-import constants from '../../assets/constants/constants'
-import addMatchStatsContent from '../../components/addMatchStatsContent'
-import AddMatchpart from '../../components/modals/AddMatchpart'
+import constants from '../../../../assets/constants/constants'
+import addMatchStatsContent from '../../../../components/competition/match/addMatchStatsContent'
+import AddMatchpart from '../../../../components/modals/AddMatchpart'
 export default {
   components: {
     addMatchStatsContent,
@@ -98,18 +99,13 @@ export default {
       let matchpart = {
         ...data,
         matchId: this.$route.params.matchId,
+        roundId: this.match.round,
         team: this.match.localTeam.manager
           ? this.match.localTeam.id
           : this.match.awayTeam.id
       }
       let response = await this.addMatchpart(matchpart)
-      if (response.status == 200) {
-        if (response.data.savedPart.team == this.match.localTeam.id) {
-          this.match.localTeam.matchparts.push(response.data.savedPart)
-        } else {
-          this.match.awayTeam.matchparts.push(response.data.savedPart)
-        }
-      }
+      this.matchparts.push(response.data.savedPart)
       this.addMatchpartDialog = false
     },
     putData() {
