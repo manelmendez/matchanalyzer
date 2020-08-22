@@ -4,6 +4,7 @@ import teamService from '../dao-postgres/team-service.js'
 import roundService from '../dao-postgres/round-service.js'
 import matchService from '../dao-postgres/match-service.js'
 import goalCtrl from './goalCtrl.js'
+import cardCtrl from './cardCtrl.js'
 
 const addTeam = async (req, res) => {
   let userId = req.user.id
@@ -471,6 +472,44 @@ const getTeamScorers = async (req, res) => {
   }
 }
 
+const getTeamCards = async (req, res) => {
+  let userId = req.user.id
+  let teamId = req.params.id
+  let competitionId = req.params.competitionId
+  try {
+    const players = await cardCtrl.getPlayerTeamCards(teamId, userId)
+    const rounds = await roundService.findByCompetition(competitionId, userId)
+    let cardList = []
+    for (const player of players) {
+      let cardItem = {
+        playerId: player.id,
+        playerName: player.name,
+        totalCards: 0,
+        roundCards: []
+      }
+      for (const round of rounds) {
+        let cardsInRound = 0
+        for (const card of player.cards) {
+          if (round.id == card.roundId) {
+            cardsInRound++
+            cardItem.totalCards++
+          }
+        }
+        if (cardItem.totalCards == 0) cardItem.roundCards.push(0)
+        else cardItem.roundCards.push(cardsInRound != 0 ? cardsInRound : null)
+      }
+      cardList.push(cardItem)
+    }
+    cardList.sort((a, b) => parseFloat(b.totalCards) - parseFloat(a.totalCards))
+    res.status(200).send({ cardList: cardList })
+  } catch (error) {
+    console.log(error)
+    res
+      .status(404)
+      .send({ message: 'No hay jornadas disputadas, por lo que no hay stats' })
+  }
+}
+
 export default {
   addTeam,
   getTeam,
@@ -480,5 +519,6 @@ export default {
   updateTeam,
   deleteTeam,
   getTeamStats,
-  getTeamScorers
+  getTeamScorers,
+  getTeamCards
 }

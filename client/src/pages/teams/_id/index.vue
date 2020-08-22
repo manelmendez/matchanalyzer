@@ -51,6 +51,7 @@
             :chart-data="pichichiList"
             :height="150"
           ></PichichiChart>
+          <CardsChart :chart-data="cardList" :height="150"></CardsChart>
         </v-col>
         <v-col>
           <v-data-table
@@ -153,12 +154,14 @@ import CreatePlayer from '../../../components/modals/CreatePlayer'
 import DeleteDialog from '../../../components/modals/DeleteDialog'
 import constants from '../../../assets/constants/constants'
 import PichichiChart from '../../../components/team/pichichiChart'
+import CardsChart from '../../../components/team/cardsChart'
 export default {
   name: 'team',
   components: {
     CreatePlayer,
     DeleteDialog,
-    PichichiChart
+    PichichiChart,
+    CardsChart
   },
   data: () => ({
     deletingPlayer: null,
@@ -186,6 +189,7 @@ export default {
       getTeam: 'team/getTeam',
       getPlayersByTeamId: 'team/getPlayersByTeamId',
       getTeamScorers: 'team/getTeamScorers',
+      getTeamCards: 'team/getTeamCards',
       deletePlayer: 'team/deletePlayer'
     })
   },
@@ -197,9 +201,8 @@ export default {
       return this.$store.getters['team/playersByTeamId'](this.$route.params.id)
     },
     pichichiList() {
-      if (this.$store.getters['team/pichichiList'].length!=0) {
+      if (this.$store.getters['team/pichichiList'].length != 0) {
         const list = this.$store.getters['team/pichichiList']
-        console.log(list)
         const primero = list[0]
         const segundo = list[1]
         const tercero = list[2]
@@ -249,12 +252,69 @@ export default {
       } else {
         return undefined
       }
+    },
+    cardList() {
+      if (this.$store.getters['team/cardList'].length != 0) {
+        const list = this.$store.getters['team/cardList']
+        const primero = list[0]
+        const segundo = list[1]
+        const tercero = list[2]
+        const labels = []
+        const cards1 = []
+        const cards2 = []
+        const cards3 = []
+        const rounds = list[0].roundCards.length
+        for (let i = 0; i < rounds; i++) {
+          // labels.push(this.statsPerRound[i].name)
+          labels.push('J' + (i + 1))
+          cards1.push(primero.roundCards[i])
+          cards2.push(segundo.roundCards[i])
+          cards3.push(tercero.roundCards[i])
+        }
+        let style = getComputedStyle(document.body)
+        const primaryColor = style.getPropertyValue('--v-primary-base')
+        const secondaryColor = style.getPropertyValue('--v-secondary-base')
+        const accentColor = style.getPropertyValue('--v-error-base')
+
+        return {
+          labels: labels,
+          datasets: [
+            {
+              label: primero.playerName,
+              data: cards1,
+              backgroundColor: 'rgb(0,0,0,0.1)',
+              borderColor: primaryColor,
+              fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
+            },
+            {
+              label: segundo.playerName,
+              data: cards2,
+              backgroundColor: 'rgb(0,0,0,0.1)',
+              borderColor: secondaryColor,
+              fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
+            },
+            {
+              label: tercero.playerName,
+              data: cards3,
+              backgroundColor: 'rgb(0,0,0,0.1)',
+              borderColor: accentColor,
+              fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
+            }
+          ]
+        }
+      } else {
+        return undefined
+      }
     }
   },
   async created() {
     await this.getTeam(this.$route.params.id)
     await this.getPlayersByTeamId(this.$route.params.id)
     await this.getTeamScorers({
+      teamId: this.$route.params.id,
+      competitionId: this.team.competition
+    })
+    await this.getTeamCards({
       teamId: this.$route.params.id,
       competitionId: this.team.competition
     })
