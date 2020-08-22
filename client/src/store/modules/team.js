@@ -6,7 +6,8 @@ export const teamModule = {
   state: {
     teams: [],
     myTeams: [],
-    players: []
+    players: [],
+    pichichiList: []
   },
   getters: {
     teams: (state) => {
@@ -26,6 +27,9 @@ export const teamModule = {
     },
     playersByTeamId: (state) => (teamId) => {
       return state.players.filter((player) => player.team == teamId)
+    },
+    pichichiList: (state) => {
+      return state.pichichiList
     }
   },
   mutations: {

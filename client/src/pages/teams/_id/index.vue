@@ -26,7 +26,10 @@
               outline
               class="rounded-xl"
               color="primary darken-1"
-              :to="{ name: 'summary', params: { id: team.competition } }"
+              :to="{
+                name: 'summary',
+                params: { id: team.competition, roundId: 'latest' }
+              }"
             >
               <v-list-item>
                 <v-list-item-content>
@@ -43,8 +46,11 @@
         </v-row>
       </v-card-title>
       <v-row>
-        <v-col v-if="team.competition != null">
-          Hola
+        <v-col v-if="team.competition != null && pichichiList">
+          <PichichiChart
+            :chart-data="pichichiList"
+            :height="150"
+          ></PichichiChart>
         </v-col>
         <v-col>
           <v-data-table
@@ -146,11 +152,13 @@ import { mapActions } from 'vuex'
 import CreatePlayer from '../../../components/modals/CreatePlayer'
 import DeleteDialog from '../../../components/modals/DeleteDialog'
 import constants from '../../../assets/constants/constants'
+import PichichiChart from '../../../components/team/pichichiChart'
 export default {
   name: 'team',
   components: {
     CreatePlayer,
-    DeleteDialog
+    DeleteDialog,
+    PichichiChart
   },
   data: () => ({
     deletingPlayer: null,
@@ -177,6 +185,7 @@ export default {
     ...mapActions({
       getTeam: 'team/getTeam',
       getPlayersByTeamId: 'team/getPlayersByTeamId',
+      getTeamScorers: 'team/getTeamScorers',
       deletePlayer: 'team/deletePlayer'
     })
   },
@@ -186,11 +195,69 @@ export default {
     },
     players() {
       return this.$store.getters['team/playersByTeamId'](this.$route.params.id)
+    },
+    pichichiList() {
+      if (this.$store.getters['team/pichichiList'].length!=0) {
+        const list = this.$store.getters['team/pichichiList']
+        console.log(list)
+        const primero = list[0]
+        const segundo = list[1]
+        const tercero = list[2]
+        const labels = []
+        const goals1 = []
+        const goals2 = []
+        const goals3 = []
+        const rounds = list[0].roundsGoals.length
+        for (let i = 0; i < rounds; i++) {
+          // labels.push(this.statsPerRound[i].name)
+          labels.push('J' + (i + 1))
+          goals1.push(primero.roundsGoals[i])
+          goals2.push(segundo.roundsGoals[i])
+          goals3.push(tercero.roundsGoals[i])
+        }
+        let style = getComputedStyle(document.body)
+        const primaryColor = style.getPropertyValue('--v-primary-base')
+        const secondaryColor = style.getPropertyValue('--v-secondary-base')
+        const accentColor = style.getPropertyValue('--v-error-base')
+
+        return {
+          labels: labels,
+          datasets: [
+            {
+              label: primero.playerName,
+              data: goals1,
+              backgroundColor: 'rgb(0,0,0,0.1)',
+              borderColor: primaryColor,
+              fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
+            },
+            {
+              label: segundo.playerName,
+              data: goals2,
+              backgroundColor: 'rgb(0,0,0,0.1)',
+              borderColor: secondaryColor,
+              fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
+            },
+            {
+              label: tercero.playerName,
+              data: goals3,
+              backgroundColor: 'rgb(0,0,0,0.1)',
+              borderColor: accentColor,
+              fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
+            }
+          ]
+        }
+      } else {
+        return undefined
+      }
     }
   },
   async created() {
     await this.getTeam(this.$route.params.id)
     await this.getPlayersByTeamId(this.$route.params.id)
+    await this.getTeamScorers({
+      teamId: this.$route.params.id,
+      competitionId: this.team.competition
+    })
   }
 }
 </script>

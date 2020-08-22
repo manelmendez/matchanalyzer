@@ -45,11 +45,11 @@ api.get(
   auth.checkAuth,
   teamCtrl.getTeamStats
 )
-// api.get(
-//   '/teams/:id/competition/:competitionId/pichihi',
-//   auth.checkAuth,
-//   teamCtrl.getTeamScorers
-// )
+api.get(
+  '/teams/:id/competition/:competitionId/pichihi',
+  auth.checkAuth,
+  teamCtrl.getTeamScorers
+)
 
 // PLAYER
 api.post('/players', auth.checkAuth, playerCtrl.addPlayer)
