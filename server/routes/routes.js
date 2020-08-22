@@ -50,6 +50,11 @@ api.get(
   auth.checkAuth,
   teamCtrl.getTeamScorers
 )
+api.get(
+  '/teams/:id/competition/:competitionId/cards',
+  auth.checkAuth,
+  teamCtrl.getTeamCards
+)
 
 // PLAYER
 api.post('/players', auth.checkAuth, playerCtrl.addPlayer)

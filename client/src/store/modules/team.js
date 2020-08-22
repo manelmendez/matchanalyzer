@@ -7,7 +7,8 @@ export const teamModule = {
     teams: [],
     myTeams: [],
     players: [],
-    pichichiList: []
+    pichichiList: [],
+    cardList: []
   },
   getters: {
     teams: (state) => {
@@ -30,6 +31,9 @@ export const teamModule = {
     },
     pichichiList: (state) => {
       return state.pichichiList
+    },
+    cardList: (state) => {
+      return state.cardList
     }
   },
   mutations: {

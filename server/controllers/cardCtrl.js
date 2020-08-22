@@ -1,4 +1,5 @@
 import cardService from '../dao-postgres/card-service.js'
+import playerService from '../dao-postgres/player-service.js'
 
 const addCard = async (req, res) => {
   let userId = req.user.id
@@ -54,8 +55,23 @@ const deleteCard = async (req, res) => {
   }
 }
 
+const getPlayerTeamCards = async (teamId, userId) => {
+  try {
+    const players = await playerService.findByTeam(teamId, userId)
+    for (const player of players) {
+      const playerCards = await cardService.findByPlayer(player.id, userId)
+      player.cards = playerCards
+    }
+    return players
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
 export default {
   addCard,
   getCardsByMatchId,
-  deleteCard
+  deleteCard,
+  getPlayerTeamCards
 }

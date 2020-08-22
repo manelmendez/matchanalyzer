@@ -163,6 +163,7 @@ export default {
     await this.getAssistsByMatchId(this.$route.params.matchId)
     await this.getCardsByMatchId(this.$route.params.matchId)
     await this.getSubstitutionsByMatchId(this.$route.params.matchId)
+    await this.putData()
     this.dataLoaded = true
   },
   computed: {
@@ -218,7 +219,6 @@ export default {
       this.match.awayTeam.players = this.$store.getters['team/playersByTeamId'](
         this.match.awayTeam.id
       )
-      this.putData()
     }
   }
 }

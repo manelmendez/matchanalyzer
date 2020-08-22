@@ -159,3 +159,16 @@ export const getTeamScorers = ({ commit }, data) => {
       throw err.response
     })
 }
+
+export const getTeamCards = ({ commit }, data) => {
+  const { teamId, competitionId } = data
+  console.log('ACTION -- getUserTeams')
+  return axios
+    .get('teams/' + teamId + '/competition/' + competitionId + '/cards')
+    .then((response) => {
+      commit(types.GET_USERCARDS, response.data.cardList)
+    })
+    .catch((err) => {
+      throw err.response
+    })
+}

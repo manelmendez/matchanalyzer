@@ -40,5 +40,8 @@ export const teamMutations = {
   [types.UPLOAD_IMAGE]() {},
   [types.GET_USERSCORERS](state, pichichiList) {
     state.pichichiList = [...pichichiList]
+  },
+  [types.GET_USERCARDS](state, cardList) {
+    state.cardList = [...cardList]
   }
 }

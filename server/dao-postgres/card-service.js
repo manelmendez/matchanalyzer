@@ -16,6 +16,14 @@ const findByMatch = async (id, userId) => {
   return result.rows
 }
 
+const findByPlayer = async (id, userId) => {
+  const result = await con.query(
+    'SELECT * FROM cards WHERE player = $1 AND "userId" = $2',
+    [id, userId]
+  )
+  return result.rows
+}
+
 const saveCard = async (card) => {
   const result = await con.query(
     'INSERT INTO cards(minute, type, player, "matchId", "roundId", "userId", matchpart) ' +
@@ -45,5 +53,6 @@ export default {
   findById,
   findByMatch,
   saveCard,
-  deleteCard
+  deleteCard,
+  findByPlayer
 }
