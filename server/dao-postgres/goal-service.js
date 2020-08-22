@@ -18,7 +18,7 @@ const findByMatch = async (id, userId) => {
 
 const findByPlayer = async (id, userId) => {
   const result = await con.query(
-    'SELECT * FROM goals WHERE "playerId" = $1 AND "userId" = $2',
+    'SELECT * FROM goals WHERE player = $1 AND "userId" = $2',
     [id, userId]
   )
   return result.rows

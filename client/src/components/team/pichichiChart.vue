@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-9">
+  <v-card class="mt-9" color="secondary darken-3">
     <v-sheet
       class="v-sheet--offset mx-auto"
       color="rgb(220,220,220,0.9)"
@@ -17,19 +17,16 @@
 
     <v-card-text class="pt-0">
       <div class="title font-weight-light mb-2">Pichichis del equipo</div>
-      <div class="subheading font-weight-light grey--text">
-        Temporada {{ team.season }}
-      </div>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-import LineChart from '../../../components/charts/LineChart.js'
+import LineChart from '../../components/charts/LineChart.js'
 
 export default {
   components: { LineChart },
-  props: ['chart-data', 'height', 'team'],
+  props: ['chart-data', 'height'],
   data() {
     return {
       options: {
@@ -42,12 +39,11 @@ export default {
             {
               scaleLabel: {
                 display: false,
-                labelString: 'Posición'
+                labelString: 'Goles'
               },
               ticks: {
-                reverse: true,
-                max: 16,
-                min: 1,
+                reverse: false,
+                min: 0,
                 stepSize: 1
               }
             }

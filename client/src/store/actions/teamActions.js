@@ -146,3 +146,16 @@ export const deletePlayer = ({ commit }, id) => {
       throw err.response
     })
 }
+
+export const getTeamScorers = ({ commit }, data) => {
+  const { teamId, competitionId } = data
+  console.log('ACTION -- getUserTeams')
+  return axios
+    .get('teams/' + teamId + '/competition/' + competitionId + '/pichihi')
+    .then((response) => {
+      commit(types.GET_USERSCORERS, response.data.pichichiList)
+    })
+    .catch((err) => {
+      throw err.response
+    })
+}

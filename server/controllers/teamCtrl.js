@@ -3,7 +3,7 @@
 import teamService from '../dao-postgres/team-service.js'
 import roundService from '../dao-postgres/round-service.js'
 import matchService from '../dao-postgres/match-service.js'
-import playerCtrl from './playerCtrl.js'
+import goalCtrl from './goalCtrl.js'
 
 const addTeam = async (req, res) => {
   let userId = req.user.id
@@ -430,27 +430,46 @@ const getTeamStats = async (req, res) => {
   }
 }
 
-// const getTeamScorers = async (req, res) => {
-//   let userId = req.user.id
-//   let teamId = req.params.id
-//   let competitionId = req.params.competitionId
-//   try {
-//     const players = await playerCtrl.getPlayersByTeamId(teamId, userId)
-//     const rounds = await roundService.findByCompetition(competitionId, userId)
-//     let pichichiList = []
-//     for (const round of rounds) {
-//       for (const player of players) {
-//         let pichichiItem = {
-//           playerId: player.id,
-//           playerName: player.name,
-//           totalGoals: 0,
-//           rounds: []
-//         }
-//       }
-//     }
-//   } catch (error) {
-//   }
-// }
+const getTeamScorers = async (req, res) => {
+  let userId = req.user.id
+  let teamId = req.params.id
+  let competitionId = req.params.competitionId
+  try {
+    const players = await goalCtrl.getPlayerTeamGoals(teamId, userId)
+    const rounds = await roundService.findByCompetition(competitionId, userId)
+    let pichichiList = []
+    for (const player of players) {
+      let pichichiItem = {
+        playerId: player.id,
+        playerName: player.name,
+        totalGoals: 0,
+        roundsGoals: []
+      }
+      for (const round of rounds) {
+        let goalsInRound = 0
+        for (const goal of player.goals) {
+          if (round.id == goal.roundId) {
+            goalsInRound++
+            pichichiItem.totalGoals++
+          }
+        }
+        if (pichichiItem.totalGoals == 0) pichichiItem.roundsGoals.push(0)
+        else
+          pichichiItem.roundsGoals.push(goalsInRound != 0 ? goalsInRound : null)
+      }
+      pichichiList.push(pichichiItem)
+    }
+    pichichiList.sort(
+      (a, b) => parseFloat(b.totalGoals) - parseFloat(a.totalGoals)
+    )
+    res.status(200).send({ pichichiList: pichichiList })
+  } catch (error) {
+    console.log(error)
+    res
+      .status(404)
+      .send({ message: 'No hay jornadas disputadas, por lo que no hay stats' })
+  }
+}
 
 export default {
   addTeam,
@@ -460,5 +479,6 @@ export default {
   addNoManagerTeam,
   updateTeam,
   deleteTeam,
-  getTeamStats
+  getTeamStats,
+  getTeamScorers
 }

@@ -28,6 +28,7 @@ const addPlayer = async (req, res) => {
 }
 const getPlayersByTeamId = async (req, res) => {
   let userId = req.user.id
+  console.log(userId);
   let teamId = req.params.teamId
   try {
     const players = await playerService.findByTeam(teamId, userId)

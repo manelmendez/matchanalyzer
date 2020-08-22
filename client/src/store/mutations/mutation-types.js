@@ -19,6 +19,7 @@ export const GET_MYTEAMS = 'GET_MYTEAMS'
 export const ADD_TEAM_TO_COMPETITION = 'ADD_TEAM_TO_COMPETITION'
 export const UPDATE_TEAM = 'UPDATE_TEAM'
 export const DELETE_TEAM = 'DELETE_TEAM'
+export const GET_USERSCORERS = 'GET_USERSCORERS'
 /*
  *   PLAYER
  */
