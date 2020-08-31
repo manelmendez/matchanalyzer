@@ -440,6 +440,7 @@ const getTeamScorers = async (req, res) => {
     const rounds = await roundService.findByCompetition(competitionId, userId)
     let pichichiList = []
     for (const player of players) {
+      let sumRoundGoals = 0
       let pichichiItem = {
         playerId: player.id,
         playerName: player.name,
@@ -454,9 +455,12 @@ const getTeamScorers = async (req, res) => {
             pichichiItem.totalGoals++
           }
         }
+        sumRoundGoals += goalsInRound
         if (pichichiItem.totalGoals == 0) pichichiItem.roundsGoals.push(0)
         else
-          pichichiItem.roundsGoals.push(goalsInRound != 0 ? goalsInRound : null)
+          pichichiItem.roundsGoals.push(
+            sumRoundGoals != 0 ? sumRoundGoals : null
+          )
       }
       pichichiList.push(pichichiItem)
     }

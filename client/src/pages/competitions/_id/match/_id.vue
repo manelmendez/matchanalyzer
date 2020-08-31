@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card v-if="dataLoaded">
+    <v-card v-if="dataLoaded && teamsLoaded">
       <v-toolbar dark color="primary darken-1">
         <v-toolbar-title>Estadísticas del partido</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -13,19 +13,13 @@
         <v-col cols="2" class="text-center">VS</v-col>
         <v-col class="text-start">{{ match.awayTeam.name }}</v-col>
       </v-row>
-      <v-row
-        v-for="(part, index) of match.localTeam.manager
-          ? match.localTeam.matchparts
-          : match.awayTeam.matchparts"
-        :key="part.id"
-      >
+      <v-row v-for="(part, index) of matchparts" :key="part.id">
         <v-col class="text-center">
           <v-row>
             <v-col class="text-center"> Parte {{ index + 1 }} </v-col>
           </v-row>
           <v-row>
             <addMatchStatsContent
-              ref="localchild"
               v-if="match.localTeam.manager || match.awayTeam.manager"
               :team="
                 match.localTeam.manager
@@ -37,6 +31,7 @@
               :roundId="Number(match.round)"
               :matchId="Number($route.params.matchId)"
               :matchpart="part"
+              :prevPartMinutes="getPreviousMinutes(index)"
             ></addMatchStatsContent>
           </v-row>
           <br /><br />
@@ -47,7 +42,7 @@
         <v-col class="text-center">
           <v-btn
             v-if="
-              this.matchparts.length < 3 &&
+              this.matchparts.length < 4 &&
               checkManagerTeam(match.localTeam, match.awayTeam)
             "
             fab
@@ -83,7 +78,8 @@ export default {
     return {
       constants: constants,
       addMatchpartDialog: false,
-      dataLoaded: false
+      dataLoaded: false,
+      teamsLoaded: false
     }
   },
   methods: {
@@ -108,39 +104,12 @@ export default {
       this.matchparts.push(response.data.savedPart)
       this.addMatchpartDialog = false
     },
-    putData() {
-      if (this.matchparts.length != 0) {
-        this.match.localTeam.matchparts = []
-        this.match.awayTeam.matchparts = []
-        for (let matchpart of this.matchparts) {
-          if (this.minutes.length != 0)
-            matchpart.minutes = this.minutes.filter(
-              (minute) => minute.matchpart == matchpart.id
-            )
-          if (this.goals.length != 0)
-            matchpart.goals = this.goals.filter(
-              (goal) => goal.matchpart == matchpart.id
-            )
-          if (this.assists.length != 0)
-            matchpart.assists = this.assists.filter(
-              (assist) => assist.matchpart == matchpart.id
-            )
-          if (this.cards.length != 0)
-            matchpart.cards = this.cards.filter(
-              (card) => card.matchpart == matchpart.id
-            )
-          if (this.substitutions.length != 0)
-            matchpart.substitutions = this.substitutions.filter(
-              (substitution) => substitution.matchpart == matchpart.id
-            )
-
-          if (matchpart.team == this.match.localTeam.id) {
-            this.match.localTeam.matchparts.push(matchpart)
-          } else {
-            this.match.awayTeam.matchparts.push(matchpart)
-          }
-        }
+    getPreviousMinutes(index) {
+      let prevMinutes = 0
+      for (let i = 0; i < index; i++) {
+        prevMinutes += parseInt(this.matchparts[index - 1].time)
       }
+      return prevMinutes
     },
     ...mapActions({
       getMatch: 'competition/getMatch',
@@ -163,7 +132,6 @@ export default {
     await this.getAssistsByMatchId(this.$route.params.matchId)
     await this.getCardsByMatchId(this.$route.params.matchId)
     await this.getSubstitutionsByMatchId(this.$route.params.matchId)
-    await this.putData()
     this.dataLoaded = true
   },
   computed: {
@@ -172,31 +140,6 @@ export default {
     },
     matchparts() {
       return this.$store.getters['competition/matchpartsByMatch'](
-        this.$route.params.matchId
-      )
-    },
-    minutes() {
-      return this.$store.getters['competition/minutesByMatch'](
-        this.$route.params.matchId
-      )
-    },
-    goals() {
-      return this.$store.getters['competition/goalsByMatch'](
-        this.$route.params.matchId
-      )
-    },
-    assists() {
-      return this.$store.getters['competition/assistsByMatch'](
-        this.$route.params.matchId
-      )
-    },
-    cards() {
-      return this.$store.getters['competition/cardsByMatch'](
-        this.$route.params.matchId
-      )
-    },
-    substitutions() {
-      return this.$store.getters['competition/substitutionsByMatch'](
         this.$route.params.matchId
       )
     }
@@ -219,6 +162,7 @@ export default {
       this.match.awayTeam.players = this.$store.getters['team/playersByTeamId'](
         this.match.awayTeam.id
       )
+      this.teamsLoaded = true
     }
   }
 }

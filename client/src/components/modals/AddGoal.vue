@@ -23,6 +23,7 @@
               shaped
               label="Minuto"
               :max="duration"
+              min="0"
               class="centered-input ml-2"
               type="number"
               v-model="minute"

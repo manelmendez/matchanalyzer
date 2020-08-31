@@ -1,24 +1,19 @@
 <template>
-  <v-card class="mt-9" color="secondary darken-3">
-    <v-sheet
-      class="v-sheet--offset mx-auto"
-      color="rgb(220,220,220,0.9)"
-      elevation="12"
-      max-width="calc(100% - 32px)"
-      max-height="calc(100% - 32px)"
-    >
-      <line-chart
-        :chart-data="this.chartData"
-        :height="this.height"
-        :options="options"
-        class="chartStyle"
-      ></line-chart>
-    </v-sheet>
-
-    <v-card-text class="pt-0">
-      <div class="title font-weight-light mb-2">Pichichis del equipo</div>
-    </v-card-text>
-  </v-card>
+  <v-sheet
+    rounded
+    class="v-sheet--offset mx-auto"
+    color="rgb(220,220,220,0.9)"
+    elevation="12"
+    max-width="calc(100% - 32px)"
+    max-height="calc(100% - 32px)"
+  >
+    <line-chart
+      :chart-data="this.chartData"
+      :height="this.height"
+      :options="options"
+      class="chartStyle"
+    ></line-chart>
+  </v-sheet>
 </template>
 
 <script>
@@ -32,7 +27,7 @@ export default {
       options: {
         title: {
           display: true,
-          text: 'Goles por jornada'
+          text: 'Pichichis del equipo'
         },
         scales: {
           yAxes: [

@@ -62,6 +62,23 @@ export const competitionModule = {
         (substitution) => substitution.matchId == matchId
       )
     },
+    minutesByMatchpart: (state) => (matchpartId) => {
+      return state.minutes.filter((minute) => minute.matchpart == matchpartId)
+    },
+    goalsByMatchpart: (state) => (matchpartId) => {
+      return state.goals.filter((goal) => goal.matchpart == matchpartId)
+    },
+    assistsByMatchpart: (state) => (matchpartId) => {
+      return state.assists.filter((assist) => assist.matchpart == matchpartId)
+    },
+    cardsByMatchpart: (state) => (matchpartId) => {
+      return state.cards.filter((card) => card.matchpart == matchpartId)
+    },
+    substitutionsByMatchpart: (state) => (matchpartId) => {
+      return state.substitutions.filter(
+        (substitution) => substitution.matchpart == matchpartId
+      )
+    },
     teamById: (state) => (teamId) => {
       return state.competition.teams.find((team) => team.id == teamId)
     },

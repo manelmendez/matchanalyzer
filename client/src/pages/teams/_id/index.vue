@@ -45,75 +45,84 @@
           </v-col>
         </v-row>
       </v-card-title>
-      <v-row>
-        <v-col v-if="team.competition != null && pichichiList">
-          <PichichiChart
-            :chart-data="pichichiList"
-            :height="150"
-          ></PichichiChart>
-          <CardsChart :chart-data="cardList" :height="150"></CardsChart>
-        </v-col>
-        <v-col>
-          <v-data-table
-            v-if="players"
-            :headers="headers"
-            :items="players"
-            class="elevation-1 text-center"
-            hide-default-footer
-            :items-per-page="-1"
-          >
-            <template v-slot:item.avatar="{ item }">
-              <v-row class="text-center">
-                <v-img
-                  :src="constants.ADDRESS + item.avatar"
-                  @error="item.avatar = constants.DEFAULT_PLAYER_URL"
-                  alt="avatar"
-                  :contain="true"
-                  height="40"
-                  width="40"
-                />
-              </v-row>
-            </template>
-            <template v-slot:item.actions="{ item }">
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    text
-                    icon
-                    color="info"
-                    @click=";(editingPlayer = item), (dialog = true)"
-                    v-on="on"
-                  >
-                    <v-icon size="18">mdi-pencil</v-icon>
-                  </v-btn>
-                </template>
-                <span>Editar jugador</span>
-              </v-tooltip>
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    text
-                    icon
-                    color="error"
-                    v-on="on"
-                    @click=";(deletingPlayer = item.id), (deleteDialog = true)"
-                  >
-                    <v-icon size="18">mdi-delete</v-icon>
-                  </v-btn>
-                </template>
-                <span>Borrar jugador</span>
-              </v-tooltip>
-            </template>
-            <template v-slot:no-data>
-              <v-col>
-                <v-alert :value="true" type="error" icon="warning">
-                  No hay jugadores en este equipo :(
-                </v-alert>
-              </v-col>
-            </template>
-          </v-data-table>
-        </v-col>
-      </v-row>
+      <v-container>
+        <v-row>
+          <v-col v-if="team.competition != null && pichichiList">
+            <PichichiChart
+              class="mt-2"
+              :chart-data="pichichiList"
+              :height="breakpoint == 'xs' ? 250 : 150"
+            ></PichichiChart>
+            <CardsChart
+              class="mt-2"
+              :chart-data="cardList"
+              :height="breakpoint == 'xs' ? 250 : 150"
+            ></CardsChart>
+          </v-col>
+          <v-col>
+            <v-data-table
+              v-if="players"
+              :headers="headers"
+              :items="players"
+              class="elevation-1 text-center"
+              hide-default-footer
+              :items-per-page="-1"
+            >
+              <template v-slot:[`item.avatar`]="{ item }">
+                <v-row class="text-center">
+                  <v-img
+                    :src="constants.ADDRESS + item.avatar"
+                    @error="item.avatar = constants.DEFAULT_PLAYER_URL"
+                    alt="avatar"
+                    :contain="true"
+                    height="40"
+                    width="40"
+                  />
+                </v-row>
+              </template>
+              <template v-slot:[`item.actions`]="{ item }">
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      text
+                      icon
+                      color="info"
+                      @click=";(editingPlayer = item), (dialog = true)"
+                      v-on="on"
+                    >
+                      <v-icon size="18">mdi-pencil</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Editar jugador</span>
+                </v-tooltip>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      text
+                      icon
+                      color="error"
+                      v-on="on"
+                      @click="
+                        ;(deletingPlayer = item.id), (deleteDialog = true)
+                      "
+                    >
+                      <v-icon size="18">mdi-delete</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Borrar jugador</span>
+                </v-tooltip>
+              </template>
+              <template v-slot:no-data>
+                <v-col>
+                  <v-alert :value="true" type="error" icon="warning">
+                    No hay jugadores en este equipo :(
+                  </v-alert>
+                </v-col>
+              </template>
+            </v-data-table>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-card>
     <v-tooltip left>
       <template v-slot:activator="{ on }">
@@ -155,6 +164,7 @@ import DeleteDialog from '../../../components/modals/DeleteDialog'
 import constants from '../../../assets/constants/constants'
 import PichichiChart from '../../../components/team/pichichiChart'
 import CardsChart from '../../../components/team/cardsChart'
+import colors from 'vuetify/lib/util/colors'
 export default {
   name: 'team',
   components: {
@@ -168,6 +178,7 @@ export default {
     editingPlayer: null,
     deleteDialog: false,
     constants: constants,
+    colors: colors,
     dialog: false,
     headers: [
       { text: '', align: 'center', sortable: false, value: 'avatar' },
@@ -206,10 +217,14 @@ export default {
         const primero = list[0]
         const segundo = list[1]
         const tercero = list[2]
+        const cuarto = list[3]
+        const quinto = list[4]
         const labels = []
         const goals1 = []
         const goals2 = []
         const goals3 = []
+        const goals4 = []
+        const goals5 = []
         const rounds = list[0].roundsGoals.length
         for (let i = 0; i < rounds; i++) {
           // labels.push(this.statsPerRound[i].name)
@@ -217,11 +232,15 @@ export default {
           goals1.push(primero.roundsGoals[i])
           goals2.push(segundo.roundsGoals[i])
           goals3.push(tercero.roundsGoals[i])
+          goals4.push(cuarto.roundsGoals[i])
+          goals5.push(quinto.roundsGoals[i])
         }
         let style = getComputedStyle(document.body)
         const primaryColor = style.getPropertyValue('--v-primary-base')
         const secondaryColor = style.getPropertyValue('--v-secondary-base')
-        const accentColor = style.getPropertyValue('--v-error-base')
+        const color3 = this.colors.shades.black
+        const color4 = this.colors.indigo.base
+        const color5 = this.colors.cyan.base
 
         return {
           labels: labels,
@@ -236,15 +255,29 @@ export default {
             {
               label: segundo.playerName,
               data: goals2,
-              backgroundColor: 'rgb(0,0,0,0.1)',
+              backgroundColor: 'rgb(0,0,0,0)',
               borderColor: secondaryColor,
               fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
             },
             {
               label: tercero.playerName,
               data: goals3,
-              backgroundColor: 'rgb(0,0,0,0.1)',
-              borderColor: accentColor,
+              backgroundColor: 'rgb(0,0,0,0)',
+              borderColor: color3,
+              fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
+            },
+            {
+              label: cuarto.playerName,
+              data: goals4,
+              backgroundColor: 'rgb(0,0,0,0)',
+              borderColor: color4,
+              fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
+            },
+            {
+              label: quinto.playerName,
+              data: goals5,
+              backgroundColor: 'rgb(0,0,0,0)',
+              borderColor: color5,
               fill: 'start' //esto provoca que se pinte la parte de abajo de la linia (por hacer el reverse)
             }
           ]
@@ -305,6 +338,10 @@ export default {
       } else {
         return undefined
       }
+    },
+    breakpoint() {
+      console.log(this.$vuetify.breakpoint.name)
+      return this.$vuetify.breakpoint.name
     }
   },
   async created() {
