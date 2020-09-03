@@ -271,13 +271,13 @@ ALTER TABLE ONLY matchanalyzer.users ALTER COLUMN id SET DEFAULT nextval('matcha
 
 COPY matchanalyzer.assists (id, type, goal, "matchId", matchpart, player, "roundId", "userId") FROM stdin;
 \.
-COPY matchanalyzer.cards (id, minute, type, player, "matchId", "userId", "roundId", matchpart) FROM stdin;
+COPY matchanalyzer.cards (id, minute, type, "matchId", matchpart, player, "roundId", "userId") FROM stdin;
 \.
 COPY matchanalyzer.competitions (id, name, season, discipline, category, manager, "signupDate", "userId") FROM stdin;
 3	2a División Grupo 5	19/20	F7	Alevín	2	2019-11-22 15:23:25+01	2
 6	1a División Grupo 2	18/19	F7	Alevín	2	2020-01-17 12:41:28+01	2
 \.
-COPY matchanalyzer.goals (id, minute, type, player, "matchId", "roundId", "userId", matchpart) FROM stdin;
+COPY matchanalyzer.goals (id, minute, type, "matchId", matchpart, player, "roundId", "userId") FROM stdin;
 26	6	\N	10	22	10	13	2
 27	9	\N	10	22	9	13	2
 28	12	\N	10	22	9	13	2
@@ -834,7 +834,7 @@ COPY matchanalyzer.matches (id, "localTeam", "awayTeam", "matchDay", round, comp
 400	13	17	2020-03-08	64	3	9	0	2
 401	25	26	2020-03-14	13	3	5	3	2
 \.
-COPY matchanalyzer.matchparts (id, "matchId", formation, "time", team, "roundId", "userId") FROM stdin;
+COPY matchanalyzer.matchparts (id, "matchId", formation, "roundId", "time", team, "userId") FROM stdin;
 22	10	3-1-2	13	15	13	2
 23	10	3-1-2	13	15	13	2
 24	10	3-1-2	13	15	13	2
@@ -912,7 +912,7 @@ COPY matchanalyzer.matchparts (id, "matchId", formation, "time", team, "roundId"
 96	400	3-1-2	64	15	13	2
 97	400	3-1-2	64	15	13	2
 \.
-COPY matchanalyzer.minutes (id, player, matchpart, "matchId", "roundId", "userId", "position") FROM stdin;
+COPY matchanalyzer.minutes (id, "matchId", matchpart, player, "roundId", "userId", "position") FROM stdin;
 2	10	22	1	13	2	PT
 3	10	22	2	13	2	CT
 4	10	22	4	13	2	LD
@@ -1520,7 +1520,7 @@ COPY matchanalyzer.rounds (id, name, date, competition, "userId") FROM stdin;
 63	Jornada 18	2020-03-06	3	2
 64	Jornada 19	2020-03-08	3	2
 \.
-COPY matchanalyzer.substitutions (id, "playerIn", "playerOut", minute, "matchId", "roundId", "userId", matchpart) FROM stdin;
+COPY matchanalyzer.substitutions (id, "playerIn", "playerOut", minute, "matchId", matchpart, "roundId", "userId") FROM stdin;
 5	3	4	7	10	25	13	2
 6	5	6	7	10	25	13	2
 7	8	9	7	10	25	13	2
