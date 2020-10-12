@@ -12,7 +12,7 @@
                 type="file"
                 ref="file"
                 @change="onFileChanged"
-                style="display: none;"
+                style="display: none"
               />
               <v-avatar
                 v-if="!image"
@@ -78,7 +78,16 @@ export default {
       constants: constants,
       image: this.team ? constants.ADDRESS + this.team.avatar : null,
       file: null,
-      temporada: ['14/15', '15/16', '16/17', '17/18', '18/19', '19/20'],
+      temporada: [
+        '14/15',
+        '15/16',
+        '16/17',
+        '17/18',
+        '18/19',
+        '19/20',
+        '20/21',
+        '21/22'
+      ],
       name: this.team ? this.team.name : '',
       season: this.team ? this.team.season : ''
     }

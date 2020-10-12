@@ -40,7 +40,7 @@
     "multer": "latest",
     "mysql": "latest",
     "nodemon": "latest",
-    "pg": "^8.3.0"
+    "pg": "latest"
   },
   "devDependencies": {
     "eslint": "latest",

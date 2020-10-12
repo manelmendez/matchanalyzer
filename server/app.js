@@ -25,6 +25,7 @@ app.use(function (req, res, next) {
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
   )
+  res.header('Content-Security-Policy', 'default-src "self"')
   next()
 })
 // middleware para obtener LOGS de cada petición que hagamos al servidor
