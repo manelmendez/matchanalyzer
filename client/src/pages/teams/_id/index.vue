@@ -347,14 +347,16 @@ export default {
   async created() {
     await this.getTeam(this.$route.params.id)
     await this.getPlayersByTeamId(this.$route.params.id)
-    await this.getTeamScorers({
-      teamId: this.$route.params.id,
-      competitionId: this.team.competition
-    })
-    await this.getTeamCards({
-      teamId: this.$route.params.id,
-      competitionId: this.team.competition
-    })
+    if (this.team.competition != null) {
+      await this.getTeamScorers({
+        teamId: this.$route.params.id,
+        competitionId: this.team.competition
+      })
+      await this.getTeamCards({
+        teamId: this.$route.params.id,
+        competitionId: this.team.competition
+      })
+    }
   }
 }
 </script>

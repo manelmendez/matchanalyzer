@@ -5,7 +5,7 @@ const app = express()
 import api from './routes/routes.js'
 import path from 'path'
 import morgan from 'morgan'
-import helmet from 'helmet'
+// import helmet from 'helmet'
 import history from 'connect-history-api-fallback'
 
 // middleware para solo parsear requires en formato urlencoded
@@ -25,15 +25,14 @@ app.use(function (req, res, next) {
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
   )
-  res.header('Content-Security-Policy', 'default-src "self"')
   next()
 })
 // middleware para obtener LOGS de cada petición que hagamos al servidor
 app.use(morgan('dev'))
 
 // SEGURIDAD, helmet protege de varias cosas sobretodo en temas de cabeceras HTTP
-app.use(helmet())
-
+// app.use(helmet()) //desactivado de momento porque da problemas al cargar imagenes por el CSP header
+app.disable('x-powered-by') //cabezera peligrosa, activar si se desactiva helmet()
 // middleware para que las rutas estaticas de la SPA funcionen bien (esto es "por culpa" del HISTORY MODE de VueJS)
 app.use(history())
 

@@ -107,7 +107,7 @@ export default {
           fd.append('image', this.file, this.file.name)
           console.log(fd)
           try {
-            const response = await this.uploadTeamImage(fd)
+            const response = await this.uploadImage(fd)
             let body = {
               season: this.season,
               name: this.name,
@@ -141,7 +141,7 @@ export default {
         if (this.file != null) {
           const fd = new FormData()
           fd.append('image', this.file, this.file.name)
-          this.uploadTeamImage(fd).then((response) => {
+          this.uploadImage(fd).then((response) => {
             console.log(response)
             let body = {
               season: this.season,
@@ -177,7 +177,7 @@ export default {
       if (this.file != null) {
         const fd = new FormData()
         fd.append('image', this.file, this.file.name)
-        this.uploadTeamImage(fd).then((response) => {
+        this.uploadImage(fd).then((response) => {
           let body = {
             team: {
               season: this.season,
@@ -229,7 +229,7 @@ export default {
       'getUserTeams',
       'addTeam',
       'addNoManagerTeam',
-      'uploadTeamImage',
+      'uploadImage',
       'updateTeam'
     ])
   },

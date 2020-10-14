@@ -34,7 +34,10 @@ axios.interceptors.response.use(
       text: ''
     }
     if (error.response) {
-      if (error.response.status >= 400) {
+      if (error.response.status == 404) {
+        // DO NOTHING FOR NOW
+        // TODO
+      } else if (error.response.status >= 400) {
         snackbar.text = error.response.data.message
         store.commit('root/SNACKBAR', snackbar)
         // if (error.response.status == 404) {

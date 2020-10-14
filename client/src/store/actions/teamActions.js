@@ -44,8 +44,8 @@ export const addNoManagerTeam = ({ commit }, body) => {
       throw err.response
     })
 }
-export const uploadTeamImage = ({ commit }, formData) => {
-  console.log('ACTION -- uploadTeamImage')
+export const uploadImage = ({ commit }, formData) => {
+  console.log('ACTION -- uploadImage')
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
   }
