@@ -207,7 +207,7 @@
     </v-dialog>
     <CreateTeam
       v-if="dialog"
-      :team="(updatingTeam ? updatingTeam : null)"
+      :team="updatingTeam ? updatingTeam : null"
       :show="dialog"
       @confirm="confirm"
       @close=";(dialog = !dialog), (updatingTeam = null)"

@@ -19,6 +19,8 @@
     "semi": "off",
     "no-console": "warn",
     "no-var": "error",
-    "prettier/prettier": 2
+    "prettier/prettier": 2,
+    "vue/no-mutating-props": "off",
+    "vue/valid-v-slot": "off"
   }
 }

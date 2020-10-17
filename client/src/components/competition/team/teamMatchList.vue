@@ -1,8 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>
-      Jornadas disputadas
-    </v-card-title>
+    <v-card-title> Jornadas disputadas </v-card-title>
     <v-data-table
       hide-default-header
       hide-default-footer

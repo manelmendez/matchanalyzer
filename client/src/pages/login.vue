@@ -40,7 +40,7 @@
                 <v-spacer></v-spacer>
                 <router-link
                   class="info--text"
-                  style="padding-right: 10px;"
+                  style="padding-right: 10px"
                   to="register"
                   >Si aún no tienes cuenta</router-link
                 >

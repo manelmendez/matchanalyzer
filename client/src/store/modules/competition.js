@@ -139,6 +139,8 @@ export const competitionModule = {
       if (state.competition.teams && state.rounds && state.rounds.length != 0) {
         let teams = [...state.competition.teams]
         let updatedTeams = []
+        const actualRound =
+          selectedRound == 'latest' ? state.rounds.length : selectedRound
         // sumar todas las jornadas hasta la seleccionada
         for (let i = 0; i < teams.length; i++) {
           let updatedTeam = { ...teams[i] }
@@ -168,8 +170,6 @@ export const competitionModule = {
             homeAgainstGoals: 0,
             awayAgainstGoals: 0
           }
-          const actualRound =
-            selectedRound == 'latest' ? state.rounds.length : selectedRound
           for (let j = 0; j < actualRound; j++) {
             let matches = state.rounds[j].matches
             let x = 0
@@ -271,7 +271,7 @@ export const competitionModule = {
           else if (a.stats.points == b.stats.points) {
             let matches = []
             //coger todos los partidos
-            for (let x = 0; x < state.rounds.length; x++) {
+            for (let x = 0; x < actualRound; x++) {
               matches = [...matches, ...state.rounds[x].matches]
             }
             let duelMatches = []
@@ -287,10 +287,10 @@ export const competitionModule = {
               }
             }
             //buscar diferencia de victorias/empates/derrotas
-            let aWin = 0
-            let aDraw = 0
-            let aLose = 0
-            let goalDifference = 0
+            let aWin = 0 //1 o 2 segun los que haya ganado
+            let aDraw = 0 //1 o 2 segun los que haya empatado
+            let aLose = 0 //1 o 2 segun los que haya perdido
+            let goalDifference = 0 // positiva o negativa segun resultados, o 0
             for (let z = 0; z < duelMatches.length; z++) {
               if (
                 duelMatches[z].localTeam.id == a.id &&
@@ -342,6 +342,7 @@ export const competitionModule = {
                   Number(duelMatches[z].localTeamGoals)
               }
             }
+
             //si se han jugado los 2 partidos entre ellos
             if (duelMatches.length == 2) {
               if (aWin == 2 || (aWin == 1 && aDraw == 1)) {
@@ -350,38 +351,65 @@ export const competitionModule = {
                 return -1
               }
               //si es igual, buscar diferencia de goles individual (no cuenta doble fuera de casa)
+              //si los puntos de los equipos son iguales y la diferencia de goles es distinta
               else {
                 if (goalDifference > 0) {
+                  return 1
+                } else if (goalDifference < 0) {
+                  return -1
+                } else {
+                  // si la diferencia de goles es igual, devuelve +1 o -1 según quien tenga más goles
+                  return a.stats.goals - a.stats.againstGoals >
+                    b.stats.goals - b.stats.againstGoals
+                    ? 1
+                    : -1
+                }
+              }
+            }
+            //si solo se ha jugado 1 solo depende de victoria/derrota
+            else if (duelMatches.length == 1) {
+              if (aWin == 1) {
+                return 1
+              } else if (aLose == 1) {
+                return -1
+              } else {
+                //si empate
+                // si la diferencia de goles es distinta
+                if (goalDifference > 0) {
+                  return 1
+                } else if (goalDifference < 0) {
+                  return -1
+                } else {
+                  // si la diferencia de goles es igual, devuelve +1 o -1 según quien tenga más goles
+                  return a.stats.goals - a.stats.againstGoals >
+                    b.stats.goals - b.stats.againstGoals
+                    ? 1
+                    : -1
+                }
+              }
+            } else {
+              // si no se ha jugado ninguno la diferencia de goles particular no importa
+              // se comprueba la general:
+              if (
+                a.stats.goals - a.stats.againstGoals >
+                b.stats.goals - b.stats.againstGoals
+              ) {
+                return 1
+              } else if (
+                a.stats.goals - a.stats.againstGoals <
+                b.stats.goals - b.stats.againstGoals
+              ) {
+                return -1
+              } else {
+                // si la general es igual se comprueban los goles a favor
+                if (a.stats.goals > b.stats.goals) {
                   return 1
                 } else {
                   return -1
                 }
               }
             }
-            //si solo se ha jugado 1
-            else if (duelMatches.length == 1) {
-              if (aWin == 1) {
-                return 1
-              } else if (aLose == 1) {
-                return -1
-              }
-            }
           }
-          //si el goal average particular es igual pasa a hacer lo siguiente:
-          //si la diferencia de goles entre los dos equipos es igual en ambos
-          else if (
-            a.stats.goals - a.stats.againstGoals ===
-            b.stats.goals - b.stats.againstGoals
-          ) {
-            //devuelve 0
-            return 0
-          }
-          //si los puntos de los equipos son iguales y la diferencia de goles es distinta
-          //devuelve +1 o -1 según quien tenga más goles
-          return a.stats.goals - a.stats.againstGoals >
-            b.stats.goals - b.stats.againstGoals
-            ? 1
-            : -1
         })
       } else {
         return []

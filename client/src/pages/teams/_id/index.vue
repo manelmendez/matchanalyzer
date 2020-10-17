@@ -143,7 +143,7 @@
     </v-tooltip>
     <CreatePlayer
       v-if="dialog"
-      :player="(editingPlayer ? editingPlayer : null)"
+      :player="editingPlayer ? editingPlayer : null"
       :show="dialog"
       @confirm="createPlayer"
       @close=";(dialog = !dialog), (editingPlayer = null)"

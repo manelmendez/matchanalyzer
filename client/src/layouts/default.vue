@@ -13,7 +13,7 @@
         @click.stop="drawer = !drawer"
         class="white--text"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title :to="'/'" class="white--text" style="cursor: pointer;">
+      <v-toolbar-title :to="'/'" class="white--text" style="cursor: pointer">
         <router-link to="/" class="toolbar-title"
           >MatchAnalyzer</router-link
         ></v-toolbar-title

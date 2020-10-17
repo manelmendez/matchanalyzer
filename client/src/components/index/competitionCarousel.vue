@@ -3,9 +3,7 @@
     <v-row justify="center">
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center;">
-            Líder
-          </v-card-title>
+          <v-card-title style="justify-content: center"> Líder </v-card-title>
           <v-card-text>
             <v-img
               justify="center"
@@ -20,9 +18,7 @@
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center;">
-            Último
-          </v-card-title>
+          <v-card-title style="justify-content: center"> Último </v-card-title>
           <v-card-text>
             <v-img
               justify="center"
@@ -43,29 +39,27 @@
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center; word-break: keep-all;">
+          <v-card-title style="justify-content: center; word-break: keep-all">
             Total de goles
           </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px;">{{ totalGoals }}</p>
+            <p style="font-size: 40px">{{ totalGoals }}</p>
             <v-icon x-large size="1000px">mdi-soccer </v-icon>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center;">
-            Año
-          </v-card-title>
+          <v-card-title style="justify-content: center"> Año </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px;">{{ competition.season }}</p>
+            <p style="font-size: 40px">{{ competition.season }}</p>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
-  <v-container fluid v-else style="height: 100%;">
-    <v-row style="height: 100%;">
+  <v-container fluid v-else style="height: 100%">
+    <v-row style="height: 100%">
       <v-col align-self="center" class="text-center">No hay datos</v-col>
     </v-row>
   </v-container>

@@ -72,7 +72,7 @@
     <CreateTeam
       v-if="dialog"
       :myTeam="true"
-      :team="(updatingTeam ? updatingTeam : null)"
+      :team="updatingTeam ? updatingTeam : null"
       :show="dialog"
       @confirm="confirmCreate"
       @close=";(dialog = !dialog), (updatingTeam = null)"

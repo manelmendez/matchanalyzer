@@ -50,7 +50,7 @@
               <v-spacer></v-spacer>
               <router-link
                 class="info--text"
-                style="padding-right: 10px;"
+                style="padding-right: 10px"
                 to="login"
                 >Volver a Inicio de Sesión</router-link
               >

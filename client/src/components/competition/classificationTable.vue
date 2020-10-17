@@ -14,7 +14,7 @@
           <td class="text-center">
             <v-list-item-avatar
               :tile="true"
-              style="cursor: pointer;"
+              style="cursor: pointer"
               @click="$router.push('/teams/' + item.id + '/competitionstats')"
             >
               <v-img

@@ -3,11 +3,11 @@
     <v-row justify="center">
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center; word-break: keep-all;">
+          <v-card-title style="justify-content: center; word-break: keep-all">
             Posicion en liga
           </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px;">{{ this.teamStats.position }}</p>
+            <p style="font-size: 40px">{{ this.teamStats.position }}</p>
             <v-icon
               v-if="
                 this.teamStats.position == 1 ||
@@ -16,7 +16,15 @@
               "
               x-large
               size="1000px"
-              :color="(this.teamStats.position == 1 ? colors.yellow.darken3 : this.teamStats.position == 2 ? colors.blueGrey.lighten1 : this.teamStats.position == 3 ? colors.deepOrange.darken1 : '')"
+              :color="
+                this.teamStats.position == 1
+                  ? colors.yellow.darken3
+                  : this.teamStats.position == 2
+                  ? colors.blueGrey.lighten1
+                  : this.teamStats.position == 3
+                  ? colors.deepOrange.darken1
+                  : ''
+              "
             >
               mdi-trophy
             </v-icon>
@@ -25,11 +33,9 @@
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center;">
-            Puntos
-          </v-card-title>
+          <v-card-title style="justify-content: center"> Puntos </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px;">
+            <p style="font-size: 40px">
               {{ this.teamStats.stats.points }}/{{
                 this.teamStats.stats.gamesPlayed * 3
               }}
@@ -39,18 +45,16 @@
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center;">
-            Goles
-          </v-card-title>
+          <v-card-title style="justify-content: center"> Goles </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px;">{{ this.teamStats.stats.goals }}</p>
+            <p style="font-size: 40px">{{ this.teamStats.stats.goals }}</p>
             <v-icon x-large size="1000px">mdi-soccer </v-icon>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card class="elevation-0">
-          <v-card-title style="justify-content: center; word-break: keep-all;">
+          <v-card-title style="justify-content: center; word-break: keep-all">
             Resumen partidos
           </v-card-title>
           <v-card-text>
@@ -65,8 +69,8 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-container fluid v-else style="height: 100%;">
-    <v-row style="height: 100%;">
+  <v-container fluid v-else style="height: 100%">
+    <v-row style="height: 100%">
       <v-col align-self="center" class="text-center">No hay datos</v-col>
     </v-row>
   </v-container>

@@ -80,7 +80,7 @@
     <CreateCompetition
       v-if="dialog"
       :show="dialog"
-      :competition="(updatingCompetition ? updatingCompetition : null)"
+      :competition="updatingCompetition ? updatingCompetition : null"
       @confirm="confirmCreate"
       @close=";(dialog = !dialog), (updatingCompetition = null)"
     ></CreateCompetition>

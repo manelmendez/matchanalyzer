@@ -2,9 +2,7 @@
   <v-snackbar v-model="show" :bottom="true" :left="true" :color="color">
     {{ text }}
     <template v-slot:action>
-      <v-btn color="black" text @click="close">
-        Close
-      </v-btn>
+      <v-btn color="black" text @click="close"> Close </v-btn>
     </template>
   </v-snackbar>
 </template>

@@ -27,14 +27,12 @@
     <v-row>
       <v-col cols="12" sm="12" md="6" lg="4">
         <v-card>
-          <v-card-title class="justify-center">
-            Total
-          </v-card-title>
+          <v-card-title class="justify-center"> Total </v-card-title>
           <v-card-text>
             <v-row>
               <v-col cols="7">- Goles a favor por partido: </v-col>
               <v-col
-                ><b style="fontsize: 18px;">{{
+                ><b style="fontsize: 18px">{{
                   totalStats.goalAverage
                 }}</b></v-col
               >
@@ -42,7 +40,7 @@
             <v-row>
               <v-col cols="7">- Goles recibidos por partido: </v-col>
               <v-col
-                ><b style="fontsize: 18px;">{{
+                ><b style="fontsize: 18px">{{
                   totalStats.againstGoalAverage
                 }}</b></v-col
               >
@@ -50,9 +48,7 @@
             <v-row>
               <v-col cols="7">- Partidos con la porteria a 0: </v-col>
               <v-col
-                ><b style="fontsize: 18px;">{{
-                  totalStats.zeroGoals
-                }}</b></v-col
+                ><b style="fontsize: 18px">{{ totalStats.zeroGoals }}</b></v-col
               >
             </v-row>
           </v-card-text>
@@ -60,14 +56,12 @@
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <v-card>
-          <v-card-title class="justify-center">
-            Local
-          </v-card-title>
+          <v-card-title class="justify-center"> Local </v-card-title>
           <v-card-text>
             <v-row>
               <v-col cols="7">- Goles a favor por partido: </v-col>
               <v-col
-                ><b style="fontsize: 18px;">{{
+                ><b style="fontsize: 18px">{{
                   totalStats.localGoalAverage
                 }}</b></v-col
               >
@@ -75,7 +69,7 @@
             <v-row>
               <v-col cols="7">- Goles recibidos por partido: </v-col>
               <v-col
-                ><b style="fontsize: 18px;">{{
+                ><b style="fontsize: 18px">{{
                   totalStats.localAgainstGoalAverage
                 }}</b></v-col
               >
@@ -83,7 +77,7 @@
             <v-row>
               <v-col cols="7">- Partidos con la porteria a 0: </v-col>
               <v-col
-                ><b style="fontsize: 18px;">{{
+                ><b style="fontsize: 18px">{{
                   totalStats.localZeroGoals
                 }}</b></v-col
               >
@@ -93,14 +87,12 @@
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <v-card>
-          <v-card-title class="justify-center">
-            Visitante
-          </v-card-title>
+          <v-card-title class="justify-center"> Visitante </v-card-title>
           <v-card-text>
             <v-row>
               <v-col cols="7">- Goles a favor por partido: </v-col>
               <v-col
-                ><b style="fontsize: 18px;">{{
+                ><b style="fontsize: 18px">{{
                   totalStats.awayGoalAverage
                 }}</b></v-col
               >
@@ -108,7 +100,7 @@
             <v-row>
               <v-col cols="7">- Goles recibidos por partido: </v-col>
               <v-col
-                ><b style="fontsize: 18px;">{{
+                ><b style="fontsize: 18px">{{
                   totalStats.awayAgainstGoalAverage
                 }}</b></v-col
               >
@@ -116,7 +108,7 @@
             <v-row>
               <v-col cols="7">- Partidos con la porteria a 0: </v-col>
               <v-col
-                ><b style="fontsize: 18px;">{{
+                ><b style="fontsize: 18px">{{
                   totalStats.awayZeroGoals
                 }}</b></v-col
               >
