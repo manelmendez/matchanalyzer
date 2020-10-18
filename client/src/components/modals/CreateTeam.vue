@@ -6,8 +6,14 @@
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
-          <v-row>
-            <v-col cols="12" md="4" class="text-xs-center">
+          <v-row align="center" justify="center">
+            <v-col
+              cols="12"
+              md="4"
+              align="center"
+              justify="center"
+              style="cursor: pointer"
+            >
               <input
                 type="file"
                 ref="file"
@@ -79,14 +85,13 @@ export default {
       image: this.team ? constants.ADDRESS + this.team.avatar : null,
       file: null,
       temporada: [
-        '14/15',
-        '15/16',
-        '16/17',
-        '17/18',
-        '18/19',
-        '19/20',
         '20/21',
-        '21/22'
+        '19/20',
+        '18/19',
+        '17/18',
+        '16/17',
+        '15/16',
+        '14/15'
       ],
       name: this.team ? this.team.name : '',
       season: this.team ? this.team.season : ''
@@ -203,7 +208,8 @@ export default {
           team: {
             season: this.season,
             name: this.name,
-            competition: this.team.competition
+            competition: this.team.competition,
+            avatar: this.team.avatar
           }
         }
         let data = {

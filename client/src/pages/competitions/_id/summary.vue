@@ -149,8 +149,8 @@
     >
       <template v-slot:activator>
         <v-btn v-model="fab" fab color="accent" dark>
-          <v-icon v-if="fab">mdi-close</v-icon>
-          <v-icon v-else>mdi-plus</v-icon>
+          <v-icon v-if="fab">close</v-icon>
+          <v-icon v-else>add</v-icon>
         </v-btn>
       </template>
       <v-tooltip left>
@@ -163,7 +163,7 @@
             color="green"
             @click.stop="dialog = !dialog"
           >
-            <v-icon>mdi-pencil</v-icon>
+            <v-icon>plus_one</v-icon>
           </v-btn>
         </template>
         <span>Añadir equipo a competición</span>
@@ -178,7 +178,7 @@
             color="indigo"
             @click.stop="addOwnTeam = !addOwnTeam"
           >
-            <v-icon>mdi-plus</v-icon>
+            <v-icon>add</v-icon>
           </v-btn>
         </template>
         <span>Añadir equipo propio</span>

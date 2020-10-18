@@ -179,7 +179,8 @@ CREATE TABLE matchanalyzer.players (
     year integer NOT NULL,
     team bigint,
     "position" character varying(255) DEFAULT ''::character varying NOT NULL,
-    "userId" bigint NOT NULL
+    "userId" bigint NOT NULL,
+    guest boolean DEFAULT false NOT NULL
 );
 ALTER TABLE matchanalyzer.players OWNER TO matchanalyzer;
 CREATE SEQUENCE matchanalyzer.players_id_seq

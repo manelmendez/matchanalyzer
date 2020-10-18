@@ -166,7 +166,8 @@ CREATE TABLE matchanalyzer.players (
     year integer NOT NULL,
     team bigint,
     "position" character varying(255) DEFAULT ''::character varying NOT NULL,
-    "userId" bigint NOT NULL
+    "userId" bigint NOT NULL,
+    guest boolean DEFAULT false NOT NULL
 );
 ALTER TABLE matchanalyzer.players OWNER TO matchanalyzer;
 CREATE SEQUENCE matchanalyzer.players_id_seq
@@ -276,6 +277,7 @@ COPY matchanalyzer.cards (id, minute, type, "matchId", matchpart, player, "round
 COPY matchanalyzer.competitions (id, name, season, discipline, category, manager, "signupDate", "userId") FROM stdin;
 3	2a División Grupo 5	19/20	F7	Alevín	2	2019-11-22 15:23:25+01	2
 6	1a División Grupo 2	18/19	F7	Alevín	2	2020-01-17 12:41:28+01	2
+20	Preferente Alevín Grupo 2	20/21	F7	Alevín	2	2020-10-18 21:10:38.581+02	2
 \.
 COPY matchanalyzer.goals (id, minute, type, "matchId", matchpart, player, "roundId", "userId") FROM stdin;
 26	6	\N	10	22	10	13	2
@@ -833,6 +835,13 @@ COPY matchanalyzer.matches (id, "localTeam", "awayTeam", "matchDay", round, comp
 399	20	28	2020-03-08	64	3	6	1	2
 400	13	17	2020-03-08	64	3	9	0	2
 401	25	26	2020-03-14	13	3	5	3	2
+402	64	56	2020-10-18	65	20	2	5	2
+403	54	60	2020-10-18	65	20	6	1	2
+404	62	67	2020-10-18	65	20	6	0	2
+405	65	59	2020-10-18	65	20	1	5	2
+406	57	63	2020-10-18	65	20	5	0	2
+407	53	66	2020-10-18	65	20	2	0	2
+408	58	61	2020-10-18	65	20	3	2	2
 \.
 COPY matchanalyzer.matchparts (id, "matchId", formation, "roundId", "time", team, "userId") FROM stdin;
 22	10	3-1-2	13	15	13	2
@@ -1446,28 +1455,38 @@ COPY matchanalyzer.minutes (id, "matchId", matchpart, player, "roundId", "userId
 537	400	97	10	64	2	DC
 538	400	97	9	64	2	DC
 \.
-COPY matchanalyzer.players (id, name, avatar, year, team, "position", "userId") FROM stdin;
-1	Pau Sabio	assets/images/person_icon.png	2009	13	PT	2
-2	Adrián Cuadrado	assets/images/person_icon.png	2009	13	CT	2
-3	Vadym Bilanchyk	assets/images/person_icon.png	2009	13	CT	2
-4	Marc Morilla	assets/images/person_icon.png	2009	13	LD	2
-5	Luc Gironès	assets/images/person_icon.png	2009	13	LI	2
-6	Pol Moreno	assets/images/person_icon.png	2009	13	LD	2
-7	Alfredo Tiffón	assets/images/person_icon.png	2009	13	MC	2
-8	Roberto Tomás	assets/images/person_icon.png	2009	13	MP	2
-9	Taemin Noh	assets/images/person_icon.png	2009	13	DC	2
-10	Welson Jiménez	assets/images/person_icon.png	2009	13	DC	2
-13	Michele Grondona	assets/images/person_icon.png	2007	31	CT	2
-15	Andrés Torres Castellarnau	assets/images/person_icon.png	2007	31	LD	2
-16	Natxo Montero Raya	assets/images/person_icon.png	2007	31	LI	2
-21	Alejandro Santiago Vargas	assets/images/person_icon.png	2007	31	DC	2
-12	David Lloret Montes	\N	2007	31	PT	2
-14	Álex Carrillo Espejo	\N	2007	31	LD	2
-18	Germán Guillén Sala	\N	2007	31	MC	2
-17	Xavi Pérez Molinero	\N	2007	31	MCD	2
-20	Hugo Recio Punzano	\N	2007	31	DC	2
-19	Pol Mora Cañete	\N	2007	31	MP	2
-11	Daniel Oliva Bermúdez	\N	2007	31	PT	2
+COPY matchanalyzer.players (id, name, avatar, year, team, "position", "userId", guest) FROM stdin;
+1	Pau Sabio	assets/images/person_icon.png	2009	13	PT	2	f
+2	Adrián Cuadrado	assets/images/person_icon.png	2009	13	CT	2	f
+3	Vadym Bilanchyk	assets/images/person_icon.png	2009	13	CT	2	f
+4	Marc Morilla	assets/images/person_icon.png	2009	13	LD	2	f
+5	Luc Gironès	assets/images/person_icon.png	2009	13	LI	2	f
+6	Pol Moreno	assets/images/person_icon.png	2009	13	LD	2	f
+7	Alfredo Tiffón	assets/images/person_icon.png	2009	13	MC	2	f
+8	Roberto Tomás	assets/images/person_icon.png	2009	13	MP	2	f
+9	Taemin Noh	assets/images/person_icon.png	2009	13	DC	2	f
+10	Welson Jiménez	assets/images/person_icon.png	2009	13	DC	2	f
+13	Michele Grondona	assets/images/person_icon.png	2007	31	CT	2	f
+15	Andrés Torres Castellarnau	assets/images/person_icon.png	2007	31	LD	2	f
+16	Natxo Montero Raya	assets/images/person_icon.png	2007	31	LI	2	f
+21	Alejandro Santiago Vargas	assets/images/person_icon.png	2007	31	DC	2	f
+12	David Lloret Montes	\N	2007	31	PT	2	f
+14	Álex Carrillo Espejo	\N	2007	31	LD	2	f
+18	Germán Guillén Sala	\N	2007	31	MC	2	f
+17	Xavi Pérez Molinero	\N	2007	31	MCD	2	f
+20	Hugo Recio Punzano	\N	2007	31	DC	2	f
+19	Pol Mora Cañete	\N	2007	31	MP	2	f
+11	Daniel Oliva Bermúdez	\N	2007	31	PT	2	f
+22	Pau Sabio	assets/images/1602696660334-IMG_5178.jpg	2009	53	PT	2	f
+23	Adrián Cuadrado	assets/images/1602696708706-IMG_5180.jpg	2009	53	CT	2	f
+24	Vadym Bylanchik	assets/images/1603046819949-IMG_5181.jpg	2009	53	CT	2	f
+25	Luc Gironès	assets/images/1603047528525-IMG_5185.jpg	2009	53	LI	2	f
+26	Marc Morilla	assets/images/1603047970510-IMG_5179.jpg	2009	53	LD	2	f
+27	Alfredo Tiffón	assets/images/1603048010616-IMG_5184.jpg	2009	53	MC	2	f
+28	Roberto Tomás	assets/images/1603048050657-IMG_5183.jpg	2009	53	MP	2	f
+29	Taemin Noh	assets/images/1603048087990-IMG_5182.jpg	2009	53	DC	2	f
+30	Welson Jimenez	assets/images/1603048115953-IMG_5186.jpg	2009	53	DC	2	f
+31	Oleksandr Gavryliuk	\N	2009	53	DC	2	f
 \.
 COPY matchanalyzer.rounds (id, name, date, competition, "userId") FROM stdin;
 13	Jornada 1	2019-12-03	3	2
@@ -1600,6 +1619,22 @@ COPY matchanalyzer.teams (id, name, avatar, "signupDate", manager, season, compe
 44	C.E.EUROPA "B"	assets/images/ceeuropa.png	2020-01-17 15:31:03+01	\N	18/19	6	2
 45	MATARÓ C.E. "C"	assets/images/mataro.png	2020-01-17 15:31:56+01	\N	18/19	6	2
 49	ESPLUGUENC "A"	assets/images/espluguenc.png	2020-01-17 15:34:29+01	\N	18/19	6	2
+53	FUNDACIÓ CORNELLÀ "B"	assets/images/1603048612830-fcornella.png	2020-10-14 18:34:49.551+02	2	20/21	20	2
+54	BARCELONA, F.C.,B	assets/images/1603048730997-fcb.png	2020-10-18 21:16:16.131+02	\N	20/21	20	2
+55	ESPANYOL, R.C.D.,A	assets/images/1603049293934-espanyol.png	2020-10-18 21:28:13.959+02	\N	20/21	20	2
+56	DAMM, C.F.,A	assets/images/1603049585719-damm.png	2020-10-18 21:33:05.736+02	\N	20/21	20	2
+57	GIMNASTIC MANRESA, C.,A	assets/images/1603049714824-gimnasticm.png	2020-10-18 21:35:14.84+02	\N	20/21	20	2
+58	MERCANTIL, C.E,A	assets/images/1603049764480-mercantil.png	2020-10-18 21:36:04.505+02	\N	20/21	20	2
+60	SANT CUGAT FUTBOL CLUB ,B	assets/images/1603050181215-santcugat.png	2020-10-18 21:43:01.225+02	\N	20/21	20	2
+61	FUNDACIÓ FUTBOL BADALONA,A	assets/images/1603050213851-badalona.png	2020-10-18 21:43:33.878+02	\N	20/21	20	2
+62	SABADELL F.C., C.E.,A	assets/images/1603050261188-sabadell.png	2020-10-18 21:44:21.199+02	\N	20/21	20	2
+59	ESCOLA FUTBOL MATARO C.E,A	assets/images/1603050531353-mataro.png	2020-10-18 21:42:01.55+02	\N	20/21	20	2
+63	VIC RIUPRIMER REFO FUTBOL CLUB,A	assets/images/1603050443901-riuprimer.png	2020-10-18 21:47:23.919+02	\N	20/21	20	2
+64	MOLLET U.E.,CF.,A	assets/images/1603050761284-mollet.png	2020-10-18 21:52:41.305+02	\N	20/21	20	2
+65	EUROPA, C.E.,A	assets/images/1603050842315-ceeuropa.png	2020-10-18 21:54:02.336+02	\N	20/21	20	2
+66	SANT ANDREU, U.E,A	assets/images/1603050879862-santandreu.png	2020-10-18 21:54:39.877+02	\N	20/21	20	2
+67	AQUA HOTEL FUTBOL CLUB,A	assets/images/1603050915107-aquahotel.png	2020-10-18 21:55:15.124+02	\N	20/21	20	2
+68	VILA OLIMPICA CLUB ESP.,A	assets/images/1603050942675-vila.png	2020-10-18 21:55:42.691+02	\N	20/21	20	2
 \.
 COPY matchanalyzer.users (id, email, name, avatar, provider, provider_id, password, "signupDate", "lastLogin", role) FROM stdin;
 1	admin@matchanalyzer.com	admin	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-05-30 19:05:38+02	admin
@@ -1608,15 +1643,15 @@ COPY matchanalyzer.users (id, email, name, avatar, provider, provider_id, passwo
 
 SELECT pg_catalog.setval('matchanalyzer.assists_id_seq', 1, false);
 SELECT pg_catalog.setval('matchanalyzer.cards_id_seq', 1, true);
-SELECT pg_catalog.setval('matchanalyzer.competitions_id_seq', 19, true);
+SELECT pg_catalog.setval('matchanalyzer.competitions_id_seq', 20, true);
 SELECT pg_catalog.setval('matchanalyzer.goals_id_seq', 195, true);
-SELECT pg_catalog.setval('matchanalyzer.matches_id_seq', 401, true);
+SELECT pg_catalog.setval('matchanalyzer.matches_id_seq', 408, true);
 SELECT pg_catalog.setval('matchanalyzer.matchparts_id_seq', 97, true);
 SELECT pg_catalog.setval('matchanalyzer.minutes_id_seq', 538, true);
-SELECT pg_catalog.setval('matchanalyzer.players_id_seq', 21, true);
+SELECT pg_catalog.setval('matchanalyzer.players_id_seq', 31, true);
 SELECT pg_catalog.setval('matchanalyzer.rounds_id_seq', 64, true);
 SELECT pg_catalog.setval('matchanalyzer.substitutions_id_seq', 50, true);
-SELECT pg_catalog.setval('matchanalyzer.teams_id_seq', 52, true);
+SELECT pg_catalog.setval('matchanalyzer.teams_id_seq', 68, true);
 SELECT pg_catalog.setval('matchanalyzer.users_id_seq', 2, true);
 
 ALTER TABLE ONLY matchanalyzer.assists

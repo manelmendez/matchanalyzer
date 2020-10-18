@@ -64,7 +64,7 @@ export default {
     return {
       name: this.competition ? this.competition.name : '',
       season: this.competition ? this.competition.season : '',
-      seasons: ['19/20', '18/19', '17/18', '16/17', '15/16', '14/15'],
+      seasons: ['20/21', '19/20', '18/19', '17/18', '16/17', '15/16', '14/15'],
       disciplines: ['F7', 'F11'],
       categoriesF7: ['Prebenjamín', 'Benjamín', 'Alevín'],
       categoriesF11: ['Infantil', 'Cadete', 'Juvenil', 'Amateur'],
