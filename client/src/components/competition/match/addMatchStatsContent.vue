@@ -60,6 +60,7 @@
                 :players="team.players"
                 @close="addMinuteDialog = false"
                 @confirm="addNewMinute"
+                @create-guest-player="createGuestPlayer"
               ></AddPlayer>
             </v-btn>
           </v-row>
@@ -324,6 +325,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      addPlayer: 'team/addPlayer',
       addMinute: 'competition/addMinute',
       addGoal: 'competition/addGoal',
       addAssist: 'competition/addAssist',
@@ -337,6 +339,20 @@ export default {
     }),
     close() {
       this.$emit('close')
+    },
+    async createGuestPlayer(data) {
+      let player = {
+        name: data.name,
+        position: null,
+        year: null,
+        team: this.team.id,
+        guest: true
+      }
+      this.addPlayer(player).then((response) => {
+        if (response.status === 200) {
+          console.log(response)
+        }
+      })
     },
     async addNewMinute(data) {
       let minute = {

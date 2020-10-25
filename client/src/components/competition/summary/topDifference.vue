@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-9">
+  <v-card class="mt-5">
     <v-sheet
       class="v-sheet--offset mx-auto"
       color="primary"
@@ -7,9 +7,9 @@
       max-width="calc(100% - 32px)"
       max-height="calc(100% - 32px)"
     >
-      <v-list class="transparent">
+      <v-list class="transparent" dense>
         <v-list-item v-for="i in 4" :key="i" class="white--text">
-          <v-list-item-avatar tile>
+          <v-list-item-avatar tile size="30">
             <v-img
               :src="constants.ADDRESS + topDifference[i - 1].avatar"
               @error="topDifference[i - 1].avatar = constants.DEFAULT_TEAM_URL"
@@ -19,41 +19,19 @@
           <v-list-item-content>
             <v-list-item-title
               v-text="topDifference[i - 1].name"
+              :title="topDifference[i - 1].name"
             ></v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn icon>
+            <v-btn icon small>
               {{ topDifference[i - 1].stats.goalDif
               }}<v-icon class="white--text">mdi-soccer</v-icon>
             </v-btn>
           </v-list-item-action>
         </v-list-item>
       </v-list>
-      <!-- <v-card class="transparent">
-        <v-card-text v-for="i in 4" :key="i" class="white--text">
-          <v-row no-gutters>
-            <v-col cols="9">
-              <v-avatar tile size="36">
-                <v-img
-                  :src="constants.ADDRESS + topDifference[i - 1].avatar"
-                  @error="
-                    topDifference[i - 1].avatar =
-                      constants.DEFAULT_TEAM_URL
-                  "
-                  contain
-                />
-              </v-avatar>
-              {{ topDifference[i - 1].name }}</v-col
-            >
-            <v-col
-              >{{ topDifference[i - 1].stats.goalDif }}
-              <v-icon class="white--text">mdi-soccer</v-icon></v-col
-            >
-          </v-row>
-        </v-card-text>
-      </v-card> -->
     </v-sheet>
-    <v-card-text class="pt-0">
+    <v-card-text class="pt-0 pb-0">
       <v-card-title class="justify-center"
         >Mejor diferencia de goles</v-card-title
       >

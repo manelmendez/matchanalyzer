@@ -5,7 +5,7 @@
         :color="resultClass(match.localTeamGoals, match.awayTeamGoals)"
         outlined
       >
-        <v-card-actions>
+        <v-list class="transparent">
           <v-list-item class="grow">
             <v-list-item-avatar tile>
               <v-img
@@ -16,10 +16,14 @@
               ></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ match.localTeam.name }}</v-list-item-title>
+              <v-list-item-title
+                v-text="match.localTeam.name"
+                :title="match.localTeam.name"
+              >
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </v-card-actions>
+        </v-list>
       </v-card>
     </v-col>
     <v-col class="pt-1 pb-1" cols="12" sm="2" md="2">
@@ -34,8 +38,8 @@
         :color="resultClass(match.awayTeamGoals, match.localTeamGoals)"
         outlined
       >
-        <v-card-actions>
-          <v-list-item class="grow">
+        <v-list class="transparent">
+          <v-list-item>
             <v-list-item-avatar tile>
               <v-img
                 :src="constants.ADDRESS + match.awayTeam.avatar"
@@ -45,10 +49,14 @@
               ></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ match.awayTeam.name }}</v-list-item-title>
+              <v-list-item-title
+                v-text="match.awayTeam.name"
+                :title="match.awayTeam.name"
+              >
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </v-card-actions>
+        </v-list>
       </v-card>
     </v-col>
     <v-col class="pt-1 pb-1" cols="12" sm="12" md="2">

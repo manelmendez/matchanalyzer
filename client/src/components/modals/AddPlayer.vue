@@ -28,6 +28,21 @@
             ></v-select>
           </v-col>
         </v-row>
+        <v-row justify="center">
+          <a v-if="!addGuest" @click="addGuest = true"
+            >o añade un jugador invitado a la lista
+          </a>
+          <v-col v-else>
+            <v-text-field v-model="name" label="Nombre"></v-text-field>
+            <v-btn
+              small
+              color="primary"
+              :disabled="name == null"
+              @click="createGuestPlayer"
+              >Añadir a la lista</v-btn
+            >
+          </v-col>
+        </v-row>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -60,7 +75,9 @@ export default {
     return {
       positions: ['PT', 'LD', 'LI', 'CT', 'MCD', 'MC', 'MP', 'ED', 'EI', 'DC'],
       player: null,
-      position: null
+      position: null,
+      name: null,
+      addGuest: false
     }
   },
   methods: {
@@ -71,6 +88,11 @@ export default {
       this.$emit('confirm', {
         playerId: this.player.id,
         position: this.position
+      })
+    },
+    createGuestPlayer() {
+      this.$emit('create-guest-player', {
+        name: this.name
       })
     }
   }

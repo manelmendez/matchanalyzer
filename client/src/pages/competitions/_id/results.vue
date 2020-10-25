@@ -16,19 +16,17 @@
       <v-card class="results">
         <v-card-title>
           <v-row justify="space-between">
-            <v-col md="3">
+            <v-col cols="12" md="3">
               <v-select
-                small
                 :items="rounds"
                 item-text="name"
                 required
                 :value="round"
-                class="headline"
                 return-object
                 @change="changeResultRound"
               ></v-select>
               <v-row>
-                <v-col>
+                <v-col class="text-center">
                   <v-btn
                     text
                     small
@@ -38,7 +36,7 @@
                     <v-icon left>mdi-chevron-double-left</v-icon>Anterior
                   </v-btn>
                 </v-col>
-                <v-col>
+                <v-col class="text-center">
                   <v-btn
                     text
                     small

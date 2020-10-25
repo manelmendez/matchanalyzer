@@ -3,17 +3,17 @@
     <p v-if="this.myTeams.length == 0">
       Aún no tienes equipos. Dale al botón para crear uno
     </p>
-    <v-list v-else>
+    <v-list v-else dense>
       <v-list-item
         v-for="team in this.myTeams"
         :key="team.id"
         @click.stop="goTo(team.id)"
       >
-        <v-list-item-avatar>
+        <v-list-item-avatar size="30">
           <v-img
             :src="constants.ADDRESS + team.avatar"
             @error="team.avatar = constants.DEFAULT_TEAM_URL"
-            :contain="true"
+            :contain="false"
           />
         </v-list-item-avatar>
         <v-list-item-content>
@@ -24,6 +24,7 @@
             <template v-slot:activator="{ on }">
               <v-btn
                 text
+                small
                 icon
                 color="info"
                 @click.stop=";(updatingTeam = team), (dialog = true)"
@@ -40,6 +41,7 @@
             <template v-slot:activator="{ on }">
               <v-btn
                 text
+                small
                 icon
                 color="error"
                 v-on="on"

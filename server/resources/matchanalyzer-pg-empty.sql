@@ -176,9 +176,9 @@ CREATE TABLE matchanalyzer.players (
     id bigint NOT NULL,
     name character varying(255) DEFAULT ''::character varying NOT NULL,
     avatar character varying(255),
-    year integer NOT NULL,
+    year integer,
     team bigint,
-    "position" character varying(255) DEFAULT ''::character varying NOT NULL,
+    "position" character varying(255),
     "userId" bigint NOT NULL,
     guest boolean DEFAULT false NOT NULL
 );

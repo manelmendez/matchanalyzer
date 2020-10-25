@@ -11,22 +11,21 @@
     <v-row v-else>
       <v-card>
         <v-card-title>
-          <v-row justify="space-between">
-            <v-col md="3">
+          <v-row justify="space-between" align="center">
+            <v-col cols="6" md="3">
               <v-select
-                small
+                dense
                 :items="rounds"
                 item-text="name"
                 required
                 :value="round"
-                class="headline"
                 return-object
                 @change="changeResultRound"
               ></v-select>
             </v-col>
-            <v-col md="3">
+            <v-col cols="6" md="3">
               <v-row>
-                <v-col>
+                <v-col class="text-center">
                   <v-btn
                     text
                     small
@@ -36,7 +35,7 @@
                     <v-icon left>mdi-chevron-double-left</v-icon>Anterior
                   </v-btn>
                 </v-col>
-                <v-col>
+                <v-col class="text-center">
                   <v-btn
                     text
                     small

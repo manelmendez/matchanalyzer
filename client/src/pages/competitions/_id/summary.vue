@@ -9,22 +9,21 @@
     </v-row>
     <v-card v-if="rounds && rounds.length != 0">
       <v-card-title>
-        <v-row justify="space-between">
-          <v-col md="3">
+        <v-row justify="space-between" align="center">
+          <v-col cols="6" md="3">
             <v-select
-              small
+              dense
               :items="rounds"
               item-text="name"
               required
               :value="round"
-              class="headline"
               return-object
               @change="changeResultRound"
             ></v-select>
           </v-col>
-          <v-col md="3">
+          <v-col cols="6" md="3">
             <v-row>
-              <v-col>
+              <v-col class="text-center">
                 <v-btn
                   text
                   small
@@ -34,7 +33,7 @@
                   <v-icon left>mdi-chevron-double-left</v-icon>Anterior
                 </v-btn>
               </v-col>
-              <v-col>
+              <v-col class="text-center">
                 <v-btn
                   text
                   small
@@ -89,22 +88,25 @@
             })
           "
         >
+          <v-icon
+            v-if="team.manager"
+            style="position: absolute; right: 3px; top: 3px"
+            color="yellow"
+            >star</v-icon
+          >
           <v-col>
             <v-img
               justify="center"
               :src="constants.ADDRESS + team.avatar"
               @error="team.avatar = constants.DEFAULT_TEAM_URL"
-              aspect-ratio="2"
+              aspect-ratio="3"
+              size="30"
               contain
             ></v-img>
           </v-col>
           <v-card-text class="title-card text-center grow">
             <b>{{ team.name }}</b>
           </v-card-text>
-          <v-card-text class="text-center" height="100%">
-            <!-- Nº de jugadores: {{team.players.length}}   -->
-          </v-card-text>
-          <v-spacer></v-spacer>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-tooltip top>
@@ -371,6 +373,6 @@ export default {
   cursor: pointer;
 }
 .title-card {
-  font-size: 15px;
+  font-size: 12px;
 }
 </style>

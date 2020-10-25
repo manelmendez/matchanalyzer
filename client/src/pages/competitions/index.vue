@@ -3,7 +3,7 @@
     <v-layout v-if="this.competitions.length == 0">
       No tienes competiciones
     </v-layout>
-    <v-list v-else>
+    <v-list v-else dense>
       <v-list-item
         v-for="competition in this.competitions"
         :key="competition.id"
@@ -27,6 +27,7 @@
             <template v-slot:activator="{ on }">
               <v-btn
                 text
+                small
                 icon
                 color="info"
                 @click.stop="
@@ -45,6 +46,7 @@
             <template v-slot:activator="{ on }">
               <v-btn
                 text
+                small
                 icon
                 color="error"
                 v-on="on"

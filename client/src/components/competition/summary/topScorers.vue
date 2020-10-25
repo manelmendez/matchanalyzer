@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-9">
+  <v-card class="mt-5">
     <v-sheet
       class="v-sheet--offset mx-auto"
       color="primary"
@@ -7,9 +7,9 @@
       max-width="calc(100% - 32px)"
       max-height="calc(100% - 32px)"
     >
-      <v-list class="transparent">
+      <v-list class="transparent" dense>
         <v-list-item v-for="i in 4" :key="i" class="white--text">
-          <v-list-item-avatar tile>
+          <v-list-item-avatar tile size="30">
             <v-img
               :src="constants.ADDRESS + topScorers[i - 1].avatar"
               @error="topScorers[i - 1].avatar = constants.DEFAULT_TEAM_URL"
@@ -19,10 +19,11 @@
           <v-list-item-content>
             <v-list-item-title
               v-text="topScorers[i - 1].name"
+              :title="topScorers[i - 1].name"
             ></v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn icon>
+            <v-btn icon small>
               {{ topScorers[i - 1].stats.goals
               }}<v-icon class="white--text">mdi-soccer</v-icon>
             </v-btn>
@@ -30,8 +31,7 @@
         </v-list-item>
       </v-list>
     </v-sheet>
-
-    <v-card-text class="pt-0">
+    <v-card-text class="pt-0 pb-0">
       <v-card-title class="justify-center">Equipos más goleadores</v-card-title>
     </v-card-text>
   </v-card>

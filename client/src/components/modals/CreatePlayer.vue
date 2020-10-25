@@ -2,7 +2,9 @@
   <v-dialog v-if="show" v-model="show" width="70%" persistent>
     <v-card>
       <v-card-title>
-        <span class="headline">Datos del jugador:</span>
+        <span class="headline" style="word-break: keep-all"
+          >Datos del jugador:</span
+        >
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
@@ -19,11 +21,13 @@
                 size="100px"
                 class="uploadPhoto"
                 @click="launchFilePicker"
+                style="cursor: pointer"
               >
                 <v-icon>add_a_photo</v-icon>
               </v-avatar>
               <v-img
                 v-else
+                style="cursor: pointer"
                 height="100px"
                 :src="image"
                 @click="launchFilePicker"
@@ -48,7 +52,7 @@
                     required
                   ></v-select>
                 </v-col>
-                <v-col cols="12" md="6">
+                <v-col cols="6" md="6">
                   <v-select
                     :items="years"
                     label="Año de nacimiento"
@@ -91,7 +95,7 @@ export default {
       position: this.player ? this.player.position : '',
       year: this.player ? this.player.year : '',
       positions: ['PT', 'LD', 'LI', 'CT', 'MCD', 'MC', 'MP', 'ED', 'EI', 'DC'],
-      years: ['2007', '2008', '2009', '2011', '2012', '2013', '2014']
+      years: [2007, 2008, 2009, 2011, 2012, 2013, 2014]
     }
   },
   methods: {
@@ -113,7 +117,8 @@ export default {
             name: this.name,
             position: this.position,
             year: this.year,
-            team: this.$route.params.id
+            team: this.$route.params.id,
+            guest: false
           }
           if (response.status == 200) {
             player.avatar = response.data
@@ -131,7 +136,8 @@ export default {
           name: this.name,
           position: this.position,
           year: this.year,
-          team: this.$route.params.id
+          team: this.$route.params.id,
+          guest: false
         }
         this.addPlayer(player).then((response) => {
           if (response.status === 200) {

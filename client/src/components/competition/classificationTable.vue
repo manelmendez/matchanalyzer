@@ -1,6 +1,8 @@
 <template>
   <v-card>
     <v-data-table
+      dense
+      style="font-size: 40px"
       v-if="rankedTeams"
       :headers="headers"
       :items="rankedTeams"
@@ -13,6 +15,7 @@
           <td class="text-center">{{ index + 1 }}</td>
           <td class="text-center">
             <v-list-item-avatar
+              size="30"
               :tile="true"
               style="cursor: pointer"
               @click="$router.push('/teams/' + item.id + '/competitionstats')"
@@ -25,7 +28,7 @@
             </v-list-item-avatar>
           </td>
           <td class="text-center">{{ item.name }}</td>
-          <td class="text-center">{{ item.stats.points }}</td>
+          <td class="text-center" style="font-weight: bold">{{ item.stats.points }}</td>
           <td class="text-center">{{ item.stats.gamesPlayed }}</td>
           <td class="text-center">{{ item.stats.wins }}</td>
           <td class="text-center">{{ item.stats.draws }}</td>
@@ -86,7 +89,7 @@ export default {
         { text: 'GF', value: 'goals', align: 'center', sortable: false },
         { text: 'GC', value: 'againstGoals', align: 'center', sortable: false },
         { text: 'DG', value: 'goalDif', align: 'center', sortable: false },
-        { text: 'En Casa', sortable: false },
+        { text: 'Casa', sortable: false },
         { text: 'PTS', value: 'points', align: 'center', sortable: false },
         { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false },
         { text: 'V', value: 'wins', align: 'center', sortable: false },
@@ -133,5 +136,8 @@ export default {
 }
 .descending:hover {
   background-color: rgba(255, 117, 117, 0.9) !important;
+}
+td {
+  font-size: 11px !important;
 }
 </style>

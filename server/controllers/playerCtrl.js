@@ -12,9 +12,9 @@ const addPlayer = async (req, res) => {
       req.body.avatar != null
         ? req.body.avatar
         : 'assets/images/person_icon.png',
-    userId: userId
+    userId: userId,
+    guest: req.body.guest
   }
-  console.log('No existe jugador con ese nombre, registrando...')
   try {
     const playerSaved = await playerService.savePlayer(player)
     return res.status(200).send({
@@ -28,7 +28,7 @@ const addPlayer = async (req, res) => {
 }
 const getPlayersByTeamId = async (req, res) => {
   let userId = req.user.id
-  console.log(userId);
+  console.log(userId)
   let teamId = req.params.teamId
   try {
     const players = await playerService.findByTeam(teamId, userId)

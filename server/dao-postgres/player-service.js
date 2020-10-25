@@ -2,15 +2,16 @@ import con from '../config/postgres.js'
 
 const savePlayer = async (player) => {
   const result = await con.query(
-    'INSERT INTO players(name, avatar, year, team, position, "userId")' +
-      'VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
+    'INSERT INTO players(name, avatar, year, team, position, "userId", guest)' +
+      'VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
     [
       player.name,
       player.avatar,
       player.year,
       player.team,
       player.position,
-      player.userId
+      player.userId,
+      player.guest
     ]
   )
   return result.rows[0]
