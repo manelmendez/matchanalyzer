@@ -2,20 +2,18 @@
   <v-container fluid v-if="this.teamStats.stats">
     <v-row justify="center">
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
-        <v-card class="elevation-0">
+        <v-card elevation="0">
           <v-card-title style="justify-content: center; word-break: keep-all">
             Posicion en liga
           </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px">{{ this.teamStats.position }}</p>
+            <p style="font-size: 20px">{{ this.teamStats.position }}</p>
             <v-icon
               v-if="
                 this.teamStats.position == 1 ||
                 this.teamStats.position == 2 ||
                 this.teamStats.position == 3
               "
-              x-large
-              size="1000px"
               :color="
                 this.teamStats.position == 1
                   ? colors.yellow.darken3
@@ -35,7 +33,7 @@
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center"> Puntos </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px">
+            <p style="font-size: 20px">
               {{ this.teamStats.stats.points }}/{{
                 this.teamStats.stats.gamesPlayed * 3
               }}
@@ -47,8 +45,8 @@
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center"> Goles </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px">{{ this.teamStats.stats.goals }}</p>
-            <v-icon x-large size="1000px">mdi-soccer </v-icon>
+            <p style="font-size: 20px">{{ this.teamStats.stats.goals }}</p>
+            <v-icon>mdi-soccer </v-icon>
           </v-card-text>
         </v-card>
       </v-col>
@@ -60,7 +58,7 @@
           <v-card-text>
             <pie-chart
               :chart-data="matchesdatacollection"
-              :height="250"
+              :height="100"
               :options="options"
               class="chartStyle"
             ></pie-chart>

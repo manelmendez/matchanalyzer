@@ -26,7 +26,7 @@
         </v-list>
       </v-card>
     </v-col>
-    <v-col class="pt-1 pb-1" cols="12" sm="2" md="2">
+    <v-col class="pt-1 pb-1" cols="6" sm="2" md="2">
       <v-card color="rgba(199, 199, 199, 0.55)" outlined>
         <v-card-text class="result">
           {{ match.localTeamGoals }} - {{ match.awayTeamGoals }}
@@ -59,7 +59,7 @@
         </v-list>
       </v-card>
     </v-col>
-    <v-col class="pt-1 pb-1" cols="12" sm="12" md="2">
+    <v-col class="pt-1 pb-1" cols="6" sm="6" md="2">
       <v-card outlined>
         <v-card-text class="text-center pt-0 pb-0">
           <v-row>
@@ -128,6 +128,9 @@
           </v-row>
         </v-card-text>
       </v-card>
+    </v-col>
+    <v-col cols="10">
+      <v-divider></v-divider>
     </v-col>
     <CreateMatch
       v-if="roundDialog"

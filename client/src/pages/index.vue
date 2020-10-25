@@ -1,6 +1,6 @@
 <template>
   <v-container class="homeContent" fluid>
-    <v-row class="justify-center">
+    <v-row justify="center">
       <v-col>
         <v-card class="animated fadeInRight">
           <v-card-title class="justify-center"
@@ -29,7 +29,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row class="justify-center">
+    <v-row justify="center">
       <v-col>
         <v-card class="animated fadeInRight">
           <v-card-title class="justify-center"

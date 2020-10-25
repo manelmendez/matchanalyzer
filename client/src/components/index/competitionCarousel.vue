@@ -9,7 +9,7 @@
               justify="center"
               :src="constants.ADDRESS + competition.teams[0].avatar"
               @error="competition.teams[0].avatar = constants.DEFAULT_TEAM_URL"
-              aspect-ratio="2"
+              aspect-ratio="4"
               contain
             ></v-img>
             {{ competition.teams[0].name }}
@@ -30,7 +30,7 @@
                 competition.teams[competition.teams.length - 1].avatar =
                   constants.DEFAULT_TEAM_URL
               "
-              aspect-ratio="2"
+              aspect-ratio="4"
               contain
             ></v-img>
             {{ competition.teams[competition.teams.length - 1].name }}
@@ -43,8 +43,8 @@
             Total de goles
           </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px">{{ totalGoals }}</p>
-            <v-icon x-large size="1000px">mdi-soccer </v-icon>
+            <p style="font-size: 20px">{{ totalGoals }}</p>
+            <v-icon>mdi-soccer </v-icon>
           </v-card-text>
         </v-card>
       </v-col>
@@ -52,7 +52,7 @@
         <v-card class="elevation-0">
           <v-card-title style="justify-content: center"> Año </v-card-title>
           <v-card-text>
-            <p style="font-size: 40px">{{ competition.season }}</p>
+            <p style="font-size: 20px">{{ competition.season }}</p>
           </v-card-text>
         </v-card>
       </v-col>

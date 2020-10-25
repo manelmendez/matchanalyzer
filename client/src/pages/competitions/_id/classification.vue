@@ -9,7 +9,7 @@
       </v-card>
     </v-row>
     <v-row v-else>
-      <v-card>
+      <v-card style="width: 100%">
         <v-card-title>
           <v-row justify="space-between" align="center">
             <v-col cols="6" md="3">
@@ -47,10 +47,22 @@
                 </v-col>
               </v-row>
             </v-col>
+            <v-col cols="12" md="3" align-self="center">
+              <v-row justify="center" align="center">
+                <v-switch
+                  dense
+                  label="Ver detalles"
+                  v-model="details"
+                ></v-switch>
+              </v-row>
+            </v-col>
           </v-row>
         </v-card-title>
         <v-card-text>
-          <classificationTable :rankedTeams="rankedTeams"></classificationTable>
+          <classificationTable
+            :rankedTeams="rankedTeams"
+            :details="details"
+          ></classificationTable>
         </v-card-text>
       </v-card>
     </v-row>
@@ -67,7 +79,8 @@ export default {
     classificationTable
   },
   data: () => ({
-    constants: constants
+    constants: constants,
+    details: false
   }),
   methods: {
     changeResultRound(item) {

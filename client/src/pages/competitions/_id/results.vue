@@ -49,28 +49,25 @@
               </v-row>
             </v-col>
             <v-col md="3">
-              <v-row>
-                <v-col>
+              <v-row class="fill-height" justify="center" align="center">
+                <v-col cols="6" sm="6">
                   <v-btn
                     small
-                    rounded
-                    color="blue-grey"
-                    class="white--text resultBtn"
+                    text
+                    elevation="0"
+                    color="success"
+                    class="resultBtn"
                     @click="createRound()"
                   >
                     Nueva Jornada
                     <v-icon right dark>add</v-icon>
                   </v-btn>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
                   <v-btn
                     small
                     v-if="round.id == rounds[rounds.length - 1].id"
-                    rounded
+                    text
                     color="error"
-                    class="white--text resultBtn"
+                    class="resultBtn"
                     @click.stop="deleteDialog = !deleteDialog"
                   >
                     Borrar Jornada
