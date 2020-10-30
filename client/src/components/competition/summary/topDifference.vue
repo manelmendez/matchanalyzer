@@ -31,10 +31,8 @@
         </v-list-item>
       </v-list>
     </v-sheet>
-    <v-card-text class="pt-0 pb-0">
-      <v-card-title class="justify-center"
-        >Mejor diferencia de goles</v-card-title
-      >
+    <v-card-text class="pt-0">
+      <div class="text-center title mb-2">Mejor diferencia de goles</div>
     </v-card-text>
   </v-card>
 </template>
@@ -56,4 +54,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-sheet--offset {
+  top: -24px;
+  position: relative;
+}
+</style>

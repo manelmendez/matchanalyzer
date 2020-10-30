@@ -47,7 +47,7 @@
       </v-card-title>
       <v-container>
         <v-row>
-          <v-col v-if="team.competition != null && pichichiList">
+          <v-col v-if="team.competition != null && pichichiList && cardList">
             <PichichiChart
               class="mt-2"
               :chart-data="pichichiList"
@@ -340,7 +340,6 @@ export default {
       }
     },
     breakpoint() {
-      console.log(this.$vuetify.breakpoint.name)
       return this.$vuetify.breakpoint.name
     }
   },

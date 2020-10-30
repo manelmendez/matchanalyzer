@@ -28,7 +28,6 @@
     "font-awesome": "latest",
     "moment": "latest",
     "vue": "latest",
-    "vue-carousel": "latest",
     "vue-chartjs": "latest",
     "vue-hot-reload-api": "latest",
     "vue-router": "latest",

@@ -11,21 +11,19 @@
           <v-card-text v-if="this.myTeams.length == 0" class="text-center"
             >Aún no hay equipos</v-card-text
           >
-          <carousel
+          <v-carousel
             v-else
-            autoplayHoverPause
-            :per-page="1"
-            :loop="true"
-            :autoplay="true"
-            :autoplayTimeout="4000"
-            paginationActiveColor="var(--v-primary-darken1)"
-            paginationColor="var(--v-item-lighten2)"
+            height="auto"
+            :cycle="true"
+            :continuous="true"
+            :interval="6000"
+            :hide-delimiter-background="true"
           >
-            <slide v-for="team in this.myTeams" :key="team.id">
+            <v-carousel-item v-for="team in this.myTeams" :key="team.id">
               <h5 class="text-center">{{ team.name }}</h5>
               <teamCarousel :team="team"></teamCarousel>
-            </slide>
-          </carousel>
+            </v-carousel-item>
+          </v-carousel>
         </v-card>
       </v-col>
     </v-row>
@@ -40,16 +38,15 @@
           <v-card-text v-if="this.competitions.length == 0" class="text-center"
             >Aún no hay competiciones</v-card-text
           >
-          <carousel
+          <v-carousel
             v-else
-            :per-page="1"
-            :loop="true"
-            :autoplay="true"
-            :autoplayTimeout="4000"
-            paginationActiveColor="var(--v-primary-darken1)"
-            paginationColor="var(--v-item-lighten2)"
+            height="auto"
+            :cycle="hover ? false : true"
+            :continuous="true"
+            :interval="6000"
+            :hide-delimiter-background="true"
           >
-            <slide
+            <v-carousel-item
               v-for="competition in this.competitions"
               :key="competition.id"
             >
@@ -57,8 +54,8 @@
               <competitionCarousel
                 :competition="competition"
               ></competitionCarousel>
-            </slide>
-          </carousel>
+            </v-carousel-item>
+          </v-carousel>
         </v-card>
       </v-col>
     </v-row>
@@ -66,17 +63,19 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { Carousel, Slide } from 'vue-carousel'
 import teamCarousel from '../components/index/teamCarousel'
 import competitionCarousel from '../components/index/competitionCarousel'
 
 export default {
   name: 'index',
   components: {
-    Carousel,
-    Slide,
     teamCarousel,
     competitionCarousel
+  },
+  data() {
+    return {
+      hover: false
+    }
   },
   methods: {
     ...mapActions({
