@@ -2,7 +2,7 @@
   <v-container fluid v-if="competition.teams">
     <v-row justify="center">
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
-        <v-card class="elevation-0">
+        <v-card flat>
           <v-card-title style="justify-content: center"> Líder </v-card-title>
           <v-card-text>
             <v-img
@@ -17,7 +17,7 @@
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
-        <v-card class="elevation-0">
+        <v-card flat>
           <v-card-title style="justify-content: center"> Último </v-card-title>
           <v-card-text>
             <v-img
@@ -38,7 +38,7 @@
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
-        <v-card class="elevation-0">
+        <v-card flat>
           <v-card-title style="justify-content: center; word-break: keep-all">
             Total de goles
           </v-card-title>
@@ -49,7 +49,7 @@
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
-        <v-card class="elevation-0">
+        <v-card flat>
           <v-card-title style="justify-content: center"> Año </v-card-title>
           <v-card-text>
             <p style="font-size: 20px">{{ competition.season }}</p>

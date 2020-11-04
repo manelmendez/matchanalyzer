@@ -211,6 +211,7 @@ export default {
 .toolbar-title {
   color: inherit;
   text-decoration: inherit;
+  font-family: 'Montserrat';
 }
 .content {
   background-color: var(--v-item-lighten3);

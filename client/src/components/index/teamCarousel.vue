@@ -2,7 +2,7 @@
   <v-container fluid v-if="this.teamStats.stats">
     <v-row justify="center">
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
-        <v-card elevation="0">
+        <v-card flat>
           <v-card-title style="justify-content: center; word-break: keep-all">
             Posicion en liga
           </v-card-title>
@@ -30,7 +30,7 @@
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
-        <v-card class="elevation-0">
+        <v-card flat>
           <v-card-title style="justify-content: center"> Puntos </v-card-title>
           <v-card-text>
             <p style="font-size: 20px">
@@ -42,7 +42,7 @@
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
-        <v-card class="elevation-0">
+        <v-card flat>
           <v-card-title style="justify-content: center"> Goles </v-card-title>
           <v-card-text>
             <p style="font-size: 20px">{{ this.teamStats.stats.goals }}</p>
@@ -51,7 +51,7 @@
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
-        <v-card class="elevation-0">
+        <v-card flat>
           <v-card-title style="justify-content: center; word-break: keep-all">
             Resumen partidos
           </v-card-title>

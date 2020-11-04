@@ -12,6 +12,8 @@
             >Aún no hay equipos</v-card-text
           >
           <v-carousel
+            :dark="$vuetify.theme.dark"
+            :light="!$vuetify.theme.dark"
             v-else
             height="auto"
             :cycle="true"
@@ -39,6 +41,8 @@
             >Aún no hay competiciones</v-card-text
           >
           <v-carousel
+            :dark="$vuetify.theme.dark"
+            :light="!$vuetify.theme.dark"
             v-else
             height="auto"
             :cycle="hover ? false : true"
