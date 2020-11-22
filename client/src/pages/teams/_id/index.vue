@@ -70,7 +70,9 @@
             >
               <template v-slot:[`item.avatar`]="{ item }">
                 <v-row class="text-center">
+                  <user-avatar v-if="item.avatar!=null" :name="item.name"></user-avatar>
                   <v-img
+                    v-else
                     :src="constants.ADDRESS + item.avatar"
                     @error="item.avatar = constants.DEFAULT_PLAYER_URL"
                     alt="avatar"
@@ -165,13 +167,15 @@ import constants from '../../../assets/constants/constants'
 import PichichiChart from '../../../components/team/pichichiChart'
 import CardsChart from '../../../components/team/cardsChart'
 import colors from 'vuetify/lib/util/colors'
+import UserAvatar from '../../../components/team/userAvatar.vue'
 export default {
   name: 'team',
   components: {
     CreatePlayer,
     DeleteDialog,
     PichichiChart,
-    CardsChart
+    CardsChart,
+    UserAvatar
   },
   data: () => ({
     deletingPlayer: null,

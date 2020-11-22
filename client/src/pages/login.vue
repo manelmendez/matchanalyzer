@@ -4,14 +4,15 @@
       <!-- LOGIN -->
       <v-row class="login" wrap justify="center">
         <v-col lg="6" md="6" sm="10" cols="12">
-          <v-card class="elevation-0">
-            <v-toolbar dark color="primary" class="elevation-0">
+          <v-card class="elevation-0 transparent" style="opacity: 1">
+            <v-toolbar dark color="transparent" class="elevation-0">
               <v-toolbar-title>Iniciar sesión</v-toolbar-title>
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-form v-model="valid" ref="form" lazy-validation @submit.prevent>
               <v-card-text>
                 <v-text-field
+                  autocomplete="new-password"
                   prepend-icon="person"
                   ref="email"
                   label="Email"
@@ -34,6 +35,7 @@
                   counter
                   :rules="passwordRules"
                   required
+                  autocomplete="new-password"
                 ></v-text-field>
               </v-card-text>
               <v-card-actions>
@@ -120,5 +122,7 @@ export default {
   align-items: center;
   align-content: center;
   justify-content: center;
+  background-image: url('../assets/images/background3.jpeg');
+  background-size: cover;
 }
 </style>

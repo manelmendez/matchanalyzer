@@ -43,7 +43,6 @@ const planification = () =>
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import axios from 'axios'
 
 Vue.use(VueRouter)
 
@@ -165,6 +164,7 @@ router.beforeEach((to, from, next) => {
     if (authUser) {
       next({ name: 'index' })
     } else {
+      isAuth()
       next()
     }
   } else {
@@ -172,24 +172,16 @@ router.beforeEach((to, from, next) => {
   }
 })
 function isAuth() {
-  axios
-    .post('private', null)
-    .then((response) => {
-      if (response.status === 200) {
-        // console.log("Autorizado")
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-      if (error.response.status === 403) {
-        console.log('No estás autorizado')
-      } else if (error.response.status === 401) {
-        console.log('No estás autorizado')
-      } else if (error.response.status === 500) {
-        console.log('No estás autorizado')
-      }
-      window.localStorage.removeItem('authUser')
-      router.push({ path: '/' })
-    })
+  // check expiry of token
+  const authUser = JSON.parse(window.localStorage.getItem('authUser'))
+  const token = authUser.token
+  const tokenDecoded = JSON.parse(atob(token.split('.')[1]))
+  if (tokenDecoded.exp < Date.now() / 1000) {
+    console.log('Token caducado')
+    window.localStorage.removeItem('authUser')
+    router.push({ path: '/' })
+  } else {
+    console.log('Token válido')
+  }
 }
 export default router
