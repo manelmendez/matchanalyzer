@@ -164,7 +164,6 @@ router.beforeEach((to, from, next) => {
     if (authUser) {
       next({ name: 'index' })
     } else {
-      isAuth()
       next()
     }
   } else {
