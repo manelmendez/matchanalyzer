@@ -173,15 +173,19 @@ router.beforeEach((to, from, next) => {
 })
 function isAuth() {
   // check expiry of token
-  const authUser = JSON.parse(window.localStorage.getItem('authUser'))
-  const token = authUser.token
-  const tokenDecoded = JSON.parse(atob(token.split('.')[1]))
-  if (tokenDecoded.exp < Date.now() / 1000) {
-    console.log('Token caducado')
-    window.localStorage.removeItem('authUser')
-    router.push({ path: '/' })
-  } else {
-    console.log('Token válido')
+  try {
+    const authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    const token = authUser.token
+    const tokenDecoded = JSON.parse(atob(token.split('.')[1]))
+    if (tokenDecoded.exp < Date.now() / 1000) {
+      console.log('Token caducado')
+      window.localStorage.removeItem('authUser')
+      router.push({ name: 'login' })
+    } else {
+      console.log('Token válido')
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
 export default router

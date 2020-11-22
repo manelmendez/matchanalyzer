@@ -70,7 +70,10 @@
             >
               <template v-slot:[`item.avatar`]="{ item }">
                 <v-row class="text-center">
-                  <user-avatar v-if="item.avatar!=null" :name="item.name"></user-avatar>
+                  <user-avatar
+                    v-if="item.avatar != null"
+                    :name="item.name"
+                  ></user-avatar>
                   <v-img
                     v-else
                     :src="constants.ADDRESS + item.avatar"

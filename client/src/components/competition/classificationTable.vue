@@ -98,7 +98,7 @@ export default {
       headersDetails: [
         { text: 'P', align: 'center', sortable: false, value: 'name' },
         { text: '', align: 'center', sortable: false, value: '' },
-        { text: 'Nombre', align: 'center', sortable: false, value: 'name'},
+        { text: 'Nombre', align: 'center', sortable: false, value: 'name' },
         { text: 'PTS', value: 'points', align: 'center', sortable: false },
         { text: 'PJ', value: 'gamesPlayed', align: 'center', sortable: false },
         { text: 'V', value: 'wins', align: 'center', sortable: false },
