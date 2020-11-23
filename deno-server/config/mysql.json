@@ -1,7 +1,0 @@
-{
-  "host": "localhost",
-  "user": "matchanalyzer",
-  "password": "matchanalyzer",
-  "database": "matchanalyzer",
-  "multipleStatements": true
-}
