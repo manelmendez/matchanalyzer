@@ -9,7 +9,7 @@ Match Analyzer
 ***Pre-requisites*** 
 > - Install NodeJS => https://nodejs.org/es/
 > 
-> - Install MongoDB Community Server => https://www.mongodb.com/download-center#community
+> - Install Postgresql => https://www.postgresql.org/download/
 
 ***Steps***
 
@@ -25,11 +25,24 @@ Match Analyzer
 
  2. Build VueJS client 
  
-  	> - **Go to matchAnalyzer/client folder and build the front-end:**
+	> - **On matchAnalyzer/server folder:**
 	> 
 	> 	$`npm run build`
  
- 3. Run NodeJS Server (and all the application)
+ 3. Create user and db for this project: 
+ 
+	> - **Run the next commands if you have Postgresql installed and initialized:**
+	> 
+	> 	$`createuser -s -i -d -r -l -w matchanalyzer`
+	> 
+	> 	$`createdb matchanalyzer`
+
+	> - **On matchAnalyzer/server folder:**
+	> 
+	> 	$`psql matchanalyzer < resources/matchanalyzer-pg-local.sql
+`
+ 
+ 1. Run NodeJS Server (and all the application)
  
 	> - **On matchAnalyzer/server folder:**
 	>
