@@ -27,7 +27,11 @@ export const teamModule = {
       return state.myTeams.find((team) => team.id == id)
     },
     playersByTeamId: (state) => (teamId) => {
-      return state.players.filter((player) => player.team == teamId)
+      let playersByTeamId = state.players.filter((player) => player.team == teamId)
+      for (const player of playersByTeamId) {
+        player.name = player.firstname + ' ' + player.lastname
+      }
+      return playersByTeamId
     },
     pichichiList: (state) => {
       return state.pichichiList

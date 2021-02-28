@@ -37,14 +37,21 @@
             </v-col>
             <v-col cols="12" md="8">
               <v-row>
-                <v-col cols="12">
+                <v-col cols="12" md="6">
                   <v-text-field
-                    label="Nombre y apellidos"
-                    v-model="name"
+                    label="Nombre"
+                    v-model="firstname"
                     required
                   ></v-text-field>
                 </v-col>
-                <v-col cols="6" md="6">
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    label="Apellidos"
+                    v-model="lastname"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
                   <v-select
                     :items="positions"
                     label="Posicion"
@@ -52,7 +59,7 @@
                     required
                   ></v-select>
                 </v-col>
-                <v-col cols="6" md="6">
+                <v-col cols="12" md="6">
                   <v-select
                     :items="years"
                     label="Año de nacimiento"
@@ -91,7 +98,8 @@ export default {
       constants: constants,
       image: this.player ? constants.ADDRESS + this.player.avatar : null,
       file: null,
-      name: this.player ? this.player.name : '',
+      firstname: this.player ? this.player.firstname : '',
+      lastname: this.player ? this.player.lastname : '',
       position: this.player ? this.player.position : '',
       year: this.player ? this.player.year : '',
       positions: ['PT', 'LD', 'LI', 'CT', 'MCD', 'MC', 'MP', 'ED', 'EI', 'DC'],
@@ -114,7 +122,8 @@ export default {
         try {
           const response = await this.uploadImage(fd)
           let player = {
-            name: this.name,
+            firstname: this.firstname,
+            lastname: this.lastname,
             position: this.position,
             year: this.year,
             team: this.$route.params.id,
@@ -133,7 +142,8 @@ export default {
         }
       } else {
         let player = {
-          name: this.name,
+          firstname: this.firstname,
+          lastname: this.lastname,
           position: this.position,
           year: this.year,
           team: this.$route.params.id,
@@ -149,7 +159,8 @@ export default {
     editPlayer() {
       let player = {
         id: this.player.id,
-        name: this.name,
+        firstname: this.firstname,
+        lastname: this.lastname,
         position: this.position,
         year: this.year,
         team: this.$route.params.id

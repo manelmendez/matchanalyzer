@@ -18,11 +18,12 @@ const findAll = async () => {
 }
 const saveUser = async (user) => {
   let result = await con.query(
-    'INSERT INTO users(email, name, avatar, provider, provider_id, password, "signupDate", "lastLogin")' +
-      'VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+    'INSERT INTO users(email, firstname, lastname, avatar, provider, provider_id, password, "signupDate", "lastLogin")' +
+      'VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
     [
       user.email,
-      user.name,
+      user.firstname,
+      user.lastname,
       user.avatar,
       user.provider,
       user.provider_id,
@@ -35,8 +36,16 @@ const saveUser = async (user) => {
 }
 const updateUser = async (user) => {
   let userUpdated = await con.query(
-    'UPDATE users SET email=$1, name=$2, avatar=$3, password=$4, "lastLogin"=$5 WHERE id = $6 RETURNING *',
-    [user.email, user.name, user.avatar, user.password, user.lastLogin, user.id]
+    'UPDATE users SET email=$1, firstname=$2, lastname=$3, avatar=$4, password=$5, "lastLogin"=$6 WHERE id = $7 RETURNING *',
+    [
+      user.email,
+      user.firstname,
+      user.lastname,
+      user.avatar,
+      user.password,
+      user.lastLogin,
+      user.id
+    ]
   )
   return userUpdated.rows[0]
 }

@@ -13,10 +13,19 @@
               <v-form v-model="valid" ref="form" lazy-validation>
                 <v-text-field
                   prepend-icon="person"
-                  name="name"
+                  name="firstname"
                   label="Nombre"
                   type="text"
-                  v-model="name"
+                  v-model="firstname"
+                  :rules="nameRules"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  prepend-icon="person"
+                  name="lastname"
+                  label="Apellidos"
+                  type="text"
+                  v-model="lastname"
                   :rules="nameRules"
                   required
                 ></v-text-field>
@@ -37,7 +46,7 @@
                   hint="At least 8 characters"
                   v-model="password"
                   min="8"
-                  :append-icon="e2 ? 'visibility' : 'visibility_off'"
+                  :append-icon="e1 ? 'visibility' : 'visibility_off'"
                   @click:append="() => (e1 = !e1)"
                   :type="e1 ? 'password' : 'text'"
                   counter
@@ -77,12 +86,13 @@ export default {
     return {
       e1: true,
       valid: true,
-      name: '',
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
       nameRules: [
-        (v) => !!v || 'Name is required',
-        () => !'' || 'Name is required'
+        (v) => !!v || 'This field is required',
+        () => !'' || 'This field is required'
       ],
       emailRules: [
         (v) => !!v || 'E-mail is required',
@@ -105,7 +115,8 @@ export default {
           password: this.password
         }
         let body = {
-          name: this.name
+          firstname: this.firstname,
+          lastname: this.lastname
         }
         this.signUp({ body, credentials }).then((response) => {
           setTimeout(() => {

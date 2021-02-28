@@ -9,10 +9,11 @@
     >
       <v-list class="transparent" dense>
         <v-list-item v-for="i in 4" :key="i" class="white--text">
-          <v-list-item-avatar tile size="30">
+          <v-list-item-avatar tile size=30>
             <v-img
               :src="constants.ADDRESS + topScorers[i - 1].avatar"
               @error="topScorers[i - 1].avatar = constants.DEFAULT_TEAM_URL"
+              contain
             />
           </v-list-item-avatar>
           <v-list-item-content>

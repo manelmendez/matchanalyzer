@@ -30,6 +30,18 @@
               required
             ></v-text-field>
           </v-col>
+          <v-col>
+            <v-select
+              dense
+              outlined
+              shaped
+              v-model="asistant"
+              :items="players"
+              item-text="name"
+              return-object
+              label="Asistente"
+            ></v-select>
+          </v-col>
         </v-row>
       </v-card-text>
       <v-card-actions>

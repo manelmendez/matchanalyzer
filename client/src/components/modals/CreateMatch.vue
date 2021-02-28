@@ -9,7 +9,7 @@
           <v-row>
             <v-col cols="12" md="4">
               <v-select
-                :items="roundTeams"
+                :items="teamsNotPlayedThisRound"
                 item-text="name"
                 return-object
                 label="Elige equipo local"
@@ -45,7 +45,7 @@
             </v-col>
             <v-col cols="12" md="4">
               <v-select
-                :items="roundTeams"
+                :items="teamsNotPlayedThisRound"
                 item-text="name"
                 return-object
                 label="Elige equipo visitante"
@@ -116,7 +116,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('competition', ['competition'])
+    ...mapGetters('competition', ['competition']),
+    teamsNotPlayedThisRound() {
+      return this.$store.getters['competition/teamsNotPlayedThisRound'](
+        this.$route.params.roundId
+      )
+    },
   }
 }
 </script>

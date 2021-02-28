@@ -24,9 +24,8 @@ export const signIn = ({ commit }, credentials) => {
 }
 export const signUp = ({ commit }, data) => {
   console.log('ACTION -- signUp')
-  console.log(data)
   return axios
-    .post('users', { body: data.body }, { auth: data.credentials })
+    .post('users', data.body, { auth: data.credentials })
     .then((response) => {
       let authUser = {
         token: response.data.token,

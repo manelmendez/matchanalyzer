@@ -4,7 +4,8 @@ import playerService from '../dao-postgres/player-service.js'
 const addPlayer = async (req, res) => {
   let userId = req.user.id
   let player = {
-    name: req.body.name,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     position: req.body.position,
     year: req.body.year,
     team: req.body.team,

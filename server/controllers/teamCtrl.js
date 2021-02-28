@@ -443,7 +443,7 @@ const getTeamScorers = async (req, res) => {
       let sumRoundGoals = 0
       let pichichiItem = {
         playerId: player.id,
-        playerName: player.name,
+        playerName: player.firstname + ' ' + player.lastname,
         totalGoals: 0,
         roundsGoals: []
       }
@@ -487,7 +487,7 @@ const getTeamCards = async (req, res) => {
     for (const player of players) {
       let cardItem = {
         playerId: player.id,
-        playerName: player.name,
+        playerName: player.firstname + ' ' + player.lastname,
         totalCards: 0,
         roundCards: []
       }

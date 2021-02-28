@@ -67,8 +67,8 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-container fluid v-else style="height: 100%">
-    <v-row style="height: 100%">
+  <v-container fluid v-else fill-height>
+    <v-row class="pb-10">
       <v-col align-self="center" class="text-center">No hay datos</v-col>
     </v-row>
   </v-container>

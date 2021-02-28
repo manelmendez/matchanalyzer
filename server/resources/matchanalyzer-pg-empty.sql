@@ -174,7 +174,8 @@ ALTER SEQUENCE matchanalyzer.minutes_id_seq OWNED BY matchanalyzer.minutes.id;
 
 CREATE TABLE matchanalyzer.players (
     id bigint NOT NULL,
-    name character varying(255) DEFAULT ''::character varying NOT NULL,
+    firstname character varying(255) DEFAULT ''::character varying NOT NULL,
+    lastname character varying(255) DEFAULT ''::character varying NOT NULL,
     avatar character varying(255),
     year integer,
     team bigint,
@@ -252,7 +253,8 @@ ALTER SEQUENCE matchanalyzer.teams_id_seq OWNED BY matchanalyzer.teams.id;
 CREATE TABLE matchanalyzer.users (
     id bigint NOT NULL,
     email character varying(255) DEFAULT ''::character varying NOT NULL,
-    name character varying(255),
+    firstname character varying(255),
+    lastname character varying(255),
     avatar character varying(255),
     provider character varying(255) DEFAULT ''::character varying NOT NULL,
     provider_id bigint,
@@ -284,8 +286,8 @@ ALTER TABLE ONLY matchanalyzer.teams ALTER COLUMN id SET DEFAULT nextval('matcha
 ALTER TABLE ONLY matchanalyzer.users ALTER COLUMN id SET DEFAULT nextval('matchanalyzer.users_id_seq'::regclass);
 
 
-COPY matchanalyzer.users (id, email, name, avatar, provider, provider_id, password, "signupDate", "lastLogin", role) FROM stdin;
-1	admin@matchanalyzer.com	admin	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-05-30 19:05:38+02	admin
+COPY matchanalyzer.users (id, email, firstname, lastname, avatar, provider, provider_id, password, "signupDate", "lastLogin", role) FROM stdin;
+1	admin@matchanalyzer.com	admin	admin	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-05-30 19:05:38+02	admin
 \.
 
 SELECT pg_catalog.setval('matchanalyzer.users_id_seq', 1, true);

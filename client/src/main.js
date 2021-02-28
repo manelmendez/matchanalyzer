@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import VueMoment from 'vue-moment'
 
 import router from './routes'
 import App from './App.vue'
@@ -16,6 +17,7 @@ import lightBlue from './assets/themes/light-blue'
 import deepPurple from './assets/themes/deep-purple'
 
 Vue.use(Vuetify)
+Vue.use(VueMoment)
 
 Vue.prototype.$axios = axiosConfig
 

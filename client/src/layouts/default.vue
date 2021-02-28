@@ -56,17 +56,37 @@
           </v-list>
         </v-card>
       </v-menu>
-      <v-menu offset-y id="user" :close-on-content-click="false">
+      <v-menu offset-y id="user" :close-on-click="true">
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" icon dark class="mr-5">
-            <v-icon>mdi-account-circle</v-icon>
+            <v-avatar v-if="user.avatar != null" size="36">
+              <img
+                :src="user.avatar"
+                alt="Profile"
+              >
+            </v-avatar>
+            <user-avatar
+              v-else
+              :firstname="user.firstname"
+              :lastname="user.lastname"
+            ></user-avatar>
           </v-btn>
+          
         </template>
         <v-list>
-          <v-list-item v-for="(item, i) in items" :key="i">
-            <v-list-item-title @click="logOut()" class="logout">{{
-              item.title
-            }}</v-list-item-title>
+          <v-list-item to="/profile/general">
+            <v-list-item-content>
+              <v-list-item-title>
+                Ver mi perfil
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title @click="logOut()" class="logout">
+                Sign Out
+              </v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -129,13 +149,16 @@ import teal from '../assets/themes/teal'
 import black from '../assets/themes/black'
 import constants from '../assets/constants/constants'
 import store from '../store/store'
+import UserAvatar from '../components/team/userAvatar.vue'
 
 export default {
   name: 'Layout',
+  components: {
+    UserAvatar
+  },
   data: () => ({
     constants: constants,
     drawer: null,
-    items: [{ title: 'Sign Out' }],
     themes: [
       { name: 'green', value: green },
       { name: 'red', value: red },
@@ -178,6 +201,9 @@ export default {
     }
   },
   computed: {
+    user() {
+      return this.$store.getters['user/user'];
+    },
     dark: {
       get() {
         return this.$vuetify.theme.dark
@@ -223,5 +249,8 @@ export default {
 }
 .logout {
   cursor: pointer;
+}
+img {
+  border: 2px solid rgb(221, 221, 221);
 }
 </style>

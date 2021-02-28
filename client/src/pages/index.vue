@@ -15,8 +15,8 @@
             :dark="$vuetify.theme.dark"
             :light="!$vuetify.theme.dark"
             v-else
-            height="auto"
-            :cycle="true"
+            :height="$vuetify.breakpoint.name == 'lg' ? 200 : $vuetify.breakpoint.name== 'xl'? 200 : $vuetify.breakpoint.name == 'md'? 200 : 400"
+            :cycle="false"
             :continuous="true"
             :interval="6000"
             :hide-delimiter-background="true"
@@ -44,7 +44,7 @@
             :dark="$vuetify.theme.dark"
             :light="!$vuetify.theme.dark"
             v-else
-            height="auto"
+            :height="$vuetify.breakpoint.name == 'lg' ? 200 : $vuetify.breakpoint.name== 'xl'? 200 : $vuetify.breakpoint.name == 'md'? 200 : 400"
             :cycle="hover ? false : true"
             :continuous="true"
             :interval="6000"

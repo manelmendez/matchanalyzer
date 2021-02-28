@@ -13,6 +13,7 @@
             <v-img
               :src="constants.ADDRESS + topDifference[i - 1].avatar"
               @error="topDifference[i - 1].avatar = constants.DEFAULT_TEAM_URL"
+              contain
             />
           </v-list-item-avatar>
           <v-list-item-content>

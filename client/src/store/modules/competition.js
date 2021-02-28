@@ -714,6 +714,19 @@ export const competitionModule = {
       } else {
         return []
       }
+    },
+    teamsNotPlayedThisRound: (state, getters) => (selectedRound) => {
+      if (state.competition.teams && state.rounds && state.rounds.length != 0) {
+        let teamsPlayed = []
+        for (const match of getters.round(selectedRound).matches) {
+          teamsPlayed.push(match.localTeam)
+          teamsPlayed.push(match.awayTeam)
+        }
+        let teamsNotPlayed = state.competition.teams.filter(a => !teamsPlayed.some(b => a.id == b.id))
+        return teamsNotPlayed
+      } else {
+        return []
+      }
     }
   },
   mutations: {

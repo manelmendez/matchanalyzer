@@ -161,7 +161,8 @@ ALTER SEQUENCE matchanalyzer.minutes_id_seq OWNED BY matchanalyzer.minutes.id;
 
 CREATE TABLE matchanalyzer.players (
     id bigint NOT NULL,
-    name character varying(255) DEFAULT ''::character varying NOT NULL,
+    firstname character varying(255) DEFAULT ''::character varying NOT NULL,
+    lastname character varying(255) DEFAULT ''::character varying NOT NULL,
     avatar character varying(255),
     year integer NOT NULL,
     team bigint,
@@ -239,7 +240,8 @@ ALTER SEQUENCE matchanalyzer.teams_id_seq OWNED BY matchanalyzer.teams.id;
 CREATE TABLE matchanalyzer.users (
     id bigint NOT NULL,
     email character varying(255) DEFAULT ''::character varying NOT NULL,
-    name character varying(255),
+    firstname character varying(255),
+    lastname character varying(255),
     avatar character varying(255),
     provider character varying(255) DEFAULT ''::character varying NOT NULL,
     provider_id bigint,
@@ -1455,38 +1457,38 @@ COPY matchanalyzer.minutes (id, "matchId", matchpart, player, "roundId", "userId
 537	400	97	10	64	2	DC
 538	400	97	9	64	2	DC
 \.
-COPY matchanalyzer.players (id, name, avatar, year, team, "position", "userId", guest) FROM stdin;
-1	Pau Sabio	assets/images/person_icon.png	2009	13	PT	2	f
-2	Adrián Cuadrado	assets/images/person_icon.png	2009	13	CT	2	f
-3	Vadym Bilanchyk	assets/images/person_icon.png	2009	13	CT	2	f
-4	Marc Morilla	assets/images/person_icon.png	2009	13	LD	2	f
-5	Luc Gironès	assets/images/person_icon.png	2009	13	LI	2	f
-6	Pol Moreno	assets/images/person_icon.png	2009	13	LD	2	f
-7	Alfredo Tiffón	assets/images/person_icon.png	2009	13	MC	2	f
-8	Roberto Tomás	assets/images/person_icon.png	2009	13	MP	2	f
-9	Taemin Noh	assets/images/person_icon.png	2009	13	DC	2	f
-10	Welson Jiménez	assets/images/person_icon.png	2009	13	DC	2	f
-13	Michele Grondona	assets/images/person_icon.png	2007	31	CT	2	f
-15	Andrés Torres Castellarnau	assets/images/person_icon.png	2007	31	LD	2	f
-16	Natxo Montero Raya	assets/images/person_icon.png	2007	31	LI	2	f
-21	Alejandro Santiago Vargas	assets/images/person_icon.png	2007	31	DC	2	f
-12	David Lloret Montes	\N	2007	31	PT	2	f
-14	Álex Carrillo Espejo	\N	2007	31	LD	2	f
-18	Germán Guillén Sala	\N	2007	31	MC	2	f
-17	Xavi Pérez Molinero	\N	2007	31	MCD	2	f
-20	Hugo Recio Punzano	\N	2007	31	DC	2	f
-19	Pol Mora Cañete	\N	2007	31	MP	2	f
-11	Daniel Oliva Bermúdez	\N	2007	31	PT	2	f
-22	Pau Sabio	assets/images/1602696660334-IMG_5178.jpg	2009	53	PT	2	f
-23	Adrián Cuadrado	assets/images/1602696708706-IMG_5180.jpg	2009	53	CT	2	f
-24	Vadym Bylanchik	assets/images/1603046819949-IMG_5181.jpg	2009	53	CT	2	f
-25	Luc Gironès	assets/images/1603047528525-IMG_5185.jpg	2009	53	LI	2	f
-26	Marc Morilla	assets/images/1603047970510-IMG_5179.jpg	2009	53	LD	2	f
-27	Alfredo Tiffón	assets/images/1603048010616-IMG_5184.jpg	2009	53	MC	2	f
-28	Roberto Tomás	assets/images/1603048050657-IMG_5183.jpg	2009	53	MP	2	f
-29	Taemin Noh	assets/images/1603048087990-IMG_5182.jpg	2009	53	DC	2	f
-30	Welson Jimenez	assets/images/1603048115953-IMG_5186.jpg	2009	53	DC	2	f
-31	Oleksandr Gavryliuk	\N	2009	53	DC	2	f
+COPY matchanalyzer.players (id, firstname, lastname, avatar, year, team, "position", "userId", guest) FROM stdin;
+1	Pau	Sabio	assets/images/person_icon.png	2009	13	PT	2	f
+2	Adrián	Cuadrado	assets/images/person_icon.png	2009	13	CT	2	f
+3	Vadym	Bilanchyk	assets/images/person_icon.png	2009	13	CT	2	f
+4	Marc	Morilla	assets/images/person_icon.png	2009	13	LD	2	f
+5	Luc	Gironès	assets/images/person_icon.png	2009	13	LI	2	f
+6	Pol	Moreno	assets/images/person_icon.png	2009	13	LD	2	f
+7	Alfredo	Tiffón	assets/images/person_icon.png	2009	13	MC	2	f
+8	Roberto	Tomás	assets/images/person_icon.png	2009	13	MP	2	f
+9	Taemin	Noh	assets/images/person_icon.png	2009	13	DC	2	f
+10	Welson	Jiménez	assets/images/person_icon.png	2009	13	DC	2	f
+13	Michele	Grondona	assets/images/person_icon.png	2007	31	CT	2	f
+15	Andrés	Torres Castellarnau	assets/images/person_icon.png	2007	31	LD	2	f
+16	Natxo	Montero Raya	assets/images/person_icon.png	2007	31	LI	2	f
+21	Alejandro	Santiago Vargas	assets/images/person_icon.png	2007	31	DC	2	f
+12	David	Lloret Montes	\N	2007	31	PT	2	f
+14	Álex	Carrillo Espejo	\N	2007	31	LD	2	f
+18	Germán	Guillén Sala	\N	2007	31	MC	2	f
+17	Xavi	Pérez Molinero	\N	2007	31	MCD	2	f
+20	Hugo	Recio Punzano	\N	2007	31	DC	2	f
+19	Pol	Mora Cañete	\N	2007	31	MP	2	f
+11	Daniel	Oliva Bermúdez	\N	2007	31	PT	2	f
+22	Pau	Sabio	assets/images/1602696660334-IMG_5178.jpg	2009	53	PT	2	f
+23	Adrián	Cuadrado	assets/images/1602696708706-IMG_5180.jpg	2009	53	CT	2	f
+24	Vadym	Bylanchik	assets/images/1603046819949-IMG_5181.jpg	2009	53	CT	2	f
+25	Luc	Gironès	assets/images/1603047528525-IMG_5185.jpg	2009	53	LI	2	f
+26	Marc	Morilla	assets/images/1603047970510-IMG_5179.jpg	2009	53	LD	2	f
+27	Alfredo	Tiffón	assets/images/1603048010616-IMG_5184.jpg	2009	53	MC	2	f
+28	Roberto	Tomás	assets/images/1603048050657-IMG_5183.jpg	2009	53	MP	2	f
+29	Taemin	Noh	assets/images/1603048087990-IMG_5182.jpg	2009	53	DC	2	f
+30	Welson	Jimenez	assets/images/1603048115953-IMG_5186.jpg	2009	53	DC	2	f
+31	Oleksandr	Gavryliuk	\N	2009	53	DC	2	f
 \.
 COPY matchanalyzer.rounds (id, name, date, competition, "userId") FROM stdin;
 13	Jornada 1	2019-12-03	3	2
@@ -1636,9 +1638,9 @@ COPY matchanalyzer.teams (id, name, avatar, "signupDate", manager, season, compe
 67	AQUA HOTEL FUTBOL CLUB,A	assets/images/1603050915107-aquahotel.png	2020-10-18 21:55:15.124+02	\N	20/21	20	2
 68	VILA OLIMPICA CLUB ESP.,A	assets/images/1603050942675-vila.png	2020-10-18 21:55:42.691+02	\N	20/21	20	2
 \.
-COPY matchanalyzer.users (id, email, name, avatar, provider, provider_id, password, "signupDate", "lastLogin", role) FROM stdin;
-1	admin@matchanalyzer.com	admin	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-05-30 19:05:38+02	admin
-2	manel@gmail.com	Manel Méndez	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-08-04 02:58:57.579+02	user
+COPY matchanalyzer.users (id, email, firstname, lastname, avatar, provider, provider_id, password, "signupDate", "lastLogin", role) FROM stdin;
+1	admin@matchanalyzer.com	admin	admin	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-05-30 19:05:38+02	admin
+2	manel@gmail.com	Manel	Méndez	\N	local	\N	$2a$10$LdvJUx0MGXB5Ku4ZAV4XJeuq6WlPjLT94PlMYWqGy.RaMMlO0AiR.	2019-12-02 12:46:52+01	2020-08-04 02:58:57.579+02	user
 \.
 
 SELECT pg_catalog.setval('matchanalyzer.assists_id_seq', 1, false);

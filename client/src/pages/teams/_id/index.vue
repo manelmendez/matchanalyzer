@@ -72,7 +72,8 @@
                 <v-row class="text-center">
                   <user-avatar
                     v-if="item.avatar != null"
-                    :name="item.name"
+                    :firstname="item.firstname"
+                    :lastname="item.lastname"
                   ></user-avatar>
                   <v-img
                     v-else
@@ -216,7 +217,11 @@ export default {
       return this.$store.getters['team/teamById'](this.$route.params.id)
     },
     players() {
-      return this.$store.getters['team/playersByTeamId'](this.$route.params.id)
+      let playerList = this.$store.getters['team/playersByTeamId'](this.$route.params.id)
+      for (const player of playerList) {
+        player.fullname = player.firstname + ' ' + player.lastname 
+      }
+      return playerList
     },
     pichichiList() {
       if (this.$store.getters['team/pichichiList'].length != 0) {

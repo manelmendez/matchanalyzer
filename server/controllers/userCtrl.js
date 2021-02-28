@@ -22,18 +22,18 @@ const signUp = async (req, res) => {
       message: `Te faltan el email o contraseña por rellenar`
     })
   }
-  console.log(credentials)
-  console.log(req.body)
+  const fullname = req.body.firstname + req.body.lastname
   const user = {
     email: email,
-    name: req.body.name,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     password: password,
     provider: 'local',
     signupDate: new Date(),
-    lastLogin: new Date()
+    lastLogin: new Date(),
+    avatar: `https://gravatar.com/avatar/${fullname}?s=200&d=retro`
   }
-
-  console.log('Registrando usuario con nombre: ' + user.name + '...')
+  console.log('Registrando usuario con nombre: ' + user.firstname + '...')
   bcrypt.genSalt(10, async (err, salt) => {
     if (err) return err
 

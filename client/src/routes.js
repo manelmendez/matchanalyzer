@@ -40,6 +40,10 @@ const planification = () =>
   import(
     /* webpackChunkName: "Planification" */ './pages/planification/index.vue'
   )
+const profile = () =>
+  import(
+    /* webpackChunkName: "Planification" */ './pages/profile/general.vue'
+  )
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -127,6 +131,12 @@ const router = new VueRouter({
       path: '/planification',
       name: 'planification',
       component: planification,
+      meta: { requiresAuth: true, layout: 'default' }
+    },
+    {
+      path: '/profile/general',
+      name: 'profile',
+      component: profile,
       meta: { requiresAuth: true, layout: 'default' }
     },
     {
