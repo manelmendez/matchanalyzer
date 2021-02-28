@@ -22,7 +22,7 @@ async function addMatchpart(req, res) {
       })
     }
   } catch (error) {
-    console.log(error);
+    console.log(error)
     return res.status(500).send({
       message: `Error al añadir partes`
     })
