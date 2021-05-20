@@ -24,7 +24,7 @@
     "@mdi/font": "latest",
     "animate.css": "latest",
     "axios": "latest",
-    "chart.js": "latest",
+    "chart.js": "^2.9.4",
     "font-awesome": "latest",
     "moment": "latest",
     "vue": "^2.6.12",
@@ -53,15 +53,5 @@
     "prettier": "latest",
     "sass": "latest",
     "vue-template-compiler": "latest"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "npm run lint"
-    ]
   }
 }

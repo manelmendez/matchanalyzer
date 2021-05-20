@@ -138,6 +138,9 @@ export default {
     deleteDialog: false,
     loading: false
   }),
+  created() {
+    console.log(this.roundTeams);
+  },
   methods: {
     createRound() {
       let body = {
@@ -209,7 +212,12 @@ export default {
     ])
   },
   computed: {
-    ...mapGetters('competition', ['competition', 'roundTeams', 'rounds']),
+    ...mapGetters('competition', ['competition', 'rounds']),
+    roundTeams() {
+      return this.$store.getters['competition/roundTeams'](
+        this.$route.params.roundId
+      )
+    },
     round() {
       return this.$store.getters['competition/round'](
         this.$route.params.roundId

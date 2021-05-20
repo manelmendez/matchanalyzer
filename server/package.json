@@ -10,14 +10,6 @@
     "test": "jest",
     "coverage": "jest --coverage"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": "npm run lint"
-  },
   "keywords": [
     "node",
     "vue"

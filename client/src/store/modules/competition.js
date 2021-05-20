@@ -91,22 +91,23 @@ export const competitionModule = {
         return []
       }
     },
-    matchById: (state) => (id) => {
+    matchById: (state) => (id, selectedRound) => {
       if (state.rounds && state.rounds.length != 0) {
         return state.rounds[
-          state.selectedRound != null
-            ? state.selectedRound - 1
+          selectedRound != null
+            ? selectedRound - 1
             : state.rounds.length - 1
         ].matches.find((match) => match.id == id)
       }
     },
-    roundTeams: (state) => {
+    roundTeams: (state) => (selectedRound) => {
       if (state.rounds && state.rounds.length != 0) {
         let actualCompetition = { ...state.competition }
+        console.log(selectedRound);
         let actualRound = {
           ...state.rounds[
-            state.selectedRound != null
-              ? state.selectedRound - 1
+            selectedRound != null
+              ? selectedRound - 1
               : state.rounds.length - 1
           ]
         }

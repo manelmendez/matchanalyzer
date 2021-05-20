@@ -121,7 +121,7 @@ export default {
       return this.$store.getters['competition/teamsNotPlayedThisRound'](
         this.$route.params.roundId
       )
-    },
+    }
   }
 }
 </script>
