@@ -16,21 +16,21 @@ services:
   #     MYSQL_DATABASE: 'matchanalyzer'
   #   networks:
   #     - ma_backend
-  # db:
-  #   image: "postgres" # use latest official postgres version
-  #   container_name: "postgres"
-  #   stdin_open: true
-  #   tty: true
-  #   restart: always
-  #   environment:
-  #     POSTGRES_PASSWORD: matchanalyzer
-  #     POSTGRES_DB: matchanalyzer
-  #     POSTGRES_USER: matchanalyzer
-  #   volumes:
-  #     - ./server/resources/matchanalyzer-pg.sql:/docker-entrypoint-initdb.d/init.sql
-  #     #- ./server/backup:/var/lib/postgresql/data # persist data even if container shuts down
-  #   networks:
-  #     - ma_backend
+  db:
+    image: "postgres" # use latest official postgres version
+    container_name: "postgres"
+    stdin_open: true
+    tty: true
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: matchanalyzer
+      POSTGRES_DB: matchanalyzer
+      POSTGRES_USER: matchanalyzer
+    volumes:
+      #- ./server/resources/matchanalyzer-pg.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./server/backup:/var/lib/postgresql/data # persist data even if container shuts down
+    networks:
+      - ma_backend
   adminer:
     image: adminer
     restart: always
