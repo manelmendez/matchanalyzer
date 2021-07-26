@@ -25,6 +25,9 @@ export const competitionModule = {
       state.competitions.rounds = state.rounds
       return state.competition
     },
+    competitionTeams: (state) => {
+      return state.competition.teams.sort((a, b) => a.name.localeCompare(b.name))
+    },
     rounds: (state) => {
       return state.rounds
     },
@@ -104,6 +107,7 @@ export const competitionModule = {
       if (state.rounds && state.rounds.length != 0) {
         let actualCompetition = { ...state.competition }
         console.log(selectedRound);
+        selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
         let actualRound = {
           ...state.rounds[
             selectedRound != null
@@ -417,6 +421,7 @@ export const competitionModule = {
       }
     },
     topScorers: (state, getters) => (selectedRound) => {
+      selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
       let orderTeams = JSON.parse(
         JSON.stringify(getters.rankedTeams(selectedRound))
       )
@@ -429,6 +434,7 @@ export const competitionModule = {
       )
     },
     mostTrashed: (state, getters) => (selectedRound) => {
+      selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
       let orderTeams = JSON.parse(
         JSON.stringify(getters.rankedTeams(selectedRound))
       )
@@ -441,6 +447,7 @@ export const competitionModule = {
       )
     },
     topDifference: (state, getters) => (selectedRound) => {
+      selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
       let orderTeams = JSON.parse(
         JSON.stringify(getters.rankedTeams(selectedRound))
       )
@@ -717,6 +724,7 @@ export const competitionModule = {
       }
     },
     teamsNotPlayedThisRound: (state, getters) => (selectedRound) => {
+      selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
       if (state.competition.teams && state.rounds && state.rounds.length != 0) {
         let teamsPlayed = []
         for (const match of getters.round(selectedRound).matches) {

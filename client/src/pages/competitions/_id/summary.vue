@@ -1,6 +1,6 @@
 <template>
   <v-container fluid grid-list-md>
-    <v-row v-if="competition.teams.length == 0">
+    <v-row v-if="competitionTeams.length == 0">
       <v-card class="no-teams">
         <v-card-text class="text-center"
           >No hay equipos en la competición.</v-card-text
@@ -68,14 +68,14 @@
         ></TopDifference>
       </v-col>
     </v-row>
-    <v-row dense v-if="competition.teams">
+    <v-row dense v-if="competitionTeams">
       <v-col
         cols="6"
         sm="4"
         md="3"
         lg="2"
         xl="1"
-        v-for="team in competition.teams"
+        v-for="team in competitionTeams"
         :key="team.id"
       >
         <v-card
@@ -347,6 +347,7 @@ export default {
     },
     ...mapGetters({
       competition: 'competition/competition',
+      competitionTeams: 'competition/competitionTeams',
       myTeams: 'team/myTeams',
       rounds: 'competition/rounds'
     }),

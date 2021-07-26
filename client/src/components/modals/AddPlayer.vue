@@ -33,11 +33,26 @@
             >o añade un jugador invitado a la lista
           </a>
           <v-col v-else>
-            <v-text-field v-model="name" label="Nombre"></v-text-field>
+            <v-row>
+            <v-col cols="12" md="6">
+                  <v-text-field
+                    label="Nombre"
+                    v-model="firstname"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    label="Apellidos"
+                    v-model="lastname"
+                    required
+                  ></v-text-field>
+                </v-col>
+            </v-row>
             <v-btn
               small
               color="primary"
-              :disabled="name == null"
+              :disabled="firstname == null && lastname == null"
               @click="createGuestPlayer"
               >Añadir a la lista</v-btn
             >
@@ -76,7 +91,8 @@ export default {
       positions: ['PT', 'LD', 'LI', 'CT', 'MCD', 'MC', 'MP', 'ED', 'EI', 'DC'],
       player: null,
       position: null,
-      name: null,
+      firstname: null,
+      lastname: null,
       addGuest: false
     }
   },
@@ -92,7 +108,8 @@ export default {
     },
     createGuestPlayer() {
       this.$emit('create-guest-player', {
-        name: this.name
+        firstname: this.firstname,
+        lastname: this.lastname
       })
     }
   }

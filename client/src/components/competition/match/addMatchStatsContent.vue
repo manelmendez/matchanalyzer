@@ -342,7 +342,8 @@ export default {
     },
     async createGuestPlayer(data) {
       let player = {
-        name: data.name,
+        firstname: data.firstname,
+        lastname: data.lastname,
         position: null,
         year: null,
         team: this.team.id,

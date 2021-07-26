@@ -15,7 +15,7 @@
               size="30"
               :tile="true"
               style="cursor: pointer"
-              @click="$router.push('/teams/' + item.id + '/competitionstats')"
+              @click="$router.push('/competitions/' + $route.params.id + '/team/' + item.id)"
             >
               <v-img
                 :src="constants.ADDRESS + item.avatar"
