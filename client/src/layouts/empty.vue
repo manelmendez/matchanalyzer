@@ -1,5 +1,7 @@
 <template>
-  <router-view :class="dark ? 'darkContent' : 'content'"></router-view>
+  <v-app>
+    <router-view :class="dark ? 'darkContent' : 'content'"></router-view>
+  </v-app>
 </template>
 <script>
 export default {

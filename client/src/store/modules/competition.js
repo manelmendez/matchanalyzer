@@ -106,14 +106,9 @@ export const competitionModule = {
     roundTeams: (state) => (selectedRound) => {
       if (state.rounds && state.rounds.length != 0) {
         let actualCompetition = { ...state.competition }
-        console.log(selectedRound);
-        selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
+        selectedRound = (selectedRound == 'latest') ? state.rounds.length : selectedRound
         let actualRound = {
-          ...state.rounds[
-            selectedRound != null
-              ? selectedRound - 1
-              : state.rounds.length - 1
-          ]
+          ...state.rounds[selectedRound - 1]
         }
         let actualRoundTeams = [...actualCompetition.teams]
         for (let i = 0; i < actualCompetition.teams.length; i++) {
@@ -724,7 +719,6 @@ export const competitionModule = {
       }
     },
     teamsNotPlayedThisRound: (state, getters) => (selectedRound) => {
-      selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
       if (state.competition.teams && state.rounds && state.rounds.length != 0) {
         let teamsPlayed = []
         for (const match of getters.round(selectedRound).matches) {

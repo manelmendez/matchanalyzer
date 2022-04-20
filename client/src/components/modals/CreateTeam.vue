@@ -84,15 +84,7 @@ export default {
       constants: constants,
       image: this.team ? constants.ADDRESS + this.team.avatar : null,
       file: null,
-      temporada: [
-        '20/21',
-        '19/20',
-        '18/19',
-        '17/18',
-        '16/17',
-        '15/16',
-        '14/15'
-      ],
+      temporada: constants.seasons,
       name: this.team ? this.team.name : '',
       season: this.team ? this.team.season : ''
     }

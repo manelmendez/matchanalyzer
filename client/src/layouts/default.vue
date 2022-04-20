@@ -1,9 +1,10 @@
 <template>
-  <v-main>
+  <v-app>
     <v-app-bar
       app
       fixed
       flat
+      permanent
       clipped-left
       collapse-on-scroll
       :color="dark ? '#1e1e1e' : 'primary darken-1'"
@@ -94,7 +95,9 @@
     <v-navigation-drawer
       clipped
       fixed
+      permanent
       :expand-on-hover="!checkMobile"
+      mini-variant
       v-model="drawer"
       width="200"
       :bottom="checkMobile"
@@ -135,8 +138,10 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <router-view :class="dark ? 'darkContent' : 'content'"></router-view>
-  </v-main>
+    <v-main>
+      <router-view :class="dark ? 'darkContent' : 'content'"></router-view>
+    </v-main>
+  </v-app>
 </template>
 <script>
 import { mapActions } from 'vuex'

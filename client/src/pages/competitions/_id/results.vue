@@ -107,7 +107,7 @@
         :show="roundDialog"
         type="new"
         :roundTeams="roundTeams"
-        :round="round.id"
+        :round="Number(round.id)"
         @close="roundDialog = !roundDialog"
         @confirm="createMatch"
       ></CreateMatch>
@@ -133,13 +133,12 @@ export default {
     DeleteDialog,
     CreateMatch
   },
-  data: () => ({
-    roundDialog: false,
-    deleteDialog: false,
-    loading: false
-  }),
-  created() {
-    console.log(this.roundTeams);
+  data() {
+    return {
+      roundDialog: false,
+      deleteDialog: false,
+      loading: false
+    }
   },
   methods: {
     createRound() {

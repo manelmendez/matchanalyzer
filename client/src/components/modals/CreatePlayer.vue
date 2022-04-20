@@ -102,8 +102,8 @@ export default {
       lastname: this.player ? this.player.lastname : '',
       position: this.player ? this.player.position : '',
       year: this.player ? this.player.year : '',
-      positions: ['PT', 'LD', 'LI', 'CT', 'MCD', 'MC', 'MP', 'ED', 'EI', 'DC'],
-      years: [2007, 2008, 2009, 2011, 2012, 2013, 2014]
+      positions: constants.positions,
+      years: constants.years
     }
   },
   methods: {
