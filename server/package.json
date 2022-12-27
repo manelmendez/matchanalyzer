@@ -18,7 +18,6 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt-nodejs": "latest",
-    "body-parser": "latest",
     "connect-history-api-fallback": "latest",
     "cors": "latest",
     "dotenv": "latest",

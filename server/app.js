@@ -1,8 +1,7 @@
 import express from 'express'
-import bodyParser from 'body-parser'
 import cors from 'cors'
 const app = express()
-import api from './routes/routes.js'
+import apiV1 from './routes/routesV1.js'
 import path from 'path'
 import morgan from 'morgan'
 // import helmet from 'helmet'
@@ -10,12 +9,13 @@ import history from 'connect-history-api-fallback'
 
 // middleware para solo parsear requires en formato urlencoded
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: false
   })
 )
 // middleware para solo parsear requires en formato JSON
-app.use(bodyParser.json())
+app.use(express.json())
+
 // middleware para usar CORS y su configuración (métodos que permite)
 app.use(cors())
 app.use(function (req, res, next) {
@@ -51,6 +51,6 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')))
 //    response.render('index')
 // })
 
-app.use('/v1', api)
+app.use('/v1', apiV1)
 
 export default app
