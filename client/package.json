@@ -27,13 +27,13 @@
     "chart.js": "^2.9.4",
     "font-awesome": "latest",
     "moment": "latest",
-    "vue": "latest",
-    "vue-chartjs": "latest",
+    "vue": "2.7.14",
+    "vue-chartjs": "3.5.0",
     "vue-hot-reload-api": "latest",
     "vue-moment": "latest",
-    "vue-router": "latest",
+    "vue-router": "3.6.2",
     "vuetify": "latest",
-    "vuex": "latest"
+    "vuex": "3.6.2"
   },
   "devDependencies": {
     "@babel/core": "latest",

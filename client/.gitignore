@@ -1,6 +1,7 @@
 # ParcelJS
 /dist
 .cache
+.parcel-cache
 
 #MacOS
 .DS_Store
