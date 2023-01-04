@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card flat>
-          <v-card-title style="justify-content: center"> Líder </v-card-title>
+          <v-card-title style="justify-content: center;"> Líder </v-card-title>
           <v-card-text>
             <v-img
               justify="center"
@@ -18,7 +18,7 @@
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card flat>
-          <v-card-title style="justify-content: center"> Último </v-card-title>
+          <v-card-title style="justify-content: center;"> Último </v-card-title>
           <v-card-text>
             <v-img
               justify="center"
@@ -39,20 +39,20 @@
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card flat>
-          <v-card-title style="justify-content: center; word-break: keep-all">
+          <v-card-title style="justify-content: center; word-break: keep-all;">
             Total de goles
           </v-card-title>
           <v-card-text>
-            <p style="font-size: 20px">{{ totalGoals }}</p>
+            <p style="font-size: 20px;">{{ totalGoals }}</p>
             <v-icon>mdi-soccer </v-icon>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6" sm="6" md="3" lg="3">
         <v-card flat>
-          <v-card-title style="justify-content: center"> Año </v-card-title>
+          <v-card-title style="justify-content: center;"> Año </v-card-title>
           <v-card-text>
-            <p style="font-size: 20px">{{ competition.season }}</p>
+            <p style="font-size: 20px;">{{ competition.season }}</p>
           </v-card-text>
         </v-card>
       </v-col>
@@ -66,27 +66,27 @@
 </template>
 
 <script>
-import constants from '../../assets/constants/constants'
+import constants from "../../assets/constants/constants";
 
 export default {
   props: {
-    competition: Object
+    competition: Object,
   },
   data() {
     return {
-      constants: constants
-    }
+      constants: constants,
+    };
   },
   computed: {
     totalGoals() {
-      let goals = 0
+      let goals = 0;
       for (let i = 0; i < this.competition.teams.length; i++) {
-        goals += this.competition.teams[i].stats.goals
+        goals += this.competition.teams[i].stats.goals;
       }
-      return goals
-    }
-  }
-}
+      return goals;
+    },
+  },
+};
 </script>
 
 <style scoped></style>
