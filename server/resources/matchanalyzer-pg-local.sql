@@ -850,13 +850,6 @@ COPY matchanalyzer.matches (id, "localTeam", "awayTeam", "matchDay", round, comp
 399	20	28	2020-03-08	64	3	6	1	2
 400	13	17	2020-03-08	64	3	9	0	2
 401	25	26	2020-03-14	13	3	5	3	2
-402	64	56	2020-10-18	65	20	2	5	2
-403	54	60	2020-10-18	65	20	6	1	2
-404	62	67	2020-10-18	65	20	6	0	2
-405	65	59	2020-10-18	65	20	1	5	2
-406	57	63	2020-10-18	65	20	5	0	2
-407	53	66	2020-10-18	65	20	2	0	2
-408	58	61	2020-10-18	65	20	3	2	2
 \.
 COPY matchanalyzer.matchparts (id, "matchId", formation, "roundId", "time", team, "userId") FROM stdin;
 22	10	3-1-2	13	15	13	2
