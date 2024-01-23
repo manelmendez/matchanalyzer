@@ -17,9 +17,8 @@ const addCompetition = async (req, res) => {
   }
   console.log('Registrando competicion con nombre: ' + competition.name + '...')
   try {
-    const competitionSaved = await competitionService.saveCompetition(
-      competition
-    )
+    const competitionSaved =
+      await competitionService.saveCompetition(competition)
     return res.status(200).send({
       competition: competitionSaved
     })

@@ -12,9 +12,8 @@ const addSubstitution = async (req, res) => {
     userId: userId
   }
   try {
-    const substitutionSaved = await substitutionService.saveSubstitution(
-      substitutionToSave
-    )
+    const substitutionSaved =
+      await substitutionService.saveSubstitution(substitutionToSave)
     return res.status(200).send({
       substitutionSaved: substitutionSaved
     })

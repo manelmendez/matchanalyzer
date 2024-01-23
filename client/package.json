@@ -52,6 +52,6 @@
     "parcel-bundler": "latest",
     "prettier": "latest",
     "sass": "latest",
-    "vue-template-compiler": "latest"
+    "vue-template-compiler": "2.7.14"
   }
 }
