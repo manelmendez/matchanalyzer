@@ -34,15 +34,11 @@
     "pg": "latest"
   },
   "devDependencies": {
-    "eslint": "latest",
-    "eslint-config-prettier": "latest",
-    "eslint-plugin-prettier": "latest",
     "husky": "latest",
     "jest": "latest",
-    "lint-staged": "latest",
-    "prettier": "latest"
+    "standard": "latest"
   },
-  "quokka": {
-    "babel": true
+  "eslintConfig": {
+    "extends": "standard"
   }
 }

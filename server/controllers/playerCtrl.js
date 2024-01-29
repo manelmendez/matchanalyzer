@@ -1,79 +1,73 @@
-// const Player = require('../models/player.js')
-import playerService from '../dao-postgres/player-service.js'
+export class PlayerController {
+  constructor ({ PlayerModel }) {
+    this.playerModel = PlayerModel
+  }
 
-const addPlayer = async (req, res) => {
-  let userId = req.user.id
-  let player = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    position: req.body.position,
-    year: req.body.year,
-    team: req.body.team,
-    avatar:
-      req.body.avatar != null
-        ? req.body.avatar
-        : 'assets/images/person_icon.png',
-    userId: userId,
-    guest: req.body.guest
+  addPlayer = async (req, res) => {
+    const userId = req.user.id
+    const player = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      position: req.body.position,
+      year: req.body.year,
+      team: req.body.team,
+      avatar:
+        req.body.avatar != null
+          ? req.body.avatar
+          : 'assets/images/person_icon.png',
+      userId,
+      guest: req.body.guest
+    }
+    try {
+      const playerSaved = await this.playerModel.savePlayer({ player })
+      return res.status(200).send({
+        player: playerSaved
+      })
+    } catch (err) {
+      return res.status(500).send({
+        message: `Error al crear el jugador: ${err}`
+      })
+    }
   }
-  try {
-    const playerSaved = await playerService.savePlayer(player)
-    return res.status(200).send({
-      player: playerSaved
-    })
-  } catch (err) {
-    return res.status(500).send({
-      message: `Error al crear el jugador: ${err}`
-    })
-  }
-}
-const getPlayersByTeamId = async (req, res) => {
-  let userId = req.user.id
-  console.log(userId)
-  let teamId = req.params.teamId
-  try {
-    const players = await playerService.findByTeam(teamId, userId)
-    return res.status(200).send({
-      players: players
-    })
-  } catch (error) {
-    return res.status(500).send({
-      message: `Error al obtener players: ${error}`
-    })
-  }
-}
 
-const updatePlayer = async (req, res) => {
-  let player = req.body
-  let userId = req.user.id
-  try {
-    const playerUpdated = await playerService.updatePlayer(
-      req.params.id,
-      player,
-      userId
-    )
-    res.status(200).send({ player: playerUpdated })
-  } catch (err) {
-    console.log(err)
-    res.status(500).send({ message: `Error al editar player: ${err}` })
+  getPlayersByTeamId = async (req, res) => {
+    const userId = req.user.id
+    console.log(userId)
+    const teamId = req.params.teamId
+    try {
+      const players = await this.playerModel.findByTeam({ teamId, userId })
+      return res.status(200).send({
+        players
+      })
+    } catch (error) {
+      return res.status(500).send({
+        message: `Error al obtener players: ${error}`
+      })
+    }
   }
-}
 
-const deletePlayer = async (req, res) => {
-  let playerId = req.params.id
-  let userId = req.user.id
-  try {
-    await playerService.deletePlayer(playerId, userId)
-    res.status(200).send({ player: playerId })
-  } catch (err) {
-    console.log(err)
-    res.status(500).send({ message: `Error al borrar el jugador` })
+  updatePlayer = async (req, res) => {
+    const player = req.body
+    const userId = req.user.id
+    const id = req.params.id
+    try {
+      const playerUpdated = await this.playerModel.updatePlayer({ id, player, userId })
+      res.status(200).send({ player: playerUpdated })
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({ message: `Error al editar player: ${err}` })
+    }
   }
-}
 
-export default {
-  addPlayer,
-  getPlayersByTeamId,
-  updatePlayer,
-  deletePlayer
+  deletePlayer = async (req, res) => {
+    const id = req.params.id
+    const userId = req.user.id
+    try {
+      await this.playerModel.deletePlayer({ id, userId })
+      res.status(200).send({ player: id })
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({ message: 'Error al borrar el jugador' })
+    }
+  }
 }
