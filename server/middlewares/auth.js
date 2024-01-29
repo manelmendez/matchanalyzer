@@ -11,7 +11,7 @@ function isAuth(req, res) {
   }
   // extract 'Bearer' from Auth header
   const tokenBearer = req.get('authorization')
-  let arr = tokenBearer.split(' ')
+  const arr = tokenBearer.split(' ')
   const token = arr[1]
   tokenServices
     .decodeToken(token)
@@ -41,7 +41,7 @@ function checkAuth(req, res, next) {
   }
   // extract 'Bearer' from Auth header
   const tokenBearer = req.get('authorization')
-  let arr = tokenBearer.split(' ')
+  const arr = tokenBearer.split(' ')
   const token = arr[1]
   tokenServices
     .decodeToken(token)
@@ -74,17 +74,19 @@ function checkAdmin(req, res, next) {
   }
   // extract 'Bearer' from Auth header
   const tokenBearer = req.get('authorization')
-  let arr = tokenBearer.split(' ')
+  const arr = tokenBearer.split(' ')
   const token = arr[1]
   tokenServices
     .decodeToken(token)
     .then((response) => {
-      if (response && response.role == 'admin') {
+      if (response && response.role === 'admin') {
         console.log('Está autorizado como administrador')
         req.user = response
         next()
       } else {
-        throw 'No está autorizado como administrador'
+        return res.status(401).send({
+          message: 'No tienes autorización como administrador'
+        })
       }
     })
     .catch((error) => {

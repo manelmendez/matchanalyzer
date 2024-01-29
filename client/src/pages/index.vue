@@ -43,7 +43,7 @@
         <v-card class="animated fadeInRight">
           <v-card-title class="justify-center"
             ><v-badge inline color="primary" :content="this.competitions.length"
-              >Competiciones {{$vuetify.breakpoint.name}}</v-badge
+              >Competiciones</v-badge
             ></v-card-title
           >
           <v-card-text v-if="this.competitions.length == 0" class="text-center"
