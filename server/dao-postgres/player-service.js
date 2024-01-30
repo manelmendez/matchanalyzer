@@ -20,7 +20,6 @@ export class PlayerModel {
   }
 
   static findByTeam = async ({ teamId, userId }) => {
-    console.log('HII')
     const result = await con.query(
       'SELECT * FROM players WHERE team = $1 AND "userId" = $2',
       [teamId, userId]
