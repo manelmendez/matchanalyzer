@@ -21,7 +21,6 @@ export default {
       for (const namePart of nameParts) {
         initials += namePart.charAt(0).toUpperCase()
       }
-      console.log(initials)
       return initials
     }
   }

@@ -17,7 +17,7 @@ const imageFilter = (req, file, cb) => {
   cb(null, true)
 }
 
-const upload = multer({ storage: storage, fileFilter: imageFilter }).single(
+const upload = multer({ storage, fileFilter: imageFilter }).single(
   'image'
 )
 

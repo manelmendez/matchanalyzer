@@ -2,13 +2,13 @@ import mysql from 'mysql'
 // const fs = require('fs')
 import dotenv from 'dotenv'
 
-dotenv.config() //cargar archivo .env
+dotenv.config() // cargar archivo .env
 
 // Con archivo .mysql.json
 // let config = fs.readFileSync(__dirname + '/mysql.json', 'utf8')
 // const connection = mysql.createPool(JSON.parse(config))
 
-let config = {
+const config = {
   host:
     process.env.PMA_HOST ||
     process.env.MYSQL_PORT_3306_TCP_ADDR ||
@@ -45,9 +45,9 @@ let connection = mysql.createPool(config)
 // }
 // handleDisconnect();
 
-//-
-//- Establish a new connection
-//-
+// -
+// - Establish a new connection
+// -
 connection.getConnection(function (err) {
   if (err) {
     // mysqlErrorHandling(connection, err);
@@ -59,19 +59,19 @@ connection.getConnection(function (err) {
   }
 })
 
-//-
-//- Reconnection function
-//-
+// -
+// - Reconnection function
+// -
 function reconnect(connection) {
   console.log('\n New connection tentative...')
 
-  //- Create a new one
+  // - Create a new one
   connection = mysql.createPool(config)
 
-  //- Try to reconnect
+  // - Try to reconnect
   connection.getConnection(function (err) {
     if (err) {
-      //- Try to connect every 5 seconds.
+      // - Try to connect every 5 seconds.
       setTimeout(function () {
         reconnect(connection)
       }, 5000)
@@ -85,9 +85,9 @@ function reconnect(connection) {
 connection.on('error', function onError(err) {
   console.log('DB ERROR', err)
   if (
-    err.code == 'PROTOCOL_CONNECTION_LOST' ||
-    err.code == 'ECONNREFUSED' ||
-    err.code == 'ENOTFOUND'
+    err.code === 'PROTOCOL_CONNECTION_LOST' ||
+    err.code === 'ECONNREFUSED' ||
+    err.code === 'ENOTFOUND'
   ) {
     reconnect(connection)
   } else {

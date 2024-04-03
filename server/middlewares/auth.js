@@ -2,7 +2,7 @@
 
 import tokenServices from '../services/token-services.js'
 
-function isAuth(req, res) {
+function isAuth (req, res) {
   if (!req.headers.authorization) {
     console.log('Sin cabeceras. No autorizado')
     return res.status(403).send({
@@ -30,7 +30,7 @@ function isAuth(req, res) {
     })
 }
 
-function checkAuth(req, res, next) {
+function checkAuth (req, res, next) {
   console.log('')
   console.log('Comprobando header Authorization')
   if (!req.headers.authorization) {
@@ -63,7 +63,7 @@ function checkAuth(req, res, next) {
     })
 }
 
-function checkAdmin(req, res, next) {
+function checkAdmin (req, res, next) {
   console.log('')
   console.log('Comprobando header Authorization')
   if (!req.headers.authorization) {

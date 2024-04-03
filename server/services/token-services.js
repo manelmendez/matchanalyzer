@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import moment from 'moment'
 import config from '../config/config.js'
 
-function createToken(user) {
+function createToken (user) {
   const userData = {
     email: user.email,
     id: user.id,
@@ -17,13 +17,13 @@ function createToken(user) {
   // return jwt.sign(payload, config.SECRET_TOKEN, {expiresIn: "14 days"})
 }
 
-function decodeToken(token) {
+function decodeToken (token) {
   return new Promise((resolve, reject) => {
     jwt.verify(token, config.SECRET_TOKEN, (err, payload) => {
       if (payload) {
         if (payload.exp <= moment().unix()) {
           console.log('Token expirado')
-          reject({
+          return ({
             status: 401,
             message: 'El token ha expirado'
           })
@@ -34,7 +34,7 @@ function decodeToken(token) {
       }
       if (err) {
         console.log('Token inválido')
-        reject({
+        return ({
           status: 500,
           message: 'Invalid Token'
         })
