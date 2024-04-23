@@ -6,11 +6,11 @@ export class AssistController {
   addAssist = async (req, res) => {
     const userId = req.user.id
     const assistToSave = {
-      goal: req.body.goal,
+      goalId: req.body.goalId,
       type: req.body.type,
-      player: req.body.playerId,
+      playerId: req.body.playerId,
       matchId: req.body.match,
-      matchpart: req.body.matchpartId,
+      matchpartId: req.body.matchpartId,
       roundId: req.body.roundId,
       userId
     }

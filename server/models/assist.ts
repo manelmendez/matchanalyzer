@@ -1,10 +1,10 @@
-export type Goal = {
+export type Assist = {
   id?: number
-  minute: number
   type: string
+  goalId: number
   playerId: number
   matchId: number
+  matchpartId: number
   roundId: number
   userId: number
-  matchpartId: number
 }
