@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { GoalService } from '../dao-postgres/goal-service'
 import { PlayerService } from '../dao-postgres/player-service'
 import { Goal } from "../models/goal"
+import { Player } from '../models/player'
 
 export class GoalController {
   private goalService: GoalService
@@ -77,10 +78,13 @@ export class GoalController {
 
   getPlayerTeamGoals = async (teamId: number, userId: number) => {
     try {
-      const players = await this.playerService.findByTeam(teamId, userId)
+      const players: Player[] = await this.playerService.findByTeam(teamId, userId)
       for (const player of players) {
-        const playerGoals = await this.goalService.findByPlayer(player.id, userId)
-        player.goals = playerGoals
+        if (player.id !== undefined) {
+          const playerGoals: Goal[] = await this.goalService.findByPlayer(player.id, userId)
+          player.goals = playerGoals
+        }
+        
       }
       return players
     } catch (error) {

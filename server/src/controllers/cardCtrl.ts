@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { CardService } from '../dao-postgres/card-service'
 import { PlayerService } from '../dao-postgres/player-service'
 import {Card} from '../models/card.js'
+import { Player } from '../models/player'
 
 export class CardController {
   private cardService: CardService
@@ -78,10 +79,12 @@ export class CardController {
 
   getPlayerTeamCards = async (teamId: number, userId: number) => {
     try {
-      const players = await this.playerService.findByTeam(teamId, userId)
+      const players: Player[] = await this.playerService.findByTeam(teamId, userId)
       for (const player of players) {
-        const playerCards = await this.cardService.findByPlayer(player.id, userId)
-        player.cards = playerCards
+        if (player.id) {
+          const playerCards: Card[] = await this.cardService.findByPlayer(player.id, userId)
+          player.cards = playerCards
+        }
       }
       return players
     } catch (error) {

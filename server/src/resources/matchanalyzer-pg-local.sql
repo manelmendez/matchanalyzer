@@ -115,8 +115,8 @@ ALTER SEQUENCE matchanalyzer.goals_id_seq OWNED BY matchanalyzer.goals.id;
 
 CREATE TABLE matchanalyzer.matches (
     id bigint NOT NULL,
-    "localteamId" bigint,
-    "awayteamId" bigint,
+    "localTeamId" bigint,
+    "awayTeamId" bigint,
     "matchDay" date,
     "roundId" bigint NOT NULL,
     "competitionId" bigint NOT NULL,
@@ -457,7 +457,7 @@ COPY matchanalyzer.goals (id, minute, type, "matchId", "matchpartId", "playerId"
 194	14	\N	400	96	9	64	2
 195	7	\N	400	97	4	64	2
 \.
-COPY matchanalyzer.matches (id, "localteamId", "awayteamId", "matchDay", "roundId", "competitionId", "localTeamGoals", "awayTeamGoals", "userId") FROM stdin;
+COPY matchanalyzer.matches (id, "localTeamId", "awayTeamId", "matchDay", "roundId", "competitionId", "localTeamGoals", "awayTeamGoals", "userId") FROM stdin;
 6	18	19	2019-12-03	13	3	4	5	2
 7	20	21	2019-12-03	13	3	2	1	2
 8	16	22	2019-12-03	13	3	12	5	2
@@ -1706,9 +1706,9 @@ CREATE INDEX "fki_goal_matchpartId" ON matchanalyzer.goals USING btree ("matchpa
 CREATE INDEX "fki_goal_playerId" ON matchanalyzer.goals USING btree ("playerId");
 CREATE INDEX "fki_goal_roundId" ON matchanalyzer.goals USING btree ("roundId");
 CREATE INDEX "fki_goal_userId" ON matchanalyzer.goals USING btree ("userId");
-CREATE INDEX "fki_match_awayteamId" ON matchanalyzer.matches USING btree ("awayteamId");
+CREATE INDEX "fki_match_awayTeamId" ON matchanalyzer.matches USING btree ("awayTeamId");
 CREATE INDEX "fki_match_competitionId" ON matchanalyzer.matches USING btree ("competitionId");
-CREATE INDEX "fki_match_localteamId" ON matchanalyzer.matches USING btree ("localteamId");
+CREATE INDEX "fki_match_localTeamId" ON matchanalyzer.matches USING btree ("localTeamId");
 CREATE INDEX "fki_match_roundId" ON matchanalyzer.matches USING btree ("roundId");
 CREATE INDEX "fki_match_userId" ON matchanalyzer.matches USING btree ("userId");
 CREATE INDEX "fki_matchpart_match" ON matchanalyzer.matchparts USING btree ("matchId");
@@ -1771,11 +1771,11 @@ ALTER TABLE ONLY matchanalyzer.goals
 ALTER TABLE ONLY matchanalyzer.goals
     ADD CONSTRAINT "goal_userId" FOREIGN KEY ("userId") REFERENCES matchanalyzer.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY matchanalyzer.matches
-    ADD CONSTRAINT "match_awayteamId" FOREIGN KEY ("awayteamId") REFERENCES matchanalyzer.teams(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT "match_awayTeamId" FOREIGN KEY ("awayTeamId") REFERENCES matchanalyzer.teams(id) ON UPDATE CASCADE ON DELETE SET NULL;
 ALTER TABLE ONLY matchanalyzer.matches
     ADD CONSTRAINT "match_competitionId" FOREIGN KEY ("competitionId") REFERENCES matchanalyzer.competitions(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY matchanalyzer.matches
-    ADD CONSTRAINT "match_localteamId" FOREIGN KEY ("localteamId") REFERENCES matchanalyzer.teams(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT "match_localTeamId" FOREIGN KEY ("localTeamId") REFERENCES matchanalyzer.teams(id) ON UPDATE CASCADE ON DELETE SET NULL;
 ALTER TABLE ONLY matchanalyzer.matches
     ADD CONSTRAINT "match_roundId" FOREIGN KEY ("roundId") REFERENCES matchanalyzer.rounds(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY matchanalyzer.matches

@@ -201,9 +201,7 @@ export class TeamController {
     }
   }
 
-  getTeamStats = async (req: Request, res: Response) => {
-    console.log(req.params);
-    
+  getTeamStats = async (req: Request, res: Response) => {    
     const teamId: number = Number(req.params.teamId)
     if (!req.user) {
       return res.status(400).json({ error: 'No userId provided in Auth' });
@@ -213,27 +211,21 @@ export class TeamController {
       let rounds: Round[]
       let matches: Match[]
       let teams: Team[]
-      if (req.params.competitionId === 'undefined') {
-        rounds = await this.roundService.findByUser(userId)
-        matches = await this.matchService.findByUser(userId)
-        teams = await this.teamService.findByUser(userId)
-        
-      }
-      else {
-        const competitionId: number = Number(req.params.competitionId)        
-        rounds = await this.roundService.findByCompetition(competitionId, userId)
-        matches = await this.matchService.findByCompetition(competitionId, userId)
-        teams = await this.teamService.findByCompetition(competitionId, userId)
-      }
+      
+      const competitionId: number = Number(req.params.competitionId)        
+      rounds = await this.roundService.findByCompetition(competitionId, userId)
+      matches = await this.matchService.findByCompetition(competitionId, userId)
+      teams = await this.teamService.findByCompetition(competitionId, userId)
+      
       
       for (let i = 0; i < rounds.length; i++) {
         rounds[i].matches = []
         for (let j = 0; j < matches.length; j++) {
-          for (let k = 0; k < teams.length; k++) {
-            if (matches[j].localTeam === teams[k].id) {
+          for (let k = 0; k < teams.length; k++) {            
+            if (matches[j].localTeamId === teams[k].id) {
               matches[j].localTeam = teams[k]
             }
-            if (matches[j].awayTeam === teams[k].id) {
+            if (matches[j].awayTeamId === teams[k].id) {
               matches[j].awayTeam = teams[k]
             }
           }
@@ -273,86 +265,87 @@ export class TeamController {
             awayAgainstGoals: 0
           }
           const actualRound: number = r + 1
+          let matches: Match[] | undefined = []
           for (let j = 0; j < actualRound; j++) {            
-            const matches: Match[] = rounds[j].matches            
+            matches = rounds[j].matches                
             let x: number = 0
             let found: boolean = false
-            while (x < matches.length && !found) {
-              if (matches[x].localTeam?.id === teams[i].id) {
-                teamStats.gamesPlayed += 1
-                teamStats.homeGamesPlayed += 1
-                teamStats.goals += Number(matches[x].localTeamGoals)
-                teamStats.homeGoals += Number(matches[x].localTeamGoals)
-                teamStats.againstGoals += Number(matches[x].awayTeamGoals)
-                teamStats.homeAgainstGoals += Number(matches[x].awayTeamGoals)
-                if (
-                  Number(matches[x].localTeamGoals) >
-                  Number(matches[x].awayTeamGoals)
-                ) {
-                  teamStats.homePoints += 3
-                  teamStats.points += 3
-                  teamStats.wins += 1
-                  teamStats.homeWins += 1
-                } else if (
-                  Number(matches[x].localTeamGoals) ===
-                  Number(matches[x].awayTeamGoals)
-                ) {
-                  teamStats.homePoints += 1
-                  teamStats.points += 1
-                  teamStats.draws += 1
-                  teamStats.homeDraws += 1
-                } else if (
-                  Number(matches[x].localTeamGoals) <
-                  Number(matches[x].awayTeamGoals)
-                ) {
-                  teamStats.homePoints += 0
-                  teamStats.points += 0
-                  teamStats.loses += 1
-                  teamStats.homeLoses += 1
+            if (matches!=undefined) {
+              while (x < matches.length && !found) {
+                if (matches[x].localTeam?.id == updatedTeam.id) {
+                  teamStats.gamesPlayed += 1
+                  teamStats.homeGamesPlayed += 1
+                  teamStats.goals += Number(matches[x].localTeamGoals)
+                  teamStats.homeGoals += Number(matches[x].localTeamGoals)
+                  teamStats.againstGoals += Number(matches[x].awayTeamGoals)
+                  teamStats.homeAgainstGoals += Number(matches[x].awayTeamGoals)
+                  if (
+                    Number(matches[x].localTeamGoals) >
+                    Number(matches[x].awayTeamGoals)
+                  ) {
+                    teamStats.homePoints += 3
+                    teamStats.points += 3
+                    teamStats.wins += 1
+                    teamStats.homeWins += 1
+                  } else if (
+                    Number(matches[x].localTeamGoals) ===
+                    Number(matches[x].awayTeamGoals)
+                  ) {
+                    teamStats.homePoints += 1
+                    teamStats.points += 1
+                    teamStats.draws += 1
+                    teamStats.homeDraws += 1
+                  } else if (
+                    Number(matches[x].localTeamGoals) <
+                    Number(matches[x].awayTeamGoals)
+                  ) {
+                    teamStats.homePoints += 0
+                    teamStats.points += 0
+                    teamStats.loses += 1
+                    teamStats.homeLoses += 1
+                  }
+                  found = true
+                } else if (matches[x].awayTeam?.id == teams[i].id) {
+                  teamStats.gamesPlayed += 1
+                  teamStats.awayGamesPlayed += 1
+                  teamStats.goals += Number(matches[x].awayTeamGoals)
+                  teamStats.awayGoals += Number(matches[x].awayTeamGoals)
+                  teamStats.againstGoals += Number(matches[x].localTeamGoals)
+                  teamStats.awayAgainstGoals += Number(matches[x].localTeamGoals)
+                  if (
+                    Number(matches[x].awayTeamGoals) >
+                    Number(matches[x].localTeamGoals)
+                  ) {
+                    teamStats.awayPoints += 3
+                    teamStats.points += 3
+                    teamStats.wins += 1
+                    teamStats.awayWins += 1
+                  } else if (
+                    Number(matches[x].awayTeamGoals) ===
+                    Number(matches[x].localTeamGoals)
+                  ) {
+                    teamStats.awayPoints += 1
+                    teamStats.points += 1
+                    teamStats.draws += 1
+                    teamStats.awayDraws += 1
+                  } else if (
+                    Number(matches[x].awayTeamGoals) <
+                    Number(matches[x].localTeamGoals)
+                  ) {
+                    teamStats.awayPoints += 0
+                    teamStats.points += 0
+                    teamStats.loses += 1
+                    teamStats.awayLoses += 1
+                  }
+                  found = true
                 }
-                found = true
-              } else if (matches[x].awayTeam?.id === teams[i].id) {
-                teamStats.gamesPlayed += 1
-                teamStats.awayGamesPlayed += 1
-                teamStats.goals += Number(matches[x].awayTeamGoals)
-                teamStats.awayGoals += Number(matches[x].awayTeamGoals)
-                teamStats.againstGoals += Number(matches[x].localTeamGoals)
-                teamStats.awayAgainstGoals += Number(matches[x].localTeamGoals)
-                if (
-                  Number(matches[x].awayTeamGoals) >
-                  Number(matches[x].localTeamGoals)
-                ) {
-                  teamStats.awayPoints += 3
-                  teamStats.points += 3
-                  teamStats.wins += 1
-                  teamStats.awayWins += 1
-                } else if (
-                  Number(matches[x].awayTeamGoals) ===
-                  Number(matches[x].localTeamGoals)
-                ) {
-                  teamStats.awayPoints += 1
-                  teamStats.points += 1
-                  teamStats.draws += 1
-                  teamStats.awayDraws += 1
-                } else if (
-                  Number(matches[x].awayTeamGoals) <
-                  Number(matches[x].localTeamGoals)
-                ) {
-                  teamStats.awayPoints += 0
-                  teamStats.points += 0
-                  teamStats.loses += 1
-                  teamStats.awayLoses += 1
-                }
-                found = true
+                x++
               }
-              x++
             }
-          }
+          }          
           updatedTeam.stats = teamStats
           updatedTeams.push(updatedTeam)
         }
-        console.log("ANTES DEL SORT")
-        console.log(updatedTeams[updatedTeams.length -1])
         // esto ordena primero por puntos y luego por diferencia de goles
         roundRanking.ranking = updatedTeams.sort(function (b, a) {
           // comprobar que ambos equipos tengan stats
@@ -474,21 +467,14 @@ export class TeamController {
         })
         roundRankings.push(roundRanking)
       }
-      console.log("HIII")
-      console.log(roundRankings[roundRankings.length - 1]);
+
+      let teamStats: any = []  
+      const team = roundRankings[roundRankings.length - 1].ranking?.find((element) => element.id == teamId)      
+      const position = roundRankings[roundRankings.length - 1].ranking?.findIndex((element) => element.id == teamId)
+      teamStats = team
+      teamStats.position = Number(position) + 1
       
-      let teamStats: TeamStats
-      for (
-        let f = 0;
-        f < roundRankings[roundRankings.length - 1].ranking.length;
-        f++
-      ) {
-        if (roundRankings[roundRankings.length - 1].ranking[f].id === teamId) {
-          teamStats = roundRankings[roundRankings.length - 1].ranking[f]
-          teamStats.position = f + 1
-        }
-      }
-      res.status(200).send(teamStats)
+      res.status(200).send({teamStats})
     } catch (err) {
       console.log(err)
       res.status(404).send({ message: 'No hay jornadas disputadas' })
@@ -516,10 +502,12 @@ export class TeamController {
         }
         for (const round of rounds) {
           let goalsInRound: number = 0
-          for (const goal of player.goals) {
-            if (round.id === goal.roundId) {
-              goalsInRound++
-              pichichiItem.totalGoals++
+          if (player.goals) {
+            for (const goal of player.goals) {
+              if (round.id === goal.roundId) {
+                goalsInRound++
+                pichichiItem.totalGoals++
+              }
             }
           }
           sumRoundGoals += goalsInRound
@@ -564,10 +552,12 @@ export class TeamController {
         }
         for (const round of rounds) {
           let cardsInRound = 0
-          for (const card of player.cards) {
-            if (round.id === card.roundId) {
-              cardsInRound++
-              cardItem.totalCards++
+          if (player.cards) {
+            for (const card of player.cards) {
+              if (round.id === card.roundId) {
+                cardsInRound++
+                cardItem.totalCards++
+              }
             }
           }
           if (cardItem.totalCards === 0) cardItem.roundCards.push(0)

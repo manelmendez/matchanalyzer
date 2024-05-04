@@ -24,9 +24,6 @@ export class PlayerController {
           ? req.body.avatar
           : 'assets/images/person_icon.png',
       userId,
-      season: req.body.season,
-      managerId: userId,
-      competitionId: req.body.competitionId,
       guest: req.body.guest
     }
     try {
@@ -48,11 +45,11 @@ export class PlayerController {
     const userId: number = req.user.id
     const teamId: number = Number(req.params.teamId)
     try {
-      const players = await this.playerService.findByTeam(teamId, userId)
+      const players: Player[] = await this.playerService.findByTeam(teamId, userId)
       return res.status(200).send({
         players
       })
-    } catch (error) {
+    } catch (error) {      
       return res.status(500).send({
         message: `Error al obtener players: ${error}`
       })

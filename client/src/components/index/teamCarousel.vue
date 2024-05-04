@@ -106,9 +106,11 @@ export default {
     // TODO mover esto a store
     getTeamStats() {
       axios
-        .get('teams/' + this.team.id + '/competition/' + this.team.competition)
+        .get('teams/' + this.team.id + '/competition/' + this.team.competitionId)
         .then((response) => {
+          console.log(response);
           this.teamStats = response.data.teamStats
+          console.log(this.teamStats);
         })
         .catch((err) => {
           console.log(err)

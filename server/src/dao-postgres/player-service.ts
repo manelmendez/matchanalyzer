@@ -22,7 +22,7 @@ export class PlayerService {
 
   findByTeam = async (teamId: number, userId: number) => {
     const result = await con.query(
-      'SELECT * FROM players WHERE team = $1 AND "userId" = $2',
+      'SELECT * FROM players WHERE "teamId" = $1 AND "userId" = $2',
       [teamId, userId]
     )
     return result.rows

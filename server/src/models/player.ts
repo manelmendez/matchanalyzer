@@ -1,3 +1,6 @@
+import { Card } from "./card"
+import { Goal } from "./goal"
+
 export type Player = {
   id?: number
   firstname: string
@@ -5,10 +8,9 @@ export type Player = {
   position: string
   year: number
   avatar: string
-  season: number
   guest: boolean
   teamId: number
   userId: number
-  managerId: number
-  competitionId: number
+  goals?: Goal[]
+  cards?: Card[]
 }

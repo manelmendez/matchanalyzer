@@ -34,6 +34,8 @@ async function isAuth(req: Request, res: Response): Promise<Response> {
 
 async function checkAuth(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   console.log('Comprobando header Authorization');
+  console.log(req.params);
+
   if (!req.headers.authorization) {
     console.log('No existe');
     return res.status(401).send({ message: 'No tienes autorización' });

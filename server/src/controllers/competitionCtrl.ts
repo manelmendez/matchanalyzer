@@ -7,6 +7,7 @@ import { Competition } from '../models/competition'
 import { TeamStats } from '../models/types'
 import { Match } from '../models/match'
 import { Team } from '../models/team'
+import { Round } from '../models/round'
 
 export class CompetitionController {
   private competitionService: CompetitionService
@@ -150,29 +151,30 @@ export class CompetitionController {
   getCompetitionRanking = async (competitions: Competition[], userId: number) => {
     const competitionsWithStats: Competition[] = []
     for (let c = 0; c < competitions.length; c++) {
-      const rounds = await this.roundService.findByCompetition(competitions[c].id, userId)
-      const matches = await this.matchService.findByCompetition(competitions[c].id, userId)
-      const teams = await this.teamService.findByCompetition(competitions[c].id, userId)
+      const competitionId: number = competitions[c].id
+      const rounds: Round[] = await this.roundService.findByCompetition(competitionId, userId)
+      const matches: Match[] = await this.matchService.findByCompetition(competitionId, userId)
+      const teams: Team[] = await this.teamService.findByCompetition(competitionId, userId)
       for (let i = 0; i < rounds.length; i++) {
         rounds[i].matches = []
         for (let j = 0; j < matches.length; j++) {
-          for (let k = 0; k < teams.length; k++) {
-            if (matches[j].localTeam === teams[k].id) {
-              matches[j].localTeam = JSON.parse(JSON.stringify(teams[k]))
+          for (let k = 0; k < teams.length; k++) {            
+            if (matches[j].localTeamId === teams[k].id) {
+              matches[j].localTeam = teams[k]
             }
-            if (matches[j].awayTeam === teams[k].id) {
-              matches[j].awayTeam = JSON.parse(JSON.stringify(teams[k]))
+            if (matches[j].awayTeamId === teams[k].id) {
+              matches[j].awayTeam = teams[k]
             }
           }
-          if (rounds[i].id === matches[j].round) {
-            rounds[i].matches.push(JSON.parse(JSON.stringify(matches[j])))
+          if (rounds[i].id === matches[j].roundId) {
+            rounds[i].matches?.push(matches[j]) // aunque salga el error, funciona pq hemos inicializado con rounds[i].matches = []
           }
         }
-      }
+      }  
       const updatedTeams = []
       // sumar todas las jornadas hasta la seleccionada
       for (let i = 0; i < teams.length; i++) {
-        const updatedTeam: Team = JSON.parse(JSON.stringify(teams[i]))
+        const updatedTeam: Team = teams[i]
         const teamStats: TeamStats = {
           gamesPlayed: 0,
           homeGamesPlayed: 0,
@@ -199,91 +201,94 @@ export class CompetitionController {
           homeAgainstGoals: 0,
           awayAgainstGoals: 0
         }
+        let matches: Match[] | undefined = []
         for (let j = 0; j < rounds.length; j++) {
-          const matches: Match[] = rounds[j].matches
+          matches = rounds[j].matches    
           let x: number = 0
           let found: boolean = false
-          while (x < matches.length && !found) {
-            if (matches[x].localTeam.id === teams[i].id) {
-              teamStats.gamesPlayed += 1
-              teamStats.homeGamesPlayed += 1
-              teamStats.goals += Number(matches[x].localTeamGoals)
-              teamStats.goalDif +=
-                Number(matches[x].localTeamGoals) -
-                Number(matches[x].awayTeamGoals)
-              teamStats.homeGoals += Number(matches[x].localTeamGoals)
-              teamStats.homeGoalDif +=
-                Number(matches[x].localTeamGoals) -
-                Number(matches[x].awayTeamGoals)
-              teamStats.againstGoals += Number(matches[x].awayTeamGoals)
-              teamStats.homeAgainstGoals += Number(matches[x].awayTeamGoals)
-              if (
-                Number(matches[x].localTeamGoals) >
-                Number(matches[x].awayTeamGoals)
-              ) {
-                teamStats.homePoints += 3
-                teamStats.points += 3
-                teamStats.wins += 1
-                teamStats.homeWins += 1
-              } else if (
-                Number(matches[x].localTeamGoals) ===
-                Number(matches[x].awayTeamGoals)
-              ) {
-                teamStats.homePoints += 1
-                teamStats.points += 1
-                teamStats.draws += 1
-                teamStats.homeDraws += 1
-              } else if (
-                Number(matches[x].localTeamGoals) <
-                Number(matches[x].awayTeamGoals)
-              ) {
-                teamStats.homePoints += 0
-                teamStats.points += 0
-                teamStats.loses += 1
-                teamStats.homeLoses += 1
+          if (matches!=undefined) {
+            while (x < matches.length && !found) {
+              if (matches[x].localTeam?.id === updatedTeam.id) {
+                teamStats.gamesPlayed += 1
+                teamStats.homeGamesPlayed += 1
+                teamStats.goals += Number(matches[x].localTeamGoals)
+                teamStats.goalDif +=
+                  Number(matches[x].localTeamGoals) -
+                  Number(matches[x].awayTeamGoals)
+                teamStats.homeGoals += Number(matches[x].localTeamGoals)
+                teamStats.homeGoalDif +=
+                  Number(matches[x].localTeamGoals) -
+                  Number(matches[x].awayTeamGoals)
+                teamStats.againstGoals += Number(matches[x].awayTeamGoals)
+                teamStats.homeAgainstGoals += Number(matches[x].awayTeamGoals)
+                if (
+                  Number(matches[x].localTeamGoals) >
+                  Number(matches[x].awayTeamGoals)
+                ) {
+                  teamStats.homePoints += 3
+                  teamStats.points += 3
+                  teamStats.wins += 1
+                  teamStats.homeWins += 1
+                } else if (
+                  Number(matches[x].localTeamGoals) ===
+                  Number(matches[x].awayTeamGoals)
+                ) {
+                  teamStats.homePoints += 1
+                  teamStats.points += 1
+                  teamStats.draws += 1
+                  teamStats.homeDraws += 1
+                } else if (
+                  Number(matches[x].localTeamGoals) <
+                  Number(matches[x].awayTeamGoals)
+                ) {
+                  teamStats.homePoints += 0
+                  teamStats.points += 0
+                  teamStats.loses += 1
+                  teamStats.homeLoses += 1
+                }
+                found = true
+              } else if (matches[x].awayTeam?.id === teams[i].id) {
+                teamStats.gamesPlayed += 1
+                teamStats.awayGamesPlayed += 1
+                teamStats.goals += Number(matches[x].awayTeamGoals)
+                teamStats.awayGoals += Number(matches[x].awayTeamGoals)
+                teamStats.goalDif +=
+                  Number(matches[x].awayTeamGoals) -
+                  Number(matches[x].localTeamGoals)
+                teamStats.againstGoals += Number(matches[x].localTeamGoals)
+                teamStats.awayGoalDif +=
+                  Number(matches[x].awayTeamGoals) -
+                  Number(matches[x].localTeamGoals)
+                teamStats.awayAgainstGoals += Number(matches[x].localTeamGoals)
+                if (
+                  Number(matches[x].awayTeamGoals) >
+                  Number(matches[x].localTeamGoals)
+                ) {
+                  teamStats.awayPoints += 3
+                  teamStats.points += 3
+                  teamStats.wins += 1
+                  teamStats.awayWins += 1
+                } else if (
+                  Number(matches[x].awayTeamGoals) ===
+                  Number(matches[x].localTeamGoals)
+                ) {
+                  teamStats.awayPoints += 1
+                  teamStats.points += 1
+                  teamStats.draws += 1
+                  teamStats.awayDraws += 1
+                } else if (
+                  Number(matches[x].awayTeamGoals) <
+                  Number(matches[x].localTeamGoals)
+                ) {
+                  teamStats.awayPoints += 0
+                  teamStats.points += 0
+                  teamStats.loses += 1
+                  teamStats.awayLoses += 1
+                }
+                found = true
               }
-              found = true
-            } else if (matches[x].awayTeam.id === teams[i].id) {
-              teamStats.gamesPlayed += 1
-              teamStats.awayGamesPlayed += 1
-              teamStats.goals += Number(matches[x].awayTeamGoals)
-              teamStats.awayGoals += Number(matches[x].awayTeamGoals)
-              teamStats.goalDif +=
-                Number(matches[x].awayTeamGoals) -
-                Number(matches[x].localTeamGoals)
-              teamStats.againstGoals += Number(matches[x].localTeamGoals)
-              teamStats.awayGoalDif +=
-                Number(matches[x].awayTeamGoals) -
-                Number(matches[x].localTeamGoals)
-              teamStats.awayAgainstGoals += Number(matches[x].localTeamGoals)
-              if (
-                Number(matches[x].awayTeamGoals) >
-                Number(matches[x].localTeamGoals)
-              ) {
-                teamStats.awayPoints += 3
-                teamStats.points += 3
-                teamStats.wins += 1
-                teamStats.awayWins += 1
-              } else if (
-                Number(matches[x].awayTeamGoals) ===
-                Number(matches[x].localTeamGoals)
-              ) {
-                teamStats.awayPoints += 1
-                teamStats.points += 1
-                teamStats.draws += 1
-                teamStats.awayDraws += 1
-              } else if (
-                Number(matches[x].awayTeamGoals) <
-                Number(matches[x].localTeamGoals)
-              ) {
-                teamStats.awayPoints += 0
-                teamStats.points += 0
-                teamStats.loses += 1
-                teamStats.awayLoses += 1
-              }
-              found = true
+              x++
             }
-            x++
           }
         }
         updatedTeam.stats = teamStats
@@ -291,118 +296,122 @@ export class CompetitionController {
       }
       // esto ordena primero por puntos y luego por diferencia de goles
       updatedTeams.sort(function (b, a) {
-        // si los puntos de los dos equipos son distintos
-        if (a.stats.points !== b.stats.points) {
-          // devuelve positivo (+) o negativo (-) según quien tenga más
-          return a.stats.points - b.stats.points
-        } else if (a.stats.points === b.stats.points) { // si los puntos son iguales pasa a hacer lo siguiente:
-          let matches = []
-          // coger todos los partidos
-          for (let x = 0; x < rounds.length; x++) {
-            matches = [...matches, ...rounds[x].matches]
-          }
-          const duelMatches = []
-          // buscar los partidos que esos 2 equipos hayan jugado entre ellos
-          for (let y = 0; y < matches.length; y++) {
-            if (
-              (matches[y].localTeam.id === a.id &&
-                matches[y].awayTeam.id === b.id) ||
-              (matches[y].localTeam.id === b.id &&
-                matches[y].awayTeam.id === a.id)
-            ) {
-              duelMatches.push(matches[y])
+        // comprobar que ambos equipos tengan stats
+        if (a.stats!== undefined && b.stats !== undefined ){
+          // si los puntos de los dos equipos son distintos
+          if (a.stats.points !== b.stats.points) {
+            // devuelve positivo (+) o negativo (-) según quien tenga más
+            return a.stats.points - b.stats.points
+          } else if (a.stats.points === b.stats.points) { // si los puntos son iguales pasa a hacer lo siguiente:
+            let matches: Match[] = []
+            // coger todos los partidos
+            for (let x = 0; x < rounds.length; x++) {
+              matches = [...matches, ...rounds[x].matches ?? []]
             }
-          }
-          // buscar diferencia de victorias/empates/derrotas
-          let aWin = 0
-          let aDraw = 0
-          let aLose = 0
-          let goalDifference = 0
-          for (let z = 0; z < duelMatches.length; z++) {
-            if (
-              duelMatches[z].localTeam.id === a.id &&
-              Number(duelMatches[z].localTeamGoals) >
-              Number(duelMatches[z].awayTeamGoals)
-            ) {
-              aWin++
-              goalDifference +=
-                Number(duelMatches[z].localTeamGoals) -
-                Number(duelMatches[z].awayTeamGoals)
-            } else if (
-              duelMatches[z].awayTeam.id === a.id &&
-              Number(duelMatches[z].awayTeamGoals) >
-              Number(duelMatches[z].localTeamGoals)
-            ) {
-              aWin++
-              goalDifference +=
-                Number(duelMatches[z].awayTeamGoals) -
-                Number(duelMatches[z].localTeamGoals)
-            } else if (
-              duelMatches[z].localTeam.id === a.id &&
-              Number(duelMatches[z].localTeamGoals) ===
-              Number(duelMatches[z].awayTeamGoals)
-            ) {
-              aDraw++
-            } else if (
-              duelMatches[z].awayTeam.id === a.id &&
-              Number(duelMatches[z].awayTeamGoals) ===
-              Number(duelMatches[z].localTeamGoals)
-            ) {
-              aDraw++
-            } else if (
-              duelMatches[z].localTeam.id === a.id &&
-              Number(duelMatches[z].localTeamGoals) <
-              Number(duelMatches[z].awayTeamGoals)
-            ) {
-              aLose++
-              goalDifference +=
-                Number(duelMatches[z].localTeamGoals) -
-                Number(duelMatches[z].awayTeamGoals)
-            } else if (
-              duelMatches[z].awayTeam.id === a.id &&
-              Number(duelMatches[z].awayTeamGoals) <
-              Number(duelMatches[z].localTeamGoals)
-            ) {
-              aLose++
-              goalDifference +=
-                Number(duelMatches[z].awayTeamGoals) -
-                Number(duelMatches[z].localTeamGoals)
+            const duelMatches = []
+            // buscar los partidos que esos 2 equipos hayan jugado entre ellos
+            for (let y = 0; y < matches.length; y++) {
+              if (
+                (matches[y].localTeam?.id === a.id &&
+                  matches[y].awayTeam?.id === b.id) ||
+                (matches[y].localTeam?.id === b.id &&
+                  matches[y].awayTeam?.id === a.id)
+              ) {
+                duelMatches.push(matches[y])
+              }
             }
-          }
-          // si se han jugado los 2 partidos entre ellos
-          if (duelMatches.length === 2) {
-            if (aWin === 2 || (aWin === 1 && aDraw === 1)) {
-              return 1
-            } else if (aLose === 2 || (aLose === 1 && aDraw === 1)) {
-              return -1
-            } else { // si es igual, buscar diferencia de goles individual (no cuenta doble fuera de casa)
-              if (goalDifference > 0) {
+            // buscar diferencia de victorias/empates/derrotas
+            let aWin: number = 0
+            let aDraw: number = 0
+            let aLose: number = 0
+            let goalDifference: number = 0
+            for (let z = 0; z < duelMatches.length; z++) {
+              if (
+                duelMatches[z].localTeam?.id === a.id &&
+                Number(duelMatches[z].localTeamGoals) >
+                Number(duelMatches[z].awayTeamGoals)
+              ) {
+                aWin++
+                goalDifference +=
+                  Number(duelMatches[z].localTeamGoals) -
+                  Number(duelMatches[z].awayTeamGoals)
+              } else if (
+                duelMatches[z].awayTeam?.id === a.id &&
+                Number(duelMatches[z].awayTeamGoals) >
+                Number(duelMatches[z].localTeamGoals)
+              ) {
+                aWin++
+                goalDifference +=
+                  Number(duelMatches[z].awayTeamGoals) -
+                  Number(duelMatches[z].localTeamGoals)
+              } else if (
+                duelMatches[z].localTeam?.id === a.id &&
+                Number(duelMatches[z].localTeamGoals) ===
+                Number(duelMatches[z].awayTeamGoals)
+              ) {
+                aDraw++
+              } else if (
+                duelMatches[z].awayTeam?.id === a.id &&
+                Number(duelMatches[z].awayTeamGoals) ===
+                Number(duelMatches[z].localTeamGoals)
+              ) {
+                aDraw++
+              } else if (
+                duelMatches[z].localTeam?.id === a.id &&
+                Number(duelMatches[z].localTeamGoals) <
+                Number(duelMatches[z].awayTeamGoals)
+              ) {
+                aLose++
+                goalDifference +=
+                  Number(duelMatches[z].localTeamGoals) -
+                  Number(duelMatches[z].awayTeamGoals)
+              } else if (
+                duelMatches[z].awayTeam?.id === a.id &&
+                Number(duelMatches[z].awayTeamGoals) <
+                Number(duelMatches[z].localTeamGoals)
+              ) {
+                aLose++
+                goalDifference +=
+                  Number(duelMatches[z].awayTeamGoals) -
+                  Number(duelMatches[z].localTeamGoals)
+              }
+            }
+            // si se han jugado los 2 partidos entre ellos
+            if (duelMatches.length === 2) {
+              if (aWin === 2 || (aWin === 1 && aDraw === 1)) {
                 return 1
-              } else {
+              } else if (aLose === 2 || (aLose === 1 && aDraw === 1)) {
+                return -1
+              } else { // si es igual, buscar diferencia de goles individual (no cuenta doble fuera de casa)
+                if (goalDifference > 0) {
+                  return 1
+                } else {
+                  return -1
+                }
+              }
+            } else if (duelMatches.length === 1) { // si solo se ha jugado 1
+              if (aWin === 1) {
+                return 1
+              } else if (aLose === 1) {
                 return -1
               }
             }
-          } else if (duelMatches.length === 1) { // si solo se ha jugado 1
-            if (aWin === 1) {
-              return 1
-            } else if (aLose === 1) {
-              return -1
-            }
+          } else if ( // si el goal average particular es igual pasa a hacer lo siguiente:
+            // si la diferencia de goles entre los dos equipos es igual en ambos
+            a.stats.goals - a.stats.againstGoals ===
+            b.stats.goals - b.stats.againstGoals
+          ) {
+            // devuelve 0
+            return 0
           }
-        } else if ( // si el goal average particular es igual pasa a hacer lo siguiente:
-          // si la diferencia de goles entre los dos equipos es igual en ambos
-          a.stats.goals - a.stats.againstGoals ===
-          b.stats.goals - b.stats.againstGoals
-        ) {
-          // devuelve 0
-          return 0
+          // si los puntos de los equipos son iguales y la diferencia de goles es distinta
+          // devuelve +1 o -1 según quien tenga más goles
+          return a.stats.goals - a.stats.againstGoals >
+            b.stats.goals - b.stats.againstGoals
+            ? 1
+            : -1
         }
-        // si los puntos de los equipos son iguales y la diferencia de goles es distinta
-        // devuelve +1 o -1 según quien tenga más goles
-        return a.stats.goals - a.stats.againstGoals >
-          b.stats.goals - b.stats.againstGoals
-          ? 1
-          : -1
+        return 0
       })
       competitions[c].teams = updatedTeams
       competitionsWithStats.push(competitions[c])
