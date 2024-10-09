@@ -22,13 +22,13 @@
           <v-spacer></v-spacer>
           <v-col>
             <v-card
-              v-if="team.competition != null"
+              v-if="team.competitionId != null"
               outline
               class="rounded-xl"
               color="primary darken-1"
               :to="{
                 name: 'summary',
-                params: { id: team.competition, roundId: 'latest' }
+                params: { id: team.competitionId, roundId: 'latest' }
               }"
             >
               <v-list-item>
@@ -47,7 +47,7 @@
       </v-card-title>
       <v-container>
         <v-row>
-          <v-col v-if="team.competition != null && pichichiList && cardList">
+          <v-col v-if="team.competitionId != null && pichichiList && cardList">
             <PichichiChart
               class="mt-2"
               :chart-data="pichichiList"
@@ -358,14 +358,14 @@ export default {
   async created() {
     await this.getTeam(this.$route.params.id)
     await this.getPlayersByTeamId(this.$route.params.id)
-    if (this.team.competition != null) {
+    if (this.team.competitionId != null) {
       await this.getTeamScorers({
         teamId: this.$route.params.id,
-        competitionId: this.team.competition
+        competitionId: this.team.competitionId
       })
       await this.getTeamCards({
         teamId: this.$route.params.id,
-        competitionId: this.team.competition
+        competitionId: this.team.competitionId
       })
     }
   }
