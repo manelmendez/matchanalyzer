@@ -7,6 +7,6 @@ export type Round = {
   date: Date
   competitionId: number
   userId: number
-  matches?: Match[] | undefined
+  matches?: Match[]
   ranking?: Team[]
 }

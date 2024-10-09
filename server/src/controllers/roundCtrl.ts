@@ -68,9 +68,12 @@ export class RoundController {
     const rounds: Round[] = await this.roundService.findByCompetition(competitionId, userId)
     const matches: Match[] = await this.matchService.findByCompetition(competitionId, userId)
     const teams: Team[] = await this.teamService.findByCompetition(competitionId, userId)
+    
     for (let i = 0; i < rounds.length; i++) {
+      rounds[i].matches = []
+      rounds[i].ranking = []
       for (let j = 0; j < matches.length; j++) {
-        for (let k = 0; k < teams.length; k++) {
+        for (let k = 0; k < teams.length; k++) {          
           if (matches[j].localTeamId === teams[k].id) {
             matches[j].localTeam = teams[k]
           }
@@ -78,11 +81,11 @@ export class RoundController {
             matches[j].awayTeam = teams[k]
           }
         }
-        if (rounds[i].id === matches[j].roundId) {
-          rounds[i].matches.push(matches[j])
+        if (rounds[i].id === matches[j].roundId) {          
+          rounds[i].matches?.push(matches[j])          
         }
       }
-    }
+    }        
     res.status(200).send({
       rounds
     })
