@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  paso1:
+  deployment:
     runs-on: ubuntu-latest
     steps:
       - name: Traer el codigo
