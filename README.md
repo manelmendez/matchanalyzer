@@ -1,6 +1,8 @@
 Match Analyzer
 =======
 
+[![Deployment Workflow](https://github.com/manelmendez/matchanalyzer/actions/workflows/deployment.yml/badge.svg)](https://github.com/manelmendez/matchanalyzer/actions/workflows/deployment.yml)
+
 ***Have to know***
 
 > - NodeJS project is on "server" folder
