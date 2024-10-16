@@ -27,7 +27,7 @@
     "chart.js": "^2.9.4",
     "font-awesome": "latest",
     "moment": "latest",
-    "vue": "2.7.14",
+    "vue": "2.7.16",
     "vue-chartjs": "3.5.0",
     "vue-hot-reload-api": "latest",
     "vue-moment": "latest",
