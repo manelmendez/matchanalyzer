@@ -9,10 +9,14 @@ jobs:
   paso1:
     runs-on: ubuntu-latest
     steps:
-      - name: Paso 1
-        run: echo "Hello World"
-      - name: Paso 2
-        run: echo "Hello World 2"
-      - name: Paso 3
-        run: ls -l
+      - name: Traer el codigo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 22
+      - name: Instalar dependencias
+        run: npm install
         
