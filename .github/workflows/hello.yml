@@ -7,7 +7,7 @@ on:
 
 jobs:
   paso1:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Paso 1
         run: echo "Hello World"
