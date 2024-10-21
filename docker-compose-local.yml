@@ -1,21 +1,6 @@
 version: '3.8'
 
 services:
-  # mysql:
-  #   image: mariadb:latest
-  #   container_name: "mysql"
-  #   restart: always
-  #   stdin_open: true
-  #   tty: true
-  #   volumes:
-  #     - ./server/resources:/docker-entrypoint-initdb.d
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: 'root'
-  #     MYSQL_USER: 'matchanalyzer'
-  #     MYSQL_PASSWORD: 'matchanalyzer'
-  #     MYSQL_DATABASE: 'matchanalyzer'
-  #   networks:
-  #     - ma_backend
   db:
     image: "postgres" # use latest official postgres version
     container_name: "postgres"
