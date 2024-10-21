@@ -1,6 +1,6 @@
 services:
   db:
-    image: "postgres:17-alpine" # use latest official postgres version
+    image: postgres:17-alpine # use latest official postgres version
     container_name: "postgres"
     stdin_open: true
     tty: true
@@ -17,6 +17,7 @@ services:
       - ma_backend
   adminer:
     image: adminer
+    container_name: "adminer"
     restart: always
     ports:
       - 2222:8080
