@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { RoundService } from "../dao-postgres/round-service"
 import { MatchService } from "../dao-postgres/match-service"
 import { TeamService } from "../dao-postgres/team-service"

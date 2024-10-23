@@ -2,7 +2,7 @@
 
 import * as tokenServices from '../services/token-services.js'
 import { Request, Response, NextFunction } from 'express'
-import {UserDataToken, Token} from '../models/types.js'
+import {UserDataToken} from '../models/types.js'
 
 async function isAuth(req: Request, res: Response): Promise<Response> {
   if (!req.headers.authorization) {
@@ -26,9 +26,10 @@ async function isAuth(req: Request, res: Response): Promise<Response> {
     req.user = decodedToken;
     console.log('Tiene acceso');
     return res.status(200).send({ message: 'Tienes acceso' });
-  } catch (error: any) {
+  } catch (error) {
     console.log('No autorizado. Sin acceso');
-    return res.status(error.status || 401).send({ message: 'No tienes autorización' });
+    console.error(error)
+    return res.status(401).send({ message: 'No tienes autorización' });
   }
 }
 
@@ -56,7 +57,7 @@ async function checkAuth(req: Request, res: Response, next: NextFunction): Promi
     req.user = decodedToken;
     console.log('Está autorizado');
     next();
-  } catch (error: any) {
+  } catch (error) {
     console.log('No está autorizado');
     console.error(error); // Use console.error for actual errors
     return res.status(401).send({ message: 'No tienes autorización' });
@@ -90,7 +91,7 @@ async function checkAdmin(req: Request, res: Response, next: NextFunction): Prom
     } else {
       return res.status(401).send({ message: 'No tienes autorización como administrador' });
     }
-  } catch (error: any) {
+  } catch (error) {
     console.log('No está autorizado');
     console.error(error); // Use console.error for actual errors
     return res.status(401).send({ message: 'No tienes autorización como administrador' });

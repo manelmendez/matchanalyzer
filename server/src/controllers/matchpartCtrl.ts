@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { MatchpartService } from '../dao-postgres/matchpart-service'
 import { MatchPart } from '../models/matchpart'
 

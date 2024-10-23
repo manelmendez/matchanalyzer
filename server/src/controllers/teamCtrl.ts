@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { GoalController } from './goalCtrl.js'
 import { CardController } from './cardCtrl.js'
 import { TeamService } from '../dao-postgres/team-service.js'
@@ -10,9 +10,8 @@ import { PlayerService } from '../dao-postgres/player-service.js'
 import { Team } from '../models/team.js'
 import { Match } from '../models/match.js'
 import { Round } from '../models/round.js'
-import { CardItem, Pichichi, TeamStats } from '../models/types.js'
+import { CardItem, Pichichi, TeamRanking, TeamStats } from '../models/types.js'
 import { Player } from '../models/player.js'
-import { Card } from '../models/card.js'
 
 export class TeamController {
   private teamService: TeamService
@@ -208,14 +207,10 @@ export class TeamController {
     }
     const userId: number = req.user.id
     try {
-      let rounds: Round[]
-      let matches: Match[]
-      let teams: Team[]
-      
       const competitionId: number = Number(req.params.competitionId)        
-      rounds = await this.roundService.findByCompetition(competitionId, userId)
-      matches = await this.matchService.findByCompetition(competitionId, userId)
-      teams = await this.teamService.findByCompetition(competitionId, userId)
+      const rounds: Round[] = await this.roundService.findByCompetition(competitionId, userId)
+      const matches: Match[] = await this.matchService.findByCompetition(competitionId, userId)
+      const teams: Team[] = await this.teamService.findByCompetition(competitionId, userId)
       
       
       for (let i = 0; i < rounds.length; i++) {
@@ -260,6 +255,9 @@ export class TeamController {
             goals: 0,
             homeGoals: 0,
             awayGoals: 0,
+            goalDif: 0,
+            homeGoalDif: 0,
+            awayGoalDif: 0,
             againstGoals: 0,
             homeAgainstGoals: 0,
             awayAgainstGoals: 0
@@ -276,8 +274,14 @@ export class TeamController {
                   teamStats.gamesPlayed += 1
                   teamStats.homeGamesPlayed += 1
                   teamStats.goals += Number(matches[x].localTeamGoals)
+                  teamStats.goalDif +=
+                    Number(matches[x].localTeamGoals) -
+                    Number(matches[x].awayTeamGoals)
                   teamStats.homeGoals += Number(matches[x].localTeamGoals)
                   teamStats.againstGoals += Number(matches[x].awayTeamGoals)
+                  teamStats.homeGoalDif +=
+                    Number(matches[x].localTeamGoals) -
+                    Number(matches[x].awayTeamGoals)
                   teamStats.homeAgainstGoals += Number(matches[x].awayTeamGoals)
                   if (
                     Number(matches[x].localTeamGoals) >
@@ -310,7 +314,13 @@ export class TeamController {
                   teamStats.awayGamesPlayed += 1
                   teamStats.goals += Number(matches[x].awayTeamGoals)
                   teamStats.awayGoals += Number(matches[x].awayTeamGoals)
+                  teamStats.goalDif +=
+                    Number(matches[x].awayTeamGoals) -
+                    Number(matches[x].localTeamGoals)
                   teamStats.againstGoals += Number(matches[x].localTeamGoals)
+                  teamStats.awayGoalDif +=
+                    Number(matches[x].awayTeamGoals) -
+                    Number(matches[x].localTeamGoals)
                   teamStats.awayAgainstGoals += Number(matches[x].localTeamGoals)
                   if (
                     Number(matches[x].awayTeamGoals) >
@@ -468,13 +478,22 @@ export class TeamController {
         roundRankings.push(roundRanking)
       }
 
-      let teamStats: any = []  
-      const team = roundRankings[roundRankings.length - 1].ranking?.find((element) => element.id == teamId)      
+      const team = roundRankings[roundRankings.length - 1].ranking?.find((element) => element.id == teamId)     
+      console.log(team) 
       const position = roundRankings[roundRankings.length - 1].ranking?.findIndex((element) => element.id == teamId)
-      teamStats = team
-      teamStats.position = Number(position) + 1
+      console.log(position)
+      const teamRanking: TeamRanking = {...team, position: Number(position) + 1}
+      console.log(teamRanking)
+
+      // let teamStats: any = []  
+      // const team = roundRankings[roundRankings.length - 1].ranking?.find((element) => element.id == teamId)      
+      // const position = roundRankings[roundRankings.length - 1].ranking?.findIndex((element) => element.id == teamId)
+      // teamStats = team
+      // teamStats.position = Number(position) + 1
+      // console.log(teamStats);
       
-      res.status(200).send({teamStats})
+
+      res.status(200).send({teamStats: teamRanking})
     } catch (err) {
       console.log(err)
       res.status(404).send({ message: 'No hay jornadas disputadas' })

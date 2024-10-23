@@ -1,10 +1,11 @@
 // import tokenServices from '../services/token-services'
 import bcrypt from 'bcrypt-nodejs'
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { UserService } from '../dao-postgres/user-service'
 import * as tokenServices from '../services/token-services.js'
 import { User } from '../models/user'
 import { UserDataToken } from '../models/types'
+import { PostgresError } from '../models/types';
 
 export class UserController {
   private userService: UserService
@@ -56,9 +57,9 @@ export class UserController {
               token: tokenServices.createToken(userSaved),
               user: userSaved
             })
-          } catch (err: any) {
-            console.log(err)
-            if (err.code === 'ER_DUP_ENTRY') {
+          } catch (err: unknown) {
+            const postgresError = err as PostgresError;
+            if (postgresError.code === 'ER_DUP_ENTRY') {
               console.log('Este usuario ya existe')
               return res.status(403).send({
                 message: 'Este usuario ya existe'

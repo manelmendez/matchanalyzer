@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { SubstitutionService } from '../dao-postgres/substitution-service'
 import { Substitution } from '../models/substitution'
 

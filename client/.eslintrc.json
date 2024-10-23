@@ -5,7 +5,7 @@
     "ecmaVersion": 2019,
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended","prettier", "prettier/vue", "plugin:vue/essential", "plugin:prettier/recommended"],
+  "extends": ["eslint:recommended","prettier", "plugin:vue/essential", "plugin:prettier/recommended"],
   "plugins": [
     "prettier"
   ],

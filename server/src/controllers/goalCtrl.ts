@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { GoalService } from '../dao-postgres/goal-service'
 import { PlayerService } from '../dao-postgres/player-service'
 import { Goal } from "../models/goal"

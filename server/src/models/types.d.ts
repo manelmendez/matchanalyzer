@@ -27,9 +27,9 @@ export type TeamStats = {
   homeLoses: number
   awayLoses: number
   goals: number
-  goalDif?: number
-  homeGoalDif?: number
-  awayGoalDif?: number
+  goalDif: number
+  homeGoalDif: number
+  awayGoalDif: number
   homeGoals: number
   awayGoals: number
   againstGoals: number
@@ -49,4 +49,15 @@ export type CardItem = {
   playerName: string
   totalCards: number
   roundCards: (number | null)[]
+}
+
+export interface PostgresError extends Error {
+  code?: string;
+  detail?: string;
+  hint?: string;
+  position?: string;
+}
+
+export interface TeamRanking extends Team {
+  position?: number
 }

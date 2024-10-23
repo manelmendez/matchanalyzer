@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { AssistService } from '../dao-postgres/assist-service'
 import {Assist} from '../models/assist.js'
 

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { CompetitionService } from '../dao-postgres/competition-service'
 import { TeamService } from '../dao-postgres/team-service'
 import { RoundService } from '../dao-postgres/round-service'
@@ -151,10 +151,17 @@ export class CompetitionController {
   getCompetitionRanking = async (competitions: Competition[], userId: number) => {
     const competitionsWithStats: Competition[] = []
     for (let c = 0; c < competitions.length; c++) {
-      const competitionId: number = competitions[c].id
-      const rounds: Round[] = await this.roundService.findByCompetition(competitionId, userId)
-      const matches: Match[] = await this.matchService.findByCompetition(competitionId, userId)
-      const teams: Team[] = await this.teamService.findByCompetition(competitionId, userId)
+      let rounds: Round[] = []
+      let matches: Match[] = []
+      let teams: Team[] = []
+
+      const competitionId = competitions[c].id
+      if (competitionId) {
+        rounds = await this.roundService.findByCompetition(competitionId, userId)
+        matches = await this.matchService.findByCompetition(competitionId, userId)
+        teams = await this.teamService.findByCompetition(competitionId, userId)
+      }
+      
       for (let i = 0; i < rounds.length; i++) {
         rounds[i].matches = []
         for (let j = 0; j < matches.length; j++) {

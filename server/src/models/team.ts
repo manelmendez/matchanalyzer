@@ -1,6 +1,6 @@
 import { TeamStats } from "./types"
 
-export type Team = {
+export interface Team {
   id?: number
   name: string
   avatar: string

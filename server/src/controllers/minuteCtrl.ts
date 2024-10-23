@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { MinuteService } from '../dao-postgres/minute-service'
 import { Minute } from '../models/minute'
 
