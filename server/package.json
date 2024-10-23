@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "start": "nodemon --exec node --loader ts-node/esm src/index.ts",
+    "start": "node --loader ts-node/esm src/index.ts",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix",
     "test": "jest",
@@ -22,7 +22,6 @@
     "bcrypt-nodejs": "latest",
     "connect-history-api-fallback": "latest",
     "cors": "latest",
-    "dotenv": "latest",
     "ejs": "latest",
     "express": "latest",
     "google-auth-library": "latest",
@@ -32,7 +31,6 @@
     "morgan": "latest",
     "multer": "latest",
     "mysql": "latest",
-    "nodemon": "latest",
     "pg": "latest",
     "typescript": "latest"
   },

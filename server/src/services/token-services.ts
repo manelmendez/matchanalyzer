@@ -1,7 +1,10 @@
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
-import config from '../config/config.js'
 import {UserDataToken, Token} from '../models/types.js'
+
+process.loadEnvFile()
+
+const SECRET_TOKEN:string = process.env.SECRET_TOKEN || 'secret'
 
 export function createToken (user: UserDataToken) {
   const userData: UserDataToken = {
@@ -14,11 +17,11 @@ export function createToken (user: UserDataToken) {
     iat: moment().unix(),
     exp: moment().add(14, 'days').unix()
   }
-  return jwt.sign(payload, config.SECRET_TOKEN)
+  return jwt.sign(payload, SECRET_TOKEN)
 }
 export function decodeToken(token: string): Promise<UserDataToken> {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, config.SECRET_TOKEN, (err: jwt.VerifyErrors | null, decoded: jwt.JwtPayload | string | undefined) => {
+    jwt.verify(token, SECRET_TOKEN, (err: jwt.VerifyErrors | null, decoded: jwt.JwtPayload | string | undefined) => {
       if (err) {
         console.log('Token inválido o expirado');
         reject({
