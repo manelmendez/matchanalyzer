@@ -21,28 +21,23 @@ export default {
     return {
       match: {
         title: 'Quieres borrar este partido?',
-        text:
-          'Si aceptas, el partido se borrará y se perderán todos sus datos. Quieres continuar?'
+        text: 'Si aceptas, el partido se borrará y se perderán todos sus datos. Quieres continuar?'
       },
       jornada: {
         title: 'Quieres borrar esta jornada?',
-        text:
-          'Si aceptas, la jornada se borrará y se perderán todos sus partidos y datos estadísticos. Quieres continuar?'
+        text: 'Si aceptas, la jornada se borrará y se perderán todos sus partidos y datos estadísticos. Quieres continuar?'
       },
       player: {
         title: 'Quieres borrar este jugador?',
-        text:
-          'Si aceptas, el jugador se borrará y se perderán todos sus datos. Quieres continuar?'
+        text: 'Si aceptas, el jugador se borrará y se perderán todos sus datos. Quieres continuar?'
       },
       team: {
         title: 'Quieres borrar este equipo?',
-        text:
-          'Si aceptas, el equipo se borrará y se perderán todos sus partidos y datos estadísticos. Quieres continuar?'
+        text: 'Si aceptas, el equipo se borrará y se perderán todos sus partidos y datos estadísticos. Quieres continuar?'
       },
       competition: {
         title: 'Quieres borrar esta competición?',
-        text:
-          'Si aceptas, la competición se borrará y se perderán todos sus datos. Quieres continuar?'
+        text: 'Si aceptas, la competición se borrará y se perderán todos sus datos. Quieres continuar?'
       }
     }
   },

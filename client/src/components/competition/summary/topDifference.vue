@@ -17,10 +17,9 @@
             />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title
-              v-text="topDifference[i - 1].name"
-              :title="topDifference[i - 1].name"
-            ></v-list-item-title>
+            <v-list-item-title :title="topDifference[i - 1].name">
+              {{ topDifference[i - 1].name }}
+            </v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn icon small>

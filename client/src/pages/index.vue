@@ -19,10 +19,10 @@
                 $vuetify.breakpoint.name == 'xl'
                   ? 300
                   : $vuetify.breakpoint.name == 'lg'
-                  ? 200
-                  : $vuetify.breakpoint.name == 'md'
-                  ? 200
-                  : 400
+                    ? 200
+                    : $vuetify.breakpoint.name == 'md'
+                      ? 200
+                      : 400
               "
               :cycle="false"
               :continuous="true"
@@ -57,10 +57,10 @@
                 $vuetify.breakpoint.name == 'xl'
                   ? 300
                   : $vuetify.breakpoint.name == 'lg'
-                  ? 200
-                  : $vuetify.breakpoint.name == 'md'
-                  ? 200
-                  : 400
+                    ? 200
+                    : $vuetify.breakpoint.name == 'md'
+                      ? 200
+                      : 400
               "
               :cycle="hover ? false : true"
               :continuous="true"
@@ -84,39 +84,39 @@
   </v-container>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
-import teamCarousel from "../components/index/teamCarousel";
-import competitionCarousel from "../components/index/competitionCarousel";
+import { mapGetters, mapActions } from 'vuex'
+import teamCarousel from '../components/index/teamCarousel'
+import competitionCarousel from '../components/index/competitionCarousel'
 
 export default {
-  name: "index",
+  name: 'index',
   components: {
     teamCarousel,
-    competitionCarousel,
+    competitionCarousel
   },
   data() {
     return {
-      hover: false,
-    };
+      hover: false
+    }
   },
   methods: {
     ...mapActions({
-      getUserCompetitions: "competition/getUserCompetitions",
-      getUserTeams: "team/getUserTeams",
-    }),
+      getUserCompetitions: 'competition/getUserCompetitions',
+      getUserTeams: 'team/getUserTeams'
+    })
   },
   computed: {
     ...mapGetters({
-      user: "user/user",
-      myTeams: "team/myTeams",
-      competitions: "competition/competitions",
-    }),
+      user: 'user/user',
+      myTeams: 'team/myTeams',
+      competitions: 'competition/competitions'
+    })
   },
   async created() {
-    await this.getUserCompetitions(this.user.id);
-    await this.getUserTeams(this.user.id);
-  },
-};
+    await this.getUserCompetitions(this.user.id)
+    await this.getUserTeams(this.user.id)
+  }
+}
 </script>
 <style scoped>
 .homeContent {

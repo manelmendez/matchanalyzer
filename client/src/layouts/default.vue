@@ -61,10 +61,7 @@
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" icon dark class="mr-5">
             <v-avatar v-if="user.avatar != null" size="36">
-              <img
-                :src="user.avatar"
-                alt="Profile"
-              >
+              <img :src="user.avatar" alt="Profile" />
             </v-avatar>
             <user-avatar
               v-else
@@ -72,14 +69,11 @@
               :lastname="user.lastname"
             ></user-avatar>
           </v-btn>
-          
         </template>
         <v-list>
           <v-list-item to="/profile/general">
             <v-list-item-content>
-              <v-list-item-title>
-                Ver mi perfil
-              </v-list-item-title>
+              <v-list-item-title> Ver mi perfil </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
@@ -185,9 +179,8 @@ export default {
     },
     ...mapActions('user', ['signOut']),
     randomTheme() {
-      let randomTheme = this.themes[
-        Math.floor(Math.random() * this.themes.length)
-      ]
+      let randomTheme =
+        this.themes[Math.floor(Math.random() * this.themes.length)]
       window.localStorage.setItem('theme', randomTheme.name)
       this.actualTheme = randomTheme.name
       store.commit('root/SET_THEME', randomTheme.name)
@@ -207,7 +200,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters['user/user'];
+      return this.$store.getters['user/user']
     },
     dark: {
       get() {

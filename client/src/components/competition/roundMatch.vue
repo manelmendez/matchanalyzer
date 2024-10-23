@@ -16,10 +16,8 @@
               ></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title
-                v-text="match.localTeam.name"
-                :title="match.localTeam.name"
-              >
+              <v-list-item-title :title="match.localTeam.name">
+                {{ match.localTeam.name }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -49,10 +47,8 @@
               ></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title
-                v-text="match.awayTeam.name"
-                :title="match.awayTeam.name"
-              >
+              <v-list-item-title :title="match.awayTeam.name">
+                {{ match.awayTeam.name }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>

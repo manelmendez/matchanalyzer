@@ -34,20 +34,20 @@
           </a>
           <v-col v-else>
             <v-row>
-            <v-col cols="12" md="6">
-                  <v-text-field
-                    label="Nombre"
-                    v-model="firstname"
-                    required
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    label="Apellidos"
-                    v-model="lastname"
-                    required
-                  ></v-text-field>
-                </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  label="Nombre"
+                  v-model="firstname"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  label="Apellidos"
+                  v-model="lastname"
+                  required
+                ></v-text-field>
+              </v-col>
             </v-row>
             <v-btn
               small

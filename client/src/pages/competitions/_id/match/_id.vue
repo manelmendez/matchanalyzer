@@ -25,8 +25,8 @@
                 match.localTeam.manager
                   ? match.localTeam
                   : match.awayTeam.manager
-                  ? match.awayTeam
-                  : null
+                    ? match.awayTeam
+                    : null
               "
               :roundId="Number(match.round)"
               :matchId="Number($route.params.matchId)"

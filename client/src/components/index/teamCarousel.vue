@@ -18,10 +18,10 @@
                 this.teamStats.position == 1
                   ? colors.yellow.darken3
                   : this.teamStats.position == 2
-                  ? colors.blueGrey.lighten1
-                  : this.teamStats.position == 3
-                  ? colors.deepOrange.darken1
-                  : ''
+                    ? colors.blueGrey.lighten1
+                    : this.teamStats.position == 3
+                      ? colors.deepOrange.darken1
+                      : ''
               "
             >
               mdi-trophy
@@ -106,11 +106,13 @@ export default {
     // TODO mover esto a store
     getTeamStats() {
       axios
-        .get('teams/' + this.team.id + '/competition/' + this.team.competitionId)
+        .get(
+          'teams/' + this.team.id + '/competition/' + this.team.competitionId
+        )
         .then((response) => {
-          console.log(response);
+          console.log(response)
           this.teamStats = response.data.teamStats
-          console.log(this.teamStats);
+          console.log(this.teamStats)
         })
         .catch((err) => {
           console.log(err)

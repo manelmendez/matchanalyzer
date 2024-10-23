@@ -41,9 +41,7 @@ const planification = () =>
     /* webpackChunkName: "Planification" */ './pages/planification/index.vue'
   )
 const profile = () =>
-  import(
-    /* webpackChunkName: "Planification" */ './pages/profile/general.vue'
-  )
+  import(/* webpackChunkName: "Planification" */ './pages/profile/general.vue')
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'

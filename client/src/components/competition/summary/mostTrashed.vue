@@ -9,7 +9,7 @@
     >
       <v-list class="transparent" dense>
         <v-list-item v-for="i in 4" :key="i" class="white--text">
-          <v-list-item-avatar tile size=30>
+          <v-list-item-avatar tile size="30">
             <v-img
               :src="constants.ADDRESS + mostTrashed[i - 1].avatar"
               @error="mostTrashed[i - 1].avatar = constants.DEFAULT_TEAM_URL"
@@ -17,10 +17,9 @@
             />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title
-              v-text="mostTrashed[i - 1].name"
-              :title="mostTrashed[i - 1].name"
-            ></v-list-item-title>
+            <v-list-item-title :title="mostTrashed[i - 1].name">
+              {{ mostTrashed[i - 1].name }}
+            </v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn icon small>

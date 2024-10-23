@@ -28,18 +28,18 @@ if (window.localStorage.getItem('theme') != null) {
     storeTheme == 'red'
       ? red
       : storeTheme == 'green'
-      ? green
-      : storeTheme == 'lightBlue'
-      ? lightBlue
-      : storeTheme == 'indigo'
-      ? indigo
-      : storeTheme == 'teal'
-      ? teal
-      : storeTheme == 'deepPurple'
-      ? deepPurple
-      : storeTheme == 'black'
-      ? black
-      : green
+        ? green
+        : storeTheme == 'lightBlue'
+          ? lightBlue
+          : storeTheme == 'indigo'
+            ? indigo
+            : storeTheme == 'teal'
+              ? teal
+              : storeTheme == 'deepPurple'
+                ? deepPurple
+                : storeTheme == 'black'
+                  ? black
+                  : green
 }
 let darkMode = true
 if (window.localStorage.getItem('dark') != null) {

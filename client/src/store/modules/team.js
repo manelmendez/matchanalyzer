@@ -28,7 +28,9 @@ export const teamModule = {
       return state.myTeams.find((team) => team.id == id)
     },
     playersByTeamId: (state) => (teamId) => {
-      let playersByTeamId = state.players.filter((player) => player.teamId == teamId)
+      let playersByTeamId = state.players.filter(
+        (player) => player.teamId == teamId
+      )
       for (const player of playersByTeamId) {
         player.name = player.firstname + ' ' + player.lastname
       }

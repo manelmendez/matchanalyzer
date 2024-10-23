@@ -217,9 +217,11 @@ export default {
       return this.$store.getters['team/teamById'](this.$route.params.id)
     },
     players() {
-      let playerList = this.$store.getters['team/playersByTeamId'](this.$route.params.id)
+      let playerList = this.$store.getters['team/playersByTeamId'](
+        this.$route.params.id
+      )
       for (const player of playerList) {
-        player.fullname = player.firstname + ' ' + player.lastname 
+        player.fullname = player.firstname + ' ' + player.lastname
       }
       return playerList
     },

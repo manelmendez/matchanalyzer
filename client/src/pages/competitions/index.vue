@@ -10,8 +10,8 @@
         @click="goTo(competition.id)"
       >
         <v-list-item-content>
-          <v-list-item-title
-            v-text="
+          <v-list-item-title>
+            {{
               competition.name +
               ' - ' +
               competition.discipline +
@@ -19,8 +19,8 @@
               competition.category +
               ' - ' +
               competition.season
-            "
-          ></v-list-item-title>
+            }}
+          </v-list-item-title>
         </v-list-item-content>
         <v-list-item-action>
           <v-tooltip top>

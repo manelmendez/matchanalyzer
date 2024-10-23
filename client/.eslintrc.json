@@ -1,9 +1,10 @@
 {
   "root": true,
   "parserOptions": {
-    "parser": "babel-eslint",
-    "ecmaVersion": 2019,
-    "sourceType": "module"
+    "parser": "@babel/eslint-parser",
+    "ecmaVersion": 2024,
+    "sourceType": "module",
+    "requireConfigFile": false
   },
   "extends": ["eslint:recommended","prettier", "plugin:vue/essential", "plugin:prettier/recommended"],
   "plugins": [
@@ -21,6 +22,7 @@
     "no-var": "error",
     "prettier/prettier": 2,
     "vue/no-mutating-props": "off",
-    "vue/valid-v-slot": "off"
+    "vue/valid-v-slot": "off",
+    "vue/multi-word-component-names": "off"
   }
 }

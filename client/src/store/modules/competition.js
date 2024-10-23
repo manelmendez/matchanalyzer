@@ -26,7 +26,9 @@ export const competitionModule = {
       return state.competition
     },
     competitionTeams: (state) => {
-      return state.competition.teams.sort((a, b) => a.name.localeCompare(b.name))
+      return state.competition.teams.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      )
     },
     rounds: (state) => {
       return state.rounds
@@ -97,16 +99,15 @@ export const competitionModule = {
     matchById: (state) => (id, selectedRound) => {
       if (state.rounds && state.rounds.length != 0) {
         return state.rounds[
-          selectedRound != null
-            ? selectedRound - 1
-            : state.rounds.length - 1
+          selectedRound != null ? selectedRound - 1 : state.rounds.length - 1
         ].matches.find((match) => match.id == id)
       }
     },
     roundTeams: (state) => (selectedRound) => {
       if (state.rounds && state.rounds.length != 0) {
         let actualCompetition = { ...state.competition }
-        selectedRound = (selectedRound == 'latest') ? state.rounds.length : selectedRound
+        selectedRound =
+          selectedRound == 'latest' ? state.rounds.length : selectedRound
         let actualRound = {
           ...state.rounds[selectedRound - 1]
         }
@@ -117,9 +118,9 @@ export const competitionModule = {
           while (j < actualRound.matches.length && !found) {
             if (
               actualCompetition.teams[i].id ==
-              actualRound.matches[j].localTeam.id ||
+                actualRound.matches[j].localTeam.id ||
               actualCompetition.teams[i].id ==
-              actualRound.matches[j].awayTeam.id
+                actualRound.matches[j].awayTeam.id
             ) {
               found = true
               let index = actualRoundTeams
@@ -278,10 +279,10 @@ export const competitionModule = {
             //buscar los partidos que esos 2 equipos hayan jugado entre ellos
             console.time('reduce')
             duelMatches = matches.reduce((acc, el) => {
-              if ((el.localTeam.id === a.id &&
-                el.awayTeam.id === b.id) ||
-                (el.localTeam.id === b.id &&
-                  el.awayTeam.id === a.id)) {
+              if (
+                (el.localTeam.id === a.id && el.awayTeam.id === b.id) ||
+                (el.localTeam.id === b.id && el.awayTeam.id === a.id)
+              ) {
                 return [...acc, el]
               }
               return acc
@@ -309,7 +310,7 @@ export const competitionModule = {
               if (
                 duelMatches[z].localTeam.id == a.id &&
                 Number(duelMatches[z].localTeamGoals) >
-                Number(duelMatches[z].awayTeamGoals)
+                  Number(duelMatches[z].awayTeamGoals)
               ) {
                 aWin++
                 goalDifference +=
@@ -318,7 +319,7 @@ export const competitionModule = {
               } else if (
                 duelMatches[z].awayTeam.id == a.id &&
                 Number(duelMatches[z].awayTeamGoals) >
-                Number(duelMatches[z].localTeamGoals)
+                  Number(duelMatches[z].localTeamGoals)
               ) {
                 aWin++
                 goalDifference +=
@@ -327,19 +328,19 @@ export const competitionModule = {
               } else if (
                 duelMatches[z].localTeam.id == a.id &&
                 Number(duelMatches[z].localTeamGoals) ==
-                Number(duelMatches[z].awayTeamGoals)
+                  Number(duelMatches[z].awayTeamGoals)
               ) {
                 aDraw++
               } else if (
                 duelMatches[z].awayTeam.id == a.id &&
                 Number(duelMatches[z].awayTeamGoals) ==
-                Number(duelMatches[z].localTeamGoals)
+                  Number(duelMatches[z].localTeamGoals)
               ) {
                 aDraw++
               } else if (
                 duelMatches[z].localTeam.id == a.id &&
                 Number(duelMatches[z].localTeamGoals) <
-                Number(duelMatches[z].awayTeamGoals)
+                  Number(duelMatches[z].awayTeamGoals)
               ) {
                 aLose++
                 goalDifference +=
@@ -348,7 +349,7 @@ export const competitionModule = {
               } else if (
                 duelMatches[z].awayTeam.id == a.id &&
                 Number(duelMatches[z].awayTeamGoals) <
-                Number(duelMatches[z].localTeamGoals)
+                  Number(duelMatches[z].localTeamGoals)
               ) {
                 aLose++
                 goalDifference +=
@@ -372,7 +373,7 @@ export const competitionModule = {
                 } else if (goalDifference < 0) {
                   return -1
                 } else {
-                  // si la diferencia de goles es igual, devuelve +1 o -1 según quien tenga más goles 
+                  // si la diferencia de goles es igual, devuelve +1 o -1 según quien tenga más goles
                   return a.stats.goals - a.stats.againstGoals >
                     b.stats.goals - b.stats.againstGoals
                     ? 1
@@ -430,7 +431,8 @@ export const competitionModule = {
       }
     },
     topScorers: (state, getters) => (selectedRound) => {
-      selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
+      selectedRound =
+        selectedRound == 'latest' ? state.rounds.length - 1 : selectedRound
       let orderTeams = JSON.parse(
         JSON.stringify(getters.rankedTeams(selectedRound))
       )
@@ -443,7 +445,8 @@ export const competitionModule = {
       )
     },
     mostTrashed: (state, getters) => (selectedRound) => {
-      selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
+      selectedRound =
+        selectedRound == 'latest' ? state.rounds.length - 1 : selectedRound
       let orderTeams = JSON.parse(
         JSON.stringify(getters.rankedTeams(selectedRound))
       )
@@ -456,7 +459,8 @@ export const competitionModule = {
       )
     },
     topDifference: (state, getters) => (selectedRound) => {
-      selectedRound = (selectedRound == 'latest') ? state.rounds.length - 1 : selectedRound
+      selectedRound =
+        selectedRound == 'latest' ? state.rounds.length - 1 : selectedRound
       let orderTeams = JSON.parse(
         JSON.stringify(getters.rankedTeams(selectedRound))
       )
@@ -617,7 +621,7 @@ export const competitionModule = {
                 if (
                   duelMatches[z].localTeam.id == a.id &&
                   Number(duelMatches[z].localTeamGoals) >
-                  Number(duelMatches[z].awayTeamGoals)
+                    Number(duelMatches[z].awayTeamGoals)
                 ) {
                   aWin++
                   goalDifference +=
@@ -626,7 +630,7 @@ export const competitionModule = {
                 } else if (
                   duelMatches[z].awayTeam.id == a.id &&
                   Number(duelMatches[z].awayTeamGoals) >
-                  Number(duelMatches[z].localTeamGoals)
+                    Number(duelMatches[z].localTeamGoals)
                 ) {
                   aWin++
                   goalDifference +=
@@ -635,19 +639,19 @@ export const competitionModule = {
                 } else if (
                   duelMatches[z].localTeam.id == a.id &&
                   Number(duelMatches[z].localTeamGoals) ==
-                  Number(duelMatches[z].awayTeamGoals)
+                    Number(duelMatches[z].awayTeamGoals)
                 ) {
                   aDraw++
                 } else if (
                   duelMatches[z].awayTeam.id == a.id &&
                   Number(duelMatches[z].awayTeamGoals) ==
-                  Number(duelMatches[z].localTeamGoals)
+                    Number(duelMatches[z].localTeamGoals)
                 ) {
                   aDraw++
                 } else if (
                   duelMatches[z].localTeam.id == a.id &&
                   Number(duelMatches[z].localTeamGoals) <
-                  Number(duelMatches[z].awayTeamGoals)
+                    Number(duelMatches[z].awayTeamGoals)
                 ) {
                   aLose++
                   goalDifference +=
@@ -656,7 +660,7 @@ export const competitionModule = {
                 } else if (
                   duelMatches[z].awayTeam.id == a.id &&
                   Number(duelMatches[z].awayTeamGoals) <
-                  Number(duelMatches[z].localTeamGoals)
+                    Number(duelMatches[z].localTeamGoals)
                 ) {
                   aLose++
                   goalDifference +=
@@ -739,7 +743,9 @@ export const competitionModule = {
           teamsPlayed.push(match.localTeam)
           teamsPlayed.push(match.awayTeam)
         }
-        let teamsNotPlayed = state.competition.teams.filter(a => !teamsPlayed.some(b => a.id == b.id))
+        let teamsNotPlayed = state.competition.teams.filter(
+          (a) => !teamsPlayed.some((b) => a.id == b.id)
+        )
         return teamsNotPlayed
       } else {
         return []
