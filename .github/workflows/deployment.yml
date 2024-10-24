@@ -8,19 +8,33 @@ on:
 jobs:
   deployment:
     runs-on: ubuntu-latest
-    env:
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASS: ${{ secrets.DB_PASS }}
-      DB_NAME: ${{ secrets.DB_NAME }}
     steps:
-      - name: Traer el codigo
-        uses: actions/checkout@v4
+      - name: Ejecutar comandos ssh remotos usando la ssh key
+        uses: appleboy/ssh-action@v1.0.0
         with:
-          fetch-depth: 0
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Instalar dependencias
-        run: npm install
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd workspace/matchanalyzer
+            git fetch
+            git checkout master
+            git pull
+            docker-compose -f docker-compose-raspy.yml up -d build
+            
+      # - name: Traer el codigo
+      #   uses: actions/checkout@v4
+      #   with:
+      #     fetch-depth: 0
+      #   env:
+      #     DB_USER: ${{ secrets.DB_USER }}
+      #     DB_PASS: ${{ secrets.DB_PASS }}
+      #     DB_NAME: ${{ secrets.DB_NAME }}
+      # - name: Setup Node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 22
+      # - name: Instalar dependencias
+      #   run: npm install
         
