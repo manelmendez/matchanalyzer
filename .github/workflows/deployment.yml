@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: Ejecutar comandos ssh remotos usando la ssh key
         uses: appleboy/ssh-action@v1.0.0
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
