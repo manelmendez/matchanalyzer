@@ -1,0 +1,19 @@
+name: Lint code
+
+on:
+  push:
+  workflow_dispatch: 
+jobs:
+  lint-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Traer el codigo
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23
+      - name: Run lint on server
+        run: cd server && npm run lint
+      - name: Run lint on client
+        run: cd client && npm run lint

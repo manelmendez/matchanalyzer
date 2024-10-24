@@ -26,21 +26,3 @@ jobs:
             git pull origin master
             docker-compose -f docker-compose-raspy.yml up -d --build
           EOF
-      # - name: Ejecutar comandos ssh remotos usando la ssh key
-      #   uses: appleboy/ssh-action@v1.0.0
-      #   env:
-      #     DB_USER: ${{ secrets.DB_USER }}
-      #     DB_PASS: ${{ secrets.DB_PASS }}
-      #     DB_NAME: ${{ secrets.DB_NAME }}
-      #     DB_HOST: ${{ secrets.DB_HOST }}
-      #     IP: ${{ secrets.IP }}
-      #     SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: ${{ secrets.SSH_PORT }}
-      #     script: |
-      #       cd /home/ubuntu/workspace/matchanalyzer/
-      #       sudo docker-compose -f docker-compose-raspy.yml up
-        
