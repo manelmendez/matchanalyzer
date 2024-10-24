@@ -46,7 +46,7 @@
     "@types/pg": "^8.11.5",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
     "@typescript-eslint/parser": "^8.11.0",
-    "eslint": "^8.57.1",
+    "eslint": "latest",
     "husky": "latest",
     "jest": "latest",
     "standard": "latest",
