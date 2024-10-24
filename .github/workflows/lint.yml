@@ -13,6 +13,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 23
+      - name: Instalar dependencias en servidor y cliente
+        run: npm installServer && npm installClient
       - name: Run lint on server
         run: cd server && npm run lint
       - name: Run lint on client
