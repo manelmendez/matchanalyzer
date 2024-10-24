@@ -26,6 +26,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd workspace/matchanalyzer
+            cd /home/ubuntu/workspace/matchanalyzer/
             sudo docker-compose -f docker-compose-raspy.yml up -d
         
