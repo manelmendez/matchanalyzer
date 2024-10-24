@@ -43,7 +43,7 @@
     "@babel/runtime": "latest",
     "@vue/component-compiler-utils": "latest",
     "cross-env": "latest",
-    "eslint": "latest",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "latest",
     "eslint-plugin-prettier": "latest",
     "eslint-plugin-vue": "latest",
