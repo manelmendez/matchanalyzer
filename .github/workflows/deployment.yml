@@ -20,7 +20,7 @@ jobs:
             cd workspace/matchanalyzer
             git fetch
             git checkout master
-            git pull
+            git pull origin master
             sudo docker-compose -f docker-compose-raspy.yml up -d build
             
       # - name: Traer el codigo
