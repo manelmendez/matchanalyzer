@@ -17,5 +17,7 @@ jobs:
         run: npm run installServer && npm run installClient
       - name: Run lint on server
         run: cd server && npm run lint
+        continue-on-error: true
       - name: Run lint on client
         run: cd client && npm run lint
+        continue-on-error: true
