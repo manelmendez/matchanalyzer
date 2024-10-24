@@ -8,7 +8,7 @@
     "build": "parcel build ./src/index.html --no-minify",
     "docker": "cross-env DOCKER=true parcel build ./src/index.html --no-minify",
     "raspy": "cross-env RASPY=true parcel build ./src/index.html --no-minify",
-    "lint": "eslint ./src --fix --ext .js,.vue",
+    "lint": "eslint ./src --fix",
     "prettier": "prettier ./src --check"
   },
   "keywords": [
