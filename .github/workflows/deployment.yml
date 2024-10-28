@@ -9,12 +9,12 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: Traer el codigo
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+      # - name: Traer el codigo
+      #   uses: actions/checkout@v4
+      # - name: Setup Node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 22
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
