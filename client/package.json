@@ -24,7 +24,7 @@
     "@mdi/font": "latest",
     "animate.css": "latest",
     "axios": "latest",
-    "chart.js": "^2.9.4",
+    "chart.js": "latest",
     "font-awesome": "latest",
     "moment": "latest",
     "vue": "3.0.0",
