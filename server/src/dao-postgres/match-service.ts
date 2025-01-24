@@ -3,10 +3,13 @@ import { Match } from '../models/match.js'
 
 export class MatchService {
   findById = async (id: number, userId: number) => {
+    console.log(id)
+    console.log(userId)
     const result = await con.query(
       'SELECT * FROM matches WHERE id = $1 AND "userId" = $2',
       [id, userId]
     )
+    console.log(result)
     return result.rows[0]
   }
 

@@ -8,7 +8,7 @@ export const matchRouter = (matchService: MatchService) => {
 
   const matchCtrl = new MatchController(matchService)
 
-  matchRouter.get('/matches/:matchId', auth.checkAuth, matchCtrl.getMatch)
+  matchRouter.get('/matches/:id', auth.checkAuth, matchCtrl.getMatch)
   matchRouter.post('/matches', auth.checkAuth, matchCtrl.addMatch)
   matchRouter.put('/matches/:id', auth.checkAuth, matchCtrl.updateMatch)
   matchRouter.delete('/matches/:id', auth.checkAuth, matchCtrl.deleteMatch)

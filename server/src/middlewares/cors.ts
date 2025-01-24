@@ -4,6 +4,8 @@ const acceptedOrigins: string[] = [
   'http://localhost:9999',
   'http://localhost:9000',
   'http://localhost:9009',
+  'http://localhost:5173',
+  'http://localhost:5174',
   'http://192.168.1.140:9999',
   'http://192.168.1.140:9000',
   'http://192.168.1.140:9009',

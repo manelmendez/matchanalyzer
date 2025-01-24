@@ -43,7 +43,6 @@ export class AssistController {
     const matchId: number = Number(req.params.matchId)
     try {
       const assists = await this.assistService.findByMatch(matchId, userId)
-      console.log(assists)
       return res.status(200).send({
         assists
       })
