@@ -13,11 +13,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Instalar dependencias en servidor y cliente
-        run: npm run installServer && npm run installClient
+      - name: Instalar dependencias
+        run: npm install
       - name: Run lint on server
-        run: cd server && npm run lint
-        continue-on-error: true
-      - name: Run lint on client
-        run: cd client && npm run lint
+        run: npm run lint
         continue-on-error: true

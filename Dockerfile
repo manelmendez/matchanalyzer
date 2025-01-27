@@ -13,9 +13,6 @@ COPY ./ ./
 # Install server dependencies
 RUN cd server && npm install
 
-# Install client dependencies and build it
-RUN cd client && npm install && npm run ${environment}
-
 # Run server
 WORKDIR /projects/matchanalyzer/server
 
