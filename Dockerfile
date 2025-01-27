@@ -11,7 +11,7 @@ WORKDIR /projects/matchanalyzer
 COPY ./ ./
 
 # Install server dependencies
-RUN cd server && npm install
+RUN npm install
 
 # Run server
 WORKDIR /projects/matchanalyzer/server
