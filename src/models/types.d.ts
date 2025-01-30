@@ -35,6 +35,7 @@ export type TeamStats = {
   againstGoals: number
   homeAgainstGoals: number
   awayAgainstGoals: number
+  position?: number
 }
 
 export type Pichichi = {

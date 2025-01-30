@@ -211,8 +211,10 @@ export class TeamController {
       const rounds: Round[] = await this.roundService.findByCompetition(competitionId, userId)
       const matches: Match[] = await this.matchService.findByCompetition(competitionId, userId)
       const teams: Team[] = await this.teamService.findByCompetition(competitionId, userId)
-      
-      
+
+      if (rounds.length == 0 || matches.length == 0) {
+        return res.status(200).send({teamStats: {}})
+      }
       for (let i = 0; i < rounds.length; i++) {
         rounds[i].matches = []
         for (let j = 0; j < matches.length; j++) {
@@ -479,11 +481,11 @@ export class TeamController {
       }
 
       const team = roundRankings[roundRankings.length - 1].ranking?.find((element) => element.id == teamId)     
-      console.log(team) 
       const position = roundRankings[roundRankings.length - 1].ranking?.findIndex((element) => element.id == teamId)
-      console.log(position)
+      if (team && team.stats) {
+        team.stats.position = Number(position) + 1;
+      }
       const teamRanking: TeamRanking = {...team, position: Number(position) + 1}
-      console.log(teamRanking)
 
       // let teamStats: any = []  
       // const team = roundRankings[roundRankings.length - 1].ranking?.find((element) => element.id == teamId)      
