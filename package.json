@@ -5,12 +5,12 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "start": "node --loader ts-node/esm src/index.ts",
+    "start": "node --watch --loader ts-node/esm src/index.ts",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix",
     "test": "jest",
     "coverage": "jest --coverage",
-    "dev": "node --loader ts-node/esm --inspect ./src/index.ts"
+    "dev": "node --watch --loader ts-node/esm --inspect ./src/index.ts"
   },
   "keywords": [
     "node",
