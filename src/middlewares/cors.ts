@@ -10,6 +10,8 @@ const acceptedOrigins: string[] = [
   'http://192.168.1.140:9000',
   'http://192.168.1.140:9009',
   'https://matchanalyzer.duckdns.org',
+  'https://vuetify.matchanalyzer.duckdns.org',
+  'https://front.matchanalyzer.duckdns.org',
 ];
 
 const corsOptions: cors.CorsOptions = {
