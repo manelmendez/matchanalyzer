@@ -14,6 +14,7 @@ const acceptedOrigins: string[] = [
   'https://front.matchanalyzer.duckdns.org',
 ];
 
+console.log(acceptedOrigins)
 const corsOptions: cors.CorsOptions = {
   origin: acceptedOrigins
 };
