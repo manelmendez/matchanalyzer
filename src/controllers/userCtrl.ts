@@ -91,6 +91,7 @@ export class UserController {
     // search for user in DB
     const base64Credentials: string = req.headers.authorization.split(' ')[1]
     const credentials: string = Buffer.from(base64Credentials, 'base64').toString('ascii')
+    console.log(credentials)
     const [email, password]: string[] = credentials.split(':')
     try {
       const userFound: User = await this.userService.findByEmail(email)
