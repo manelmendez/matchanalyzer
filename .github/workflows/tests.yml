@@ -1,0 +1,20 @@
+name: Test code
+
+on:
+  push:
+  workflow_dispatch: 
+jobs:
+  lint-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Traer el codigo
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Instalar dependencias
+        run: npm install
+      - name: Run tests on server
+        run: npm run test
+        continue-on-error: true

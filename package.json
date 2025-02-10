@@ -39,6 +39,7 @@
     "@types/connect-history-api-fallback": "^1.5.4",
     "@types/cors": "^2.8.17",
     "@types/express": "latest",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "latest",
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
@@ -48,8 +49,9 @@
     "@typescript-eslint/parser": "^8.11.0",
     "eslint": "^8.57.1",
     "husky": "latest",
-    "jest": "latest",
+    "jest": "^29.7.0",
     "standard": "latest",
+    "ts-jest": "^29.2.5",
     "ts-node": "latest"
   },
   "eslintConfig": {
