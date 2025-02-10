@@ -4,7 +4,7 @@ on:
   push:
   workflow_dispatch: 
 jobs:
-  lint-code:
+  test-code:
     runs-on: ubuntu-latest
     steps:
       - name: Traer el codigo
