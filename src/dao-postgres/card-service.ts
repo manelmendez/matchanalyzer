@@ -1,5 +1,5 @@
-import con from '../config/postgres.js'
-import {Card} from '../models/card.js'
+import con from '../config/postgres'
+import {Card} from '../models/card'
 export class CardService {
   findById = async (id: number, userId: number) => {
     const result = await con.query(

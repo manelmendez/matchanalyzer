@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { CardService } from '../dao-postgres/card-service'
 import { PlayerService } from '../dao-postgres/player-service'
-import {Card} from '../models/card.js'
+import {Card} from '../models/card'
 import { Player } from '../models/player'
 
 export class CardController {
