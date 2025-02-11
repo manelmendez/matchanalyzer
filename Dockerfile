@@ -14,7 +14,6 @@ COPY ./ ./
 RUN npm install
 
 # Run server
-WORKDIR /projects/matchanalyzer/server
+RUN npm start
 
 EXPOSE 9000
-CMD [ "npm", "start" ]
