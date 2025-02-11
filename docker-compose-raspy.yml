@@ -26,11 +26,7 @@ services:
     networks:
       - ma_backend
   matchanalyzer:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-      args:
-        environment: "raspy"
+    image: ghcr.io/${{ github.repository }}/matchanalyzer:latest
     container_name: "matchanalyzer"
     restart: always
     stdin_open: true
