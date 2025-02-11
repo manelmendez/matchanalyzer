@@ -35,6 +35,7 @@ services:
       - db
     environment:
       PMA_HOST: db
+      COMPOSE_HTTP_TIMEOUT: 120
     ports:
       - "9009:9000"
     networks:
