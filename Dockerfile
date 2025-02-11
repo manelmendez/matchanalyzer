@@ -14,6 +14,5 @@ COPY ./ ./
 RUN npm install
 
 # Run server
-RUN npm start
-
 EXPOSE 9000
+CMD [ "npm", "start" ]
