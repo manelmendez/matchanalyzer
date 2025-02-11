@@ -27,7 +27,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --build-arg environment=raspy -t ghcr.io/${{ github.repository }}/matchanalyzer:latest .
+          docker buildx build --platform linux/amd64,linux/arm64 --build-arg environment=raspy -t ghcr.io/${{ github.repository }}/matchanalyzer:latest --progress=plain .
 
       - name: Push Docker image to GHCR
         run: |
