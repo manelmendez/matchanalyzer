@@ -1,4 +1,4 @@
-name: Build, Push, and Deploy Docker Image
+name: Build, Push, and Deploy Server Docker Image
 
 on:
   push:
@@ -27,11 +27,11 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build --build-arg environment=raspy -t ghcr.io/${{ github.repository }}/matchanalyzer:latest .
+          docker build --build-arg environment=raspy -t ghcr.io/matchanalyzer:latest .
 
       - name: Push Docker image to GHCR
         run: |
-          docker push ghcr.io/${{ github.repository }}/matchanalyzer:latest
+          docker push ghcr.io/matchanalyzer:latest
 
       - name: Verify Docker login
         run: docker info
