@@ -1,4 +1,4 @@
-name: Deployment Workflow
+name: Build, Push, and Deploy Docker Image
 
 on:
   push:
@@ -15,20 +15,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: check variables
-        run: |
-         echo ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build the Docker image
         run: |
@@ -37,6 +32,9 @@ jobs:
       - name: Push Docker image to GHCR
         run: |
           docker push ghcr.io/${{ github.repository }}/matchanalyzer:latest
+
+      - name: Verify Docker login
+        run: docker info
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
