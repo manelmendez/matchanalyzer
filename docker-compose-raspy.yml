@@ -26,7 +26,7 @@ services:
     networks:
       - ma_backend
   matchanalyzer:
-    image: ghcr.io/matchanalyzer/matchanalyzer:latest
+    image: ghcr.io/manelmendez/matchanalyzer/matchanalyzer:latest
     container_name: "matchanalyzer"
     restart: always
     stdin_open: true
