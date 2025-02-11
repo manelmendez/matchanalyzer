@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  build_and_deploy:
+  deployment_workflow:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,11 +27,11 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build --build-arg environment=raspy -t ghcr.io/matchanalyzer:latest .
+          docker build --build-arg environment=raspy -t ghcr.io/${{ github.repository }}/matchanalyzer:latest .
 
       - name: Push Docker image to GHCR
         run: |
-          docker push ghcr.io/matchanalyzer:latest
+          docker push ghcr.io/${{ github.repository }}/matchanalyzer:latest
 
       - name: Verify Docker login
         run: docker info
