@@ -1,4 +1,4 @@
-FROM node:23-alpine
+FROM node:23
 
 # setting up MatchAnalyzer
 ARG environment
