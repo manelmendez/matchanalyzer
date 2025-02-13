@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:17-alpine # use latest official postgres version
+    image: postgres:17.2-alpine # use latest official postgres version
     container_name: "postgres"
     stdin_open: true
     tty: true
