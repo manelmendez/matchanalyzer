@@ -14,7 +14,7 @@ services:
     volumes:
       # - ./server/backup:/var/lib/postgresql/data # persist data even if container shuts down
       - postgresql_data:/var/lib/postgresql/data # persist data even if container shuts down in a volume
-      - ./server/resources/matchanalyzer-pg.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./resources/matchanalyzer-pg.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - ma_backend
   adminer:
