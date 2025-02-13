@@ -1,12 +1,9 @@
 import multer from 'multer'
 import { Request, Response } from 'express'
-import path from 'path';
 
 const storage = multer.diskStorage({
   destination: function (req: Request, file: any, cb: any) {
-    const __dirname = path.resolve()
-    const uploadPath = path.join(__dirname, 'src', 'assets', 'images'); // Construye la ruta absoluta
-    cb(null, uploadPath);
+    cb(null, './src/assets/images')
   },
   filename: function (req: Request, file: any, cb: any) {
     const filename = `${Date.now()}-${file.originalname}`;
@@ -15,6 +12,7 @@ const storage = multer.diskStorage({
 })
 
 const imageFilter = (req: Request, file: any, cb: any) => {
+  console.log(file)
   // accept image only
   if (!file || !file.originalname || !file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
     return cb(new Error('Only image files are allowed!'), false)
