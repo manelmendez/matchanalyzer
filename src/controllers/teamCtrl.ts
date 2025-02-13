@@ -53,7 +53,8 @@ export class TeamController {
     try {
       const teamSaved: Team = await this.teamService.saveTeam(team)
       return res.status(200).send({
-        team: teamSaved
+        team: teamSaved,
+        message: "Equipo creado correctamente"
       })
     } catch (err) {
       console.log(err)
@@ -83,7 +84,8 @@ export class TeamController {
     try {
       const teamSaved: Team = await this.teamService.saveTeam(team)
       return res.status(200).send({
-        team: teamSaved
+        team: teamSaved,
+        message: "Equipo creado correctamente"
       })
     } catch (err) {
       console.log(err)
@@ -171,6 +173,7 @@ export class TeamController {
 
   updateTeam = async (req: Request, res: Response) => {
     const team: Team = req.body.team
+    console.log(req.body)
     if (!req.user) {
       return res.status(400).json({ error: 'No userId provided in Auth' });
     }
@@ -178,7 +181,7 @@ export class TeamController {
     const id: number = Number(req.params.id)
     try {
       const value: Team = await this.teamService.updateTeam(id, team, userId)
-      res.status(200).send({ team: value })
+      res.status(200).send({ team: value, message: "Equipo editado correctamente" })
     } catch (err) {
       console.log(err)
       res.status(500).send({ message: 'Error al editar team' })
@@ -193,7 +196,9 @@ export class TeamController {
     const userId: number = req.user.id
     try {
       const value = await this.teamService.deleteTeam(id, userId)
-      res.status(200).send({ team: value })
+      res.status(200).send({ team: value,
+        message: "Equipo borrado correctamente"
+       })
     } catch (err) {
       console.log(err)
       res.status(500).send({ message: 'Error al borrar el equipo' })

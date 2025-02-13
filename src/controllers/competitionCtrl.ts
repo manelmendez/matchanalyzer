@@ -41,7 +41,8 @@ export class CompetitionController {
       const competitionSaved =
         await this.competitionService.saveCompetition(competition)
       return res.status(200).send({
-        competition: competitionSaved
+        competition: competitionSaved,
+        message: "Competición creada correctamente"
       })
     } catch (err) {
       console.log(err)
@@ -120,15 +121,13 @@ export class CompetitionController {
       category: req.body.category,
       userId
     }
-    this.competitionService
-      .updateCompetition(competition, id, userId)
-      .then(() => {
-        res.status(200).send({ competition })
-      })
-      .catch((err) => {
-        console.log(err)
-        res.status(500).send({ message: 'Error al actualizar el partido' })
-      })
+    try {
+      const updatedCompetition: Competition = await this.competitionService.updateCompetition(competition, id, userId)
+      res.status(200).send({ competition: updatedCompetition, message: "Competición editada correctamente" })
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({ message: 'Error al actualizar la competición' })
+    }
   }
 
   deleteCompetition = async (req: Request, res: Response) => {
@@ -139,7 +138,7 @@ export class CompetitionController {
     const id: number = Number(req.params.id)
     try {
       await this.competitionService.deleteCompetition(id, userId)
-      return res.status(200).send({ competition: req.params.id })
+      return res.status(200).send({ competition: req.params.id, message: "Competición borrada correctamente" })
     } catch (err) {
       console.log(err)
       return res.status(500).send({
