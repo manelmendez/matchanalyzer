@@ -1,13 +1,14 @@
 'use strict'
 
-import * as tokenServices from '../services/token-services.js'
+import * as tokenServices from '../utils/token-services.js'
 import { Request, Response, NextFunction } from 'express'
 import {UserDataToken} from '../models/types.js'
+import errorHelper from '../utils/errorHelper.js';
 
-async function isAuth(req: Request, res: Response): Promise<Response> {
+const isAuth = async(req: Request, res: Response) => {
   if (!req.headers.authorization) {
     console.log('Sin cabeceras. No autorizado');
-    return res.status(403).send({ message: 'No tienes autorización' });
+    errorHelper.unauthorizedError('No tienes autorización')
   }
 
   // Extract 'Bearer' from Auth header
@@ -16,7 +17,7 @@ async function isAuth(req: Request, res: Response): Promise<Response> {
   const parts = tokenBearer.split(' ');
   if (parts.length !== 2 || parts[0] !== 'Bearer') {
     console.log('Formato de token invalido');
-    return res.status(401).send({ message: 'Formato de token invalido' });
+    errorHelper.unauthorizedError('Formato de token invalido');
   }
 
   const token: string = parts[1];
@@ -29,17 +30,14 @@ async function isAuth(req: Request, res: Response): Promise<Response> {
   } catch (error) {
     console.log('No autorizado. Sin acceso');
     console.error(error)
-    return res.status(401).send({ message: 'No tienes autorización' });
+    errorHelper.unauthorizedError('No tienes autorización')
   }
 }
 
-async function checkAuth(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-  console.log('Comprobando header Authorization');
-  console.log(req.params);
-
+const checkAuth = async(req: Request, res: Response, next: NextFunction) => {
   if (!req.headers.authorization) {
     console.log('No existe');
-    return res.status(401).send({ message: 'No tienes autorización' });
+    errorHelper.unauthorizedError('No tienes autorización')
   }
 
   const tokenBearer: string = req.get('authorization')!; // Use non-null assertion for clarity
@@ -47,7 +45,7 @@ async function checkAuth(req: Request, res: Response, next: NextFunction): Promi
   const parts = tokenBearer.split(' ');
   if (parts.length !== 2 || parts[0] !== 'Bearer') {
     console.log('Formato de token invalido');
-    return res.status(401).send({ message: 'Formato de token invalido' });
+    errorHelper.unauthorizedError('Formato de token inválido')
   }
 
   const token: string = parts[1];
@@ -60,15 +58,14 @@ async function checkAuth(req: Request, res: Response, next: NextFunction): Promi
   } catch (error) {
     console.log('No está autorizado');
     console.error(error); // Use console.error for actual errors
-    return res.status(401).send({ message: 'No tienes autorización' });
+    errorHelper.unauthorizedError('No tienes autorización')
   }
 }
 
-async function checkAdmin(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-  console.log('Comprobando header Authorization');
+const checkAdmin = async(req: Request, res: Response, next: NextFunction) => {
   if (!req.headers.authorization) {
     console.log('No existe');
-    return res.status(401).send({ message: 'No tienes autorización como administrador' });
+    errorHelper.unauthorizedError('No tienes autorización como administrador')
   }
 
   // Extract 'Bearer' from Auth header
@@ -77,7 +74,7 @@ async function checkAdmin(req: Request, res: Response, next: NextFunction): Prom
   const parts = tokenBearer.split(' ');
   if (parts.length !== 2 || parts[0] !== 'Bearer') {
     console.log('Formato de token invalido');
-    return res.status(401).send({ message: 'Formato de token invalido' });
+    errorHelper.unauthorizedError('Formato de token inválido')
   }
 
   const token: string = parts[1];
@@ -89,12 +86,12 @@ async function checkAdmin(req: Request, res: Response, next: NextFunction): Prom
       console.log('Está autorizado como administrador');
       next();
     } else {
-      return res.status(401).send({ message: 'No tienes autorización como administrador' });
+      errorHelper.unauthorizedError('No tienes autorización como administrador')
     }
   } catch (error) {
     console.log('No está autorizado');
     console.error(error); // Use console.error for actual errors
-    return res.status(401).send({ message: 'No tienes autorización como administrador' });
+    errorHelper.unauthorizedError('No tienes autorización como administrador')
   }
 }
 

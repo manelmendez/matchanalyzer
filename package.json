@@ -19,7 +19,7 @@
   "author": "manelmendez",
   "license": "MIT",
   "dependencies": {
-    "bcrypt-nodejs": "latest",
+    "bcrypt": "latest",
     "connect-history-api-fallback": "latest",
     "cors": "latest",
     "ejs": "latest",
@@ -35,7 +35,7 @@
     "typescript": "latest"
   },
   "devDependencies": {
-    "@types/bcrypt-nodejs": "latest",
+    "@types/bcrypt": "latest",
     "@types/connect-history-api-fallback": "^1.5.4",
     "@types/cors": "^2.8.17",
     "@types/express": "latest",

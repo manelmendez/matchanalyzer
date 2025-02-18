@@ -1,4 +1,4 @@
-import con from '../config/postgres.js'
+import con from '../adapters/postgres.js'
 import { Competition } from '../models/competition.js'
 
 export class CompetitionService {

@@ -1,4 +1,4 @@
-import con from '../config/postgres.js'
+import con from '../adapters/postgres.js'
 import { Match } from '../models/match.js'
 
 export class MatchService {

@@ -27,11 +27,11 @@ import { TeamService } from '../dao-postgres/team-service.js'
 import { UserService } from '../dao-postgres/user-service.js'
 
 import imageServices from '../services/image-services.js'
-import auth from '../middlewares/auth.js'
+// import auth from '../middlewares/auth.js'
 const api = express.Router()
 
 // AUTH
-api.post('/private', auth.isAuth)
+// api.post('/private', auth.isAuth)
 
 // OAUTH2
 // api.get('/oauth/google', oauth2Ctrl.verifyGoogleToken)

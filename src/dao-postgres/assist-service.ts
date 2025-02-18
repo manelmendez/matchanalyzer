@@ -1,4 +1,4 @@
-import con from '../config/postgres.js'
+import con from '../adapters/postgres.js'
 import {Assist} from '../models/assist.js'
 
 export class AssistService {
