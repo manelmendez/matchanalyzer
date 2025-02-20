@@ -25,7 +25,7 @@ export function decodeToken(token: string): Promise<UserDataToken> {
       if (err) {
         console.log('Token inválido o expirado');
         reject({
-          status: 500,
+          status: 401,
           message: 'Invalid Token',
         });
       }
@@ -46,7 +46,7 @@ export function decodeToken(token: string): Promise<UserDataToken> {
         else {
           console.log('Token inválido');
           reject({
-            status: 500,
+            status: 401,
             message: 'Invalid Token',
           });
         }

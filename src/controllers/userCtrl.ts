@@ -10,7 +10,7 @@ import errorHelper from '../utils/errorHelper.js'
 
 export class UserController {
   private userService: UserService
-  constructor (userService: UserService) {
+  constructor(userService: UserService) {
     this.userService = userService
   }
 
@@ -72,11 +72,8 @@ export class UserController {
     ) {
       errorHelper.unauthorizedError('Missing Authorization Header')
     }
-    console.log(req.headers.authorization)
     const base64Credentials: string = req.headers.authorization?.split(' ')[1] || ''
-    console.log(base64Credentials)
     const credentials: string = Buffer.from(base64Credentials, 'base64').toString('ascii')
-    console.log(credentials)
     const [email, password]: string[] = credentials.split(':')
     try {
       const userFound: User = await this.userService.findByEmail(email)
@@ -130,45 +127,60 @@ export class UserController {
   }
 
   getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('Buscando todos los usuarios...')
     try {
-      const users = await this.userService.findAll()
-      return res.status(200).send({
-        users
-      })
-    } catch (error) {
-      console.log(`Error: ${error}`)
-      errorHelper.forbiddenError('Error al obtener usuarios')
+      console.log('Buscando todos los usuarios...')
+      try {
+        const users = await this.userService.findAll()
+        return res.status(200).send({
+          users
+        })
+      } catch (error) {
+        console.log(`Error: ${error}`)
+        errorHelper.forbiddenError('Error al obtener usuarios')
+      }
+    }
+    catch (error) {
+      next(error)
     }
   }
 
   updateUser = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('Buscando todos los usuarios...')
-    const user: User = req.body.user
     try {
-      const userUpdated = await this.userService.updateUser(user)
-      console.log('Usuarios encontrados.')
-      return res.status(200).send({
-        user: userUpdated
-      })
-    } catch (err) {
-      console.log(`Error: ${err}`)
-      errorHelper.forbiddenError('No se ha podido actualizar el usuario')
+      console.log('Buscando todos los usuarios...')
+      const user: User = req.body.user
+      try {
+        const userUpdated = await this.userService.updateUser(user)
+        console.log('Usuarios encontrados.')
+        return res.status(200).send({
+          user: userUpdated
+        })
+      } catch (err) {
+        console.log(`Error: ${err}`)
+        errorHelper.forbiddenError('No se ha podido actualizar el usuario')
+      }
+    }
+    catch (error) {
+      next(error)
     }
   }
 
   deleteUser = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('Buscando todos los usuarios...')
-    const userId: number = Number(req.params.id)
     try {
-      await this.userService.deleteUser(userId)
-      console.log('Usuario eliminado.')
-      return res.status(200).send({
-        message: 'Usuario eliminado'
-      })
-    } catch (err) {
-      console.log(`Error: ${err}`)
-      errorHelper.forbiddenError('No se ha podido eliminar el usuario')
+      console.log('Buscando todos los usuarios...')
+      const userId: number = Number(req.params.id)
+      try {
+        await this.userService.deleteUser(userId)
+        console.log('Usuario eliminado.')
+        return res.status(200).send({
+          message: 'Usuario eliminado'
+        })
+      } catch (err) {
+        console.log(`Error: ${err}`)
+        errorHelper.forbiddenError('No se ha podido eliminar el usuario')
+      }
+    }
+    catch (error) {
+      next(error)
     }
   }
 }

@@ -1,5 +1,6 @@
 import con from '../adapters/postgres.js'
 import { Goal } from '../models/goal.js'
+import errorHelper from '../utils/errorHelper.js'
 
 export class GoalService {
   findById = async (id: number, userId: number) => {
@@ -27,6 +28,7 @@ export class GoalService {
   }
 
   saveGoal = async (goal: Goal) => {
+    try {
     const result = await con.query(
       'INSERT INTO goals(minute, type, "playerId", "matchId", "roundId", "userId", "matchpartId") ' +
       'VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *',
@@ -41,6 +43,10 @@ export class GoalService {
       ]
     )
     return result.rows[0]
+  } catch (err) {
+    console.log(err)
+    errorHelper.internalServerError('Error al guardar en la base de datos')
+  }
   }
 
   deleteGoal = async (id: number, userId: number) => {

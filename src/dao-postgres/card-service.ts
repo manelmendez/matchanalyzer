@@ -1,5 +1,6 @@
 import con from '../adapters/postgres.js'
-import {Card} from '../models/card.js'
+import { Card } from '../models/card.js'
+import errorHelper from '../utils/errorHelper.js'
 export class CardService {
   findById = async (id: number, userId: number) => {
     const result = await con.query(
@@ -26,20 +27,25 @@ export class CardService {
   }
 
   saveCard = async (card: Card) => {
-    const result = await con.query(
-      'INSERT INTO cards(minute, type, "playerId", "matchId", "roundId", "userId", "matchpartId") ' +
-      'VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *',
-      [
-        card.minute,
-        card.type,
-        card.playerId,
-        card.matchId,
-        card.roundId,
-        card.userId,
-        card.matchpartId
-      ]
-    )
-    return result.rows[0]
+    try {
+      const result = await con.query(
+        'INSERT INTO cards(minute, type, "playerId", "matchId", "roundId", "userId", "matchpartId") ' +
+        'VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *',
+        [
+          card.minute,
+          card.type,
+          card.playerId,
+          card.matchId,
+          card.roundId,
+          card.userId,
+          card.matchpartId
+        ]
+      )
+      return result.rows[0]
+    } catch (err) {
+      console.log(err)
+      errorHelper.internalServerError('Error al guardar en la base de datos')
+    }
   }
 
   deleteCard = async (id: number, userId: number) => {
