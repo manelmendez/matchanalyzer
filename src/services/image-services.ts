@@ -1,5 +1,6 @@
 import multer from 'multer'
 import { Request, Response } from 'express'
+import errorHelper from '../utils/errorHelper.js'
 
 const storage = multer.diskStorage({
   destination: function (req: Request, file: any, cb: any) {
@@ -29,16 +30,16 @@ const uploadImage = async (req: Request, res: Response) => {
     if (err) {
       console.error(err);
       if (err.code === 'LIMIT_FILE_SIZE') {
-        return res.status(413).json({ error: 'Image file too large' });
+        errorHelper.badRequestError('Image file too large');
       } else {
-        return res.status(500).json({ error: 'Failed to upload image' });
+        errorHelper.internalServerError('Failed to upload image');
       }
     }
     console.log('Uploading image');
     console.log(req.file);
     try {
       if (!req.file || req.file === undefined) {
-        return res.status(400).json({ error: 'No image file uploaded' });
+        errorHelper.badRequestError('No image file uploaded');
       }
       return res.status(200).json({
         message: 'Image uploaded successfully',
@@ -47,7 +48,7 @@ const uploadImage = async (req: Request, res: Response) => {
       });
     } catch (err) {
       console.error(err);
-      return res.status(500).json({ error: 'Internal server error' });
+      errorHelper.internalServerError('Failed to upload image');
     }
   });
 }
