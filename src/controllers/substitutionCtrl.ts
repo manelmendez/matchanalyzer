@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { SubstitutionService } from '../dao-postgres/substitution-service'
 import { Substitution } from '../models/substitution'
+import errorHelper from '../utils/errorHelper.js'
 
 export class SubstitutionController {
   private substitutionService: SubstitutionService
@@ -10,7 +11,7 @@ export class SubstitutionController {
 
   addSubstitution = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const substitutionToSave: Substitution = {
@@ -30,15 +31,13 @@ export class SubstitutionController {
       })
     } catch (error) {
       console.log(error)
-      return res.status(500).send({
-        message: `Error al añadir sustitucion: ${error}`
-      })
+      errorHelper.internalServerError('Error al añadir sustituciones')
     }
   }
 
   getSubstitutionsByMatchId = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const matchId: number = Number(req.params.matchId)
@@ -48,15 +47,14 @@ export class SubstitutionController {
         substitutions
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al obtener sustitucion: ${error}`
-      })
+      console.log(error);
+      errorHelper.internalServerError('Error al obtener sustituciones')
     }
   }
 
   deleteSubstitution = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const id: number = Number(req.params.substitutionId)
@@ -66,9 +64,8 @@ export class SubstitutionController {
         substitutionDeleted
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al borrar sustitucion: ${error}`
-      })
+      console.log(error);
+      errorHelper.internalServerError('Error al borrar sustitucion')
     }
   }
 }

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { MatchService } from '../dao-postgres/match-service'
 import { Match } from '../models/match'
+import errorHelper from '../utils/errorHelper.js'
 
 export class MatchController {
   private matchService: MatchService
@@ -10,7 +11,7 @@ export class MatchController {
 
   getMatch = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     const id: number = Number(req.params.id)
@@ -20,15 +21,14 @@ export class MatchController {
         match
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al obtener match: ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al obtener partido')
     }
   }
 
   addMatch = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     // getting data
@@ -50,16 +50,14 @@ export class MatchController {
       })
     } catch (err) {
       console.log(err)
-      return res.status(500).send({
-        message: `Error al crear competición: ${err}`
-      })
+      errorHelper.internalServerError('Error al añadir partido')
     }
   }
 
   updateMatch = async (req: Request, res: Response) => {
     const id: number = Number(req.params.id)
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     const match: Match = {
@@ -77,14 +75,14 @@ export class MatchController {
       res.status(200).send({ match: matchUpdated })
     } catch (err) {
       console.log(err)
-      res.status(500).send({ message: 'Error al actualizar el partido' })
+      errorHelper.internalServerError('Error al actualizar el partido')
     }
   }
 
   deleteMatch = async (req: Request, res: Response) => {
     const id: number = Number(req.params.id)
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     await this.matchService.deleteMatch(id, userId).then(() => {
@@ -92,7 +90,7 @@ export class MatchController {
     })
       .catch((err) => {
         console.log(err)
-        res.status(500).send({ message: 'Error al borrar el partido' })
+        errorHelper.internalServerError('Error al borrar el partido')
       })
   }
 }

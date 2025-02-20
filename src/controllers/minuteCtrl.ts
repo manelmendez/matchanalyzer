@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { MinuteService } from '../dao-postgres/minute-service'
 import { Minute } from '../models/minute'
+import errorHelper from '../utils/errorHelper.js'
 
 export class MinuteController {
   private minuteService: MinuteService
@@ -10,7 +11,7 @@ export class MinuteController {
 
   addMinute = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     const minute: Minute = {
@@ -28,15 +29,13 @@ export class MinuteController {
       })
     } catch (error) {
       console.log(error)
-      return res.status(500).send({
-        message: `Error al añadir partes: ${error}`
-      })
+      errorHelper.internalServerError('Error al añadir minutos')
     }
   }
 
   getMinutesByMatchId = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     const matchId: number = Number(req.params.matchId)
@@ -46,15 +45,14 @@ export class MinuteController {
         minutes
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al obtener partes: ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al obtener minutos')
     }
   }
 
   deleteMinute = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     const id: number = Number(req.params.minuteId)
@@ -64,9 +62,8 @@ export class MinuteController {
         minuteDeleted
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al obtener partes: ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al borrar minutos')
     }
   }
 }

@@ -3,6 +3,7 @@ import { GoalService } from '../dao-postgres/goal-service'
 import { PlayerService } from '../dao-postgres/player-service'
 import { Goal } from "../models/goal"
 import { Player } from '../models/player'
+import errorHelper from '../utils/errorHelper.js'
 
 export class GoalController {
   private goalService: GoalService
@@ -15,7 +16,7 @@ export class GoalController {
 
   addGoal = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const goalToSave: Goal = {
@@ -34,15 +35,13 @@ export class GoalController {
       })
     } catch (error) {
       console.log(error)
-      return res.status(500).send({
-        message: `Error al añadir gol: ${error}`
-      })
+      errorHelper.internalServerError('Error al añadir gol')
     }
   }
 
   getGoalsByMatchId = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const matchId: number = Number(req.params.matchId)
@@ -52,15 +51,14 @@ export class GoalController {
         goals
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al obtener gol: ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al obtener goles')
     }
   }
 
   deleteGoal = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const goalId: number = Number(req.params.goalId)
@@ -70,9 +68,8 @@ export class GoalController {
         goalDeleted
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al borrar gol: ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al borrar el gol')
     }
   }
 

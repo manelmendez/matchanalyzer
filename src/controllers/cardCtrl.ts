@@ -3,6 +3,7 @@ import { CardService } from '../dao-postgres/card-service'
 import { PlayerService } from '../dao-postgres/player-service'
 import {Card} from '../models/card'
 import { Player } from '../models/player'
+import errorHelper from '../utils/errorHelper.js'
 
 export class CardController {
   private cardService: CardService
@@ -15,7 +16,7 @@ export class CardController {
 
   addCard = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const cardToSave: Card = {
@@ -35,15 +36,13 @@ export class CardController {
       })
     } catch (error) {
       console.log(error)
-      return res.status(500).send({
-        message: `Error al añadir tarjeta: ${error}`
-      })
+      errorHelper.internalServerError('Error al añadir tarjeta')
     }
   }
 
   getCardsByMatchId = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const matchId: number = Number(req.params.matchId)
@@ -53,15 +52,14 @@ export class CardController {
         cards
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al obtener tarjeta: ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al obtener tarjeta')
     }
   }
 
   deleteCard = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const cardId: number = Number(req.params.cardId)
@@ -71,9 +69,8 @@ export class CardController {
         cardDeleted
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al borrar tarjeta: ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al borrar tarjeta')
     }
   }
 

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { PlayerService } from '../dao-postgres/player-service'
 import {Player} from '../models/player.js'
+import errorHelper from '../utils/errorHelper.js'
 
 export class PlayerController {
   private playerService: PlayerService
@@ -10,7 +11,7 @@ export class PlayerController {
 
   addPlayer = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const player: Player = {
@@ -32,15 +33,14 @@ export class PlayerController {
         player: playerSaved
       })
     } catch (err) {
-      return res.status(500).send({
-        message: `Error al crear el jugador: ${err}`
-      })
+      console.log(err)
+      errorHelper.internalServerError('Error al añadir jugador')
     }
   }
 
   getPlayersByTeamId = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const teamId: number = Number(req.params.teamId)
@@ -50,16 +50,15 @@ export class PlayerController {
         players
       })
     } catch (error) {      
-      return res.status(500).send({
-        message: `Error al obtener players: ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al obtener jugadores')
     }
   }
 
   updatePlayer = async (req: Request, res: Response) => {
     const player = req.body
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const id: number = Number(req.params.id)
@@ -68,14 +67,14 @@ export class PlayerController {
       res.status(200).send({ player: playerUpdated })
     } catch (err) {
       console.log(err)
-      res.status(500).send({ message: `Error al editar player: ${err}` })
+      errorHelper.internalServerError('Error al editar jugador')
     }
   }
 
   deletePlayer = async (req: Request, res: Response) => {
     const id: number = Number(req.params.id)
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     try {
@@ -83,7 +82,7 @@ export class PlayerController {
       res.status(200).send({ player: id })
     } catch (err) {
       console.log(err)
-      res.status(500).send({ message: 'Error al borrar el jugador' })
+      errorHelper.internalServerError('Error al borrar jugador')
     }
   }
 }

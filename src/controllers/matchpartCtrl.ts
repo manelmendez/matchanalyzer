@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { MatchpartService } from '../dao-postgres/matchpart-service'
 import { MatchPart } from '../models/matchpart'
+import errorHelper from '../utils/errorHelper.js'
 
 export class MatchpartController {
   private matchpartService: MatchpartService
@@ -11,7 +12,7 @@ export class MatchpartController {
 
   addMatchpart = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     const matchpartToSave: MatchPart = {
@@ -29,21 +30,17 @@ export class MatchpartController {
           savedPart
         })
       } else {
-        return res.status(500).send({
-          message: 'Error al añadir partes'
-        })
+        errorHelper.internalServerError('Error al añadir partes')
       }
     } catch (error) {
       console.log(error)
-      return res.status(500).send({
-        message: 'Error al añadir partes'
-      })
+      errorHelper.internalServerError('Error al añadir partes')
     }
   }
 
   getMatchpartsByMatchId = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     const matchId: number = Number(req.params.matchId)
@@ -54,20 +51,17 @@ export class MatchpartController {
           matchParts
         })
       } else {
-        return res.status(500).send({
-          message: 'Error al obtener partes'
-        })
+        errorHelper.notFoundError('No se han encontrado partes')
       }
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al obtener partes ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al obtener partes')
     }
   }
 
   deleteMatchpart = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = Number(req.user.id)
     const id: number = Number(req.params.matchpartId)
@@ -77,9 +71,8 @@ export class MatchpartController {
         matchpartDeleted
       })
     } catch (error) {
-      return res.status(500).send({
-        message: `Error al borrar parte: ${error}`
-      })
+      console.log(error)
+      errorHelper.internalServerError('Error al borrar parte')
     }
   }
 }

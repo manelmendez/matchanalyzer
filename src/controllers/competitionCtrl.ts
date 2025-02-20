@@ -8,6 +8,7 @@ import { TeamStats } from '../models/types'
 import { Match } from '../models/match'
 import { Team } from '../models/team'
 import { Round } from '../models/round'
+import errorHelper from '../utils/errorHelper.js'
 
 export class CompetitionController {
   private competitionService: CompetitionService
@@ -24,7 +25,7 @@ export class CompetitionController {
 
   addCompetition = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const competition: Competition = {
@@ -46,16 +47,14 @@ export class CompetitionController {
       })
     } catch (err) {
       console.log(err)
-      return res.status(500).send({
-        message: 'Error al crear competición'
-      })
+      errorHelper.internalServerError('Error al crear competición')
     }
   }
 
   getCompetition = async (req: Request, res: Response) => {
     const id: number = Number(req.params.id)
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const managerId: number = Number(req.user.id)
@@ -71,22 +70,18 @@ export class CompetitionController {
         })
       } else {
         console.log('No existe la competición.')
-        return res.status(404).send({
-          message: 'No se ha encontrado la competición'
-        })
+        errorHelper.notFoundError('No se ha encontrado la competición')
       }
     } catch (err) {
       console.log(`Error: ${err}`)
-      return res.status(500).send({
-        message: 'Error al buscar'
-      })
+      errorHelper.internalServerError('Error al buscar competición')
     }
   }
 
   getUserCompetitions = async (req: Request, res: Response) => {
     const id: number = Number(req.params.id)
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     console.log('Buscando todas las competiciones en la base de datos...')
@@ -104,12 +99,13 @@ export class CompetitionController {
       }
     } catch (error) {
       console.log(error)
+      errorHelper.internalServerError('Error al obtener competiciones')
     }
   }
 
   updateCompetition = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const id: number = Number(req.params.id)
@@ -126,13 +122,13 @@ export class CompetitionController {
       res.status(200).send({ competition: updatedCompetition, message: "Competición editada correctamente" })
     } catch (err) {
       console.log(err)
-      res.status(500).send({ message: 'Error al actualizar la competición' })
+      errorHelper.internalServerError('Error al actualizar competición')
     }
   }
 
   deleteCompetition = async (req: Request, res: Response) => {
     if (!req.user) {
-      return res.status(400).json({ error: 'No userId provided in Auth' });
+      return errorHelper.unauthorizedError('No userId provided in Auth')
     }
     const userId: number = req.user.id
     const id: number = Number(req.params.id)
@@ -141,9 +137,7 @@ export class CompetitionController {
       return res.status(200).send({ competition: req.params.id, message: "Competición borrada correctamente" })
     } catch (err) {
       console.log(err)
-      return res.status(500).send({
-        message: 'Error al borrar la competición'
-      })
+      errorHelper.internalServerError('Error al borrar competición')
     }
   }
 
