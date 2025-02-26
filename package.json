@@ -28,6 +28,7 @@
     "helmet": "latest",
     "jsonwebtoken": "latest",
     "moment": "latest",
+    "moment-timezone": "^0.5.47",
     "morgan": "latest",
     "multer": "latest",
     "mysql": "latest",

@@ -260,6 +260,27 @@ CREATE SEQUENCE matchanalyzer.users_id_seq
     CACHE 1;
 ALTER TABLE matchanalyzer.users_id_seq OWNER TO matchanalyzer;
 ALTER SEQUENCE matchanalyzer.users_id_seq OWNED BY matchanalyzer.users.id;
+
+CREATE TABLE matchanalyzer.calendar (
+  id bigint NOT NULL,
+  title character varying NOT NULL,
+  description character varying,
+  start date NOT NULL,
+  "end" date NOT NULL,
+  location character varying,
+  "userId" bigint NOT NULL
+);
+ALTER TABLE matchanalyzer.calendar OWNER TO matchanalyzer;
+CREATE SEQUENCE matchanalyzer.calendar_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
+ALTER TABLE matchanalyzer.calendar_id_seq OWNER TO matchanalyzer;
+ALTER TABLE ONLY matchanalyzer.calendar
+  ADD CONSTRAINT calendar_pkey PRIMARY KEY (id);
+
 ALTER TABLE ONLY matchanalyzer.assists ALTER COLUMN id SET DEFAULT nextval('matchanalyzer.assists_id_seq'::regclass);
 ALTER TABLE ONLY matchanalyzer.cards ALTER COLUMN id SET DEFAULT nextval('matchanalyzer.cards_id_seq'::regclass);
 ALTER TABLE ONLY matchanalyzer.competitions ALTER COLUMN id SET DEFAULT nextval('matchanalyzer.competitions_id_seq'::regclass);
@@ -272,7 +293,10 @@ ALTER TABLE ONLY matchanalyzer.rounds ALTER COLUMN id SET DEFAULT nextval('match
 ALTER TABLE ONLY matchanalyzer.substitutions ALTER COLUMN id SET DEFAULT nextval('matchanalyzer.substitutions_id_seq'::regclass);
 ALTER TABLE ONLY matchanalyzer.teams ALTER COLUMN id SET DEFAULT nextval('matchanalyzer.teams_id_seq'::regclass);
 ALTER TABLE ONLY matchanalyzer.users ALTER COLUMN id SET DEFAULT nextval('matchanalyzer.users_id_seq'::regclass);
+ALTER TABLE ONLY matchanalyzer.calendar ALTER COLUMN id SET DEFAULT nextval('matchanalyzer.calendar_id_seq'::regclass);
 
+COPY matchanalyzer.calendar (id, title, description, start, "end", location, "userId") FROM stdin;
+\.
 COPY matchanalyzer.assists (id, type, goal, "matchId", "matchpartId", "playerId", "roundId", "userId") FROM stdin;
 \.
 COPY matchanalyzer.cards (id, minute, type, "matchId", "matchpartId", "playerId", "roundId", "userId") FROM stdin;
@@ -1649,6 +1673,7 @@ SELECT pg_catalog.setval('matchanalyzer.rounds_id_seq', 64, true);
 SELECT pg_catalog.setval('matchanalyzer.substitutions_id_seq', 50, true);
 SELECT pg_catalog.setval('matchanalyzer.teams_id_seq', 68, true);
 SELECT pg_catalog.setval('matchanalyzer.users_id_seq', 2, true);
+SELECT pg_catalog.setval('matchanalyzer.calendar_id_seq', 1, true);
 
 ALTER TABLE ONLY matchanalyzer.assists
     ADD CONSTRAINT idx_16397_primary PRIMARY KEY (id);
@@ -1720,6 +1745,7 @@ CREATE INDEX "fki_substitution_roundId" ON matchanalyzer.substitutions USING btr
 CREATE INDEX "fki_substitution_userId" ON matchanalyzer.substitutions USING btree ("userId");
 CREATE INDEX "fki_team_competitionId" ON matchanalyzer.teams USING btree ("competitionId");
 CREATE INDEX "fki_team_userId" ON matchanalyzer.teams USING btree ("userId");
+CREATE INDEX "fki_calendar_userId" ON matchanalyzer.calendar USING btree ("userId");
 CREATE UNIQUE INDEX idx_16480_email ON matchanalyzer.users USING btree (email);
 
 ALTER TABLE ONLY matchanalyzer.assists
@@ -1810,3 +1836,5 @@ ALTER TABLE ONLY matchanalyzer.teams
     ADD CONSTRAINT "team_competitionId" FOREIGN KEY ("competitionId") REFERENCES matchanalyzer.competitions(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY matchanalyzer.teams
     ADD CONSTRAINT "team_userId" FOREIGN KEY ("userId") REFERENCES matchanalyzer.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY matchanalyzer.calendar
+    ADD CONSTRAINT "calendar_userId" FOREIGN KEY ("userId") REFERENCES matchanalyzer.users(id) ON UPDATE CASCADE ON DELETE CASCADE;

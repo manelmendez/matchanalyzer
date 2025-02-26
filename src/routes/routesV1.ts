@@ -25,8 +25,10 @@ import { RoundService } from '../dao-postgres/round-service.js'
 import { SubstitutionService } from '../dao-postgres/substitution-service.js'
 import { TeamService } from '../dao-postgres/team-service.js'
 import { UserService } from '../dao-postgres/user-service.js'
+import { CalendarService } from '../dao-postgres/calendar-service.js'
 
 import imageServices from '../services/image-services.js'
+import { calendarRouter } from './calendarRoutes.js'
 // import auth from '../middlewares/auth.js'
 const api = express.Router()
 
@@ -63,5 +65,7 @@ api.use(assistRouter(new AssistService))
 api.use(cardRouter(new CardService, new PlayerService))
 // SUBSTITUTIONS
 api.use(substitutionRouter(new SubstitutionService))
+// CALENDAR
+api.use(calendarRouter(new CalendarService))
 
 export default api
