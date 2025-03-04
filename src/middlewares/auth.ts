@@ -26,7 +26,6 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
 
     const decodedToken: UserDataToken = await tokenServices.decodeToken(token);
     req.user = decodedToken;
-    console.log('Tiene acceso');
     return res.status(200).send({ message: 'Tienes acceso' });
   } catch (error) {
     console.log('No autorizado. Sin acceso');
@@ -55,7 +54,6 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const decodedToken: UserDataToken = await tokenServices.decodeToken(token);
       req.user = decodedToken;
-      console.log('Está autorizado');
       next();
     }
     catch (error: unknown) {
@@ -89,7 +87,6 @@ const checkAdmin = async (req: Request, res: Response, next: NextFunction) => {
     const decodedToken: UserDataToken = await tokenServices.decodeToken(token);
     if (decodedToken && decodedToken.role === 'admin') {
       req.user = decodedToken;
-      console.log('Está autorizado como administrador');
       next();
     } else {
       errorHelper.unauthorizedError('No tienes autorización como administrador')
