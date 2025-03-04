@@ -10,6 +10,7 @@ export const calendarRouter = (calendarService: CalendarService) => {
 
   calendarRouter.get('/calendar', auth.checkAuth, calendarCtrl.getUserEvents)
   calendarRouter.post('/calendar', auth.checkAuth, calendarCtrl.addEvent)
+  calendarRouter.put('/calendar/:calendarId', auth.checkAuth, calendarCtrl.updateEvent)
   calendarRouter.delete('/calendar/:calendarId', auth.checkAuth, calendarCtrl.deleteEvent)
 
   return calendarRouter

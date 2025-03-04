@@ -31,6 +31,21 @@ export class CalendarService {
     }
   }
 
+  updateCalendarEvent = async (event: CalendarEvent, userId: number) => {
+    try {
+      const result = await con.query(
+        'UPDATE calendar SET title=$1, description=$2, start=$3, "end"=$4, location=$5 ' +
+        'WHERE id=$6 AND "userId"=$7 RETURNING *',
+        [event.title, event.description, event.start, event.end, event.location, event.id, userId]
+      )
+      return result.rows[0]
+    }
+    catch (err) {
+      console.log(err);
+      errorHelper.internalServerError("Error al actualizar en la base de datos")
+    }
+  }
+
   deleteCalendarEvent = async (id: number, userId: number) => {
     const result = await con.query(
       'DELETE FROM calendar WHERE id = $1 AND "userId"=$2 RETURNING *',
