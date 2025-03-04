@@ -39,7 +39,6 @@ export function decodeToken(token: string): Promise<UserDataToken> {
               message: 'El token ha expirado',
             });
           } else {
-            console.log('Token válido');
             resolve(Object(decodedPayload.sub));
           }
         } 

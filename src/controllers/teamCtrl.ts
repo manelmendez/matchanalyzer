@@ -107,9 +107,9 @@ export class TeamController {
   getTeam = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       if (!req.user) {
-        return errorHelper.unauthorizedError('No userId provided in Auth')
+        errorHelper.unauthorizedError('No userId provided in Auth')
       }
-      const userId: number = req.user.id
+      const userId: number = req.user?.id as number
       const id: number = Number(req.params.id)
       console.log('Buscando equipo con id: ' + id + ' en la base de datos...')
       // search team on DB
@@ -136,7 +136,7 @@ export class TeamController {
       if (!req.user) {
         return errorHelper.unauthorizedError('No userId provided in Auth')
       }
-      const userId: number = req.user.id
+      const userId: number = req.user?.id as number
       console.log(
         'Buscando equipos del usuario ' + managerId + ' en la base de datos...'
       )
@@ -164,9 +164,9 @@ export class TeamController {
       const team: Team = req.body.team
       console.log(req.body)
       if (!req.user) {
-        return errorHelper.unauthorizedError('No userId provided in Auth')
+        errorHelper.unauthorizedError('No userId provided in Auth')
       }
-      const userId: number = req.user.id
+      const userId: number = req.user?.id as number
       const id: number = Number(req.params.id)
       try {
         const value: Team = await this.teamService.updateTeam(id, team, userId)
@@ -185,12 +185,12 @@ export class TeamController {
     try {
       const id: number = Number(req.params.id)
       if (!id) {
-        return errorHelper.badRequestError("Falta la id del equipo a borrar")
+        errorHelper.badRequestError("Falta la id del equipo a borrar")
       }
       if (!req.user) {
-        return errorHelper.unauthorizedError('No userId provided in Auth')
+        errorHelper.unauthorizedError('No userId provided in Auth')
       }
-      const userId: number = req.user.id
+      const userId: number = req.user?.id as number
       try {
         const value = await this.teamService.deleteTeam(id, userId)
         res.status(200).send({
@@ -212,9 +212,9 @@ export class TeamController {
     try {
       const teamId: number = Number(req.params.teamId)
       if (!req.user) {
-        return errorHelper.unauthorizedError('No userId provided in Auth')
+        errorHelper.unauthorizedError('No userId provided in Auth')
       }
-      const userId: number = req.user.id
+      const userId: number = req.user?.id as number
       try {
         // obtengo competitions, rounds, matches y teams
         const competitionId: number = Number(req.params.competitionId)
@@ -225,6 +225,7 @@ export class TeamController {
         // si no hay rounds ni matches devuelve las estadisticas vacias
         if (rounds.length == 0 || matches.length == 0) {
           res.status(200).send({ teamStats: {} })
+          return
         }
         // sino recorremos primero todos los rounds
         // y le añadimos los partidos que tengan su roundId
@@ -382,17 +383,18 @@ export class TeamController {
           });
           roundRankings.push(roundRanking)
         }
-
-        const team = roundRankings[roundRankings.length - 1].ranking?.find((element) => element.id == teamId)
-        const position = roundRankings[roundRankings.length - 1].ranking?.findIndex((element) => element.id == teamId)
+        
+        const team = roundRankings[roundRankings.length - 1]?.ranking?.find((element) => element.id == teamId)
+        const position = roundRankings[roundRankings.length - 1]?.ranking?.findIndex((element) => element.id == teamId)
         if (team && team.stats) {
           team.stats.position = Number(position) + 1;
         }
         const teamRanking: TeamRanking = { ...team, position: Number(position) + 1 }
         res.status(200).send({ teamStats: teamRanking })
       } catch (err) {
+        console.log("Error en teamStats")
         console.log(err)
-        errorHelper.notFoundError('No hay jornadas disputadas')
+        errorHelper.notFoundError('Error al obtener estadísticas del equipo')
       }
     }
     catch (error) {
