@@ -59,7 +59,10 @@ export class AssistController {
       }
       const userId: number = req.user.id
       const assistId: number = parseInt(req.params.assistId)
-      const assistDeleted = await this.assistService.deleteAssist(assistId, userId)
+      const assistDeleted = await this.assistService.deleteAssist(
+        assistId,
+        userId
+      )
       res.status(200).send({
         assistDeleted
       })

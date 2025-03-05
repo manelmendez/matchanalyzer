@@ -16,7 +16,12 @@ export class CompetitionController {
   private roundService: RoundService
   private matchService: MatchService
 
-  constructor(competitionService: CompetitionService, teamService: TeamService, roundService: RoundService, matchService: MatchService) {
+  constructor(
+    competitionService: CompetitionService,
+    teamService: TeamService,
+    roundService: RoundService,
+    matchService: MatchService
+  ) {
     this.competitionService = competitionService
     this.teamService = teamService
     this.roundService = roundService
@@ -39,12 +44,14 @@ export class CompetitionController {
         userId
       }
       try {
-        console.log('Registrando competicion con nombre: ' + competition.name + '...')
+        console.log(
+          'Registrando competicion con nombre: ' + competition.name + '...'
+        )
         const competitionSaved =
           await this.competitionService.saveCompetition(competition)
         res.status(200).send({
           competition: competitionSaved,
-          message: "Competición creada correctamente"
+          message: 'Competición creada correctamente'
         })
       } catch (err) {
         console.log(err)
@@ -64,9 +71,15 @@ export class CompetitionController {
       }
       const userId: number = req.user.id
       const managerId: number = Number(req.user.id)
-      console.log('Buscando competición con id: ' + id + ' en la base de datos...')
+      console.log(
+        'Buscando competición con id: ' + id + ' en la base de datos...'
+      )
       try {
-        const result: Competition[] = await this.competitionService.findById(id, managerId, userId)
+        const result: Competition[] = await this.competitionService.findById(
+          id,
+          managerId,
+          userId
+        )
         if (result) {
           const competition = JSON.parse(JSON.stringify(result))
           const teams = await this.teamService.findByCompetition(id, userId)
@@ -90,7 +103,11 @@ export class CompetitionController {
     }
   }
 
-  getUserCompetitions = async (req: Request, res: Response, next: NextFunction) => {
+  getUserCompetitions = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const id: number = Number(req.params.id)
       if (!req.user) {
@@ -99,10 +116,15 @@ export class CompetitionController {
       const userId: number = req.user.id
       try {
         console.log('Buscando todas las competiciones en la base de datos...')
-        const competitions = await this.competitionService.findByManager(id, userId)
+        const competitions = await this.competitionService.findByManager(
+          id,
+          userId
+        )
         console.log('Competiciones encontradas.')
         if (!competitions) {
-          throw errorHelper.internalServerError('Error al obtener competiciones')
+          throw errorHelper.internalServerError(
+            'Error al obtener competiciones'
+          )
         }
         const competitionsWithStats = await this.getCompetitionRanking(
           competitions,
@@ -122,7 +144,11 @@ export class CompetitionController {
     }
   }
 
-  updateCompetition = async (req: Request, res: Response, next: NextFunction) => {
+  updateCompetition = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       if (!req.user) {
         return errorHelper.unauthorizedError('No userId provided in Auth')
@@ -138,8 +164,16 @@ export class CompetitionController {
         userId
       }
       try {
-        const updatedCompetition: Competition = await this.competitionService.updateCompetition(competition, id, userId)
-        res.status(200).send({ competition: updatedCompetition, message: "Competición editada correctamente" })
+        const updatedCompetition: Competition =
+          await this.competitionService.updateCompetition(
+            competition,
+            id,
+            userId
+          )
+        res.status(200).send({
+          competition: updatedCompetition,
+          message: 'Competición editada correctamente'
+        })
       } catch (err) {
         console.log(err)
         errorHelper.internalServerError('Error al actualizar competición')
@@ -149,7 +183,11 @@ export class CompetitionController {
     }
   }
 
-  deleteCompetition = async (req: Request, res: Response, next: NextFunction) => {
+  deleteCompetition = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       if (!req.user) {
         return errorHelper.unauthorizedError('No userId provided in Auth')
@@ -158,7 +196,10 @@ export class CompetitionController {
       const id: number = Number(req.params.id)
       try {
         await this.competitionService.deleteCompetition(id, userId)
-        res.status(200).send({ competition: req.params.id, message: "Competición borrada correctamente" })
+        res.status(200).send({
+          competition: req.params.id,
+          message: 'Competición borrada correctamente'
+        })
       } catch (err) {
         console.log(err)
         errorHelper.internalServerError('Error al borrar competición')
@@ -168,7 +209,10 @@ export class CompetitionController {
     }
   }
 
-  getCompetitionRanking = async (competitions: Competition[], userId: number) => {
+  getCompetitionRanking = async (
+    competitions: Competition[],
+    userId: number
+  ) => {
     try {
       const competitionsWithStats: Competition[] = []
       for (let c = 0; c < competitions.length; c++) {
@@ -178,9 +222,17 @@ export class CompetitionController {
 
         const competitionId = competitions[c].id
         if (competitionId) {
-          rounds = await this.roundService.findByCompetition(competitionId, userId)
-          matches = await this.matchService.findByCompetition(competitionId, userId)
-          teams = await this.teamService.findByCompetition(competitionId, userId) || []
+          rounds = await this.roundService.findByCompetition(
+            competitionId,
+            userId
+          )
+          matches = await this.matchService.findByCompetition(
+            competitionId,
+            userId
+          )
+          teams =
+            (await this.teamService.findByCompetition(competitionId, userId)) ||
+            []
         }
 
         for (let i = 0; i < rounds.length; i++) {
@@ -287,7 +339,9 @@ export class CompetitionController {
                   teamStats.awayGoalDif +=
                     Number(matches[x].awayTeamGoals) -
                     Number(matches[x].localTeamGoals)
-                  teamStats.awayAgainstGoals += Number(matches[x].localTeamGoals)
+                  teamStats.awayAgainstGoals += Number(
+                    matches[x].localTeamGoals
+                  )
                   if (
                     Number(matches[x].awayTeamGoals) >
                     Number(matches[x].localTeamGoals)
@@ -330,11 +384,12 @@ export class CompetitionController {
             if (a.stats.points !== b.stats.points) {
               // devuelve positivo (+) o negativo (-) según quien tenga más
               return a.stats.points - b.stats.points
-            } else if (a.stats.points === b.stats.points) { // si los puntos son iguales pasa a hacer lo siguiente:
+            } else if (a.stats.points === b.stats.points) {
+              // si los puntos son iguales pasa a hacer lo siguiente:
               let matches: Match[] = []
               // coger todos los partidos
               for (let x = 0; x < rounds.length; x++) {
-                matches = [...matches, ...rounds[x].matches ?? []]
+                matches = [...matches, ...(rounds[x].matches ?? [])]
               }
               const duelMatches = []
               // buscar los partidos que esos 2 equipos hayan jugado entre ellos
@@ -357,7 +412,7 @@ export class CompetitionController {
                 if (
                   duelMatches[z].localTeam?.id === a.id &&
                   Number(duelMatches[z].localTeamGoals) >
-                  Number(duelMatches[z].awayTeamGoals)
+                    Number(duelMatches[z].awayTeamGoals)
                 ) {
                   aWin++
                   goalDifference +=
@@ -366,7 +421,7 @@ export class CompetitionController {
                 } else if (
                   duelMatches[z].awayTeam?.id === a.id &&
                   Number(duelMatches[z].awayTeamGoals) >
-                  Number(duelMatches[z].localTeamGoals)
+                    Number(duelMatches[z].localTeamGoals)
                 ) {
                   aWin++
                   goalDifference +=
@@ -375,19 +430,19 @@ export class CompetitionController {
                 } else if (
                   duelMatches[z].localTeam?.id === a.id &&
                   Number(duelMatches[z].localTeamGoals) ===
-                  Number(duelMatches[z].awayTeamGoals)
+                    Number(duelMatches[z].awayTeamGoals)
                 ) {
                   aDraw++
                 } else if (
                   duelMatches[z].awayTeam?.id === a.id &&
                   Number(duelMatches[z].awayTeamGoals) ===
-                  Number(duelMatches[z].localTeamGoals)
+                    Number(duelMatches[z].localTeamGoals)
                 ) {
                   aDraw++
                 } else if (
                   duelMatches[z].localTeam?.id === a.id &&
                   Number(duelMatches[z].localTeamGoals) <
-                  Number(duelMatches[z].awayTeamGoals)
+                    Number(duelMatches[z].awayTeamGoals)
                 ) {
                   aLose++
                   goalDifference +=
@@ -396,7 +451,7 @@ export class CompetitionController {
                 } else if (
                   duelMatches[z].awayTeam?.id === a.id &&
                   Number(duelMatches[z].awayTeamGoals) <
-                  Number(duelMatches[z].localTeamGoals)
+                    Number(duelMatches[z].localTeamGoals)
                 ) {
                   aLose++
                   goalDifference +=
@@ -410,21 +465,24 @@ export class CompetitionController {
                   return 1
                 } else if (aLose === 2 || (aLose === 1 && aDraw === 1)) {
                   return -1
-                } else { // si es igual, buscar diferencia de goles individual (no cuenta doble fuera de casa)
+                } else {
+                  // si es igual, buscar diferencia de goles individual (no cuenta doble fuera de casa)
                   if (goalDifference > 0) {
                     return 1
                   } else {
                     return -1
                   }
                 }
-              } else if (duelMatches.length === 1) { // si solo se ha jugado 1
+              } else if (duelMatches.length === 1) {
+                // si solo se ha jugado 1
                 if (aWin === 1) {
                   return 1
                 } else if (aLose === 1) {
                   return -1
                 }
               }
-            } else if ( // si el goal average particular es igual pasa a hacer lo siguiente:
+            } else if (
+              // si el goal average particular es igual pasa a hacer lo siguiente:
               // si la diferencia de goles entre los dos equipos es igual en ambos
               a.stats.goals - a.stats.againstGoals ===
               b.stats.goals - b.stats.againstGoals
@@ -445,10 +503,11 @@ export class CompetitionController {
         competitionsWithStats.push(competitions[c])
       }
       return competitionsWithStats
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err)
-      errorHelper.internalServerError('Error al obtener clasificación de competiciones')
+      errorHelper.internalServerError(
+        'Error al obtener clasificación de competiciones'
+      )
     }
   }
 }

@@ -51,6 +51,7 @@
     "eslint": "^8.57.1",
     "husky": "latest",
     "jest": "^29.7.0",
+    "prettier": "^3.5.3",
     "standard": "latest",
     "ts-jest": "^29.2.5",
     "ts-node": "latest"
