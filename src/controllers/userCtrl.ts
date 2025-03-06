@@ -47,7 +47,7 @@ export class UserController {
       try {
         const userSaved = await this.userService.saveUser(user)
         delete user.password
-        return res.status(200).send({
+        res.status(200).send({
           message: 'Te has registrado correctamente',
           token: tokenServices.createToken(userSaved),
           user: userSaved
@@ -85,7 +85,7 @@ export class UserController {
           userFound.lastLogin = new Date()
           const userUpdated: UserDataToken = await this.userService.updateUser(userFound)
           // delete userUpdated.password
-          return res.status(200).send({
+          res.status(200).send({
             message: 'Te has logueado correctamente',
             token: tokenServices.createToken(userUpdated),
             user: userUpdated
@@ -113,7 +113,7 @@ export class UserController {
       if (user) {
         console.log('Usuario encontrado.')
         // send user
-        return res.status(200).send({
+        res.status(200).send({
           message: 'Datos obtenidos correctamente',
           user
         })
@@ -131,7 +131,7 @@ export class UserController {
       console.log('Buscando todos los usuarios...')
       try {
         const users = await this.userService.findAll()
-        return res.status(200).send({
+        res.status(200).send({
           users
         })
       } catch (error) {
@@ -146,13 +146,14 @@ export class UserController {
 
   updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log('Buscando todos los usuarios...')
-      const user: User = req.body.user
+      console.log('Editando usuario...')
+      const user: User = req.body
       try {
         const userUpdated = await this.userService.updateUser(user)
         console.log('Usuarios encontrados.')
-        return res.status(200).send({
-          user: userUpdated
+        res.status(200).send({
+          user: userUpdated,
+          message: "Usuario editado correctamente"
         })
       } catch (err) {
         console.log(`Error: ${err}`)
@@ -171,7 +172,7 @@ export class UserController {
       try {
         await this.userService.deleteUser(userId)
         console.log('Usuario eliminado.')
-        return res.status(200).send({
+        res.status(200).send({
           message: 'Usuario eliminado'
         })
       } catch (err) {

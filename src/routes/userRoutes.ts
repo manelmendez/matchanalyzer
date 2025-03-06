@@ -12,7 +12,7 @@ export const userRouter = (userService: UserService) => {
   userRouter.post('/users/signin', userCtrl.signIn)
   userRouter.get('/users/:id', auth.checkAuth, userCtrl.getUser)
   userRouter.get('/users', auth.checkAuth, userCtrl.getAllUsers)
-  userRouter.put('/users/:id', auth.checkAdmin, userCtrl.updateUser)
+  userRouter.put('/users/:id', auth.checkAuth, userCtrl.updateUser)
   userRouter.delete('/users/:id', auth.checkAdmin, userCtrl.deleteUser)
 
   return userRouter
